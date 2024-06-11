@@ -30,13 +30,20 @@ class LoginController extends Controller
         $funcionario = Funcionarios::where('email', $credentials['email'])->first();
 
         if ($funcionario && Hash::check($credentials['password'], $funcionario->senha)) {
+           
             Auth::login($funcionario);
+            session(['funcionario' => $funcionario]);
             return redirect()->intended('dashboard');
         }
-
+        if($funcionario){
         return redirect()->back()->withErrors([
             'email' => 'As credenciais fornecidas não correspondem aos nossos registros.',
         ]);
+    }else{
+        return redirect()->back()->withErrors([
+            'email' => 'O e-mail fornecido não corresponde aos nossos registros.',
+        ]);
+    }
     }
 
     public function logout(Request $request)

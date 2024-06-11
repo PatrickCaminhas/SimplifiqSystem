@@ -20,7 +20,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse ml-auto text-dark" id="navbarNav">
-            <ul class="navbar-nav ">
+            <ul class="navbar-nav bg-success">
                 <li class="nav-item ">
                     <a class="nav-link" href="/">Início</a>
                 </li>
@@ -69,11 +69,11 @@
                                     </form>
                                     @if ($errors->any())
                                         <div class="alert alert-danger mt-3">
-                                            <ul>
+                                            
                                                 @foreach ($errors->all() as $error)
-                                                    <li>{{ $error }}</li>
+                                                    {{ $error }}
                                                 @endforeach
-                                            </ul>
+                                            
                                         </div>
                                     @endif
                                 </div>

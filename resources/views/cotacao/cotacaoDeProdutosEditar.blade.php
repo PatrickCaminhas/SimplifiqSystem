@@ -42,7 +42,12 @@
         </div>
 
         <div class="offcanvas-body ">
-            <h6 class="offcanvas-subtitle text-light">Bem vindo, $USER!</h6>
+             <h6 class="offcanvas-subtitle text-light">
+                <p>Bem-vindo, 
+                @if (session('funcionario'))
+                     {{ session('funcionario')->nome }}!</p>
+                @endif
+            </h6>
             <!-- Conteúdo do menu aqui -->
             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
 

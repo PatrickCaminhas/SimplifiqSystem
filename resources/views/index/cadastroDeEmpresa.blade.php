@@ -12,15 +12,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
 </head>
 
-<body style="height: 100vh;" class="bg-primary">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary text-light sticky-top">
+<body
+    style="height: 100vh; background-image: url({{ asset('img/login.jpg') }}); background-size: cover; background-repea: no-repeat;"
+    class="bg-success">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success text-light sticky-top" style="height: 8vh;">
         <a class="navbar-brand ms-2 " style="font-family: 'Quicksand', sans-serif;">Simplifiq System</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse ml-auto" id="navbarNav">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav bg-success">
                 <li class="nav-item">
                     <a class="nav-link" href="/">Início</a>
                 </li>
@@ -41,77 +43,86 @@
         </div>
     </nav>
     <!-- -->
-    <div class="bg-light d-flex align-items-center justify-content-center" style="height: 100vh;">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-6 col-lg-4">
-                    <div class="card shadow-sm">
-                        <div class="card-body">
-                            <h2 class="text-center">Cadastro</h2>
-                            <form method="POST" action="{{ route('cadastro') }}">
-                                @csrf
-                                <div class="form-group">
-                                    <label for="nomeempresa">Nome da empresa</label>
-                                    <input type="text" class="form-control" id="nomeempresa"
-                                        placeholder="Digite o nome da empresa" name="nomeempresa" required>
+    <div class="bg-dark bg-opacity-25">
+        <div class="d-flex align-items-center justify-content-center" style="height: 92vh;">
+            <div class="container" style="height: 92vh;">
+                <div class="row justify-content-center">
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card shadow-sm">
+                            <div class="card-body bg-dark text-light border">
+                                <h3 class="text-center">Cadastro</h3>
+                                <form method="POST" action="{{ route('cadastro') }}">
+                                    @csrf
+                                    <div class="form-group">
+                                        <label for="nomeempresa">Nome da empresa</label>
+                                        <input type="text" class="form-control" id="nomeempresa"
+                                            placeholder="Digite o nome da empresa" name="nomeempresa" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cnpj">CNPJ</label>
+                                        <input type="text" class="form-control" id="cnpj"
+                                            placeholder="Digite o CNPJ da empresa" name="cnpj" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tamanhoempresa">Tamanho da empresa</label>
+                                        <select class="form-control" id="tamanhoempresa" name="tamanhoempresa" required>
+                                            <option selected disabled>Selecione o tamanho de empresa</option>
+                                            <option value="mei">MEI</option>
+                                            <option value="microempresa">MICRO</option>
+                                            <option value="pequenaempresa">PEQUENA</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tipoEmpresa">Tipo de empresa</label>
+                                        <select class="form-control" id="tipoEmpresa" name="tipoempresa" required>
+                                            <option selected disabled>Selecione o tipo de empresa</option>
+                                            <option value="Indústria">Indústria</option>
+                                            <option value="Comércio">Comércio</option>
+                                            <option value="Serviços">Serviços</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="telefone">Telefone</label>
+                                        <input type="tel" class="form-control" id="telefone" name="telefone"
+                                            placeholder="(33) 90123-4567" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nome">Nome:</label>
+                                        <input type="text" class="form-control" id="nome" name="nome"
+                                            placeholder="Digite seu nome" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sobrenome">Sobrenome:</label>
+                                        <input type="text" class="form-control" id="sobrenome" name="sobrenome"
+                                            placeholder="Digite seu sobrenome" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">E-mail</label>
+                                        <input type="email" class="form-control" id="email" name="email"
+                                            placeholder="Digite seu email" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="senha">Senha</label>
+                                        <input class="form-control" type="password" id="senha" name="senha"
+                                            placeholder="Digite sua senha" minlength="8" required>
+                                    </div>
+                                    <div class="text-center mt-2">
+                                        <button type="submit" class="btn btn-success text-center">Cadastrar</button>
+                                        <button type="reset" class="btn btn-success text-center">Limpar</button>
+                                    </div>
+                                </form>
+                                @if ($errors->any())
+                                <div class="alert alert-danger mt-3">
+                                    
+                                        @foreach ($errors->all() as $error)
+                                            {{ $error }}
+                                        @endforeach
+                                    
                                 </div>
-                                <div class="form-group">
-                                    <label for="cnpj">CNPJ</label>
-                                    <input type="text" class="form-control" id="cnpj"
-                                        placeholder="Digite o CNPJ da empresa" name="cnpj" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="tamanhoempresa">Tamanho da empresa</label>
-                                    <select class="form-control" id="tamanhoempresa" name="tamanhoempresa" required>
-                                        <option selected disabled>Selecione o tamanho de empresa</option>
-                                        <option value="mei">MEI</option>
-                                        <option value="microempresa">MICRO</option>
-                                        <option value="pequenaempresa">PEQUENA</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="tipoEmpresa">Tipo de empresa</label>
-                                    <select class="form-control" id="tipoEmpresa" name="tipoempresa" required>
-                                        <option selected disabled>Selecione o tipo de empresa</option>
-                                        <option value="Indústria">Indústria</option>
-                                        <option value="Comércio">Comércio</option>
-                                        <option value="Serviços">Serviços</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="telefone">Telefone</label>
-                                    <input type="tel" class="form-control" id="telefone" name="telefone"
-                                        placeholder="(33) 90123-4567" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="nome">Nome:</label>
-                                    <input type="text" class="form-control" id="nome" name="nome"
-                                        placeholder="Digite seu nome" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="sobrenome">Sobrenome:</label>
-                                    <input type="text" class="form-control" id="sobrenome" name="sobrenome"
-                                        placeholder="Digite seu sobrenome" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="email">E-mail</label>
-                                    <input type="email" class="form-control" id="email" name="email"
-                                        placeholder="Digite seu email" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="senha">Senha</label>
-                                    <input class="form-control" type="password" id="senha" name="senha"
-                                        placeholder="Digite sua senha" minlength="8" required>
-                                </div>
-                                <div class="text-center mt-1">
-                                    <button type="submit" class="btn btn-primary text-center">Cadastrar</button>
-                                    <button type="reset" class="btn btn-primary text-center">Limpar</button>
-                                </div>
-                            </form>
+                            @endif
+                            </div>
                         </div>
-                    </div>
-                    <div class="text-center mt-3">
-                        <a href="/" class="btn btn-primary text-center">Voltar</a>
+
                     </div>
                 </div>
             </div>

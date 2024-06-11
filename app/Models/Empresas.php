@@ -19,7 +19,7 @@ class Empresas extends Authenticatable
     ];
 
     protected $hidden = [
-        'senha',
+       
     ];
 
     public function getAuthPassword()

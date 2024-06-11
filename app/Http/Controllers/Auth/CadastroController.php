@@ -17,7 +17,7 @@ class CadastroController extends Controller
 
     public function store(Request $request)
     {
-        
+
         // Validação dos dados
         $request->validate([
             'nomeempresa' => 'required|string',
@@ -30,19 +30,24 @@ class CadastroController extends Controller
             'email' => 'required|string|email|unique:funcionarios,email',
             'senha' => 'required|string|min:8',
         ]);
-
-        // Criando a empresa
-        $empresa = Empresas::create([
-            'nome' => $request->input('nomeempresa'),
-            'cnpj' => $request->input('cnpj'),
-            'tamanho_empresa' => $request->input('tamanhoempresa'),
-            'tipo_empresa' => $request->input('tipoempresa'),
-            'telefone' => $request->input('telefone'),
-        ]);
-
+        if (!Empresas::where('cnpj', $request->get('cnpj')->exists())) {
+            // Criando a empresa
+            $empresa = Empresas::create([
+                'nome' => $request->input('nomeempresa'),
+                'cnpj' => $request->input('cnpj'),
+                'tamanho_empresa' => $request->input('tamanhoempresa'),
+                'tipo_empresa' => $request->input('tipoempresa'),
+                'telefone' => $request->input('telefone'),
+            ]);
+        } else {
+            return redirect()->back()->withErrors([
+                'cnpj' => 'O CNPJ fornecido já está cadastrado.',
+            ]);
+        }
         // Gerando ID único para o funcionário
-        $id_funcionario = mt_rand(100, 999) . strtoupper(substr($request->input('nome'), 0, 1) . substr($request->input('sobrenome'), 0, 1)) . mt_rand(10, 99);
-
+        do {
+            $id_funcionario = mt_rand(100, 999);
+        } while (Funcionarios::where('id', $id_funcionario)->exists());
         // Criando o funcionário
         $funcionario = Funcionarios::create([
             'id' => $id_funcionario,
@@ -57,8 +62,7 @@ class CadastroController extends Controller
         if ($funcionario) {
             return redirect('/')->with('success', 'Cadastro realizado com sucesso!');
         } else {
-            return view('index\login');
+            return view('index/inicio');
         }
-        
     }
 }

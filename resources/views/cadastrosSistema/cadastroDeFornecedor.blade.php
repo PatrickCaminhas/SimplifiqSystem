@@ -12,12 +12,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
 </head>
 
-<body class=bg-dark>
+<body class="bg-dark" style="height: 100vh;">
     <!-- Menu superior -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-primary sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-success sticky-top">
         <div class="container-fluid">
             <!-- Botão de menu offcanvas -->
-            <button class="navbar-dark btn btn-primary text-light " type="button" data-bs-toggle="offcanvas"
+            <button class="navbar-dark btn btn-success text-light " type="button" data-bs-toggle="offcanvas"
                 data-bs-target="#menuOffcanvas" aria-controls="menuOffcanvas">
                 <span class=" navbar-toggler-icon "></span>
             </button>
@@ -25,7 +25,7 @@
             <span class="navbar-brand mx-auto text-light " style="font-family: 'Quicksand', sans-serif;"><b>Simplifiq
                     System</b></span>
             <!-- Botão para offcanvas de notificações -->
-            <button class="btn btn-primary border border-light " type="button" data-bs-toggle="offcanvas"
+            <button class="btn btn-success border border-light " type="button" data-bs-toggle="offcanvas"
                 data-bs-target="#notificacoesOffcanvas" aria-controls="notificacoesOffcanvas">
                 Notificações
             </button>
@@ -33,7 +33,7 @@
     </nav>
 
     <!-- Offcanvas para o menu -->
-    <div class="offcanvas navbar-dark offcanvas-start bg-primary text-light" tabindex="-1" id="menuOffcanvas"
+    <div class="offcanvas navbar-dark offcanvas-start bg-success text-light" tabindex="-1" id="menuOffcanvas"
         aria-labelledby="menuOffcanvasLabel">
         <div data-bs-theme="dark" class="offcanvas-header">
             <h5 class="offcanvas-title" id="menuOffcanvasLabel">Menu</h5>
@@ -42,7 +42,12 @@
         </div>
 
         <div class="offcanvas-body ">
-            <h6 class="offcanvas-subtitle text-light">Bem vindo, $USER!</h6>
+             <h6 class="offcanvas-subtitle text-light">
+                <p>Bem-vindo, 
+                @if (session('funcionario'))
+                     {{ session('funcionario')->nome }}!</p>
+                @endif
+            </h6>
             <!-- Conteúdo do menu aqui -->
             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
 
@@ -50,7 +55,7 @@
                     <a class="nav-link" href="/dashboard">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="cadastrodeproduto">Cadastro de produto</a>
+                    <a class="nav-link" href="cadastroproduto">Cadastro de produto</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="cadastrofornecedor">Cadastro de fornecedor</a>
@@ -59,7 +64,7 @@
                     <a class="nav-link" href="cotacaoprodutos">Cotação de produtos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/informacaoproduto">Informação de produto</a>
+                    <a class="nav-link" href="{{route('produto.listar')}}">Informação de produto</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Informação da empresa</a>
@@ -108,14 +113,14 @@
 
             </div>
             <div>
-                <a href="/notificacoes" class="btn btn-primary">Ver todas</a>
+                <a href="/notificacoes" class="btn btn-success">Ver todas</a>
             </div>
         </div>
         <!-- Você pode usar qualquer componente Bootstrap ou elementos personalizados -->
     </div>
     </div>
 
-    <div class=" d-flex align-items-center justify-content-center" style="height: 100vh;">
+    <div class=" d-flex align-items-center justify-content-center" style="height: 90vh;">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-6 col-lg-4">
@@ -155,16 +160,14 @@
                                         placeholder="Digite o telefone do fornecedor">
                                 </div>
                                 <div class= "text-center mt-1">
-                                    <button type="submit" class="btn btn-primary text-center">Cadastrar</button>
-                                    <button type="reset" class="btn btn-primary text-center">Limpar</button>
+                                    <button type="submit" class="btn btn-success text-center">Cadastrar</button>
+                                    <button type="reset" class="btn btn-success text-center">Limpar</button>
                                 </div>
                             </form>
                         </div>
 
                     </div>
-                    <div class= "text-center mt-3">
-                        <a href="/dashboard" class="btn btn-primary text-center">Voltar</a>
-                    </div>
+                  
                 </div>
             </div>
         </div>

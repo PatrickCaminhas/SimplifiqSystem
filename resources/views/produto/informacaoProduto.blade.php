@@ -42,7 +42,12 @@
         </div>
 
         <div class="offcanvas-body ">
-            <h6 class="offcanvas-subtitle text-light">Bem vindo, $USER!</h6>
+             <h6 class="offcanvas-subtitle text-light">
+                <p>Bem-vindo, 
+                @if (session('funcionario'))
+                     {{ session('funcionario')->nome }}!</p>
+                @endif
+            </h6>
             <!-- Conteúdo do menu aqui -->
             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
 
@@ -50,7 +55,7 @@
                     <a class="nav-link" href="/dashboard">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="cadastrodeproduto">Cadastro de produto</a>
+                    <a class="nav-link" href="cadastroproduto">Cadastro de produto</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="cadastrofornecedor">Cadastro de fornecedor</a>
@@ -59,7 +64,7 @@
                     <a class="nav-link" href="cotacaoprodutos">Cotação de produtos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/informacaoproduto">Informação de produto</a>
+                    <a class="nav-link active" aria-current="page" href="{{route('produto.listar')}}">Informação de produto</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Informação da empresa</a>
@@ -124,15 +129,15 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <h5 class="card-title">Informações do produto</h5>
-                                    <p class="card-text">Nome: $NOME_PRODUTO</p>
-                                    <p class="card-text">Categoria: $DESCRICAO_PRODUTO</p>
-                                    <p class="card-text">Custo: $CUSTO_PRODUTO</p>
-                                    <p class="card-text">Ultimo fornecedor: $FORNECEDOR_PRODUTO</p>
-                                    <p class="card-text">Quantidade: $QUANTIDADE_PRODUTO</p>
+                                    <p class="card-text">Nome: {{$produto->nome}}</p>
+                                    <p class="card-text">Categoria: {{$produto->categoria}}</p>
+                                    <p class="card-text">Custo: {{$produto->preco_compra}}</p>
+                                    <p class="card-text">Ultimo fornecedor: {{$produto->ultimo_fornecedor}}</p>
+                                    <p class="card-text">Quantidade: {{$produto->quantidade}}</p>
                                 </div>
                                 <div class="col-md-6">
-                                    <p class="card-text">Preço: $PREÇO_VENDA_PRODUTO</p>
-                                    <p class="card-text">Descrição: $DESCRICAO_PRODUTO</p>
+                                    <p class="card-text">Preço: {{$produto->preco_venda}}</p>
+                                    <p class="card-text">Descrição: {{$produto->descricao}}</p>
                                     <h5 class="card-title">Ações</h5>
                                     <p href="#" class="btn btn-primary">Editar</p>
                                     <p href="#" class="btn btn-danger">Excluir</p>
@@ -149,7 +154,10 @@
                         <div class="card mb-2">
                             <div class="card-body">
                                 <h5 class="card-title">Fácil de Usar</h5>
-                                <p class="card-text">Interface amigável e intuitiva para facilitar o uso diário.</p>
+                                <p class="card-text">
+                                    aaa
+                                    
+                                </p>
                             </div>
                         </div>
                     </div>

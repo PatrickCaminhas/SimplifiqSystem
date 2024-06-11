@@ -14,10 +14,10 @@
 
 <body class=bg-dark>
     <!-- Menu superior -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-primary sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-success sticky-top">
         <div class="container-fluid">
             <!-- Botão de menu offcanvas -->
-            <button class="navbar-dark btn btn-primary text-light " type="button" data-bs-toggle="offcanvas"
+            <button class="navbar-dark btn btn-success text-light " type="button" data-bs-toggle="offcanvas"
                 data-bs-target="#menuOffcanvas" aria-controls="menuOffcanvas">
                 <span class=" navbar-toggler-icon "></span>
             </button>
@@ -25,7 +25,7 @@
             <span class="navbar-brand mx-auto text-light " style="font-family: 'Quicksand', sans-serif;"><b>Simplifiq
                     System</b></span>
             <!-- Botão para offcanvas de notificações -->
-            <button class="btn btn-primary border border-light " type="button" data-bs-toggle="offcanvas"
+            <button class="btn btn-success border border-light " type="button" data-bs-toggle="offcanvas"
                 data-bs-target="#notificacoesOffcanvas" aria-controls="notificacoesOffcanvas">
                 Notificações
             </button>
@@ -33,7 +33,7 @@
     </nav>
 
     <!-- Offcanvas para o menu -->
-    <div class="offcanvas navbar-dark offcanvas-start bg-primary text-light" tabindex="-1" id="menuOffcanvas"
+    <div class="offcanvas navbar-dark offcanvas-start bg-success text-light" tabindex="-1" id="menuOffcanvas"
         aria-labelledby="menuOffcanvasLabel">
         <div data-bs-theme="dark" class="offcanvas-header">
             <h5 class="offcanvas-title" id="menuOffcanvasLabel">Menu</h5>
@@ -42,7 +42,13 @@
         </div>
 
         <div class="offcanvas-body ">
-            <h6 class="offcanvas-subtitle text-light">Bem vindo, $USER!</h6>
+            <h6 class="offcanvas-subtitle text-light">
+                <p>Bem-vindo,
+                    @if (session('funcionario'))
+                        {{ session('funcionario')->nome }}!
+                </p>
+                @endif
+            </h6>
             <!-- Conteúdo do menu aqui -->
             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
 
@@ -50,7 +56,7 @@
                     <a class="nav-link" href="/dashboard">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="cadastrodeproduto">Cadastro de produto</a>
+                    <a class="nav-link active" aria-current="page" href="cadastroproduto">Cadastro de produto</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="cadastrofornecedor">Cadastro de fornecedor</a>
@@ -59,7 +65,7 @@
                     <a class="nav-link" href="cotacaoprodutos">Cotação de produtos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/informacaoproduto">Informação de produto</a>
+                    <a class="nav-link" href="{{route('produto.listar')}}">Informação de produto</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Informação da empresa</a>
@@ -108,41 +114,40 @@
 
             </div>
             <div>
-                <a href="/notificacoes" class="btn btn-primary">Ver todas</a>
+                <a href="/notificacoes" class="btn btn-success">Ver todas</a>
             </div>
         </div>
         <!-- Você pode usar qualquer componente Bootstrap ou elementos personalizados -->
     </div>
     </div>
 
-    <div class=" d-flex align-items-center justify-content-center" style="height: 100vh;">
+    <div class=" d-flex align-items-center justify-content-center" style="height: 91vh;">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-6 col-lg-4">
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <h2 class="text-center">Cadastro de produto</h2>
-                            <form method="POST" action="/dashboard">
+                            <form method="POST" action="{{ route('cadastroproduto.store') }}">
                                 @csrf
                                 <div class="form-group">
                                     <label for="nomeproduto">Nome</label>
-                                    <input type="text" class="form-control" id="nomeproduto"
-                                        placeholder="Digite o nome do produto">
+                                    <input type="text" class="form-control" id="nomeproduto" name="nome"
+                                        placeholder="Digite o nome do produto" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="modeloproduto">Modelo</label>
-                                    <input type="text" class="form-control" id="modeloproduto"
+                                    <input type="text" class="form-control" id="modeloproduto" name="modelo"
                                         placeholder="Digite o modelo do produto">
                                 </div>
                                 <div class="form-group">
                                     <label for="marcaproduto">Marca</label>
-                                    <input type="text" class="form-control" id="marcaproduto"
+                                    <input type="text" class="form-control" id="marcaproduto" name="marca"
                                         placeholder="Digite o nome da marca do produto">
                                 </div>
-
                                 <div class="form-group">
                                     <label for="categoriaproduto">Categoria</label>
-                                    <select class="form-control" id="categoriaproduto">
+                                    <select class="form-control" id="categoriaproduto" name="categoria">
                                         <option selected disabled>Selecione a categoria do produto</option>
                                         <option value="eletronico">Eletronico</option>
                                         <option value="vestuario">Vestuario</option>
@@ -153,7 +158,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="unidadeproduto">Unidade de medida</label>
-                                    <select class="form-control" id="unidadeproduto">
+                                    <select class="form-control" id="unidadeproduto" name="unidade_medida">
                                         <option selected disabled>Selecione a unidade de medida do produto</option>
                                         <option value="peso">Peso (gramas)</option>
                                         <option value="volume">Volume (litros)</option>
@@ -161,30 +166,25 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                  <label for="medidaproduto">Medida</label>
-                                  <input type="text" class="form-control" id="medidaproduto"
-                                      placeholder="Digite a meedida do produto">
-                              </div>
-                                <div class="form-group">
-                                    <label for="imagemproduto">Imagem</label>
-                                    <input type="file" class="form-control" id="imagemproduto" accept="image/" placeholder="Selecione a imagem do produto">
+                                    <label for="medidaproduto">Medida</label>
+                                    <input type="text" class="form-control" id="medidaproduto" name="medida"
+                                        placeholder="Digite a medida do produto">
                                 </div>
                                 <div class="form-group">
-                                    <label for="email">Descrição</label>
-                                    <textarea class="form-control" id="descricao" rows="3" style="resize: none;" placeholder="Digite a descrição do produto"></textarea>
+                                    <label for="descricao">Descrição</label>
+                                    <textarea class="form-control" id="descricao" name="descricao" rows="3" style="resize: none;"
+                                        placeholder="Digite a descrição do produto"></textarea>
                                 </div>
-                                
-                                <div class= "text-center mt-1">
-                                    <button type="submit" class="btn btn-primary text-center">Cadastrar</button>
-                                    <button type="reset" class="btn btn-primary text-center">Limpar</button>
+                                <div class="text-center mt-1">
+                                    <button type="submit" class="btn btn-success text-center">Cadastrar</button>
+                                    <button type="reset" class="btn btn-success text-center">Limpar</button>
                                 </div>
                             </form>
+
                         </div>
 
                     </div>
-                    <div class= "text-center mt-3">
-                        <a href="/dashboard" class="btn btn-primary text-center">Voltar</a>
-                    </div>
+
                 </div>
             </div>
         </div>

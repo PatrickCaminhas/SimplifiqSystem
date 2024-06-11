@@ -12,16 +12,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
 </head>
 
-<body style="height: 100vh;" class="bg-light">
+<body style="height: 100vh;" class="bg-dark text-light" style="height: 100vh;">
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary text-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success text-dark">
         <a class="navbar-brand ms-2 " style="font-family: 'Quicksand', sans-serif;">Simplifiq System</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div     class="collapse navbar-collapse ml-auto"" id="navbarNav">
-            <ul class="navbar-nav >
+        <div     class="collapse navbar-collapse ml-auto" id="navbarNav">
+            <ul class="navbar-nav bg-success" >
                 <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="/">Início</a>
                 </li>
@@ -45,14 +45,15 @@
     </nav>
 
     <!-- Main Content -->
+    <div >
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-12 text-center">
                 <h1 class="display-4">Bem-vindo ao Sistema de Administração</h1>
                 <p class="lead">Gerencie suas operações de forma eficiente e eficaz com nosso sistema robusto e
                     intuitivo.</p>
-                <a href="login" class="btn btn-primary btn-lg mt-3">Entrar</a>
-                <a href="cadastro" class="btn btn-primary btn-lg mt-3">Cadastrar</a>
+                <a href="login" class="btn btn-success btn-lg mt-3">Entrar</a>
+                <a href="cadastro" class="btn btn-success btn-lg mt-3">Cadastrar</a>
             </div>
         </div>
     </div>
@@ -61,7 +62,7 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-4">
-                <div class="card">
+                <div class="card bg-black text-light">
                     <div class="card-body">
                         <h5 class="card-title">Fácil de Usar</h5>
                         <p class="card-text">Interface amigável e intuitiva para facilitar o uso diário.</p>
@@ -69,7 +70,7 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card">
+                <div class="card bg-black text-light">
                     <div class="card-body">
                         <h5 class="card-title">Segurança</h5>
                         <p class="card-text">Sua segurança é nossa prioridade. Todos os dados são protegidos.</p>
@@ -77,7 +78,7 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card">
+                <div class="card bg-black text-light">
                     <div class="card-body">
                         <h5 class="card-title">Suporte 24/7</h5>
                         <p class="card-text">Nossa equipe está disponível para ajudá-lo a qualquer momento.</p>
@@ -88,11 +89,12 @@
     </div>
 
     <!-- Footer -->
-    <footer class=" bg-primary  text-light text-center text-lg-start mt-5">
+    <footer class=" bg-success  text-light text-center text-lg-start mt-5">
         <div class="container p-4">
             <p class="text-center">&copy; 2024 Sistema de Administração. Todos os direitos reservados.</p>
         </div>
     </footer>
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
