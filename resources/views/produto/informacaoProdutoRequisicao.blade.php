@@ -125,9 +125,9 @@
     </div>
     </div>
 
-    <div class="container mt-4 mb-4 bg-light text-dark">
+    <div class="container mt-5  col-md-6 bg-light text-dark">
         <div class="row">
-            <div class="col-md-12 text-center">
+            <div class=" text-center">
                 <h4 class="display-6">Informação de produto</h4>
                 <form id="produto-form">
                     @csrf

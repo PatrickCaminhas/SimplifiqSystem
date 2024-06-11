@@ -11,25 +11,40 @@ class InformacaoProdutosController extends Controller
     //
     public function create()
     {
-        return view('produto\informacaoProdutoRequisicao');
+        $produtos = Produtos::all();
+        if ($produtos) {
+            return view('produto/informacaoProdutoRequisicao', ['produtos' => $produtos]);
+        } else {
+            return redirect('informacaoProdutoRequisicao')->with('error', 'Produto não encontrado.');
+        }
+        
     }
     public function createRead()
     {
         return view('produto\informacaoProduto');
     }
 
-    public function getInformation(Request $request)
+    public function listar($nome)
     {
-        $request->validate([
-            'nome' => 'required|string',
-        ]);
-        $produto = Produtos::where('nome', $request->input('nome'))->first();
+        $produto = Produtos::where('nome', $nome)->first();
         if ($produto) {
-            return view('produto\informacaoProduto', ['produto' => $produto]);
+            return view('produto/informacaoProduto', ['produto' => $produto]);
         } else {
             return redirect('informacaoproduto')->with('error', 'Produto não encontrado.');
         }
     }
+    
+
+    public function todosNomes()
+    {
+        $produtos = Produtos::all();
+        if ($produtos) {
+            return ['produtos' => $produtos];
+        } else {
+            return redirect('informacaoproduto')->with('error', 'Produto não encontrado.');
+        }
+    }
+
     public function store(Request $request)
     {
         $request->validate([
