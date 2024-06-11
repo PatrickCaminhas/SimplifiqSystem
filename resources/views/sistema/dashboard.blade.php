@@ -42,7 +42,7 @@
         </div>
 
         <div class="offcanvas-body ">
-            <h6 class="offcanvas-subtitle text-light">Bem vindo, $USER!</h6>
+            <h6 class="offcanvas-subtitle text-light">Bem vindo, $USER! {{$usuario="Patri1ck" }}</h6>
             <!-- Conteúdo do menu aqui -->
             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
 
@@ -71,7 +71,7 @@
                     <a class="nav-link" href="/configuracaousuario">Configurações</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/">Logout</a>
+                    <a class="nav-link" href="{{ route('logout') }}">Logout</a>
                 </li>
                 <!-- Adicione mais itens de menu conforme necessário -->
             </ul>

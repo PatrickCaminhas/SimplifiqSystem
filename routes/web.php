@@ -1,21 +1,40 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\CadastroController;
+use App\Http\Controllers\DashboardController;
+
+
+Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('login', [LoginController::class, 'login']);
+Route::get('logout', [LoginController::class, 'logout'])->name('logout');
+
+
+Route::get('/cadastro', [CadastroController::class, 'create'])->name('cadastro');
+Route::post('/cadastro', [CadastroController::class, 'store']);
+
 
 Route::get('/', function () {
     return view('index/inicio');
 });
 
-Route::match(['get', 'post'],'/login', function () {
-    return view('index/login');
-});
-Route::match(['get', 'post'],'/cadastrodeempresa', function () {
-    return view('index/cadastroDeEmpresa');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
 
-Route::match(['get', 'post'],'/dashboard', function () {
-    return view('sistema/dashboard');
-});
+
+
+
+
+
+
+
+
+
+
+
+
 Route::match(['get', 'post'],'/cadastroempresaconcluido', function () {
     return view('index/cadastroEmpresaConcluido');
 });
@@ -29,7 +48,7 @@ Route::match(['get', 'post'],'/cotacaoprodutos', function () {
     return view('cotacao/cotacaoDeProdutos');
 });
 Route::match(['get', 'post'],'/cotacaoprodutosrevisao', function () {
-    return view('cotacaoDeProdutosRevisao');
+    return view('cotacao/cotacaoDeProdutosRevisao');
 });
 Route::match(['get', 'post'],'/cotacaoprodutosfinal', function () {
     return view('cotacao/cotacaoDeProdutosFinal');
@@ -59,4 +78,7 @@ Route::match(['get', 'post'],'/enviarmensagem', function () {
 
 Route::match(['get', 'post'],'/dashboard2', function () {
     return view('alternative/dashboard');
+});
+Route::match(['get', 'post'],'/login2', function () {
+    return view('alternative/login');
 });

@@ -35,7 +35,7 @@
                     <a class="nav-link" href="/login">Login</a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link" href="/cadastrodeempresa">Cadastro</a>
+                    <a class="nav-link" href="/cadastro">Cadastro</a>
                 </li>
 
 
@@ -52,7 +52,7 @@
                 <p class="lead">Gerencie suas operações de forma eficiente e eficaz com nosso sistema robusto e
                     intuitivo.</p>
                 <a href="login" class="btn btn-primary btn-lg mt-3">Entrar</a>
-                <a href="cadastrodeempresa" class="btn btn-primary btn-lg mt-3">Cadastrar</a>
+                <a href="cadastro" class="btn btn-primary btn-lg mt-3">Cadastrar</a>
             </div>
         </div>
     </div>

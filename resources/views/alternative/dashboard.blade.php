@@ -14,10 +14,10 @@
 
 <body class="bg-black bg-gradient">
     <!-- Menu superior -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-primary sticky-top  ">
+    <nav class="navbar navbar-expand-lg navbar-light bg-success sticky-top  ">
         <div class="container-fluid">
             <!-- Botão de menu offcanvas -->
-            <button class="navbar-dark btn btn-primary text-light " type="button" data-bs-toggle="offcanvas"
+            <button class="navbar-dark btn btn-success text-light " type="button" data-bs-toggle="offcanvas"
                 data-bs-target="#menuOffcanvas" aria-controls="menuOffcanvas">
                 <span class=" navbar-toggler-icon "></span>
             </button>
@@ -25,7 +25,7 @@
             <a href="/dashboard"><span class="navbar-brand mx-auto text-light " style="font-family: 'Quicksand', sans-serif;"><b>Simplifiq
                     System</b></span> </a>
             <!-- Botão para offcanvas de notificações -->
-            <button class="btn btn-primary border border-light " type="button" data-bs-toggle="offcanvas"
+            <button class="btn btn-success border border-light " type="button" data-bs-toggle="offcanvas"
                 data-bs-target="#notificacoesOffcanvas" aria-controls="notificacoesOffcanvas">
                 Notificações
             </button>
@@ -33,7 +33,7 @@
     </nav>
 
     <!-- Offcanvas para o menu -->
-    <div class="offcanvas navbar-dark offcanvas-start bg-primary text-light" tabindex="-1" id="menuOffcanvas"
+    <div class="offcanvas navbar-dark offcanvas-start bg-success text-light" tabindex="-1" id="menuOffcanvas"
         aria-labelledby="menuOffcanvasLabel">
         <div data-bs-theme="dark" class="offcanvas-header">
             <h5 class="offcanvas-title" id="menuOffcanvasLabel">Menu</h5>
@@ -106,8 +106,8 @@
                 </div>
                 
             </div>
-            <div>
-                <a href="/notificacoes" class="btn btn-primary">Ver todas</a>
+            <div class="mt-2">
+                <a href="/notificacoes" class="btn btn-success">Ver todas</a>
             </div>
         </div>
         <!-- Você pode usar qualquer componente Bootstrap ou elementos personalizados -->
@@ -147,7 +147,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <a href="ultimasatividades" class="btn btn-primary">Ver todas</a>
+                        <a href="ultimasatividades" class="btn btn-success">Ver todas</a>
                     </div>
                 </div>
             </div>
@@ -164,7 +164,7 @@
                         <h5 class="card-title">Enviar mensagem</h5>
                         <p class="card-text">Envie uma mensagem para um funcionario, todos os funcionarios ou para um fornecedor cadastrado no sistema.</p>
                        <!-- <a href="/enviarmensagem" class="btn btn-primary">Enviar mensagem</a> -->
-                       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                       <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                         Enviar mensagem
                       </button>
 <!-- Modal -->
@@ -226,7 +226,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Mensagens recebidas</h5>
                         <p class="card-text">Acesse a sua caixa de mensagens recebidas.</p>
-                        <a href="#" class="btn btn-primary">Acesse</a>
+                        <a href="#" class="btn btn-success">Acesse</a>
                     </div>
                 </div>
                 </div>
@@ -273,7 +273,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <a href="#" class="btn btn-primary">Ver todas</a>
+                        <a href="#" class="btn btn-success">Ver todas</a>
                     </div>
                 </div>
             </div>

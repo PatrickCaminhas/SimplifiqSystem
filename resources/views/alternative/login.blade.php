@@ -21,8 +21,8 @@
         </button>
         <div class="collapse navbar-collapse ml-auto text-dark" id="navbarNav">
             <ul class="navbar-nav ">
-                <li class="nav-item ">
-                    <a class="nav-link" href="/">Início</a>
+            <li class="nav-item ">
+                <a class="nav-link" href="/">Início</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Sobre</a>
@@ -37,6 +37,7 @@
                     <a class="nav-link" href="/cadastro">Cadastro</a>
                 </li>
             </ul>
+
         </div>
     </nav> 
     <div>
@@ -48,41 +49,36 @@
                             <div class="card shadow-lg border border-dark">
                                 <div class="card-body bg-dark text-light">
                                     <h2 class="text-center">Login</h2>
-                                    <form method="POST" action="{{ route('login') }}">
+                                    <form method="POST" action="/dashboard">
                                         @csrf
                                         <div class="form-group">
                                             <label for="email">Email</label>
-                                            <input type="email" class="form-control" id="email" name="email"
-                                                placeholder="Digite seu email" required>
+                                            <input type="email" class="form-control" id="email"
+                                                placeholder="Digite seu email">
                                         </div>
                                         <div class="form-group">
                                             <label for="password">Senha</label>
-                                            <input type="password" class="form-control" id="password" name="password"
-                                                placeholder="Digite sua senha" required>
+                                            <input type="password" class="form-control" id="password"
+                                                placeholder="Digite sua senha">
                                         </div>
-                                        <div class="text-start mt-3">
-                                            <a href="/" class="text-success">Esqueceu a senha?</a>
+                                        <div class= "text-start mt-3">
+                                            <a href="/" class=" text-success">Esqueceu a senha?</a>
                                         </div>
                                         <div class="text-center mt-3">
                                             <button type="submit" class="btn btn-success text-center">Entrar</button>
                                         </div>
                                     </form>
-                                    @if ($errors->any())
-                                        <div class="alert alert-danger mt-3">
-                                            <ul>
-                                                @foreach ($errors->all() as $error)
-                                                    <li>{{ $error }}</li>
-                                                @endforeach
-                                            </ul>
-                                        </div>
-                                    @endif
+                                    
                                 </div>
+
                             </div>
+                            
                         </div>
                     </div>
                 </div>
             </div>
-        </div>       
+        </div>
+        
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
