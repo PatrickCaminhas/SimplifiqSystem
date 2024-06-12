@@ -135,12 +135,23 @@ preco_mais_barato
 id_fornecedor  (FK)
 data_hora_criacao  
 
-### Tabela Balanço:
+### Tabela Balanço Financeiro:
 id (PK)  
 descricao  
 tipo [saida ou entrada]  
 mes  
 ano  
+
+### Tabela Levantamento Metas:
+id (PK)  
+meta_mensal
+meta_dia
+dia 
+mes  
+ano  
+venda (quanto vendeu no dia)
+resultado_diario (venda menos a meta_dia)
+resultado_acumulado(soma do resultado acumulado do dia atual e dos dias anteriores do mês)
 
 # Próximos Passos
 ## Refinamento dos Requisitos:
@@ -150,7 +161,7 @@ Refinar e detalhar requisitos específicos conforme necessário.
 Pesquisar novas funcionalidades para o sistema.  
 Novas funções a serem desenvolvidos e pesquisadas:  
     1 - Calendario controle de metas.  
-    2 - Balanço geral de entradas e saidas.  
+    2 - Balanço financeiro de entradas e saidas.  
     3 - Gestão de inventario  
     4 - Envio de mensagens entre funcionarios.  
     5 - Envio de notificações para funcionarios.  
