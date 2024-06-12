@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Notifications\Notifiable;
 class Funcionarios extends Authenticatable
 {
     use HasFactory;
@@ -17,6 +17,7 @@ class Funcionarios extends Authenticatable
         'email',
         'cnpj',
         'senha',
+        'cargo',
     ];
 
     protected $hidden = [

@@ -10,6 +10,7 @@ class AuthenticateDashboard
 {
     public function handle(Request $request, Closure $next)
     {
+        
         // Verifica se o usuário está autenticado
         if (!Auth::check()) {
             // Se não estiver autenticado, redireciona para a rota de login

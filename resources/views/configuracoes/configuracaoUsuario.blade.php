@@ -14,10 +14,10 @@
 
 <body class=bg-dark>
     <!-- Menu superior -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-primary sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-success sticky-top">
         <div class="container-fluid">
             <!-- Botão de menu offcanvas -->
-            <button class="navbar-dark btn btn-primary text-light " type="button" data-bs-toggle="offcanvas"
+            <button class="navbar-dark btn btn-success text-light " type="button" data-bs-toggle="offcanvas"
                 data-bs-target="#menuOffcanvas" aria-controls="menuOffcanvas">
                 <span class=" navbar-toggler-icon "></span>
             </button>
@@ -25,7 +25,7 @@
             <span class="navbar-brand mx-auto text-light " style="font-family: 'Quicksand', sans-serif;"><b>Simplifiq
                     System</b></span>
             <!-- Botão para offcanvas de notificações -->
-            <button class="btn btn-primary border border-light " type="button" data-bs-toggle="offcanvas"
+            <button class="btn btn-success border border-light " type="button" data-bs-toggle="offcanvas"
                 data-bs-target="#notificacoesOffcanvas" aria-controls="notificacoesOffcanvas">
                 Notificações
             </button>
@@ -33,7 +33,7 @@
     </nav>
 
     <!-- Offcanvas para o menu -->
-    <div class="offcanvas navbar-dark offcanvas-start bg-primary text-light" tabindex="-1" id="menuOffcanvas"
+    <div class="offcanvas navbar-dark offcanvas-start bg-success text-light" tabindex="-1" id="menuOffcanvas"
         aria-labelledby="menuOffcanvasLabel">
         <div data-bs-theme="dark" class="offcanvas-header">
             <h5 class="offcanvas-title" id="menuOffcanvasLabel">Menu</h5>
@@ -113,7 +113,7 @@
 
             </div>
             <div>
-                <a href="/notificacoes" class="btn btn-primary">Ver todas</a>
+                <a href="/notificacoes" class="btn btn-success">Ver todas</a>
             </div>
         </div>
         <!-- Você pode usar qualquer componente Bootstrap ou elementos personalizados -->
@@ -131,7 +131,7 @@
                         
                         <h5 class="card-subtitle mb-2 text-muted text-center">Backup</h5>
                         <p class="card-text">Realize o backup de seus dados para garantir a segurança de suas informações.</p>
-                        <a href="#" class="btn btn-primary">Realizar backup</a>
+                        <a href="#" class="btn btn-success">Realizar backup</a>
                     </div>
                 </div>
             </div>
@@ -144,7 +144,7 @@
                     <div class="card-body">
                         <h5 class="card-subtitle mb-2 text-muted text-center">Alterar cargos</h5>
                         <p class="card-text">Altere os cargos dos usuarios da sua empresa.</p>
-                        <a href="#" class="btn btn-primary">Alterar cargos</a>
+                        <a href="#" class="btn btn-success">Alterar cargos</a>
                     </div>
                 </div>
             </div>
@@ -157,7 +157,7 @@
                     <div class="card-body">
                         <h5 class="card-subtitle mb-2 text-muted text-center">Alterar seus dados</h5>
                         <p class="card-text">Altere os seus dados.</p>
-                        <a href="#" class="btn btn-primary">Alterar senha</a>
+                        <a href="#" class="btn btn-success">Alterar senha</a>
                     </div>
                 </div>
             </div>
@@ -166,7 +166,7 @@
                     <div class="card-body">
                         <h5 class="card-subtitle mb-2 text-muted text-center">Alterar senha</h5>
                         <p class="card-text">Altere sua senha para garantir a segurança de sua conta.</p>
-                        <a href="#" class="btn btn-primary">Alterar senha</a>
+                        <a href="#" class="btn btn-success">Alterar senha</a>
                     </div>
                 </div>
             </div>

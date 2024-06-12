@@ -53,6 +53,7 @@ class CadastroController extends Controller
             'id' => $id_funcionario,
             'nome' => $request->input('nome'),
             'sobrenome' => $request->input('sobrenome'),
+            'cargo' => 'Administrador',
             'email' => $request->input('email'),
             'cnpj' => $empresa->cnpj,
             'senha' => Hash::make($request->input('senha')),

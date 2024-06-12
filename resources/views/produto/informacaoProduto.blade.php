@@ -14,10 +14,10 @@
 
 <body class=bg-dark>
     <!-- Menu superior -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-primary sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-success sticky-top">
         <div class="container-fluid">
             <!-- Botão de menu offcanvas -->
-            <button class="navbar-dark btn btn-primary text-light " type="button" data-bs-toggle="offcanvas"
+            <button class="navbar-dark btn btn-success text-light " type="button" data-bs-toggle="offcanvas"
                 data-bs-target="#menuOffcanvas" aria-controls="menuOffcanvas">
                 <span class=" navbar-toggler-icon "></span>
             </button>
@@ -25,7 +25,7 @@
             <span class="navbar-brand mx-auto text-light " style="font-family: 'Quicksand', sans-serif;"><b>Simplifiq
                     System</b></span>
             <!-- Botão para offcanvas de notificações -->
-            <button class="btn btn-primary border border-light " type="button" data-bs-toggle="offcanvas"
+            <button class="btn btn-success border border-light " type="button" data-bs-toggle="offcanvas"
                 data-bs-target="#notificacoesOffcanvas" aria-controls="notificacoesOffcanvas">
                 Notificações
             </button>
@@ -33,7 +33,7 @@
     </nav>
 
     <!-- Offcanvas para o menu -->
-    <div class="offcanvas navbar-dark offcanvas-start bg-primary text-light" tabindex="-1" id="menuOffcanvas"
+    <div class="offcanvas navbar-dark offcanvas-start bg-success text-light" tabindex="-1" id="menuOffcanvas"
         aria-labelledby="menuOffcanvasLabel">
         <div data-bs-theme="dark" class="offcanvas-header">
             <h5 class="offcanvas-title" id="menuOffcanvasLabel">Menu</h5>
@@ -45,7 +45,7 @@
              <h6 class="offcanvas-subtitle text-light">
                 <p>Bem-vindo, 
                 @if (session('funcionario'))
-                     {{ session('funcionario')->nome }}!</p>
+                     {{  ucfirst(session('funcionario')->nome)}}!</p>
                 @endif
             </h6>
             <!-- Conteúdo do menu aqui -->
@@ -113,7 +113,7 @@
 
             </div>
             <div>
-                <a href="/notificacoes" class="btn btn-primary">Ver todas</a>
+                <a href="/notificacoes" class="btn btn-success">Ver todas</a>
             </div>
         </div>
         <!-- Você pode usar qualquer componente Bootstrap ou elementos personalizados -->
@@ -124,11 +124,12 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title display-6 text-center">$PRODUTO#20240517</h5>
+                        <h5 class="card-title display-6 text-center">PRODUTO {{ ucfirst($produto->nome)}}</h5>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6">
                                     <h5 class="card-title">Informações do produto</h5>
+                                    <p class="card-text">Nome: {{$produto->id}}</p>
                                     <p class="card-text">Nome: {{$produto->nome}}</p>
                                     <p class="card-text">Categoria: {{$produto->categoria}}</p>
                                     <p class="card-text">Custo: {{$produto->preco_compra}}</p>
@@ -203,7 +204,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                                <a href="#" class="btn btn-primary">Ver todas</a>
+                                <a href="#" class="btn btn-success">Ver todas</a>
                             </div>
                         </div>
                     </div>

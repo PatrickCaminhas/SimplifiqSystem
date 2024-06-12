@@ -5,10 +5,10 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\CadastroController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CadastroProdutos;
+use App\Http\Controllers\FornecedorController;
 use App\Http\Controllers\InformacaoProdutosController;
-
-
 use App\Http\Middleware\AuthenticateDashboard;
+use App\Http\Controllers\ConfiguracoesController;
 
 
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -40,14 +40,16 @@ Route::middleware([AuthenticateDashboard::class])->group(function () {
     Route::get('/informacaoproduto/{nome}', [InformacaoProdutosController::class, 'listar'])->name('produto.listar.nome');
     Route::get('/informacaoprodutorequisicao', [InformacaoProdutosController::class, 'create'])->name('produto.listar');
 
- 
+    Route::get('/cadastrofornecedor', [FornecedorController::class, 'create'])->name('cadastrofornecedor');
+    Route::post('/cadastrofornecedor', [FornecedorController::class, 'store'])->name('cadastrofornecedor.store');
+
+    Route::get('/configuracoes', [ConfiguracoesController::class, 'createConfiguracoes'])->name('configuracoes');
+    Route::get('/alterarSenha', [ConfiguracoesController::class, 'createAlterarSenha'])->name('configuracoes.senha');
+    Route::post('/alterarSenhaConfirmar', [ConfiguracoesController::class, 'update'])->name('configuracoes.senha.alterar');
 
 
 });
 
-Route::middleware(AuthenticateDashboard::class)->match(['get', 'post'], '/cadastrofornecedor', function () {
-    return view('cadastrosSistema/cadastroDeFornecedor');
-});
 Route::middleware(AuthenticateDashboard::class)->match(['get', 'post'], '/cotacaoprodutos', function () {
     return view('cotacao/cotacaoDeProdutos');
 });
