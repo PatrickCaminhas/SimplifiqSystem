@@ -78,7 +78,7 @@ O sistema deve ter mecanismos de backup e recuperação para garantir a integrid
 ### Tabela Empresas:
 id (PK)  
 nome  
-cnpj  
+cnpj  (Unique)
 tamanho_empresa  
 tipo_empresa  
 telefone  
@@ -88,7 +88,7 @@ id (PK)
 nome  
 sobrenome  
 cargo  
-email  
+email  (Unique)
 cnpj (FK)  
 senha  
 
@@ -112,7 +112,7 @@ preco_venda
 ### Tabela Fornecedores:
 id (PK)  
 nome  
-cnpj  
+cnpj  (Unique)
 endereco  
 cidade  
 estado  
@@ -132,8 +132,15 @@ outras_informacoes
 id (PK)  
 produto_id (FK)  
 preco_mais_barato  
-nome_fornecedor  
+id_fornecedor  (FK)
 data_hora_criacao  
+
+### Tabela Balanço:
+id (PK)  
+descricao  
+tipo [saida ou entrada]  
+mes  
+ano  
 
 # Próximos Passos
 ## Refinamento dos Requisitos:
@@ -149,6 +156,8 @@ Novas funções a serem desenvolvidos e pesquisadas:
     5 - Envio de notificações para funcionarios.  
     6 - Controle de folha de pagamento.  
     7 - Gestão de benefícios e férias.  
+    8 - Informativo de proximas contas.  
+    9 - Informativo de ultimas atividades (ultimas alterações no sistema).  
 
 
 ## Implementação:
