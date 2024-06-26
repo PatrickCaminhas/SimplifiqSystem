@@ -52,9 +52,6 @@ Isolamento de Dados:
 Cada empresa deve ter seu próprio banco de dados para evitar o vazamento de dados entre empresas diferentes.  
 
 ## 2. Desempenho
-Escalabilidade:  
-O sistema deve ser capaz de escalar horizontalmente para suportar um grande número de empresas e usuários.  
-
 Tempo de Resposta:  
 O sistema deve garantir tempos de resposta rápidos para as operações de leitura e escrita nos bancos de dados.  
 

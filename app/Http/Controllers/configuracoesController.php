@@ -19,6 +19,11 @@ class ConfiguracoesController extends Controller
         return view('configuracoes.alterarSenha');
     }
 
+    public function createCadastroFuncionario()
+    {
+        return view('configuracoes.cadastrarFuncionario');
+    }
+     
     public function update(Request $request)
     {
         $request->validate([
@@ -46,4 +51,35 @@ class ConfiguracoesController extends Controller
             return redirect()->back()->with('error', 'Erro ao alterar a senha.');
         }
     }
+
+    public function storeFuncionario(Request $request){
+        $request->validate([
+            'nome' => 'required|string',
+            'sobrenome' => 'required|string',
+            'cargo' => 'required|string',
+         
+            'email' => 'required|string|email|unique:funcionarios,email',
+        ]);
+        do {
+            $id_funcionario = mt_rand(100, 999);
+        } while (Funcionarios::where('id', $id_funcionario)->exists());
+        $user = Auth::user();
+        $nome = $request->input('nome');
+        $sobrenome = $request->input('sobrenome');
+        $senha = strtoupper(substr($nome, 0, 3) . substr($sobrenome, 0, 3) . '12');
+        $funcionario = Funcionarios::create([
+            'id' => $id_funcionario,
+            'nome' => $request->input('nome'),
+            'sobrenome' => $request->input('sobrenome'),
+            'cargo' => 'Administrador',
+            'email' => $request->input('email'),
+            'senha' => Hash::make($senha),
+        ]);
+        if ($funcionario) {
+            return redirect('configuracoes')->with('success', 'Cadastro realizado com sucesso!');
+        } else {
+            return view('index/inicio');
+        }
+    }
+    
 }

@@ -32,10 +32,13 @@
                     <a class="nav-link" href="#">Contato</a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link" href="/login">Login</a>
+                    <a class="nav-link" href="{{ route('empresas') }}">Login</a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link" href="/cadastro">Cadastro</a>
+                    <a class="nav-link" href="{{ route('cadastro') }}">Cadastro</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{ route('loginAdministrativo.form') }}">Administração</a>
                 </li>
 
 
@@ -52,7 +55,7 @@
                 <h1 class="display-4">Bem-vindo ao Sistema de Administração</h1>
                 <p class="lead">Gerencie suas operações de forma eficiente e eficaz com nosso sistema robusto e
                     intuitivo.</p>
-                <a href="login" class="btn btn-success btn-lg mt-3">Entrar</a>
+                <a href="{{route('empresas')}}" class="btn btn-success btn-lg mt-3">Entrar</a>
                 <a href="cadastro" class="btn btn-success btn-lg mt-3">Cadastrar</a>
             </div>
         </div>
@@ -91,7 +94,7 @@
     <!-- Footer -->
     <footer class=" bg-success  text-light text-center text-lg-start mt-5">
         <div class="container p-4">
-            <p class="text-center">&copy; 2024 Sistema de Administração. Todos os direitos reservados.</p>
+            <p class="text-center">&copy; 2024 Simplifiq Sistem. Todos os direitos reservados.</p>
         </div>
     </footer>
     </div>

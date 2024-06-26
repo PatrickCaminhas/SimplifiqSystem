@@ -30,7 +30,7 @@ class CadastroController extends Controller
             'email' => 'required|string|email|unique:funcionarios,email',
             'senha' => 'required|string|min:8',
         ]);
-        if (!Empresas::where('cnpj', $request->get('cnpj')->exists())) {
+        if (!Empresas::where('cnpj', $request->get('cnpj'))->exists()) {
             // Criando a empresa
             $empresa = Empresas::create([
                 'nome' => $request->input('nomeempresa'),
@@ -38,6 +38,7 @@ class CadastroController extends Controller
                 'tamanho_empresa' => $request->input('tamanhoempresa'),
                 'tipo_empresa' => $request->input('tipoempresa'),
                 'telefone' => $request->input('telefone'),
+                'estado' => 'inexistente',
             ]);
         } else {
             return redirect()->back()->withErrors([

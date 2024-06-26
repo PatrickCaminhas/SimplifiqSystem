@@ -55,10 +55,10 @@
                     <a class="nav-link" href="/dashboard">Inicio</a>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="cadastroproduto">Cadastro de produto</a>
+                    <a class="nav-link" href="{{route('cadastroproduto')}}">Cadastro de produto</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="cadastrofornecedor">Cadastro de fornecedor</a>
+                    <a class="nav-link" href="{{route('cadastrofornecedor')}}">Cadastro de fornecedor</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="cotacaoprodutos">Cotação de produto</a>
@@ -73,7 +73,7 @@
                     <a class="nav-link" href="#">Calculadora empresarial</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/configuracaousuario">Configurações</a>
+                    <a class="nav-link" href="{{route('configuracoes')}}">Configurações</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/">Logout</a>

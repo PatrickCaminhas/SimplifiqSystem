@@ -1,66 +1,191 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<h1 align="center">Simplifiq</h1> 
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+O Simplifiq é um sistema para auxilio administrativo voltado para microempreendedores individuais(MEI), microempreendedores e pequenos empreededores. A ideia do Simplifiq é ser uma aplicação leve, de facil acesso e que seja intuitiva para que todos consigam utilizar suas funções desde pequenos empreendedores com alguns computadores a até MEI's com apenas um celular em mãos. Foi decidido que o sistema seria um Software as a Service(SaaS) e teria arquitetura multilocatario e dentre as tecnologias utilizadas foi escolhido por opinião pessoal a linguagem PHP e o Framework back-end Laravel, para o front-end foi utilizado o framework Bootstrap por escolha pessoal e por ser responsivo, assim tornando a aplicação não somente usavel em um desktop quanto em celulares ou tablets. Dentre as ferramentas escolhidas para implementações do projeto foram escolhidas o Tenancy for Laravel para aplicação da arquitetura multilocatario pois é uma ferramenta robusta e completa e o DomPDF para geração de arquivos PDF.
 
-## About Laravel
+Diagrama do banco de dados: https://dbdiagram.io/d/Simplifiq-System-667b82739939893dae454c5f  
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+# Requisitos Funcionais
+## 1. Gerenciamento de Empresas
+Cadastro de Empresas:  
+O sistema deve permitir o cadastro de empresas com as seguintes informações: nome, CNPJ, tamanho da empresa (MEI, pequena empresa ou micro empresa), tipo de empresa (ramo de atuação), e telefone.  
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Leitura de Empresas:  
+O sistema deve permitir a consulta das informações cadastradas de cada empresa.  
+## 2. Gerenciamento de Funcionários
+Cadastro de Funcionários:  
+O sistema deve permitir o cadastro de funcionários com as seguintes informações: nome, sobrenome, cargo, email, CNPJ da empresa em que trabalha (chave estrangeira), e senha.  
 
-## Learning Laravel
+Leitura de Funcionários:  
+O sistema deve permitir a consulta das informações de cada funcionário.  
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Controle de Acesso:  
+O sistema deve permitir ao administrador da empresa definir e alterar os cargos dos funcionários, modificando suas permissões de acesso e operação no sistema (leitura, cadastro, alteração).  
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Autenticação:  
+O sistema deve permitir que os usuários façam login e possam mudar suas senhas.  
+## 3. Gerenciamento de Produtos
+Cadastro de Produtos:  
+O sistema deve permitir o cadastro de produtos com as seguintes informações: nome, marca, modelo, categoria, unidade de medida, medida, descrição, quantidade, último fornecedor, preço de compra e preço de venda.  
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Leitura de Produtos:  
+O sistema deve permitir a consulta das informações cadastradas de cada produto.  
 
-## Laravel Sponsors
+## 4. Gerenciamento de Fornecedores
+Cadastro de Fornecedores:  
+O sistema deve permitir o cadastro de fornecedores com as seguintes informações: nome, CNPJ, endereço, cidade, estado, nome do representante, email e telefone.  
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Leitura de Fornecedores:  
+O sistema deve permitir a consulta das informações cadastradas de cada fornecedor.  
 
-### Premium Partners
+## 5. Cotação de Produtos
+Cadastro de Cotações:  
+O sistema deve permitir o registro de cotações de produtos com as seguintes informações: id do produto, preço mais barato, nome do fornecedor que deu o preço mais barato, data e hora de criação da cotação.  
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Leitura de Cotações:  
+O sistema deve permitir a consulta das cotações registradas.  
 
-## Contributing
+## 6. Informações da Empresa
+Leitura de Dados da Empresa:  
+O sistema deve permitir a consulta de dados adicionais da empresa, tais como lucro mensal, produto mais vendido, produto mais rentável, produto menos vendido, entre outras informações.  
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+# Requisitos Não Funcionais
+## 1. Segurança
+Autenticação e Autorização:  
+O sistema deve garantir que apenas usuários autenticados possam acessar o sistema.  
+O sistema deve implementar controles de autorização para garantir que os usuários só possam acessar funcionalidades e dados conforme suas permissões.  
 
-## Code of Conduct
+Isolamento de Dados:  
+Cada empresa deve ter seu próprio banco de dados para evitar o vazamento de dados entre empresas diferentes.  
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 2. Desempenho
+Tempo de Resposta:  
+O sistema deve garantir tempos de resposta rápidos para as operações de leitura e escrita nos bancos de dados.  
 
-## Security Vulnerabilities
+## 3. Usabilidade
+Interface Amigável:  
+O sistema deve fornecer uma interface de usuário amigável e intuitiva para facilitar o uso por micro e pequenos empreendedores.  
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Documentação:  
+O sistema deve ter uma documentação clara e completa para ajudar os usuários a entender e utilizar todas as funcionalidades.  
+## 4. Manutenção
+Facilidade de Manutenção:  
+O sistema deve ser desenvolvido de forma modular para facilitar a manutenção e a adição de novas funcionalidades.  
 
-## License
+Backup e Recuperação:  
+O sistema deve ter mecanismos de backup e recuperação para garantir a integridade dos dados em caso de falha.  
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# Modelo de Dados
+
+## Banco de Dados Comum
+
+### Tabela Empresas:
+id (PK)  
+nome  
+cnpj  (Unique)
+tamanho_empresa  
+tipo_empresa  
+telefone  
+
+### Tabela Funcionários:
+id (PK)  
+nome  
+sobrenome  
+cargo  
+email  (Unique)
+cnpj (FK)  
+senha  
+
+## Banco de Dados por Empresa
+
+### Tabela Produtos:
+
+id (PK)  
+nome  
+marca  
+modelo  
+categoria  
+unidade_medida  
+medida  
+descricao  
+quantidade  
+ultimo_fornecedor  
+preco_compra  
+preco_venda  
+
+### Tabela Fornecedores:
+id (PK)  
+nome  
+cnpj  (Unique)
+endereco  
+cidade  
+estado  
+nome_representante  
+email  
+telefone  
+
+### Tabela Informações Empresa:
+id (PK)  
+lucro_mensal  
+produto_mais_vendido  
+produto_mais_rentavel  
+produto_menos_vendido  
+outras_informacoes  
+
+### Tabela Cotações:
+id (PK)  
+produto_id (FK)  
+preco_mais_barato  
+id_fornecedor  (FK)
+data_hora_criacao  
+
+### Tabela Balanço Financeiro:
+id (PK)  
+descricao  
+tipo [saida ou entrada]  
+mes  
+ano  
+
+### Tabela Levantamento Metas:
+id (PK)  
+meta_mensal
+meta_dia
+dia 
+mes  
+ano  
+venda (quanto vendeu no dia)
+resultado_diario (venda menos a meta_dia)
+resultado_acumulado(soma do resultado acumulado do dia atual e dos dias anteriores do mês)
+
+# Próximos Passos
+## Refinamento dos Requisitos:
+
+Validar os requisitos com stakeholders.  
+Refinar e detalhar requisitos específicos conforme necessário.  
+Pesquisar novas funcionalidades para o sistema.  
+Novas funções a serem desenvolvidos e pesquisadas:  
+    1 - Calendario controle de metas.  
+    2 - Balanço financeiro de entradas e saidas.  
+    3 - Gestão de inventario  
+    4 - Envio de mensagens entre funcionarios.  
+    5 - Envio de notificações para funcionarios.  
+    6 - Controle de folha de pagamento.  
+    7 - Gestão de benefícios e férias.  
+    8 - Informativo de proximas contas.  
+    9 - Informativo de ultimas atividades (ultimas alterações no sistema).  
+
+
+## Implementação:
+Desenvolver as funções não implementadas.  
+Implementar graficos automatizados baseados nos valores do banco de dados.  
+Melhorias no front-end, aplicação de frameworks e outras ferramentas.  
+Realizar testes unitários, de integração e de aceitação.  
+
+
+## Documentação:
+Criar a documentação do sistema, incluindo manual do usuário e documentação técnica.  
+
+## Deploy:
+Configurar a infraestrutura necessária para o deploy do sistema na web.  
+Implementar práticas de segurança e backup.  

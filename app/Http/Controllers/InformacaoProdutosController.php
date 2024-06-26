@@ -19,6 +19,19 @@ class InformacaoProdutosController extends Controller
         }
         
     }
+    private function sanitizeString($string)
+    {
+        $string = trim($string); // Remove espaços em branco do início e do fim
+        $string = str_replace(
+            ['ç', 'ã', 'õ', 'á', 'é', 'í', 'ó', 'ú', 'â', 'ê', 'î', 'ô', 'û', 'à', 'è', 'ì', 'ò', 'ù', 'ä', 'ë', 'ï', 'ö', 'ü', 'ñ'],
+            ['c', 'a', 'o', 'a', 'e', 'i', 'o', 'u', 'a', 'e', 'i', 'o', 'u', 'a', 'e', 'i', 'o', 'u', 'a', 'e', 'i', 'o', 'u', 'n'],
+            $string
+        ); // Substitui caracteres especiais
+        $string = preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Remove caracteres especiais
+        $string = preg_replace('/\s+/', '', $string); // Remove espaços em branco no meio
+
+        return strtolower($string);
+    }
     public function createRead()
     {
         return view('produto\informacaoProduto');
@@ -74,6 +87,34 @@ class InformacaoProdutosController extends Controller
             return redirect('dashboard')->with('success', 'Cadastro realizado com sucesso!');
         } else {
             return redirect('cadastroproduto')->with('error', 'Erro ao cadastrar produto.');
+        }
+    }
+    public function update(Request $request){
+        $request->validate([
+            'nome' => 'required|string',
+            'marca' => 'string',
+            'modelo' => 'string',
+            'categoria' => 'string',
+            'unidade_medida' => 'string',
+            'medida' => 'string',
+            'descricao' => 'string',
+            'quantidade' => 'string',
+            'preco_venda' => 'string',
+        ]);
+        $produto = Produtos::where('nome', $request->input('nome'))->update([
+            'nome' => $request->input('nome'),
+            'marca' => $request->input('marca'),
+            'modelo' => $request->input('modelo'),
+            'categoria' => $request->input('categoria'),
+            'unidade_medida' => $request->input('unidade_medida'),
+            'medida' => $request->input('medida'),
+            'descricao' => $request->input('descricao'),
+            'preco_venda' => $request->input('preco_venda'),
+        ]);
+        if ($produto) {
+            return redirect('dashboard')->with('success', 'Alteração de dados produto com sucesso!');
+        } else {
+            return redirect('cadastroproduto')->with('error', 'Erro ao alterar produto.');
         }
     }
 }

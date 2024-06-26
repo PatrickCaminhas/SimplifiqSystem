@@ -16,6 +16,7 @@ class Empresas extends Authenticatable
         'tamanho_empresa',
         'tipo_empresa',
         'telefone',
+        'estado',
     ];
 
     protected $hidden = [

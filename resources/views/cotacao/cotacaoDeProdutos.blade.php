@@ -14,10 +14,10 @@
 
 <body class=bg-dark>
     <!-- Menu superior -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-primary sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-success sticky-top">
         <div class="container-fluid">
             <!-- Botão de menu offcanvas -->
-            <button class="navbar-dark btn btn-primary text-light " type="button" data-bs-toggle="offcanvas"
+            <button class="navbar-dark btn btn-success text-light " type="button" data-bs-toggle="offcanvas"
                 data-bs-target="#menuOffcanvas" aria-controls="menuOffcanvas">
                 <span class=" navbar-toggler-icon "></span>
             </button>
@@ -25,7 +25,7 @@
             <span class="navbar-brand mx-auto text-light " style="font-family: 'Quicksand', sans-serif;"><b>Simplifiq
                     System</b></span>
             <!-- Botão para offcanvas de notificações -->
-            <button class="btn btn-primary border border-light " type="button" data-bs-toggle="offcanvas"
+            <button class="btn btn-success border border-light " type="button" data-bs-toggle="offcanvas"
                 data-bs-target="#notificacoesOffcanvas" aria-controls="notificacoesOffcanvas">
                 Notificações
             </button>
@@ -33,7 +33,7 @@
     </nav>
 
     <!-- Offcanvas para o menu -->
-    <div class="offcanvas navbar-dark offcanvas-start bg-primary text-light" tabindex="-1" id="menuOffcanvas"
+    <div class="offcanvas navbar-dark offcanvas-start bg-success text-light" tabindex="-1" id="menuOffcanvas"
         aria-labelledby="menuOffcanvasLabel">
         <div data-bs-theme="dark" class="offcanvas-header">
             <h5 class="offcanvas-title" id="menuOffcanvasLabel">Menu</h5>
@@ -55,10 +55,10 @@
                     <a class="nav-link" href="/dashboard">Inicio</a>
               
                 <li class="nav-item">
-                    <a class="nav-link" href="cadastroproduto">Cadastro de produto</a>
+                    <a class="nav-link" href="{{route('cadastroproduto')}}">Cadastro de produto</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="cadastrofornecedor">Cadastro de fornecedor</a>
+                    <a class="nav-link" href="{{route('cadastrofornecedor')}}">Cadastro de fornecedor</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page"  href="cotacaoprodutos">Cotação de produto</a>
@@ -73,7 +73,7 @@
                     <a class="nav-link" href="#">Calculadora empresarial</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/configuracaousuario">Configurações</a>
+                    <a class="nav-link" href="{{route('configuracoes')}}">Configurações</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/">Logout</a>
@@ -113,7 +113,7 @@
 
             </div>
             <div>
-                <a href="/notificacoes" class="btn btn-primary">Ver todas</a>
+                <a href="/notificacoes" class="btn btn-success">Ver todas</a>
             </div>
         </div>
         <!-- Você pode usar qualquer componente Bootstrap ou elementos personalizados -->
@@ -195,8 +195,8 @@
                         </tbody>
                     </table>
                     <div class= "text-center mt-2 mb-4">
-                        <button type="submit" class="btn btn-primary text-center">Salvar</button>
-                        <button type="reset" class="btn btn-primary text-center">Limpar</button>
+                        <button type="submit" class="btn btn-success text-center">Salvar</button>
+                        <button type="reset" class="btn btn-success text-center">Limpar</button>
 
 
 

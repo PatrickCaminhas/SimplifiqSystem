@@ -55,10 +55,10 @@
                     <a class="nav-link" href="/dashboard">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="cadastroproduto">Cadastro de produto</a>
+                    <a class="nav-link" href="{{route('cadastroproduto')}}">Cadastro de produto</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="cadastrofornecedor">Cadastro de fornecedor</a>
+                    <a class="nav-link" href="{{route('cadastrofornecedor')}}">Cadastro de fornecedor</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="cotacaoprodutos">Cotação de produtos</a>
@@ -73,7 +73,7 @@
                     <a class="nav-link" href="#">Calculadora empresarial</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/configuracaousuario">Configurações</a>
+                    <a class="nav-link active" aria-current="page" href="{{route('configuracoes')}}">Configurações</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/">Logout</a>
@@ -139,7 +139,16 @@
     </div>
     <div class="container mt-4">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-subtitle mb-2 text-muted text-center">Cadastrar funcionario </h5>
+                        <p class="card-text">Cadastre um novo funcionário na empresa.</p>
+                        <a href="{{route('configuracoes.funcionario')}}" class="btn btn-success">Cadastrar funcionário</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-subtitle mb-2 text-muted text-center">Alterar cargos</h5>
@@ -156,7 +165,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-subtitle mb-2 text-muted text-center">Alterar seus dados</h5>
-                        <p class="card-text">Altere os seus dados.</p>
+                        <p class="card-text">Altere os seus dados cadastrais.</p>
                         <a href="#" class="btn btn-success">Alterar senha</a>
                     </div>
                 </div>
@@ -166,7 +175,7 @@
                     <div class="card-body">
                         <h5 class="card-subtitle mb-2 text-muted text-center">Alterar senha</h5>
                         <p class="card-text">Altere sua senha para garantir a segurança de sua conta.</p>
-                        <a href="#" class="btn btn-success">Alterar senha</a>
+                        <a href="{{route('configuracoes.senha')}}" class="btn btn-success">Alterar senha</a>
                     </div>
                 </div>
             </div>

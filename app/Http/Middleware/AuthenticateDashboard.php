@@ -14,7 +14,8 @@ class AuthenticateDashboard
         // Verifica se o usuário está autenticado
         if (!Auth::check()) {
             // Se não estiver autenticado, redireciona para a rota de login
-            return redirect('/');
+            $userId = auth()->user()->id;
+            return redirect()->route('login', ['userId' => $userId]);
         }
 
         return $next($request);

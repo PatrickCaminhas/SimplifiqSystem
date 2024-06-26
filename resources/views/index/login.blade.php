@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
 </head>
 
-<body class="bg-image" style="height: 100vh; background-image: url({{ asset('img/login.jpg') }}); background-size: cover; background-repea: no-repeat;">
+<body class="bg-image" style="height: 100vh; background-image: url({{ global_asset('img/login.jpg') }}); background-size: cover; background-repea: no-repeat;">
     <nav class="navbar navbar-expand-lg navbar-dark bg-success text-dark sticky-top" style="height: 8vh;">
         <a class="navbar-brand ms-2" style="font-family: 'Quicksand', sans-serif;">Simplifiq System</a>
         <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -22,7 +22,7 @@
         <div class="collapse navbar-collapse ml-auto text-dark" id="navbarNav">
             <ul class="navbar-nav bg-success">
                 <li class="nav-item ">
-                    <a class="nav-link" href="/">Início</a>
+                    <a class="nav-link" href="{{ route('inicio') }}">Início</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Sobre</a>
@@ -31,10 +31,13 @@
                     <a class="nav-link" href="#">Contato</a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link active" aria-current="page" href="/login">Login</a>
+                    <a class="nav-link active" aria-current="page" href="{{ route('empresas') }}">Login</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/cadastro">Cadastro</a>
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{ route('cadastro') }}">Cadastro</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{ route('loginAdministrativo.form') }}">Administração</a>
                 </li>
             </ul>
         </div>

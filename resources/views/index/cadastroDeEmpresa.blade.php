@@ -13,7 +13,7 @@
 </head>
 
 <body
-    style="height: 100vh; background-image: url({{ asset('img/login.jpg') }}); background-size: cover; background-repea: no-repeat;"
+    style="height: 100vh; background-image: url({{ global_asset('img/login.jpg') }}); background-size: cover; background-repea: no-repeat;"
     class="bg-success">
     <nav class="navbar navbar-expand-lg navbar-dark bg-success text-light sticky-top" style="height: 8vh;">
         <a class="navbar-brand ms-2 " style="font-family: 'Quicksand', sans-serif;">Simplifiq System</a>
@@ -33,10 +33,13 @@
                     <a class="nav-link" href="#">Contato</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/login">Login</a>
+                    <a class="nav-link" href="{{ route('empresas') }}">Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/cadastro">Cadastro</a>
+                    <a class="nav-link active" aria-current="page" href="{{ route('cadastro') }}">Cadastro</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('loginAdministrativo.form') }}">Administracao</a>
                 </li>
             </ul>
 

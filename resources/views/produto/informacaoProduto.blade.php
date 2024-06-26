@@ -55,10 +55,10 @@
                     <a class="nav-link" href="/dashboard">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="cadastroproduto">Cadastro de produto</a>
+                    <a class="nav-link" href="{{route('cadastroproduto')}}">Cadastro de produto</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="cadastrofornecedor">Cadastro de fornecedor</a>
+                    <a class="nav-link" href="{{route('cadastrofornecedor')}}">Cadastro de fornecedor</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="cotacaoprodutos">Cotação de produtos</a>
@@ -73,7 +73,7 @@
                     <a class="nav-link" href="#">Calculadora empresarial</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/configuracaousuario">Configurações</a>
+                    <a class="nav-link" href="{{route('configuracoes')}}">Configurações</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/">Logout</a>
@@ -166,7 +166,7 @@
                         <div class="card mb-2">
                             <div class="card-body">
                                 <h5 class="card-title">Fornecedores por % de produto</h5>
-                                <img src="{{ asset('img/Screenshot_2.png') }}" alt="Descrição da Imagem" class="img-fluid">
+                                <img src="{{ global_asset('img/Screenshot_2.png') }}" alt="Descrição da Imagem" class="img-fluid">
                             </div>
                         </div>
                     </div>
@@ -216,7 +216,7 @@
                         <div class="card mb-2">
                             <div class="card-body">
                                 <h5 class="card-title">Variação de custo unitário</h5>
-                                <img src="{{ asset('img/Screenshot_3.png') }}" alt="Descrição da Imagem"
+                                <img src="{{ global_asset('img/Screenshot_3.png') }}" alt="Descrição da Imagem"
                                     class="img-fluid">
 
                             </div>
@@ -226,7 +226,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">Variação de preço</h5>
-                                <img src="{{ asset('img/Screenshot_3.png') }}" alt="Descrição da Imagem"
+                                <img src="{{ global_asset('img/Screenshot_3.png') }}" alt="Descrição da Imagem"
                                     class="img-fluid">
 
                             </div>

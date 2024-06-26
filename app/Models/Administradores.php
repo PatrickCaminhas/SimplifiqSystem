@@ -3,19 +3,19 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Empresa extends Authenticatable
+class administradores extends Authenticatable
 {
     use HasFactory;
-
+    
     protected $fillable = [
+        'id',
         'nome',
-        'cnpj',
-        'tamanho_empresa',
-        'tipo_empresa',
-        'telefone',
+        'sobrenome',
+        'email',
+        'senha',
     ];
 
     protected $hidden = [
@@ -26,4 +26,5 @@ class Empresa extends Authenticatable
     {
         return $this->senha;
     }
+
 }
