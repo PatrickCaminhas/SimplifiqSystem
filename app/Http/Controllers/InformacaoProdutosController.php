@@ -17,7 +17,7 @@ class InformacaoProdutosController extends Controller
         } else {
             return redirect('informacaoProdutoRequisicao')->with('error', 'Produto não encontrado.');
         }
-        
+
     }
     private function sanitizeString($string)
     {
@@ -46,7 +46,7 @@ class InformacaoProdutosController extends Controller
             return redirect('informacaoproduto')->with('error', 'Produto não encontrado.');
         }
     }
-    
+
 
     public function todosNomes()
     {
@@ -117,4 +117,6 @@ class InformacaoProdutosController extends Controller
             return redirect('cadastroproduto')->with('error', 'Erro ao alterar produto.');
         }
     }
+
 }
+

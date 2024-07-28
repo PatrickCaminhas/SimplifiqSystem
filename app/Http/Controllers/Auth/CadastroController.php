@@ -17,7 +17,6 @@ class CadastroController extends Controller
 
     public function store(Request $request)
     {
-
         // Validação dos dados
         $request->validate([
             'nomeempresa' => 'required|string',
@@ -30,7 +29,9 @@ class CadastroController extends Controller
             'email' => 'required|string|email|unique:funcionarios,email',
             'senha' => 'required|string|min:8',
         ]);
-        if (!Empresas::where('cnpj', $request->get('cnpj'))->exists()) {
+
+        // Verificar se a empresa já existe
+        if (!Empresas::where('cnpj', $request->input('cnpj'))->exists()) {
             // Criando a empresa
             $empresa = Empresas::create([
                 'nome' => $request->input('nomeempresa'),
@@ -45,10 +46,12 @@ class CadastroController extends Controller
                 'cnpj' => 'O CNPJ fornecido já está cadastrado.',
             ]);
         }
+
         // Gerando ID único para o funcionário
         do {
             $id_funcionario = mt_rand(100, 999);
         } while (Funcionarios::where('id', $id_funcionario)->exists());
+
         // Criando o funcionário
         $funcionario = Funcionarios::create([
             'id' => $id_funcionario,
@@ -56,7 +59,7 @@ class CadastroController extends Controller
             'sobrenome' => $request->input('sobrenome'),
             'cargo' => 'Administrador',
             'email' => $request->input('email'),
-            'cnpj' => $empresa->cnpj,
+            'cnpj' => $request->input('cnpj'), // Certifique-se de que o nome do campo está correto
             'senha' => Hash::make($request->input('senha')),
         ]);
 
@@ -67,4 +70,5 @@ class CadastroController extends Controller
             return view('index/inicio');
         }
     }
+
 }

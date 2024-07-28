@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('empresas', function (Blueprint $table) {
-            $table->string('nome',100);
-            $table->string('cnpj',18)->primary();
-            $table->string('tamanho_empresa',14);
-            $table->string('tipo_empresa',20);
-            $table->string('telefone',15);
+        Schema::create('contas', function (Blueprint $table) {
+            $table->id();
+            $table->string('credor');
+            $table->decimal('valor', 10, 2);
+            $table->string('tipo');
+            $table->date('data_vencimento');
+            $table->string('estado');
+            $table->date('data_pagamento')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('empresas');
+        Schema::dropIfExists('contas');
     }
 };

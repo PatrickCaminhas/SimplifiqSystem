@@ -43,7 +43,7 @@
 
         <div class="offcanvas-body ">
              <h6 class="offcanvas-subtitle text-light">
-                <p>Bem-vindo, 
+                <p>Bem-vindo,
                 @if (session('funcionario'))
                      {{  ucfirst(session('funcionario')->nome)}}!</p>
                 @endif
@@ -132,7 +132,7 @@
                                     <p class="card-text">Nome: {{$produto->id}}</p>
                                     <p class="card-text">Nome: {{$produto->nome}}</p>
                                     <p class="card-text">Categoria: {{$produto->categoria}}</p>
-                                    <p class="card-text">Custo: {{$produto->preco_compra}}</p>
+                                    <p class="card-text">Valor Compra: R$ {{$produto->preco_compra}}</p>
                                     <p class="card-text">Ultimo fornecedor: {{$produto->ultimo_fornecedor}}</p>
                                     <p class="card-text">Quantidade: {{$produto->quantidade}}</p>
                                 </div>
@@ -157,7 +157,7 @@
                                 <h5 class="card-title">Fácil de Usar</h5>
                                 <p class="card-text">
                                     aaa
-                                    
+
                                 </p>
                             </div>
                         </div>

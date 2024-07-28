@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class administradores extends Authenticatable
+class Administradores extends Authenticatable
 {
     use HasFactory;
-    
+
     protected $fillable = [
         'id',
         'nome',

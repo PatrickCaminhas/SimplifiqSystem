@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdministradoresController;
+use App\Http\Middleware\AuthenticateDashboardAdministrator;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\CadastroController;
@@ -40,16 +41,19 @@ foreach (config('tenancy.central_domains') as $domain) {
         Route::post('loginAdministrativo', [AdministradoresController::class, 'login'])->name('loginAdministrativo.store');
         Route::get('cadastroAdministrador', [AdministradoresController::class, 'showCadastroForm'])->name('cadastroAdministrador.form');
         Route::post('cadastroAdministrador', [AdministradoresController::class, 'store'])->name('cadastroAdministrador.store');
-   
-        Route::get('/dashboardAdministrador', [AdministradoresController::class, 'showDashboard'])->name('cadastroAdministrador.store');
 
-        Route::post('dashboardAdministrador', [AdministradoresController::class, 'showDashboardForm'])->name('dashboardAdministrador.log');
+        Route::get('/dashboardAdministrador', [AdministradoresController::class, 'showDashboard'])->name('cadastroAdministrador.log');
+
+        Route::post('dashboardAdministrador', [AdministradoresController::class, 'showDashboard'])->name('dashboardAdministrador.log');
 
 
         Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
 
-
+        //Route::middleware([AuthenticateDashboardAdministrator::class])->group(function () {
+        //    Route::get('/dashboardAdministrador', [AdministradoresController::class, 'showDashboard'])->name('cadastroAdministrador.log');
+        //    Route::post('/dashboardAdministrador', [AdministradoresController::class, 'showDashboard'])->name('dashboardAdministrador.log');
+        //});
 
 
 
@@ -61,6 +65,8 @@ foreach (config('tenancy.central_domains') as $domain) {
             /*Route::match(['get', 'post'], '/dashboard', function () {
         return view('sistema/dashboard');
     });*/
+
+
             Route::get('/dashboard/{id}', function () {
                 return view('sistema.dashboard');
             });

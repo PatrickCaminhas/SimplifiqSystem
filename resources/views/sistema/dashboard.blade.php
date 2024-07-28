@@ -10,15 +10,37 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.2/css/responsive.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/plug-ins/2.0.8/i18n/pt-BR.json">
+
 </head>
 
 <body class="bg-black bg-gradient">
     <!-- Menu superior -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-success sticky-top  ">
+    <nav
+        class="navbar navbar-expand-lg navbar-light
+    @if ($padrao_cores == 'vermelho') bg-danger
+    @elseif ($padrao_cores == 'verde') bg-success
+    @elseif ($padrao_cores == 'amarelo') bg-warning
+    @elseif ($padrao_cores == 'azul') bg-primary
+    @else bg-primary @endif
+     sticky-top  ">
+
+
+
+
         <div class="container-fluid">
             <!-- Botão de menu offcanvas -->
-            <button class="navbar-dark btn btn-success text-light " type="button" data-bs-toggle="offcanvas"
-                data-bs-target="#menuOffcanvas" aria-controls="menuOffcanvas">
+            <button
+                class="navbar-dark btn
+            @if ($padrao_cores == 'vermelho') btn-danger
+            @elseif ($padrao_cores == 'verde') btn-success
+            @elseif ($padrao_cores == 'amarelo') btn-warning
+            @elseif ($padrao_cores == 'azul')
+            @else bg-primary @endif
+             text-light "
+                type="button" data-bs-toggle="offcanvas" data-bs-target="#menuOffcanvas" aria-controls="menuOffcanvas">
                 <span class=" navbar-toggler-icon "></span>
             </button>
             <!-- Nome da aplicação -->
@@ -26,46 +48,69 @@
                     style="font-family: 'Quicksand', sans-serif;"><b>Simplifiq
                         System</b></span> </a>
             <!-- Botão para offcanvas de notificações -->
-            <button class="btn btn-success border border-light " type="button" data-bs-toggle="offcanvas"
-                data-bs-target="#notificacoesOffcanvas" aria-controls="notificacoesOffcanvas">
+            <button
+                class="btn
+            @if ($padrao_cores == 'vermelho') btn-danger text-light border-light
+            @elseif ($padrao_cores == 'verde') btn-success text-light border-light
+            @elseif ($padrao_cores == 'amarelo') btn-warning text-black border-dark
+            @elseif ($padrao_cores == 'azul') btn-primary text-light border-light
+            @else bg-primary border-light @endif
+            "
+                type="button" data-bs-toggle="offcanvas" data-bs-target="#notificacoesOffcanvas"
+                aria-controls="notificacoesOffcanvas">
                 Notificações
             </button>
         </div>
     </nav>
 
     <!-- Offcanvas para o menu -->
-    <div class="offcanvas navbar-dark offcanvas-start bg-success text-light" tabindex="-1" id="menuOffcanvas"
-        aria-labelledby="menuOffcanvasLabel">
-        <div data-bs-theme="dark" class="offcanvas-header">
+    <div class="offcanvas offcanvas-start
+    @if ($padrao_cores == 'vermelho') bg-danger text-light navbar-dark
+    @elseif ($padrao_cores == 'verde') bg-success text-light navbar-dark
+    @elseif ($padrao_cores == 'amarelo') bg-warning text-dark
+    @elseif ($padrao_cores == 'azul') bg-primary text-light navbar-dark
+    @else bg-primary text-light navbar-dark @endif
+    "
+        data-bs-theme="dark" tabindex="-1" id="menuOffcanvas" aria-labelledby="menuOffcanvasLabel">
+        <div data-bs-theme="dark" class="navbar offcanvas-header">
             <h5 class="offcanvas-title" id="menuOffcanvasLabel">Menu</h5>
             <button type="button" class="btn-close " data-bs-dismiss="offcanvas" aria-label="Fechar"></button>
 
         </div>
 
         <div class="offcanvas-body ">
-            <h6 class="offcanvas-subtitle text-light">
-                <p>Bem-vindo, 
-                @if (session('funcionario'))
-                     {{ session('funcionario')->nome }}!</p>
+            <h6 class="offcanvas-subtitle">
+                <p>Bem-vindo,
+                    @if (session('funcionario'))
+                        {{ session('funcionario')->nome }}!
+                </p>
                 @endif
             </h6>
             <!-- Conteúdo do menu aqui -->
             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
 
                 <li class="nav-item ">
-                    <a class="nav-link active" aria-current="page" href="/dashboard">Inicio</a>
+                    <b> <a class="nav-link active" aria-current="page" href="/dashboard">Inicio</a></b>
                 </li>
+
+                @if (isset($menu) && $menu == 'Vendas')
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('cadastroproduto') }}">Cadastro de produto</a>
+                    </li>
+                @elseif(isset($menu) && $menu == 'Serviços')
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('cadastroproduto') }}">Cadastro de serviços</a>
+                    </li>
+                @endif
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('cadastroproduto')}}">Cadastro de produto</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('cadastrofornecedor')}}">Cadastro de fornecedor</a>
+                    <a class="nav-link" href="{{ route('cadastrofornecedor') }}">Cadastro de fornecedor
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="cotacaoprodutos">Cotação de produtos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('produto.listar')}}">Informação de produto</a>
+                    <a class="nav-link" href="{{ route('produto.listar') }}">Informação de produto</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Informação da empresa</a>
@@ -74,7 +119,7 @@
                     <a class="nav-link" href="#">Calculadora empresarial</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('configuracoes')}}">Configurações</a>
+                    <a class="nav-link" href="{{ route('configuracoes') }}">Configurações</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('logout') }}">Logout</a>
@@ -114,7 +159,15 @@
 
             </div>
             <div>
-                <a href="/notificacoes" class="btn btn-success">Ver todas</a>
+                <a href="/notificacoes"
+                    class="btn
+                @if ($padrao_cores == 'vermelho') btn-danger
+                @elseif ($padrao_cores == 'verde') btn-success
+                @elseif ($padrao_cores == 'amarelo') btn-warning
+                @elseif ($padrao_cores == 'azul') btn-primary
+                @else bg-primary @endif
+                ">Ver
+                    todas</a>
             </div>
         </div>
         <!-- Você pode usar qualquer componente Bootstrap ou elementos personalizados -->
@@ -127,7 +180,8 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Lucro e despesas dos ultimos 6 meses</h5>
-                        <img src="{{ global_asset('img/Screenshot_1.png') }}" alt="Descrição da Imagem" class="img-fluid">
+                        <img src="{{ global_asset('img/Screenshot_1.png') }}" alt="Descrição da Imagem"
+                            class="img-fluid">
 
                     </div>
                 </div>
@@ -154,7 +208,18 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <a href="ultimasatividades" class="btn btn-success">Ver todas</a>
+
+                        {{ dump($padrao_cores) }}
+
+                        <a href="ultimasatividades"
+                            class="btn
+                        @if ($padrao_cores == 'vermelho') btn-danger
+                        @elseif ($padrao_cores == 'verde') btn-success
+                        @elseif ($padrao_cores == 'amarelo') btn-warning
+                        @elseif ($padrao_cores == 'azul') btn-primary
+                        @else bg-primary @endif
+                        ">Ver
+                            todas</a>
                     </div>
                 </div>
             </div>
@@ -163,7 +228,7 @@
     </div>
     <!-- Features Section -->
     <div class="container mt-5 mb-4">
-      
+
         <div class="row">
             <div class="col-md-4">
                 <div>
@@ -173,8 +238,15 @@
                             <p class="card-text">Envie uma mensagem para um funcionario, todos os funcionarios ou para
                                 um fornecedor cadastrado no sistema.</p>
                             <!-- <a href="/enviarmensagem" class="btn btn-primary">Enviar mensagem</a> -->
-                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                data-bs-target="#staticBackdrop">
+                            <button type="button"
+                                class="btn
+                            @if ($padrao_cores == 'vermelho') btn-danger
+                            @elseif ($padrao_cores == 'verde') btn-success
+                            @elseif ($padrao_cores == 'amarelo') btn-warning
+                            @elseif ($padrao_cores == 'azul') btn-primary
+                            @else bg-primary @endif
+                            "
+                                data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                 Enviar mensagem
                             </button>
                             <!-- Modal -->
@@ -244,7 +316,14 @@
                         <div class="card-body">
                             <h5 class="card-title">Mensagens recebidas</h5>
                             <p class="card-text">Acesse a sua caixa de mensagens recebidas.</p>
-                            <a href="#" class="btn btn-success">Acesse</a>
+                            <a href="#"
+                                class="btn
+                            @if ($padrao_cores == 'vermelho') btn-danger
+                            @elseif ($padrao_cores == 'verde') btn-success
+                            @elseif ($padrao_cores == 'amarelo') btn-warning
+                            @elseif ($padrao_cores == 'azul') btn-primary
+                            @else bg-primary @endif
+                            ">Acesse</a>
                         </div>
                     </div>
                 </div>
@@ -253,7 +332,8 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Fornecedores x Pedidos</h5>
-                        <img src="{{ global_asset('img/Screenshot_2.png') }}" alt="Descrição da Imagem" class="img-fluid">
+                        <img src="{{ global_asset('img/Screenshot_2.png') }}" alt="Descrição da Imagem"
+                            class="img-fluid">
                     </div>
                 </div>
             </div>
@@ -261,44 +341,58 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Proximas contas</h5>
-                        <table class="table table-light  border table-dorder table-hover">
-                            <thead class="table-group-divider">
-                                <tr class="">
-                                    <th class=" ">Data</th>
-                                    <th class="">Conta</th>
+                        <table id="myTable" class="display">
+                            <thead>
+                                <tr>
+                                    <th>Vencimento</th>
+                                    <th>Credor</th>
                                 </tr>
                             </thead>
-                            <tbody class="table-group-divider ">
-                                <tr class="text-danger">
-                                    <th class="text-danger">03/05</th>
-                                    <th class="text-danger">Energia eletrica</th>
-                                </tr>
-                                <tr class="">
-                                    <th class="">11/05</th>
-                                    <th class="">Pedido #00077</th>
-                                </tr>
-                                <tr class="">
-                                    <th class="">15/05</th>
-                                    <th class="">Água e esgoto</th>
-                                </tr>
-                                <tr class="">
-                                    <th class="">15/05</th>
-                                    <th class="">Pedido #00078</th>
-                                </tr>
-                                <tr class="">
-                                    <th class="">19/05</th>
-                                    <th class="">Aluguel</th>
-                                </tr>
+                            <tbody>
+                                @foreach ($contas as $conta)
+                                    @if($conta->estado == 'Pendente' || $conta->estado == 'Vencida')
+                                    <tr>
+                                        <td>{{ \Carbon\Carbon::parse($conta->data_vencimento)->format('d/m/Y') }}
+                                        </td>
+                                        <td style="overflow-x: auto;">{{ $conta->credor }}</td>
+                                    </tr>
+                                    @endif
+                                @endforeach
+
                             </tbody>
                         </table>
-                        <a href="#" class="btn btn-success">Ver todas</a>
+                        <a href="#"
+                            class="btn
+                        @if ($padrao_cores == 'vermelho') btn-danger
+                        @elseif ($padrao_cores == 'verde') btn-success
+                        @elseif ($padrao_cores == 'amarelo') btn-warning
+                        @elseif ($padrao_cores == 'azul') btn-primary
+                        @else bg-primary @endif
+                        ">Ver
+                            todas</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- Inclua os arquivos JavaScript do Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+        crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.2/js/responsive.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#myTable').DataTable({
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json'
+                },
+                "pageLength": 5,
+                "lengthChange": false,
+            });
+        });
+    </script>
 </body>
 
 </html>

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 
-class Empresas extends Authenticatable
+class EmpresaInformation extends Model
 {
     use HasFactory;
 
@@ -20,12 +20,4 @@ class Empresas extends Authenticatable
         'padrao_cores',
     ];
 
-    protected $hidden = [
-
-    ];
-
-    public function getAuthPassword()
-    {
-        return $this->senha;
-    }
 }

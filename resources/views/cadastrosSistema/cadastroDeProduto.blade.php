@@ -161,13 +161,13 @@
                                     <select class="form-control" id="unidadeproduto" name="unidade_medida">
                                         <option selected disabled>Selecione a unidade de medida do produto</option>
                                         <option value="peso">Peso (gramas)</option>
-                                        <option value="volume">Volume (litros)</option>
+                                        <option value="volume">Volume (mililitros)</option>
                                         <option value="energia">Energia (Watt)</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="medidaproduto">Medida</label>
-                                    <input type="text" class="form-control" id="medidaproduto" name="medida"
+                                    <input type="number" class="form-control" id="medidaproduto" name="medida" min='1'
                                         placeholder="Digite a medida do produto">
                                 </div>
                                 <div class="form-group">

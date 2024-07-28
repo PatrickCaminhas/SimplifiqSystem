@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nome',30);
             $table->string('sobrenome',70);
             $table->string('email',100)->unique();
-            $table->string('empresas')->foreign('cnpj')->references('cnpj')->on('empresas')->onDelete('cascade');
+            $table->string('cnpj')->foreign('cnpj')->references('cnpj')->on('empresas')->onDelete('cascade');
             $table->string('senha',255);
             $table->timestamps();
         });
