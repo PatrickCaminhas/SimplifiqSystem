@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Metas extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'id',
+        'valor',
+        'valor_atual',
+        'ending_at',
+    ];
 }

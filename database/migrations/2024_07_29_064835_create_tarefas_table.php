@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('metas', function (Blueprint $table) {
+        Schema::create('tarefas', function (Blueprint $table) {
             $table->id();
-            $table->decimal('valor', 6,2);
-            $table->decimal('valor_atual', 6,2);
-            $table->string('estado');
-            $table->date('ending_at');
             $table->timestamps();
         });
     }
@@ -26,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('metas');
+        Schema::dropIfExists('tarefas');
     }
 };

@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\ContasController;
+use App\Http\Controllers\ServicosController;
+use App\Http\Middleware\CheckMetas;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
@@ -16,6 +18,8 @@ use App\Http\Controllers\ConfiguracoesController;
 use App\Http\Controllers\EstoqueController;
 use App\Http\Middleware\AuthenticateDashboard;
 use App\Http\Middleware\CheckCompanyType;
+use App\Http\Controllers\MetasController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -79,12 +83,28 @@ Route::middleware([
         Route::get('/estoque', [EstoqueController::class, 'create'])->name('estoque.create');
         Route::post('/estoque', [EstoqueController::class, 'edit'])->name('estoque.edit');
         Route::get('/estoque/{id}', [EstoqueController::class, 'edit'])->name('estoque.edit');
-        Route::post('/estoque/{id}',[EstoqueController::class,'update'])->name('estoque.update');
-        Route::get('/contas',[ContasController::class,'createRead'])->name('contas.read');
-        Route::get('/contas/cadastro',[ContasController::class,'create'])->name('contas.create');
-        Route::post('/contas/cadastro',[ContasController::class,'createConta'])->name('contas.createConta');
-        Route::get('/contas/finalizar',[ContasController::class,'update'])->name('contas.update');
-        Route::post('/contas/finalizar',[ContasController::class,'finalizarConta'])->name('contas.finalizarConta');
+        Route::post('/estoque/{id}', [EstoqueController::class, 'update'])->name('estoque.update');
+        Route::get('/contas', [ContasController::class, 'createRead'])->name('contas.read');
+        Route::get('/contas/cadastro', [ContasController::class, 'create'])->name('contas.create');
+        Route::post('/contas/cadastro', [ContasController::class, 'createConta'])->name('contas.createConta');
+        Route::get('/contas/finalizar', [ContasController::class, 'update'])->name('contas.update');
+        Route::post('/contas/finalizar', [ContasController::class, 'finalizarConta'])->name('contas.finalizarConta');
+
+        Route::middleware([CheckMetas::class])->group(function () {
+            Route::get('/metas', [MetasController::class, 'createRead'])->name('metas.read');
+        });
+        Route::get('/metas/cadastro', [MetasController::class, 'createStoreMeta'])->name('metas.create');
+        Route::post('/metas/cadastro', [MetasController::class, 'store'])->name('metas.store');
+        Route::post('/metas', [MetasController::class, 'storeProgresso'])->name('metas.storeProgresso');
+
+        Route::get('/servicos', [ServicosController::class, 'createRead'])->name('servicos.read');
+        Route::get('/servicos/cadastro', [ServicosController::class, 'createStoreServico'])->name('servicos.create');
+        Route::post('/servicos/cadastro', [ServicosController::class, 'store'])->name('servicos.store');
+        Route::get('/tarefas', [ServicosController::class, 'createReadTarefas'])->name('tarefas.read');
+        Route::get('/tarefas/cadastro', [ServicosController::class, 'createStoreTarefas'])->name('tarefas.create');
+
+
+
         Route::get('logout', [LoginController::class, 'logout'])->name('logout');
     });
 });

@@ -361,7 +361,7 @@
 
                             </tbody>
                         </table>
-                        <a href="#"
+                        <a href="{{route('contas.read')}}"
                             class="btn
                         @if ($padrao_cores == 'vermelho') btn-danger
                         @elseif ($padrao_cores == 'verde') btn-success

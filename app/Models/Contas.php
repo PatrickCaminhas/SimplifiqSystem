@@ -16,7 +16,5 @@ class Contas extends Model
         'data_vencimento',
         'data_pagamento',
         'estado',
-
-
     ];
 }
