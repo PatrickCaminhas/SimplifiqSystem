@@ -6,6 +6,12 @@
 Diagrama do banco de dados: https://dbdiagram.io/d/Simplifiq-System-667b82739939893dae454c5f  
 </p>
 
+## Linguagens, ferramentas e frameworks utilizadas.
+### 1. <a href="https://www.php.net/">PHP</a>
+### 2. <a href="https://laravel.com/">Laravel</a>
+### 3. <a href="https://getbootstrap.com/">Bootstrap </a>
+### 4. <a href="https://tenancyforlaravel.com/">Tenancy for Laravel</a>
+
 
 # Requisitos Funcionais
 ## 1. Gerenciamento de Empresas
