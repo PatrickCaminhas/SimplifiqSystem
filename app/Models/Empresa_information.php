@@ -3,19 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 
-class EmpresaCadastro extends Authenticatable
+class Empresa_information extends Model
 {
     use HasFactory;
-
     protected $fillable = [
-        'nome',
         'cnpj',
+        'nome',
         'tamanho_empresa',
         'tipo_empresa',
         'telefone',
+        'estado',
+        'padrao_cores',
     ];
-
 }

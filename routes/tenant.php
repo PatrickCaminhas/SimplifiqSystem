@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\ContasController;
+use App\Http\Controllers\informacaoEmpresaController;
 use App\Http\Controllers\ServicosController;
 use App\Http\Middleware\CheckMetas;
 use App\Http\Middleware\RedirectIfAuthenticated;
@@ -19,6 +20,7 @@ use App\Http\Controllers\EstoqueController;
 use App\Http\Middleware\AuthenticateDashboard;
 use App\Http\Middleware\CheckCompanyType;
 use App\Http\Controllers\MetasController;
+use App\Http\Controllers\CotacoesController;
 
 
 /*
@@ -68,18 +70,13 @@ Route::middleware([
         Route::get('/cadastrarfuncionario', [ConfiguracoesController::class, 'createCadastroFuncionario'])->name('configuracoes.funcionario');
         Route::post('/cadastrarfuncionarioconfirmar', [ConfiguracoesController::class, 'storeFuncionario'])->name('configuracoes.funcionario.cadastrar');
 
-        Route::middleware(AuthenticateDashboard::class)->match(['get', 'post'], '/cotacaoprodutos', function () {
-            return view('cotacao/cotacaoDeProdutos');
-        });
-        Route::middleware(AuthenticateDashboard::class)->match(['get', 'post'], '/cotacaoprodutosrevisao', function () {
-            return view('cotacao/cotacaoDeProdutosRevisao');
-        });
-        Route::middleware(AuthenticateDashboard::class)->match(['get', 'post'], '/cotacaoprodutosfinal', function () {
-            return view('cotacao/cotacaoDeProdutosFinal');
-        });
-        Route::middleware(AuthenticateDashboard::class)->match(['get', 'post'], '/cotacaoprodutoseditar', function () {
-            return view('cotacao/cotacaoDeProdutosEditar');
-        });
+        Route::get('/cotacaoprodutos',[CotacoesController::class, 'create'])->name('cotacaProdutos');
+        Route::post('/cotacaoprodutosrevisao',[CotacoesController::class, 'createRevisao'])->name('cotacaoProdutosRevisao');
+        Route::post('/cotacaoprodutosfinal',[CotacoesController::class, 'createFinal'])->name('cotacaoProdutosFinal');
+        Route::post('/cotacaoprodutoseditar',[CotacoesController::class, 'createEdicao'])->name('cotacaoProdutosEditar');
+
+
+
         Route::get('/estoque', [EstoqueController::class, 'create'])->name('estoque.create');
         Route::post('/estoque', [EstoqueController::class, 'edit'])->name('estoque.edit');
         Route::get('/estoque/{id}', [EstoqueController::class, 'edit'])->name('estoque.edit');
@@ -103,6 +100,7 @@ Route::middleware([
         Route::get('/tarefas', [ServicosController::class, 'createReadTarefas'])->name('tarefas.read');
         Route::get('/tarefas/cadastro', [ServicosController::class, 'createStoreTarefas'])->name('tarefas.create');
 
+        Route::get('/informacoes/empresa',[informacaoEmpresaController::class, 'createRead'])->name('informacoes.empresa');
 
 
         Route::get('logout', [LoginController::class, 'logout'])->name('logout');

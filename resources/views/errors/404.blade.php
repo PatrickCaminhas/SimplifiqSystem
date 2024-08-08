@@ -5,6 +5,7 @@
     <title>Página Não Encontrada</title>
 </head>
 <body>
+
     <h1>Página Não Encontrada</h1>
     <p>Desculpe, a página que você está procurando não existe.</p>
     <a href="{{ url()->previous() }}">Voltar</a>

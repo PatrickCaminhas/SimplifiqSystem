@@ -165,6 +165,13 @@
                                                             value="{{ $empresa->nome }}">
                                                         <input type="hidden" name="cnpj"
                                                             value="{{ $empresa->cnpj }}">
+                                                        <input type="hidden" name="tamanho_empresa"
+                                                            value="{{ $empresa->tamanho_empresa }}">
+                                                        <input type="hidden" name="tipo_empresa"
+                                                            value="{{ $empresa->tipo_empresa }}">
+                                                        <input type="hidden" name="telefone"
+                                                            value="{{ $empresa->telefone }}">
+
                                                         <button type="submit" class="btn btn-primary">
                                                             Criar empresa</button>
                                                     </form>

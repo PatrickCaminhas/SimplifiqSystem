@@ -12,10 +12,10 @@ class MetasController extends Controller
     public function createRead()
     {
         $metas = Metas::all();
-        return view('sistema.metas.metas', ['metas' => $metas]);
+        return view('sistema.metas.metas', ['metas' => $metas],['page'=>'metas']);
     }
     public function createStoreMeta(){
-        return view('sistema.metas.metasCadastro');
+        return view('sistema.metas.metasCadastro', ['page' => 'metas']);
     }
 
 

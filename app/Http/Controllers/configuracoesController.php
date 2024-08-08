@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Empresa_information;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -11,19 +12,47 @@ class ConfiguracoesController extends Controller
 {
     public function createConfiguracoes()
     {
-        return view('configuracoes.configuracaoUsuario');
+        $status_cadastro = $this->verificarFuncionario();
+        return view('configuracoes.configuracaoUsuario',['page'=>'configuracoes'], ['cadastro_funcionario'=>$status_cadastro]);
+    }
+    public function verificarFuncionario(){
+        $status_cadastro = 'permitido';
+        $empresa = Empresa_information::first();
+        $quantidade_funcionarios = Funcionarios::all()->count();
+        if($quantidade_funcionarios == 2 && $empresa->tamanho_empresa == "mei"){
+            $status_cadastro = 'negado';
+        }
+        if($quantidade_funcionarios == 10 && $empresa->tamanho_empresa == "microempresa" && ($empresa->tipo_empresa == "Comércio" || $empresa->tipo_empresa == "Serviços")){
+            $status_cadastro = 'negado';
+        }
+        if($quantidade_funcionarios == 20 && $empresa->tamanho_empresa == "microempresa" && $empresa->tipo_empresa == "Indústria"){
+            $status_cadastro = 'negado';
+        }
+        if($quantidade_funcionarios == 49 && $empresa->tamanho_empresa == "pequenaempresa" && ($empresa->tipo_empresa == "Comércio" || $empresa->tipo_empresa == "Serviços")){
+            $status_cadastro = 'negado';
+        }
+        if($quantidade_funcionarios == 99 && $empresa->tamanho_empresa == "pequenaempresa" && $empresa->tipo_empresa == "Indústria"){
+            $status_cadastro = 'negado';
+        }
+        return $status_cadastro;
     }
 
     public function createAlterarSenha()
     {
-        return view('configuracoes.alterarSenha');
+        return view('configuracoes.alterarSenha',['page'=>'configuracoes']);
     }
 
     public function createCadastroFuncionario()
     {
-        return view('configuracoes.cadastrarFuncionario');
+        $status_cadastro = $this->verificarFuncionario();
+        if($status_cadastro == 'negado'){
+            return redirect('configuracoes')->with('error', 'Limite de funcionários atingido!');
+        }
+        else{
+        return view('configuracoes.cadastrarFuncionario',['page'=>'configuracoes'], ['cadastro_funcionario'=>$status_cadastro]);
+        }
     }
-     
+
     public function update(Request $request)
     {
         $request->validate([
@@ -57,7 +86,7 @@ class ConfiguracoesController extends Controller
             'nome' => 'required|string',
             'sobrenome' => 'required|string',
             'cargo' => 'required|string',
-         
+
             'email' => 'required|string|email|unique:funcionarios,email',
         ]);
         do {
@@ -81,5 +110,5 @@ class ConfiguracoesController extends Controller
             return view('index/inicio');
         }
     }
-    
+
 }

@@ -13,38 +13,51 @@
 </head>
 
 <body class=bg-dark>
-     <!-- Menu superior -->
-     @include('partials.header')
+    <!-- Menu superior -->
+    @include('partials.header')
 
-     <!-- Offcanvas para o menu -->
+    <!-- Offcanvas para o menu -->
     @include('partials.menu')
 
-     <!-- Offcanvas para notificações -->
-     @include('partials.notificacoes')
+    <!-- Offcanvas para notificações -->
+    @include('partials.notificacoes')
 
     <div class="container mt-4">
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title display-6 text-center">PRODUTO {{ ucfirst($produto->nome)}}</h5>
+                        <h5 class="card-title display-6 text-center">Dados da empresa</h5>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <h5 class="card-title">Informações do produto</h5>
-                                    <p class="card-text">Nome: {{$produto->id}}</p>
-                                    <p class="card-text">Nome: {{$produto->nome}}</p>
-                                    <p class="card-text">Categoria: {{$produto->categoria}}</p>
-                                    <p class="card-text">Valor Compra: R$ {{$produto->preco_compra}}</p>
-                                    <p class="card-text">Ultimo fornecedor: {{$produto->ultimo_fornecedor}}</p>
-                                    <p class="card-text">Quantidade: {{$produto->quantidade}}</p>
+                                    <h5 class="card-title">Nome: {{ $informacaoEmpresa->nome }}</h5>
+                                    <p class="card-text">CNPJ: {{ $informacaoEmpresa->cnpj }}</p>
+                                    <p class="card-text">Tipo de empresa: {{ ucfirst($informacaoEmpresa->tamanho_empresa) }}
+                                    </p>
+                                    <p class="card-text">Setor: {{ $informacaoEmpresa->tipo_empresa }}</p>
+                                    <p class="card-text">Telefone do responsavel: {{ $informacaoEmpresa->telefone }}</p>
+                                    <p class="card-text">Estado no sistema: {{ ucfirst($informacaoEmpresa->estado) }}</p>
+                                    <p class="card-text">Padrão de cores do sistema: {{ ucfirst($informacaoEmpresa->padrao_cores) }}</p>
                                 </div>
                                 <div class="col-md-6">
-                                    <p class="card-text">Preço: {{$produto->preco_venda}}</p>
-                                    <p class="card-text">Descrição: {{$produto->descricao}}</p>
+                                    <p class="card-text">Logo:
+                                        @if ($informacaoEmpresa->logo)
+                                            <img src="{{ $informacaoEmpresa->logo }}" alt="Logo da empresa"
+                                                class="img-fluid">
+                                        @else
+                                            a empresa não possui logo!
+                                        @endif
+                                    </p>
+                                    <p class="card-text">Inicio no sistema: {{ $informacaoEmpresa->created_at }}</p>
                                     <h5 class="card-title">Ações</h5>
-                                    <p href="#" class="btn btn-primary">Editar</p>
-                                    <p href="#" class="btn btn-danger">Excluir</p>
+                                    <p href="#" class="btn btn-primary">Alterar dados da empresa</p>
+                                    <br>
+                                    <p href="#" class="btn btn-primary">Alterar tema da empresa </p>
+                                    <br>
+                                    <p href="#" class="btn btn-primary">Alterar logo da empresa </p>
+
+
                                 </div>
 
                             </div>
@@ -69,7 +82,8 @@
                         <div class="card mb-2">
                             <div class="card-body">
                                 <h5 class="card-title">Fornecedores por % de produto</h5>
-                                <img src="{{ global_asset('img/Screenshot_2.png') }}" alt="Descrição da Imagem" class="img-fluid">
+                                <img src="{{ global_asset('img/Screenshot_2.png') }}" alt="Descrição da Imagem"
+                                    class="img-fluid">
                             </div>
                         </div>
                     </div>

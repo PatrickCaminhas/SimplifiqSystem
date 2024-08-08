@@ -44,7 +44,7 @@ class LoginController extends Controller
     public function showEmpresas()
     {
 
-        $empresas = Empresas::all();
+        $empresas = Empresas::all()->where('estado', 'ativa');
 
         // Sanitiza o nome de cada empresa
         $empresasSanitizadas = [];

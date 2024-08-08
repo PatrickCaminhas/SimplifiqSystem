@@ -43,40 +43,31 @@
                                         placeholder="Digite o nome do produto" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="modeloproduto">Modelo</label>
+                                    <label for="modeloproduto">Categoria</label>
                                     <input type="text" class="form-control" id="modeloproduto" name="modelo"
-                                        placeholder="Digite o modelo do produto">
+                                        placeholder="Digite a categoria do serviço">
                                 </div>
                                 <div class="form-group">
-                                    <label for="marcaproduto">Marca</label>
+                                    <label for="marcaproduto">Duração estimada</label>
                                     <input type="text" class="form-control" id="marcaproduto" name="marca"
-                                        placeholder="Digite o nome da marca do produto">
+                                        placeholder="Digite o tempo estimado em minutos">
                                 </div>
                                 <div class="form-group">
-                                    <label for="categoriaproduto">Categoria</label>
-                                    <select class="form-control" id="categoriaproduto" name="categoria">
-                                        <option selected disabled>Selecione a categoria do produto</option>
-                                        <option value="eletronico">Eletronico</option>
-                                        <option value="vestuario">Vestuario</option>
-                                        <option value="alimentos">Alimento</option>
-                                        <option value="bebidas">Bebida</option>
-                                        <option value="iluminacao">Iluminação</option>
-                                    </select>
+                                    <label for="marcaproduto">Materiais necessários</label>
+                                    <input type="text" class="form-control" id="marcaproduto" name="marca"
+                                        placeholder="Digite o tempo estimado em minutos">
                                 </div>
                                 <div class="form-group">
-                                    <label for="unidadeproduto">Unidade de medida</label>
-                                    <select class="form-control" id="unidadeproduto" name="unidade_medida">
-                                        <option selected disabled>Selecione a unidade de medida do produto</option>
-                                        <option value="peso">Peso (gramas)</option>
-                                        <option value="volume">Volume (mililitros)</option>
-                                        <option value="energia">Energia (Watt)</option>
-                                    </select>
+                                    <label for="marcaproduto">Quantidade de pessoas necessárias</label>
+                                    <input type="text" class="form-control" id="marcaproduto" name="marca"
+                                        placeholder="Digite o tempo estimado em minutos">
                                 </div>
                                 <div class="form-group">
-                                    <label for="medidaproduto">Medida</label>
-                                    <input type="number" class="form-control" id="medidaproduto" name="medida" min='1'
-                                        placeholder="Digite a medida do produto">
+                                    <label for="marcaproduto">Valor</label>
+                                    <input type="text" class="form-control" id="marcaproduto" name="marca"
+                                        placeholder="Digite o tempo estimado em minutos">
                                 </div>
+
                                 <div class="form-group">
                                     <label for="descricao">Descrição</label>
                                     <textarea class="form-control" id="descricao" name="descricao" rows="3" style="resize: none;"

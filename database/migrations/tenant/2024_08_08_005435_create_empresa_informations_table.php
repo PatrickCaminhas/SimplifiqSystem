@@ -11,7 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('empresa_information', function (Blueprint $table) {
+        Schema::create('empresa_informations', function (Blueprint $table) {
+            $table->id();
             $table->string('cnpj');
             $table->string('nome');
             $table->string('tamanho_empresa');
@@ -19,6 +20,7 @@ return new class extends Migration
             $table->string('telefone');
             $table->string('estado');
             $table->string('padrao_cores');
+            $table->binary('logo')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('empresa_information');
+        Schema::dropIfExists('empresa_informations');
     }
 };

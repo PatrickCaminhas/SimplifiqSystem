@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Tenant;
 use App\Models\Funcionarios;
 use App\Models\Empresas;
+use App\Models\Empresa_information;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -48,7 +49,7 @@ class TenantController extends Controller
         }
 
         $funcionario = Funcionarios::where('cnpj', $cnpj)->first();
-        
+
         $empresa = Empresas::where('cnpj', $cnpj)->update([
             'estado' => 'ativa',
         ]);
@@ -72,6 +73,16 @@ class TenantController extends Controller
             'cargo' => 'Administrador',
             'email' => $funcionario->email,
             'senha' => Hash::make('password'), // Certifique-se de hash a senha corretamente
+        ]);
+
+        Empresa_information::create([
+            'cnpj' => $cnpj,
+            'nome' => $nome,
+            'tamanho_empresa' => $request->tamanho_empresa,
+            'tipo_empresa' => $request->tipo_empresa,
+            'telefone' => $request->telefone,
+            'estado' => 'ativa',
+            'padrao_cores' => 'azul',
         ]);
 
         // Limpa o contexto do tenant

@@ -9,7 +9,24 @@ class CotacoesController extends Controller
     //
     public function create()
     {
-        return view('cotacao\cotacaoDeProdutos');
+        return view('cotacao\cotacaoDeProdutos', ['page' => 'cotacao']);
+    }
+
+    public function createRevisao()
+    {
+        return view('cotacao\cotacaoDeProdutosRevisao', ['page' => 'cotacao']);
+    }
+
+    public function createFinal(){
+        return view('cotacao\cotacaoDeProdutosFinal', ['page' => 'cotacao']);
+    }
+
+    public function createEdicao(){
+        return view('cotacao\cotacaoDeProdutosEdicao', ['page' => 'cotacao']);
+    }
+    public function store(Request $request)
+    {
+
     }
 
     public function gerarPdf()

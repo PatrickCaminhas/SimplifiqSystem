@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
-use App\Models\EmpresaInformation; // Add this line to import the 'EmpresaInformation' class
+use App\Models\Empresa_information; // Add this line to import the 'EmpresaInformation' class
 use App\Models\Empresas;
 
 class CheckCompanyType
@@ -22,10 +22,10 @@ class CheckCompanyType
     {
         // Supondo que o usuário autenticado tem um relacionamento com a empresa
         $user = Auth::user();
-        $empresa = EmpresaInformation::first();
+        $empresa = Empresa_information::first();
 
         if ($empresa) {
-
+            View::share('empresa', $empresa->nome);
             View::share('menu', $empresa->tipo_empresa);
             View::share('padrao_cores', $empresa->padrao_cores);
 

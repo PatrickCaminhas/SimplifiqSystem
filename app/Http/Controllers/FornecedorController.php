@@ -11,7 +11,7 @@ class FornecedorController extends Controller
     //
     public function create()
     {
-        return view('cadastrosSistema\cadastroDeFornecedor');
+        return view('cadastrosSistema\cadastroDeFornecedor', ['page' => 'cadastrofornecedor']);
     }
     public function store(Request $request)
     {
@@ -35,7 +35,7 @@ class FornecedorController extends Controller
             'email' => $request->input('email'),
             'telefone' => $request->input('telefone'),
         ]);
-        
+
         if ($fornecedores) {
             return redirect('dashboard')->with('success', 'Cadastro realizado com sucesso!');
         } else {

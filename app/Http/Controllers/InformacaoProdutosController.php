@@ -13,7 +13,7 @@ class InformacaoProdutosController extends Controller
     {
         $produtos = Produtos::all();
         if ($produtos) {
-            return view('produto/informacaoProdutoRequisicao', ['produtos' => $produtos]);
+            return view('produto/informacaoProdutoRequisicao', ['produtos' => $produtos], ['page' => 'informacaoProduto']);
         } else {
             return redirect('informacaoProdutoRequisicao')->with('error', 'Produto não encontrado.');
         }
@@ -34,14 +34,14 @@ class InformacaoProdutosController extends Controller
     }
     public function createRead()
     {
-        return view('produto\informacaoProduto');
+        return view('produto\informacaoProduto', ['page' => 'informacaoProduto']);
     }
 
     public function listar($nome)
     {
         $produto = Produtos::where('nome', $nome)->first();
         if ($produto) {
-            return view('produto/informacaoProduto', ['produto' => $produto]);
+            return view('produto/informacaoProduto', ['produto' => $produto], ['page' => 'informacaoProduto']);
         } else {
             return redirect('informacaoproduto')->with('error', 'Produto não encontrado.');
         }

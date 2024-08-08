@@ -10,7 +10,8 @@ class DashboardController extends Controller
     public function index()
     {
         $contas = Contas::all();
-        return view('sistema\dashboard', ['contas' => $contas]);
+
+        return view('sistema\dashboard', ['contas' => $contas],['page'=>'dashboard']);
     }
 
     // Adicione outros métodos conforme necessário

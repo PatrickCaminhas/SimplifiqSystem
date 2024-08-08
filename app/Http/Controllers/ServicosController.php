@@ -13,15 +13,15 @@ class ServicosController extends Controller
     public function createRead()
     {
         $servicos = Servicos::all();
-        return view('sistema.servicos.servicos', ['servicos' => $servicos]);
+        return view('sistema.servicos.servicos', ['servicos' => $servicos],['page'=>'servicos']);
     }
     public function createStoreServico(){
-        return view('sistema.servicos.servicosCadastro');
+        return view('sistema.servicos.servicosCadastro', ['page' => 'servicos']);
     }
     public function createStoreTarefas(Request $request){
         $servico =  Servicos::find($request->id);
         $funcionarios = Funcionarios::all();
-        return view('sistema.servicos.tarefasCadastro',['servico_id' => $request->id], ['funcionarios'=> $funcionarios]);
+        return view('sistema.servicos.tarefasCadastro',['servico_id' => $request->id], ['funcionarios'=> $funcionarios],['page'=>'servicos']);
     }
 
     public function store(Request $request){

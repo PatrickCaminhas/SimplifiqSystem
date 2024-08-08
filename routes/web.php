@@ -12,6 +12,7 @@ use App\Http\Controllers\FornecedorController;
 use App\Http\Controllers\InformacaoProdutosController;
 use App\Http\Middleware\AuthenticateDashboard;
 use App\Http\Controllers\ConfiguracoesController;
+use App\Http\Controllers\CotacoesController;
 
 
 foreach (config('tenancy.central_domains') as $domain) {
@@ -89,9 +90,8 @@ foreach (config('tenancy.central_domains') as $domain) {
             Route::post('/cadastrarfuncionarioconfirmar', [ConfiguracoesController::class, 'storeFuncionario'])->name('configuracoes.funcionario.cadastrar');
         });
 
-        Route::middleware(AuthenticateDashboard::class)->match(['post'], '/cotacaoprodutos', function () {
-            return view('cotacao/cotacaoDeProdutos');
-        });
+        Route::get('/cotacaoprodutos',[CotacoesController::class, 'create'])->name('cotacaoprodutos')->name('cotacaoprodutos');
+
         Route::middleware(AuthenticateDashboard::class)->match(['get', 'post'], '/cotacaoprodutosrevisao', function () {
             return view('cotacao/cotacaoDeProdutosRevisao');
         });
