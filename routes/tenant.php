@@ -101,7 +101,7 @@ Route::middleware([
         Route::get('/tarefas/cadastro', [ServicosController::class, 'createStoreTarefas'])->name('tarefas.create');
 
         Route::get('/informacoes/empresa',[informacaoEmpresaController::class, 'createRead'])->name('informacoes.empresa');
-
+        Route::get('/servicos/cadastro/tipo', [ServicosController::class, 'createTipoRead'])->name('servicos.tipo.read');
 
         Route::get('logout', [LoginController::class, 'logout'])->name('logout');
     });

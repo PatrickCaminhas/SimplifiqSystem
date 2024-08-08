@@ -34,38 +34,38 @@
                 <div class="col-md-6 col-lg-4">
                     <div class="card shadow-sm">
                         <div class="card-body">
-                            <h2 class="text-center">Cadastro de produto</h2>
+                            <h2 class="text-center">Cadastro de serviços</h2>
                             <form method="POST" action="{{ route('cadastroproduto.store') }}">
                                 @csrf
                                 <div class="form-group">
                                     <label for="nomeproduto">Nome</label>
-                                    <input type="text" class="form-control" id="nomeproduto" name="nome"
+                                    <input type="text" class="form-control" id="nomeservico" name="nome"
                                         placeholder="Digite o nome do produto" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="modeloproduto">Categoria</label>
-                                    <input type="text" class="form-control" id="modeloproduto" name="modelo"
+                                    <input type="text" class="form-control" id="categoriaservico" name="categoria"
                                         placeholder="Digite a categoria do serviço">
                                 </div>
                                 <div class="form-group">
                                     <label for="marcaproduto">Duração estimada</label>
-                                    <input type="text" class="form-control" id="marcaproduto" name="marca"
+                                    <input type="number" class="form-control" id="duracaoservico" name="duracao"
                                         placeholder="Digite o tempo estimado em minutos">
                                 </div>
                                 <div class="form-group">
                                     <label for="marcaproduto">Materiais necessários</label>
-                                    <input type="text" class="form-control" id="marcaproduto" name="marca"
-                                        placeholder="Digite o tempo estimado em minutos">
+                                    <input type="text" class="form-control" id="materiais_necessarios" name="materiais_necessarios"
+                                        placeholder="Informe os materiais necessários para o serviço">
                                 </div>
                                 <div class="form-group">
                                     <label for="marcaproduto">Quantidade de pessoas necessárias</label>
-                                    <input type="text" class="form-control" id="marcaproduto" name="marca"
-                                        placeholder="Digite o tempo estimado em minutos">
+                                    <input type="number" class="form-control" id="quantidade_de_pessoas" name="quantidade_de_pessoas"
+                                        placeholder="Informa a quantidade pessoas necessárias para o serviço" min="1">
                                 </div>
                                 <div class="form-group">
                                     <label for="marcaproduto">Valor</label>
-                                    <input type="text" class="form-control" id="marcaproduto" name="marca"
-                                        placeholder="Digite o tempo estimado em minutos">
+                                    <input type="number" class="form-control" id="valor" name="valor"
+                                        placeholder="Digite o valor do serviço">
                                 </div>
 
                                 <div class="form-group">

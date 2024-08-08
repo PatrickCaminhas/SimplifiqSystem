@@ -16,7 +16,7 @@
     @include('partials.header')
 
     <!-- Offcanvas para o menu -->
-   @include('partials.menu')
+    @include('partials.menu')
 
     <!-- Offcanvas para notificações -->
     @include('partials.notificacoes')
@@ -197,18 +197,18 @@
                             </thead>
                             <tbody>
                                 @foreach ($contas as $conta)
-                                    @if($conta->estado == 'Pendente' || $conta->estado == 'Vencida')
-                                    <tr>
-                                        <td>{{ \Carbon\Carbon::parse($conta->data_vencimento)->format('d/m/Y') }}
-                                        </td>
-                                        <td style="overflow-x: auto;">{{ $conta->credor }}</td>
-                                    </tr>
+                                    @if ($conta->estado == 'Pendente' || $conta->estado == 'Vencida')
+                                        <tr>
+                                            <td>{{ \Carbon\Carbon::parse($conta->data_vencimento)->format('d/m/Y') }}
+                                            </td>
+                                            <td style="overflow-x: auto;">{{ $conta->credor }}</td>
+                                        </tr>
                                     @endif
                                 @endforeach
 
                             </tbody>
                         </table>
-                        <a href="{{route('contas.read')}}"
+                        <a href="{{ route('contas.read') }}"
                             class="btn
                         @if ($padrao_cores == 'vermelho') btn-danger
                         @elseif ($padrao_cores == 'verde') btn-success

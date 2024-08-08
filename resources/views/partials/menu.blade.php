@@ -19,7 +19,7 @@
                     {{ session('funcionario')->nome }}!
             </p>
             @endif
-            {{$page}}
+
         </h6>
         <!-- Conteúdo do menu aqui -->
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
@@ -40,7 +40,7 @@
                 <li class="nav-item
                 @if($page == 'cadastroservicos') active @endif
                 ">
-                    <a class="nav-link" href="{{ route('cadastroproduto') }}">Cadastro de serviços</a>
+                    <a class="nav-link" href="{{ route('servicos.tipo.read') }}">Cadastro de serviços</a>
                 </li>
             @endif
             <li class="nav-item">

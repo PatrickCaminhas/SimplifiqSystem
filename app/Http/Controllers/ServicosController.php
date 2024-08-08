@@ -6,6 +6,7 @@ use App\Models\Tarefas;
 use Illuminate\Http\Request;
 use App\Models\Servicos;
 use App\Models\Funcionarios;
+use App\Models\tipo_servico;
 
 class ServicosController extends Controller
 {
@@ -22,6 +23,24 @@ class ServicosController extends Controller
         $servico =  Servicos::find($request->id);
         $funcionarios = Funcionarios::all();
         return view('sistema.servicos.tarefasCadastro',['servico_id' => $request->id], ['funcionarios'=> $funcionarios],['page'=>'servicos']);
+    }
+
+    public function createTipoRead()
+    {
+        return view('cadastrosSistema.cadastroDeServicos', ['page'=> 'servicos']);
+    }
+
+    public function storeTipo(){
+        $tipo_servico = new tipo_servico();
+        $tipo_servico->nome = request()->input('nome');
+        $tipo_servico->categoria = request()->input('categoria');
+        $tipo_servico->duracao = request()->input('duracao');
+        $tipo_servico->materiais_necessarios = request()->input('materiais_necessarios');
+        $tipo_servico->quantidade_de_pessoas = request()->input('quantidade_de_pessoas');
+        $tipo_servico->valor = request()->input('valor');
+        $tipo_servico->descricao = request()->input('descricao');
+        $tipo_servico->save();
+        return redirect()->route('servicos.read');
     }
 
     public function store(Request $request){
