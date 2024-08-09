@@ -36,10 +36,10 @@
            <!-- Conteúdo do menu aqui -->
            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                <li class="nav-item">
-                   <a class="nav-link active" aria-current="page" href="/dashboardAdministrador">Inicio</a>
+                   <a class="nav-link active" aria-current="page" href="{{ route('dashboardAdministrador.log') }}">Inicio</a>
                </li>
                <li class="nav-item">
-                   <a class="nav-link" href="{{ route('cadastroproduto') }}">Simples Nacional</a>
+                   <a class="nav-link" href="{{ route('simples.create') }}">Simples Nacional</a>
                </li>
                <li class="nav-item">
                    <a class="nav-link" href="{{ route('logout') }}">Logout</a>

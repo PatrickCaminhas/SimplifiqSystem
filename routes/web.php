@@ -13,7 +13,7 @@ use App\Http\Controllers\InformacaoProdutosController;
 use App\Http\Middleware\AuthenticateDashboard;
 use App\Http\Controllers\ConfiguracoesController;
 use App\Http\Controllers\CotacoesController;
-
+use App\Http\Controllers\SimplesNacionalController;
 
 foreach (config('tenancy.central_domains') as $domain) {
     Route::domain($domain)->group(function () {
@@ -43,10 +43,11 @@ foreach (config('tenancy.central_domains') as $domain) {
         Route::get('cadastroAdministrador', [AdministradoresController::class, 'showCadastroForm'])->name('cadastroAdministrador.form');
         Route::post('cadastroAdministrador', [AdministradoresController::class, 'store'])->name('cadastroAdministrador.store');
 
-        Route::get('/dashboardAdministrador', [AdministradoresController::class, 'showDashboard'])->name('cadastroAdministrador.log');
+        Route::get('/dashboardAdministrador', [AdministradoresController::class, 'showDashboard'])->name('dashboardAdministrador.log');
 
         Route::post('dashboardAdministrador', [AdministradoresController::class, 'showDashboard'])->name('dashboardAdministrador.log');
-
+        Route::get('/simplesNacional',[SimplesNacionalController::class,'create'])->name('simples.create');
+        Route::get('/simplesNacional/store',[SimplesNacionalController::class,'createStore'])->name('simples.form.store');
 
         Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 

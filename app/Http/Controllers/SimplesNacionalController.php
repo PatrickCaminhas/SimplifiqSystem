@@ -11,11 +11,12 @@ class SimplesNacionalController extends Controller
     //
     public function create()
     {
-        return view("administracao.simplesNacional", ['page' => 'simplesNacional']);
+        $SimplesNacional = SimplesNacional::all();
+        return view("administracao.simplesNacional", ['simplesNacional'=>$SimplesNacional],['page' => 'simplesNacional']);
     }
     public function createStore()
     {
-        return view("administracao.simplesNacionalStore", ['page' => 'simplesNacional']);
+        return view("administracao.cadastroSimplesNacional", ['page' => 'simplesNacional']);
     }
     public function createUpdate()
     {

@@ -27,6 +27,7 @@
                     <div class="card shadow-sm">
                         <div class="card-body" style="overflow-x: auto;">
                             <h2 class="text-center">Aliquotas Simples Nacional</h2>
+                            <a href="{{route('simples.form.store')}}" class="btn btn-success"> Adicionar faixa </a>
                             <table id="myTable" class="display">
                                 <thead>
                                     <tr>
