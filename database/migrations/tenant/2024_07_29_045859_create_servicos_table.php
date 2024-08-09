@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('servicos', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('nome');
             $table->string('nome_cliente');
             $table->string('identificacao_cliente');
             $table->string('tipo_cliente');

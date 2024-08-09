@@ -47,7 +47,8 @@ foreach (config('tenancy.central_domains') as $domain) {
 
         Route::post('dashboardAdministrador', [AdministradoresController::class, 'showDashboard'])->name('dashboardAdministrador.log');
         Route::get('/simplesNacional',[SimplesNacionalController::class,'create'])->name('simples.create');
-        Route::get('/simplesNacional/store',[SimplesNacionalController::class,'createStore'])->name('simples.form.store');
+        Route::post('/simplesNacional/store',[SimplesNacionalController::class,'store'])->name('simples.store');
+
 
         Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 

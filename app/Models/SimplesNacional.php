@@ -12,7 +12,8 @@ class SimplesNacional extends Model
         'id',
         'nome_anexo',
         'faixa_anexo',
-        'receita_bruta_anual',
+        'receita_bruta_anual_min',
+        'receita_bruta_anual_max',
         'aliquota',
         'deducao',
 

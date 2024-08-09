@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('metas_progresso', function (Blueprint $table) {
+        Schema::create('metas_progressos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('meta_id');
             $table->decimal('valor', 6,2);
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('metas_progresso');
+        Schema::dropIfExists('metas_progressos');
     }
 };

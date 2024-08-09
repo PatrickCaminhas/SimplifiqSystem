@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('nome_anexo');
             $table->string('faixa_anexo');
-            $table->decimal('receita_bruta_anual',9,2);
-            $table->decimal('aliquota_anexo', 2, 2);
-            $table->decimal('deducao',8,2);
+            $table->decimal('receita_bruta_anual_min',11,2);
+            $table->decimal('receita_bruta_anual_max',11,2);
+            $table->decimal('aliquota', 4, 2);
+            $table->decimal('deducao',10,2);
             $table->timestamps();
         });
     }
