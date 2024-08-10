@@ -21,7 +21,7 @@ use App\Http\Middleware\AuthenticateDashboard;
 use App\Http\Middleware\CheckCompanyType;
 use App\Http\Controllers\MetasController;
 use App\Http\Controllers\CotacoesController;
-
+use App\Http\Controllers\SimplesNacionalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -102,6 +102,9 @@ Route::middleware([
 
         Route::get('/informacoes/empresa',[informacaoEmpresaController::class, 'createRead'])->name('informacoes.empresa');
         Route::get('/servicos/cadastro/tipo', [ServicosController::class, 'createTipoRead'])->name('servicos.tipo.read');
+
+        Route::get('/calcularSimples', [SimplesNacionalController::class, 'createCalculadora'])->name('simples.create.calculadora');
+        Route::post('/calcularSimples', [SimplesNacionalController::class, 'calculate'])->name('simples.calculate');
 
         Route::get('logout', [LoginController::class, 'logout'])->name('logout');
     });

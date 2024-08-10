@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\SimplesNacional;
 use App\Models\Empresa_information;
+use Stancl\Tenancy\Facades\Tenancy;
 
 class SimplesNacionalController extends Controller
 {
@@ -13,6 +14,10 @@ class SimplesNacionalController extends Controller
     {
         $SimplesNacional = SimplesNacional::all();
         return view("administracao.simplesNacional", ['simplesNacional' => $SimplesNacional], ['page' => 'simplesNacional']);
+    }
+    public function createCalculadora()
+    {
+        return view("sistema.informativo.calculadoraSimplesNacional", ['page' => 'simplesNacional']);
     }
     public function createStore()
     {
@@ -80,30 +85,68 @@ class SimplesNacionalController extends Controller
         $simplesNacional = SimplesNacional::where('nome_anexo', $request->input('nome_anexo'))
             ->where('faixa_anexo', $request->input('faixa_anexo'))
             ->first();
-            if ($simplesNacional) {
-                $simplesNacional->receita_bruta_anual_min = $request->input('receita_bruta_anual_min');
-                $simplesNacional->receita_bruta_anual_max = $request->input('receita_bruta_anual_max');
-                $simplesNacional->aliquota = $request->input('aliquota');
-                $simplesNacional->deducao = $request->input('deducao');
-                $simplesNacional->save();
+        if ($simplesNacional) {
+            $simplesNacional->receita_bruta_anual_min = $request->input('receita_bruta_anual_min');
+            $simplesNacional->receita_bruta_anual_max = $request->input('receita_bruta_anual_max');
+            $simplesNacional->aliquota = $request->input('aliquota');
+            $simplesNacional->deducao = $request->input('deducao');
+            $simplesNacional->save();
 
-                return redirect()->route('simples.create')->with('success', 'Registro atualizado com sucesso!');
-            } else {
-                return redirect()->route('simples.create')->with('error', 'Registro não encontrado!');
-            }
+            return redirect()->route('simples.create')->with('success', 'Registro atualizado com sucesso!');
+        } else {
+            return redirect()->route('simples.create')->with('error', 'Registro não encontrado!');
+        }
     }
+
+
 
     public function calculate(Request $request)
     {
         $empresa = Empresa_information::first();
+
         $request->validate([
             'receita_bruta_anual' => 'required|numeric|regex:/^\d{1,9}(\.\d{1,2})?$/',
             'receita_bruta_mes' => 'required|numeric|regex:/^\d{1,9}(\.\d{1,2})?$/',
-
         ]);
-        $simplesNacional = simplesNacional::find($empresa->tipo_empresa); //COLOCAR MAIS DE UM VALOR DE PROCURA, TIPO EMPRESA E RAMO DO MERCADO
-        $receita_bruta_anual = $request->receita_bruta_anual;
-        $receita_mes = $request->receita_mes;
+
+        $valor_bruto_anual = $request->input('receita_bruta_anual');
+        $valor_bruto_mes = $request->input('receita_bruta_mes');
+
+        $anexo = match ($empresa->tipo_empresa) {
+            'Comercio' => 1,
+            'Indústria' => 2,
+            'Serviços' => 3,
+            default => null,
+        };
+
+        if (is_null($anexo)) {
+            return redirect()->route('simples.create.calculadora')->with('error', 'Tipo de empresa inválido!');
+        }
+
+        $simplesNacional = \DB::connection('mysql')
+            ->table('simples_nacionals')
+            ->where('nome_anexo', $anexo)
+            ->where('receita_bruta_anual_min', '<=', $valor_bruto_anual)
+            ->where('receita_bruta_anual_max', '>=', $valor_bruto_anual)
+            ->first();
+
+        if ($simplesNacional) {
+            $aliquota = $simplesNacional->aliquota;
+            $deducao = $simplesNacional->deducao;
+
+            $resultado = ((($valor_bruto_anual * ($aliquota / 100)) - $deducao) / $valor_bruto_anual) * $valor_bruto_mes;
+            return redirect()->route('simples.create.calculadora')->with('valor', "A previsão de imposto do DAS é de R$".$resultado);
+
+        } else {
+            return redirect()->route('simples.create.calculadora')->with('error', 'Registro não encontrado!');
+        }
+    }
+
+
+
+    public function teste()
+    {
+        /*
         if ($empresa->tipo_empresa == "Comercio")////////////////////////////////ALTERAR PARA VALORES DO BANCO DE DADOS
         {
             if ($receita_bruta_anual <= 180000) {
@@ -169,8 +212,7 @@ class SimplesNacionalController extends Controller
             } else
                 $aliquota = 30;
         }
-        ////////////////////////////////ALTERAR PARA VALORES DO BANCO DE DADOS
-        $resultado = ((($receita_bruta_anual * ($aliquota / 100)) - $deducao) / $receita_bruta_anual) * $receita_mes;
-        return view('administracao.simplesNacional', ['valor' => $resultado]);
+        */
+
     }
 }

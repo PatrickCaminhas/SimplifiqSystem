@@ -67,7 +67,7 @@
             <li class="nav-item">
                 <a class="nav-link
                 @if($page == 'calculadoraEmpresarial') active @endif
-                " href="#">Calculadora empresarial</a>
+                " href="{{ route('simples.create.calculadora') }}">Calculadora Simples Nacional</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link
