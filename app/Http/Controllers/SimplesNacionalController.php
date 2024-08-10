@@ -50,7 +50,7 @@ class SimplesNacionalController extends Controller
         ]);
 
         $verifica = SimplesNacional::where('nome_anexo', $request->input('nome_anexo'))->where('faixa_anexo', $request->input('faixa_anexo'))->first();
-        if($verifica){
+        if ($verifica) {
             return redirect()->route('simples.create')->with('error', 'Já existe um anexo com essa faixa cadastrada.');
         }
 
@@ -63,7 +63,7 @@ class SimplesNacionalController extends Controller
             'deducao' => $request->input('deducao'),
         ]);
         $simplesNacional->save();
-        return redirect('simplesNacional')->with('success', 'Faixa cadastrada com sucesso.');
+        return redirect()->route('simples.create')->with('success', 'Faixa cadastrada com sucesso.');
 
     }
 
@@ -77,12 +77,20 @@ class SimplesNacionalController extends Controller
             'aliquota' => 'required|numeric|regex:/^\d{1,2}(\.\d{1,2})?$/',
             'deducao' => 'required|numeric|regex:/^\d{1,8}(\.\d{1,2})?$/',
         ]);
-        $simplesNacional = SimplesNacional::find($request->id);
-        $simplesNacional->receita_bruta_anual = $request->receita_bruta_anual;
-        $simplesNacional->aliquota = $request->aliquota;
-        $simplesNacional->deducao = $request->deducao;
-        $simplesNacional->save();
-        return redirect('administracao.simplesNacional')->with('success');
+        $simplesNacional = SimplesNacional::where('nome_anexo', $request->input('nome_anexo'))
+            ->where('faixa_anexo', $request->input('faixa_anexo'))
+            ->first();
+            if ($simplesNacional) {
+                $simplesNacional->receita_bruta_anual_min = $request->input('receita_bruta_anual_min');
+                $simplesNacional->receita_bruta_anual_max = $request->input('receita_bruta_anual_max');
+                $simplesNacional->aliquota = $request->input('aliquota');
+                $simplesNacional->deducao = $request->input('deducao');
+                $simplesNacional->save();
+
+                return redirect()->route('simples.create')->with('success', 'Registro atualizado com sucesso!');
+            } else {
+                return redirect()->route('simples.create')->with('error', 'Registro não encontrado!');
+            }
     }
 
     public function calculate(Request $request)
