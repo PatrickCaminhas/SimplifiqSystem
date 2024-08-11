@@ -58,11 +58,11 @@
                                             <td>{{ $meta->estado }}</td>
                                             <td>
                                                 <button type="button" class="btn bg-primary text-light"
-                                                    data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                                    data-bs-toggle="modal" data-bs-target="#meta{{$meta->id}}">
                                                     Verificar
                                                 </button>
                                                 <!-- Modal -->
-                                                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
+                                                <div class="modal fade" id="meta{{$meta->id}}" data-bs-backdrop="static"
                                                     data-bs-keyboard="false" tabindex="-1"
                                                     aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                     <div class="modal-dialog">

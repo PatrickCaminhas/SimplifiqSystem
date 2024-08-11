@@ -16,7 +16,6 @@ class Servicos extends Model
         'tipo_cliente',
         'valor',
         'tipo_servico',
-        'quantidade_tarefas',
         'data_inicio',
         'data_fim',
         'estado',

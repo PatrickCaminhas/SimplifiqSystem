@@ -66,6 +66,11 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link
+                @if($page == 'informacaoEmpresa') active @endif
+                " href="{{ route('metas.read') }}">Metas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link
                 @if($page == 'calculadoraEmpresarial') active @endif
                 " href="{{ route('simples.create.calculadora') }}">Calculadora Simples Nacional</a>
             </li>

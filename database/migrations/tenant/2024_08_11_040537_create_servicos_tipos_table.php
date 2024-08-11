@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tipo_servicos', function (Blueprint $table) {
+        Schema::create('servicos_tipos', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('categoria');
-            $table->decimal('duracao',5,2);
-            $table->string('materiais_necessarios');
+            $table->string('nome');
+            $table->integer('duracao');
+            $table->string('materiais');
             $table->integer('quantidade_de_funcionarios');
-            $table->decimal('valor',6,2);
-            $table->string('descricao')->nullable();
+            $table->decimal('valor_diario',4,2);
+            $table->string('descricao');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tipo_servicos');
+        Schema::dropIfExists('servicos_tipos');
     }
 };

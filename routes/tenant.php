@@ -49,7 +49,6 @@ Route::middleware([
 
 
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
         Route::get('/cadastroproduto', [CadastroProdutos::class, 'create'])->name('cadastroproduto');
@@ -97,11 +96,15 @@ Route::middleware([
         Route::get('/servicos', [ServicosController::class, 'createRead'])->name('servicos.read');
         Route::get('/servicos/cadastro', [ServicosController::class, 'createStoreServico'])->name('servicos.create');
         Route::post('/servicos/cadastro', [ServicosController::class, 'store'])->name('servicos.store');
-        Route::get('/tarefas', [ServicosController::class, 'createReadTarefas'])->name('tarefas.read');
-        Route::get('/tarefas/cadastro', [ServicosController::class, 'createStoreTarefas'])->name('tarefas.create');
+        Route::get('/servicos/cadastro/tipo', [ServicosController::class, 'createTipoRead'])->name('servicos.tipo.read');
+        Route::post('/servicos/cadastro/tipo', [ServicosController::class, 'storeTipo'])->name('servicos.tipo.store');
+
+        //Route::get('/tarefas', [ServicosController::class, 'createReadTarefas'])->name('tarefas.read');
+        //Route::get('/tarefas/cadastro', [ServicosController::class, 'createStoreTarefas'])->name('tarefas.create');
 
         Route::get('/informacoes/empresa',[informacaoEmpresaController::class, 'createRead'])->name('informacoes.empresa');
-        Route::get('/servicos/cadastro/tipo', [ServicosController::class, 'createTipoRead'])->name('servicos.tipo.read');
+
+
 
         Route::get('/calcularSimples', [SimplesNacionalController::class, 'createCalculadora'])->name('simples.create.calculadora');
         Route::post('/calcularSimples', [SimplesNacionalController::class, 'calculate'])->name('simples.calculate');

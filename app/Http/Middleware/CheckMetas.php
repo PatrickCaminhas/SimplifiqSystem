@@ -25,8 +25,11 @@ class CheckMetas
         foreach ($metas as $meta) {
             if ($meta->valor_atual < $meta->valor) {
                 $meta->estado = 'Não cumprida';
-            } else if ($meta->valor_atual > $meta->valor) {
+            } else if ($meta->valor_atual >= $meta->valor) {
                 $meta->estado = 'Finalizada';
+            }
+            else if ($meta->valor_atual >= $meta->valor) {
+                $meta->estado = 'Cumprida';
             }
             $meta->save();
         }

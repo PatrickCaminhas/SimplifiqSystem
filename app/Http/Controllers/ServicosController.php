@@ -6,7 +6,7 @@ use App\Models\Tarefas;
 use Illuminate\Http\Request;
 use App\Models\Servicos;
 use App\Models\Funcionarios;
-use App\Models\tipo_servico;
+use App\Models\ServicosTipo;
 
 class ServicosController extends Controller
 {
@@ -17,7 +17,8 @@ class ServicosController extends Controller
         return view('sistema.servicos.servicos', ['servicos' => $servicos],['page'=>'servicos']);
     }
     public function createStoreServico(){
-        return view('sistema.servicos.servicosCadastro', ['page' => 'servicos']);
+        $tipos_servico = ServicosTipo::all();
+        return view('sistema.servicos.servicosCadastro', ['page' => 'servicos'], ['tipos_servico' => $tipos_servico]);
     }
     public function createStoreTarefas(Request $request){
         $servico =  Servicos::find($request->id);
@@ -27,20 +28,20 @@ class ServicosController extends Controller
 
     public function createTipoRead()
     {
-        return view('cadastrosSistema.cadastroDeServicos', ['page'=> 'servicos']);
+        return view('sistema.servicos.cadastroTipoServicos', ['page'=> 'servicos']);
     }
 
-    public function storeTipo(){
-        $tipo_servico = new tipo_servico();
+
+    public function storeTipo(Request $request){
+        $tipo_servico = new ServicosTipo();
         $tipo_servico->nome = request()->input('nome');
-        $tipo_servico->categoria = request()->input('categoria');
         $tipo_servico->duracao = request()->input('duracao');
         $tipo_servico->materiais_necessarios = request()->input('materiais_necessarios');
-        $tipo_servico->quantidade_de_pessoas = request()->input('quantidade_de_pessoas');
-        $tipo_servico->valor = request()->input('valor');
+        $tipo_servico->quantidade_de_funcionarios = request()->input('quantidade_de_funcionarios');
+        $tipo_servico->valor_diario = request()->input('valor');
         $tipo_servico->descricao = request()->input('descricao');
         $tipo_servico->save();
-        return redirect()->route('servicos.read');
+        return redirect()->route('servicos.tipo.read');
     }
 
     public function store(Request $request){
@@ -51,7 +52,6 @@ class ServicosController extends Controller
         $servicos->tipo_cliente = request()->input('tipo_cliente');
         $servicos->valor= request()->input('valor');
         $servicos->tipo_servico = request()->input('tipo_servico');
-        $servicos->quantidade_tarefas = 0;
         $servicos->data_inicio = request()->input('data_inicio');
         $servicos->data_fim = request()->input('data_fim');
         $servicos->estado = 'Pendente';
