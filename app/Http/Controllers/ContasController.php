@@ -32,7 +32,6 @@ class ContasController extends Controller
         $conta->estado = 'Pendente';
         $conta->save();
         return redirect()->route('contas.read');
-
     }
     public function finalizarConta(Request $request){
         $conta = Contas::find($request->input('id'));

@@ -211,6 +211,7 @@
                         valorTotal = valorDiario * dias;
                     }
                 } else if (tipoPrestacao === 'Horas') {
+                    document.getElementById('duracao_servico').textContent = parseInt(duracaoDiario);
 
                     var horas = parseInt(document.getElementById('horas').value);
                     var minutos = parseInt(document.getElementById('minutos').value);

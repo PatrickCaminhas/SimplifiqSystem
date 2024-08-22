@@ -14,15 +14,15 @@
 
 <body
     style="height: 100vh; background-image: url({{ global_asset('img/login.jpg') }}); background-size: cover; background-repea: no-repeat;"
-    class="bg-success">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-success text-light sticky-top" style="height: 8vh;">
+    class="bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary text-light sticky-top" style="height: 8vh;">
         <a class="navbar-brand ms-2 " style="font-family: 'Quicksand', sans-serif;">Simplifiq System</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse ml-auto" id="navbarNav">
-            <ul class="navbar-nav bg-success">
+            <ul class="navbar-nav bg-primary">
                 <li class="nav-item">
                     <a class="nav-link" href="/">Início</a>
                 </li>
@@ -110,17 +110,17 @@
                                             placeholder="Digite sua senha" minlength="8" required>
                                     </div>
                                     <div class="text-center mt-2">
-                                        <button type="submit" class="btn btn-success text-center">Cadastrar</button>
-                                        <button type="reset" class="btn btn-success text-center">Limpar</button>
+                                        <button type="submit" class="btn btn-primary text-center">Cadastrar</button>
+                                        <button type="reset" class="btn btn-primary text-center">Limpar</button>
                                     </div>
                                 </form>
                                 @if ($errors->any())
                                 <div class="alert alert-danger mt-3">
-                                    
+
                                         @foreach ($errors->all() as $error)
                                             {{ $error }}
                                         @endforeach
-                                    
+
                                 </div>
                             @endif
                             </div>

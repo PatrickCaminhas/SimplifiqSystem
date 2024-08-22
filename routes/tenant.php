@@ -77,9 +77,12 @@ Route::middleware([
 
 
         Route::get('/estoque', [EstoqueController::class, 'create'])->name('estoque.create');
-        Route::post('/estoque', [EstoqueController::class, 'edit'])->name('estoque.edit');
-        Route::get('/estoque/{id}', [EstoqueController::class, 'edit'])->name('estoque.edit');
-        Route::post('/estoque/{id}', [EstoqueController::class, 'update'])->name('estoque.update');
+        //Route::post('/estoque', [EstoqueController::class, 'edit'])->name('estoque.edit');
+        //Route::get('/estoque/{id}', [EstoqueController::class, 'edit'])->name('estoque.edit');
+        Route::get('/estoque/{id}', [EstoqueController::class, 'update'])->name('estoque.update');
+        Route::post('/estoque', [EstoqueController::class, 'update'])->name('estoque.update');
+        Route::get('/estoque/recente/{id}', [EstoqueController::class, 'getEstoqueRecente'])->name('estoque.recente');
+
         Route::get('/contas', [ContasController::class, 'createRead'])->name('contas.read');
         Route::get('/contas/cadastro', [ContasController::class, 'create'])->name('contas.create');
         Route::post('/contas/cadastro', [ContasController::class, 'createConta'])->name('contas.createConta');
@@ -92,6 +95,8 @@ Route::middleware([
         Route::get('/metas/cadastro', [MetasController::class, 'createStoreMeta'])->name('metas.create');
         Route::post('/metas/cadastro', [MetasController::class, 'store'])->name('metas.store');
         Route::post('/metas', [MetasController::class, 'storeProgresso'])->name('metas.storeProgresso');
+        Route::get('/metas/informacoes', [MetasController::class, 'createInformacoes'])->name('metas.informacoes');
+        Route::post('/metas/informacoes', [MetasController::class, 'createInformacoes'])->name('metas.informacoes');
 
         Route::get('/servicos', [ServicosController::class, 'createRead'])->name('servicos.read');
         Route::get('/servicos/cadastro', [ServicosController::class, 'createStoreServico'])->name('servicos.create');

@@ -13,14 +13,14 @@
 </head>
 
 <body class="bg-image" style="height: 100vh; background-image: url({{ asset('img/login.jpg') }}); background-size: cover; background-repea: no-repeat;">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-success text-dark sticky-top" style="height: 8vh;">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary text-dark sticky-top" style="height: 8vh;">
         <a class="navbar-brand ms-2" style="font-family: 'Quicksand', sans-serif;">Simplifiq System</a>
         <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse ml-auto text-dark" id="navbarNav">
-            <ul class="navbar-nav bg-success">
+            <ul class="navbar-nav bg-primary">
                 <li class="nav-item ">
                     <a class="nav-link" href="/">Início</a>
                 </li>
@@ -41,7 +41,7 @@
                 </li>
             </ul>
         </div>
-    </nav> 
+    </nav>
     <div>
         <div class="bg-dark bg-opacity-75 col-md-6">
             <div class="d-flex align-items-center justify-content-center" style="height: 92vh;">
@@ -54,57 +54,41 @@
                                     <form method="POST" action="{{ route('paginalogin') }}">
                                         @csrf
                                         <div class="form-group">
-            
+
                                             <select class="select2 form-control" id="empresa" name="empresa"
                                             onchange="updateFormAction()">
                                             <option selected disabled>Selecione a sua empresa</option>
-                                            
+
                                             @foreach ($empresas as $empresa)
                                                 <option value="{{$empresa->nome }}">{{$empresa->nome}} </option>
                                             @endforeach
                                         </select>
                                         </div>
-                                        
-                                        <div class="text-start mt-3">
-                                            <a href="/" class="text-success">Esqueceu a senha?</a>
-                                        </div>
+
+
                                         <div class="text-center mt-3">
-                                            <button type="submit" class="btn btn-success text-center">Entrar</button>
+                                            <button type="submit" class="btn btn-primary text-center">Entrar</button>
                                         </div>
                                     </form>
                                     @if ($errors->any())
                                         <div class="alert alert-danger mt-3">
-                                            
+
                                                 @foreach ($errors->all() as $error)
                                                     {{ $error }}
                                                 @endforeach
-                                            
+
                                         </div>
                                     @endif
                                 </div>
-                                <script>
-                                    function updateFormAction() {
-                                        const form = document.getElementById('produto-form');
-                                        const select = document.getElementById('nome');
-                                        const selectedValue = select.value;
-                                        form.action = `/informacaoproduto/${selectedValue}`;
-                                    }
-                                </script>
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>       
+        </div>
     </div>
-    <script>
-        function updateFormAction() {
-            const form = document.getElementById('produto-form');
-            const select = document.getElementById('nome');
-            const selectedValue = select.value;
-            form.action = `/informacaoproduto/${selectedValue}`;
-        }
-        </script>
+
     <script>
         $(document).ready(function() {
             $('.select2').select2();

@@ -18,14 +18,14 @@
 
 <body class="bg-black bg-gradient">
 
-     <!-- Menu superior -->
-     @include('partials.header')
+    <!-- Menu superior -->
+    @include('partials.header')
 
-     <!-- Offcanvas para o menu -->
+    <!-- Offcanvas para o menu -->
     @include('partials.menu')
 
-     <!-- Offcanvas para notificações -->
-     @include('partials.notificacoes')
+    <!-- Offcanvas para notificações -->
+    @include('partials.notificacoes')
 
     <div class="d-flex align-items-center justify-content-center" style="height: 92vh;">
         <div class="container">
@@ -42,8 +42,8 @@
                                         <th>ID</th>
                                         <th>Valor final</th>
                                         <th>Prazo final</th>
-                                        <th>Estado</th>
-                                        <th>Verificar</th>
+                                        <th>Progresso</th>
+                                        <th>Estatísticas</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -55,15 +55,14 @@
 
                                             <td>{{ \Carbon\Carbon::parse($meta->ending_at)->format('d/m/Y') }}
                                             </td>
-                                            <td>{{ $meta->estado }}</td>
                                             <td>
                                                 <button type="button" class="btn bg-primary text-light"
-                                                    data-bs-toggle="modal" data-bs-target="#meta{{$meta->id}}">
-                                                    Verificar
+                                                    data-bs-toggle="modal" data-bs-target="#meta{{ $meta->id }}">
+                                                    Adicionar
                                                 </button>
                                                 <!-- Modal -->
-                                                <div class="modal fade" id="meta{{$meta->id}}" data-bs-backdrop="static"
-                                                    data-bs-keyboard="false" tabindex="-1"
+                                                <div class="modal fade" id="meta{{ $meta->id }}"
+                                                    data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
                                                     aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
@@ -71,8 +70,7 @@
                                                                 <h1 class="modal-title fs-5" id="staticBackdropLabel">
                                                                     Meta #{{ $meta->id }}</h1>
                                                                 <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="modal"
-                                                                    aria-label="Close"></button>
+                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
                                                             <div class="modal-body bg-secondary-subtle">
 
@@ -137,27 +135,33 @@
                                                                         value="{{ $meta->id }}">
                                                                     <div class="form-floating mb-3">
                                                                         <input type="number" class="form-control"
-                                                                            name="valor" id="valor"
-                                                                            min="1" step="0.01"
-                                                                            required @if($meta->estado=='Finalizada' || $meta->estado=='Não cumprida') disabled @endif
-                                                                            >
-                                                                            <label>
+                                                                            name="valor" id="valor" min="1"
+                                                                            step="0.01" required
+                                                                            @if ($meta->estado == 'Finalizada' || $meta->estado == 'Não cumprida') disabled @endif>
+                                                                        <label>
                                                                             Progresso de meta:</label>
                                                                     </div>
                                                                 </div>
                                                                 <button type="submit" class="btn btn-primary"
-                                                                @if($meta->estado=='Finalizada' || $meta->estado=='Não cumprida') disabled @endif
-                                                                >
+                                                                    @if ($meta->estado == 'Finalizada' || $meta->estado == 'Não cumprida') disabled @endif>
                                                                     Novo progresso</button>
 
                                                             </div>
-                                                            </form>
                                                         </div>
 
                                                     </div>
                                                 </div>
+                                                </form>
 
-
+                                            </td>
+                                            <td>
+                                                <form action="{{ route('metas.informacoes') }}" method="POST">
+                                                    @csrf
+                                                    <input type="hidden" name="meta_id" value="{{ $meta->id }}">
+                                                    <button type="submit" class="btn bg-primary text-light">
+                                                        Verificar
+                                                    </button>
+                                                </form>
 
                                             </td>
                                         </tr>

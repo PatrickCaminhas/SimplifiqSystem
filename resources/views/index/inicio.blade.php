@@ -14,14 +14,14 @@
 
 <body style="height: 100vh;" class="bg-dark text-light" style="height: 100vh;">
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-success text-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary text-dark">
         <a class="navbar-brand ms-2 " style="font-family: 'Quicksand', sans-serif;">Simplifiq System</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div     class="collapse navbar-collapse ml-auto" id="navbarNav">
-            <ul class="navbar-nav bg-success" >
+            <ul class="navbar-nav bg-primary" >
                 <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="/">Início</a>
                 </li>
@@ -55,8 +55,8 @@
                 <h1 class="display-4">Bem-vindo ao Sistema de Administração</h1>
                 <p class="lead">Gerencie suas operações de forma eficiente e eficaz com nosso sistema robusto e
                     intuitivo.</p>
-                <a href="{{route('empresas')}}" class="btn btn-success btn-lg mt-3">Entrar</a>
-                <a href="cadastro" class="btn btn-success btn-lg mt-3">Cadastrar</a>
+                <a href="{{route('empresas')}}" class="btn btn-primary btn-lg mt-3">Entrar</a>
+                <a href="cadastro" class="btn btn-primary btn-lg mt-3">Cadastrar</a>
             </div>
         </div>
     </div>
@@ -92,7 +92,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class=" bg-success  text-light text-center text-lg-start mt-5">
+    <footer class=" bg-primary  text-light text-center text-lg-start mt-5">
         <div class="container p-4">
             <p class="text-center">&copy; 2024 Simplifiq Sistem. Todos os direitos reservados.</p>
         </div>

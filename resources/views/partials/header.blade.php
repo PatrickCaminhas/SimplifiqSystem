@@ -22,7 +22,7 @@
         </button>
         <!-- Nome da aplicação -->
         <a href="/dashboard"><span class="navbar-brand mx-auto text-light "
-                style="font-family: 'Quicksand', sans-serif;"><b>{{ $empresa }} </b></span> </a>
+                style="font-family: 'Quicksand', sans-serif;"><b>Simplifiq</b></span> </a>
         <!-- Botão para offcanvas de notificações -->
         <button
             class="btn

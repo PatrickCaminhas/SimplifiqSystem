@@ -21,7 +21,7 @@
     @include('partials.header')
 
     <!-- Offcanvas para o menu -->
-   @include('partials.menu')
+    @include('partials.menu')
 
     <!-- Offcanvas para notificações -->
     @include('partials.notificacoes')
@@ -49,11 +49,72 @@
                                             <td>{{ $produto->nome }}</td>
                                             <td>{{ $produto->quantidade }}</td>
                                             <td>
-                                                <form method="GET" action="{{route('estoque.edit', $produto->id)}}">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-primary">
-                                                        Alterar estoque</button>
-                                                </form>
+                                                <button type="button" class="btn bg-primary text-light"
+                                                    data-bs-toggle="modal" data-bs-target="#meta{{ $produto->id }}"
+                                                    data-produto-id="{{ $produto->id }}">
+                                                    Alterar
+                                                </button>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="meta{{ $produto->id }}"
+                                                    data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                                                    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                                                                    Produto #{{ $produto->id }}</h1>
+                                                                <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body bg-secondary-subtle">
+
+                                                                    <div class="col-md-8">
+                                                                        <label for="exampleFormControlInput1"
+                                                                            class="form-label">Produto:</label>
+                                                                        <a>{{ $produto->nome . ' ' . $produto->modelo . ' ' }}</a>
+                                                                    </div>
+
+                                                                    <div class="col-md-4">
+                                                                        <p for="exampleFormControlInput1"
+                                                                            class="form-label">Marca:
+                                                                        <a>{{ $produto->marca }}</a></p>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <p for="exampleFormControlInput1"
+                                                                            class="form-label">Quantidade atual:
+                                                                        <a>{{ $produto->quantidade }}</a></p>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <p for="exampleFormControlInput1"
+                                                                            class="form-label">Ultima ação:</p>
+                                                                        <a id="ultima-acao-{{ $produto->id }}">
+                                                                          Nenhuma ação
+                                                                        </a>
+                                                                    </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <form method="POST" action="{{ route('estoque.update', $produto->id) }}" id="form-estoque">
+                                                                    @csrf
+                                                                    <div class="col-md-12">
+                                                                        <input type="hidden" name="produto_id" value="{{ $produto->id }}">
+                                                                        <input type="hidden" id="tipo_acao" name="tipo_acao" value="">
+                                                                        <div class="form-floating mb-3">
+                                                                            <input type="number" class="form-control" name="quantidade" id="quantidade" min="1" required>
+                                                                            <label for="quantidade">Quantidade:</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <button type="submit" class="btn btn-primary" onclick="definirAcao('baixa')" @if ($produto->quantidade == 0) disabled @endif>
+                                                                        Baixa
+                                                                    </button>
+                                                                    <button type="submit" class="btn btn-primary" onclick="definirAcao('reposicao')">
+                                                                        Reposição
+                                                                    </button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -85,6 +146,34 @@
             });
         });
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('button[data-produto-id]');
+
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const produtoId = this.getAttribute('data-produto-id');
+                    fetch(`/estoque/recente/${produtoId}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            const ultimaAcao = document.getElementById(`ultima-acao-${produtoId}`);
+                            if (data) {
+                                ultimaAcao.innerHTML = `Última ação: ${data.acao || 'Nenhuma ação'} de ${data.quantidade || '0'} unidades pelo usuário ${data.usuario || 'desconhecido'}`;
+                            } else {
+                                ultimaAcao.innerHTML = 'Nenhuma ação';
+                            }
+                        })
+                        .catch(error => console.error('Erro ao carregar a última ação:', error));
+                });
+            });
+        });
+    </script>
+    <script>
+        function definirAcao(acao) {
+            document.getElementById('tipo_acao').value = acao;
+        }
+    </script>
+
 </body>
 
 </html>

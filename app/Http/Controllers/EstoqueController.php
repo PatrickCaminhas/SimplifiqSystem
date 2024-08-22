@@ -26,9 +26,21 @@ class EstoqueController extends Controller
             $estoqueRecente = new Estoque();
             $estoqueRecente->acao = null;
         }
-            return view('estoque\alterarEstoque', ['produto' => $produto], ['estoqueRecente' => $estoqueRecente]);
+            return view('estoque\alterarEstoque', ['produto' => $produto,'page' => 'estoque','estoqueRecente' => $estoqueRecente]);
 
     }
+
+    public function getEstoqueRecente($id)
+{
+    $estoqueRecente = Estoque::where('produto_id', $id)->latest()->first();
+    if ($estoqueRecente) {
+        $estoqueRecente->formatted_created_at = $estoqueRecente->created_at->format('d/m/Y H:i:s');
+    }else{
+        $estoqueRecente = new Estoque();
+        $estoqueRecente->acao = null;
+    }
+    return response()->json($estoqueRecente);
+}
 
     public function update(Request $request, $id)
     {

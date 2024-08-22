@@ -41,7 +41,8 @@
                                             <input type="hidden" name="acao" id="acao" value="">
                                             <p> Nome do produto: {{ $produto->nome }}</p>
                                             <p> Quantidade atual: {{ $produto->quantidade }}</p>
-                                            <p> Ultima ação: @if ($estoqueRecente->acao == null)
+                                            <p> Ultima ação:
+                                                @if ($estoqueRecente->acao == null)
                                                     Nenhuma ação
                                                 @else
                                                     {{ $estoqueRecente->acao }} de {{ $estoqueRecente->quantidade }}

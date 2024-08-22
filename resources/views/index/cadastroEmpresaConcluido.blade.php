@@ -10,8 +10,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
 </head>
-<body>
-    <div class="container mt-5">
+<body class="bg-primary text-white">
+    <div class="container mt-5 ">
         <div class="row">
             <div class="col-md-6 offset-md-3 text-center">
                 <h1 class="display-4">Cadastro Confirmado!</h1>
@@ -24,7 +24,7 @@
     </div>
     <script>
         // Tempo em segundos para redirecionamento
-        let tempoRedirecionamento = 5;
+        let tempoRedirecionamento = 10;
 
         // Função para atualizar o contador
         function atualizarContador() {
@@ -51,9 +51,9 @@
     <script>
         setTimeout(function() {
             window.location.href = "/"; // Substitua pelo URL da página inicial
-        }, 5000); // 5000 milissegundos = 5 segundos
+        }, 10000); // 5000 milissegundos = 5 segundos
     </script>
-    
+
     <!-- Inclua os arquivos JavaScript do Bootstrap ou outros scripts -->
 </body>
 </html>

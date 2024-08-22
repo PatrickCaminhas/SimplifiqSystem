@@ -24,6 +24,14 @@ class LoginController extends Controller
 
         return redirect()->away('http://localhost:8000/empresas');
     }
+
+    public function buscar(Request $request)
+    {
+        $termo = $request->input('query');
+        $empresas = Empresas::where('nome', 'LIKE', "%{$termo}%")->limit(10)->get();
+
+        return response()->json($empresas);
+    }
     private function sanitizeString($string)
     {
         $string = trim($string); // Remove espaços em branco do início e do fim
@@ -60,6 +68,24 @@ class LoginController extends Controller
         }
     }
 
+    public function showEmpresas2()
+    {
+
+        $empresas = Empresas::all()->where('estado', 'ativa');
+
+        // Sanitiza o nome de cada empresa
+        $empresasSanitizadas = [];
+        foreach ($empresas as $empresa) {
+            $empresa->nome = $this->sanitizeString($empresa->nome);
+            $empresasSanitizadas[] = $empresa;
+        }
+
+        if ($empresasSanitizadas) {
+            return view('index.empresas2');
+        } else {
+            return redirect('index.empresas')->with('error', 'Empresa não encontrada.');
+        }
+    }
     public function login(Request $request)
     {
         $request->validate([

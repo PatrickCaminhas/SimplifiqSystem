@@ -14,7 +14,10 @@ class CadastroController extends Controller
     {
         return view('index\cadastroDeEmpresa');
     }
-
+    public function cadastroConcluido()
+    {
+        return view('index\cadastroEmpresaConcluido');
+    }
     public function store(Request $request)
     {
         // Validação dos dados
@@ -65,7 +68,7 @@ class CadastroController extends Controller
 
         // Redirecionamento após o cadastro
         if ($funcionario) {
-            return redirect('/')->with('success', 'Cadastro realizado com sucesso!');
+            return redirect('cadastroConcluido')->with('success', 'Cadastro realizado com sucesso!');
         } else {
             return view('index/inicio');
         }

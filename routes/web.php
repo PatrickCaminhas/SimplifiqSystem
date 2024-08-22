@@ -21,7 +21,7 @@ foreach (config('tenancy.central_domains') as $domain) {
         Route::get('/', function () {
             return view('index.inicio');
         })->name('inicio');
-        Route::get('empresas', [LoginController::class, 'showEmpresas'])->name('empresas');
+        Route::get('empresas2', [LoginController::class, 'showEmpresas'])->name('empresas');
         Route::get('/criartenant', [TenantController::class, 'create']);
         Route::post('/criar-Tenant', [TenantController::class, 'createTenant'])->name('criarTenant');
         Route::get('/create-tenant', [TenantController::class, 'createTenant']);
@@ -33,6 +33,12 @@ foreach (config('tenancy.central_domains') as $domain) {
 
         Route::get('/cadastro', [CadastroController::class, 'create'])->name('cadastro');
         Route::post('/cadastro', [CadastroController::class, 'store']);
+        Route::get('/cadastroConcluido', [CadastroController::class, 'cadastroConcluido'])->name('cadastroConcluido');
+        Route::get('empresas', [LoginController::class, 'showEmpresas2'])->name('empresas');
+        Route::get('/sanitize-string/{nome}', [LoginController::class, 'sanitizeString'])->name('sanitize.string');
+
+        Route::get('/buscar-empresa', [LoginController::class, 'buscar'])->name('buscar.empresa');
+
         /*Route::match(['get', 'post'], '/cadastroempresaconcluido', function () {
             return view('index/cadastroEmpresaConcluido');
         });*/
