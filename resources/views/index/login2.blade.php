@@ -38,7 +38,7 @@
                 </li>
             </ul>
         </div>
-    </nav> 
+    </nav>
     <div>
         <div class="bg-dark bg-opacity-75 col-md-6">
             <div class="d-flex align-items-center justify-content-center" style="height: 92vh;">
@@ -64,16 +64,16 @@
                                             <a href="/" class="text-success">Esqueceu a senha?</a>
                                         </div>
                                         <div class="text-center mt-3">
-                                            <button type="submit" class="btn btn-success text-center">Entrar</button>
+                                            <button type="submit" class="btn @include('partials.buttomCollor') text-center">Entrar</button>
                                         </div>
                                     </form>
                                     @if ($errors->any())
                                         <div class="alert alert-danger mt-3">
-                                            
+
                                                 @foreach ($errors->all() as $error)
                                                     {{ $error }}
                                                 @endforeach
-                                            
+
                                         </div>
                                     @endif
                                 </div>
@@ -82,7 +82,7 @@
                     </div>
                 </div>
             </div>
-        </div>       
+        </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>

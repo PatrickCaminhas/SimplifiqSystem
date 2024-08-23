@@ -51,11 +51,16 @@ Route::middleware([
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
+        Route::get('/cadastros', [DashboardController::class,'cadastros'])->name('cadastros');
+
         Route::get('/cadastroproduto', [CadastroProdutos::class, 'create'])->name('cadastroproduto');
         Route::post('/cadastroproduto', [CadastroProdutos::class, 'store'])->name('cadastroproduto.store');
 
         Route::get('/informacaoproduto', [InformacaoProdutosController::class, 'createRead'])->name('produto.informacao');
-        Route::get('/informacaoproduto/{nome}', [InformacaoProdutosController::class, 'listar'])->name('produto.listar.nome');
+       // Route::get('/informacaoproduto/{nome}', [InformacaoProdutosController::class, 'listar'])->name('produto.listar.nome');
+        Route::get('/informacaoproduto/{id}', [InformacaoProdutosController::class, 'listar']);
+
+        Route::get('/buscar-produto', [InformacaoProdutosController::class, 'buscarProduto']);
         Route::get('/informacaoprodutorequisicao', [InformacaoProdutosController::class, 'create'])->name('produto.listar');
         Route::get('alterarinformacoesproduto', [InformacaoProdutosController::class, 'update'])->name('produto.alterar');
 

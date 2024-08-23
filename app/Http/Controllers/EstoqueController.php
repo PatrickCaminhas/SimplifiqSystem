@@ -14,7 +14,7 @@ class EstoqueController extends Controller
     public function create()
     {
         $produtos = Produtos::all();
-        return view('estoque\estoque', ['produtos' => $produtos], ['page' => 'estoque']);
+        return view('sistema\estoque\estoque', ['produtos' => $produtos], ['page' => 'estoque']);
     }
     public function edit($id)
     {

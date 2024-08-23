@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Contas;
+use Carbon\Carbon;
 
 
 class ContasController extends Controller
@@ -12,8 +13,15 @@ class ContasController extends Controller
     public function createRead()
     {
         $contas = Contas::all();
-        return view('sistema.informativo.contasAPagar', ['contas' => $contas],['page'=>'contas']);
+        $despesasPorMes = $this->despesasUltimosSeisMeses();
+
+        return view('sistema.informativo.contasAPagar', [
+            'contas' => $contas,
+            'despesasPorMes' => $despesasPorMes,
+            'page' => 'contas'
+        ]);
     }
+
     public function create()
     {
         return view('sistema.informativo.contasAPagarCadastro', ['page' => 'contas']);
@@ -21,9 +29,10 @@ class ContasController extends Controller
     public function update(Request $request)
     {
         $conta = Contas::find($request->input('id'));
-        return view('sistema.informativo.contasAPagarFinalizar', ['conta' => $conta],['page'=>'contas']);
+        return view('sistema.informativo.contasAPagarFinalizar', ['conta' => $conta], ['page' => 'contas']);
     }
-    public function createConta(Request $request){
+    public function createConta(Request $request)
+    {
         $conta = new Contas();
         $conta->credor = $request->input('credor');
         $conta->valor = $request->input('valor');
@@ -33,11 +42,29 @@ class ContasController extends Controller
         $conta->save();
         return redirect()->route('contas.read');
     }
-    public function finalizarConta(Request $request){
+    public function finalizarConta(Request $request)
+    {
         $conta = Contas::find($request->input('id'));
         $conta->estado = $request->input('estado');
         $conta->data_pagamento = date('Y-m-d');
         $conta->save();
         return redirect()->route('contas.read');
     }
+
+    public function despesasUltimosSeisMeses()
+    {
+        $despesasPorMes = [];
+
+        for ($i = 6; $i > 0; $i--) {
+            $mes = now()->subMonths($i)->format('Y-m');
+            $despesaMensal = Contas::where('data_pagamento', 'like', $mes . '%')
+                ->sum('valor');
+            $mes = now()->subMonths($i)->format('m/Y');
+
+            $despesasPorMes[$mes] = $despesaMensal;
+        }
+
+        return $despesasPorMes;
+    }
+
 }

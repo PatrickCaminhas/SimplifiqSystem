@@ -105,7 +105,7 @@
 
                     <div class="mt-4 mb-4">
 
-                        <button class="btn btn-success me-2">Salvar</button>
+                        <button class="btn @include('partials.buttomCollor') me-2">Salvar</button>
                         <a class="btn btn-primary me-2">Baixar PDF</a>
                         <a class="btn btn-danger me-2" href="/cotacaoprodutos">Cancelar</a>
                     </div>

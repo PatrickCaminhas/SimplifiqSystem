@@ -13,14 +13,14 @@
 </head>
 
 <body class=bg-dark>
-      <!-- Menu superior -->
-      @include('partials.header')
+    <!-- Menu superior -->
+    @include('partials.header')
 
-      <!-- Offcanvas para o menu -->
-     @include('partials.menu')
+    <!-- Offcanvas para o menu -->
+    @include('partials.menu')
 
-      <!-- Offcanvas para notificações -->
-      @include('partials.notificacoes')
+    <!-- Offcanvas para notificações -->
+    @include('partials.notificacoes')
 
 
 
@@ -74,8 +74,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="medidaproduto">Medida</label>
-                                    <input type="number" class="form-control" id="medidaproduto" name="medida" min='1'
-                                        placeholder="Digite a medida do produto">
+                                    <input type="number" class="form-control" id="medidaproduto" name="medida"
+                                        min='1' placeholder="Digite a medida do produto">
                                 </div>
                                 <div class="form-group">
                                     <label for="descricao">Descrição</label>
@@ -83,8 +83,10 @@
                                         placeholder="Digite a descrição do produto"></textarea>
                                 </div>
                                 <div class="text-center mt-1">
-                                    <button type="submit" class="btn btn-success text-center">Cadastrar</button>
-                                    <button type="reset" class="btn btn-success text-center">Limpar</button>
+                                    <button type="submit"
+                                        class="btn @include('partials.buttomCollor') text-center">Cadastrar</button>
+                                    <button type="reset"
+                                        class="btn @include('partials.buttomCollor') text-center">Limpar</button>
                                 </div>
                             </form>
 

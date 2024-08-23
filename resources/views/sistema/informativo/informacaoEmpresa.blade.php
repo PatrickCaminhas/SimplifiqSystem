@@ -10,6 +10,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 
 <body class=bg-dark>
@@ -33,12 +35,22 @@
                                 <div class="col-md-6">
                                     <h5 class="card-title">Nome: {{ $informacaoEmpresa->nome }}</h5>
                                     <p class="card-text">CNPJ: {{ $informacaoEmpresa->cnpj }}</p>
-                                    <p class="card-text">Tipo de empresa: {{ ucfirst($informacaoEmpresa->tamanho_empresa) }}
+                                    <p class="card-text">Tipo de empresa:
+                                        @if ($informacaoEmpresa->tamanho_empresa == 'pequenaempresa')
+                                            Empresa de pequeno porte (EPP)
+                                        @elseif($informacaoEmpresa->tamanho_empresa == 'microempresa')
+                                            Microempresa(ME)
+                                        @elseif($informacaoEmpresa->tamanho_empresa == 'mei')
+                                            Microempreendedor Individual (MEI)
+                                        @endif
+
                                     </p>
                                     <p class="card-text">Setor: {{ $informacaoEmpresa->tipo_empresa }}</p>
                                     <p class="card-text">Telefone do responsavel: {{ $informacaoEmpresa->telefone }}</p>
-                                    <p class="card-text">Estado no sistema: {{ ucfirst($informacaoEmpresa->estado) }}</p>
-                                    <p class="card-text">Padrão de cores do sistema: {{ ucfirst($informacaoEmpresa->padrao_cores) }}</p>
+                                    <p class="card-text">Estado no sistema: {{ ucfirst($informacaoEmpresa->estado) }}
+                                    </p>
+                                    <p class="card-text">Padrão de cores do sistema:
+                                        {{ ucfirst($informacaoEmpresa->padrao_cores) }}</p>
                                 </div>
                                 <div class="col-md-6">
                                     <p class="card-text">Logo:
@@ -63,6 +75,31 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="container mt-5 mb-5">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card mb-2">
+                            <div class="card-body">
+                                <h5 class="card-title">Despesas dos ultimos 6 meses</h5>
+                                <canvas id="despesasChart"></canvas>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Despesas diarias do mês atual</h5>
+                                <canvas id="despesasDiariasChart"></canvas>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
             <div class="container mt-4">
@@ -121,40 +158,68 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                                <a href="#" class="btn btn-success">Ver todas</a>
+                                <a href="#" class="btn @include('partials.buttomCollor')">Ver todas</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="container mt-5 mb-5">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="card mb-2">
-                            <div class="card-body">
-                                <h5 class="card-title">Variação de custo unitário</h5>
-                                <img src="{{ global_asset('img/Screenshot_3.png') }}" alt="Descrição da Imagem"
-                                    class="img-fluid">
 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Variação de preço</h5>
-                                <img src="{{ global_asset('img/Screenshot_3.png') }}" alt="Descrição da Imagem"
-                                    class="img-fluid">
-
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
             <!-- Features Section -->
 
             <!-- Inclua os arquivos JavaScript do Bootstrap -->
+            <script>
+                const ctxs = document.getElementById('despesasChart').getContext('2d');
+                const despesasData = @json(array_values($despesasPorMes));
+                const labelsm = @json(array_keys($despesasPorMes));
+
+                const despesasChart = new Chart(ctxs, {
+                    type: 'bar', // ou 'line' para um gráfico de linha
+                    data: {
+                        labels: labelsm,
+                        datasets: [{
+                            label: 'Despesas',
+                            data: despesasData,
+                            backgroundColor: 'rgba(214, 11, 11, 1)',
+                            borderColor: 'rgba(214, 11, 11, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            </script>
+            <script>
+                const ctxm = document.getElementById('despesasDiariasChart').getContext('2d');
+                const despesasDiariasData = @json(array_values($despesasDiarias));
+                const labelsd = @json(array_keys($despesasDiarias));
+
+                const despesasDiariasChart = new Chart(ctxm, {
+                    type: 'line', // ou 'line' para um gráfico de linha
+                    data: {
+                        labels: labelsd,
+                        datasets: [{
+                            label: 'Despesas',
+                            data: despesasDiariasData,
+                            backgroundColor: 'rgba(214, 11, 11, 1)',
+                            borderColor: 'rgba(214, 11, 11, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            </script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

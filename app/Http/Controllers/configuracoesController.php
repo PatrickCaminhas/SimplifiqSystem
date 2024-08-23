@@ -13,7 +13,7 @@ class configuracoesController extends Controller
     public function createConfiguracoes()
     {
         $status_cadastro = $this->verificarFuncionario();
-        return view('configuracoes.configuracaoUsuario',['page'=>'configuracoes'], ['cadastro_funcionario'=>$status_cadastro]);
+        return view('sistema.configuracoes.configuracaoUsuario',['page'=>'configuracoes'], ['cadastro_funcionario'=>$status_cadastro]);
     }
     public function verificarFuncionario(){
         $status_cadastro = 'permitido';
@@ -39,7 +39,7 @@ class configuracoesController extends Controller
 
     public function createAlterarSenha()
     {
-        return view('configuracoes.alterarSenha',['page'=>'configuracoes']);
+        return view('sistema.configuracoes.alterarSenha',['page'=>'configuracoes']);
     }
 
     public function createCadastroFuncionario()
@@ -49,7 +49,7 @@ class configuracoesController extends Controller
             return redirect('configuracoes')->with('error', 'Limite de funcionários atingido!');
         }
         else{
-        return view('configuracoes.cadastrarFuncionario',['page'=>'configuracoes'], ['cadastro_funcionario'=>$status_cadastro]);
+        return view('sistema.configuracoes.cadastrarFuncionario',['page'=>'configuracoes'], ['cadastro_funcionario'=>$status_cadastro]);
         }
     }
 

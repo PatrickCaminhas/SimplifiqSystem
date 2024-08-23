@@ -11,11 +11,7 @@
         <!-- Botão de menu offcanvas -->
         <button
             class="navbar-dark btn text-light
-                @if ($padrao_cores == 'vermelho') btn-danger
-                @elseif ($padrao_cores == 'verde') btn-success
-                @elseif ($padrao_cores == 'amarelo') btn-warning
-                @elseif ($padrao_cores == 'azul')
-                @else bg-primary @endif
+               @include('partials.buttomCollor')
             "type="button"
             data-bs-toggle="offcanvas" data-bs-target="#menuOffcanvas" aria-controls="menuOffcanvas">
             <span class=" navbar-toggler-icon "></span>

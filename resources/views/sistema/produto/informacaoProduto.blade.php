@@ -107,7 +107,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                                <a href="#" class="btn btn-success">Ver todas</a>
+                                <a href="#" class="btn @include('partials.buttomCollor')">Ver todas</a>
                             </div>
                         </div>
                     </div>

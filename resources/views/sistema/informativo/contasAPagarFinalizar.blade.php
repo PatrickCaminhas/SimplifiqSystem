@@ -55,7 +55,7 @@
                                                     <label>Tipo:</label>
                                                 </div>
                                                 <div class="text-center mt-3">
-                                                    <button type="submit" class="btn btn-success">Finalizar</button>
+                                                    <button type="submit" class="btn @include('partials.buttomCollor')">Finalizar</button>
                                                 </div>
                                         </form>
                                         @if ($errors->any())

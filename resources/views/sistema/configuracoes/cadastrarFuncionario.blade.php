@@ -63,8 +63,8 @@
                                     </label>
                                 </div>
                                 <div class="text-center mt-3">
-                                    <button type="submit" class="btn btn-success text-center">Cadastrar</button>
-                                    <button type="reset" class="btn btn-success text-center">Limpar</button>
+                                    <button type="submit" class="btn @include('partials.buttomCollor') text-center">Cadastrar</button>
+                                    <button type="reset" class="btn @include('partials.buttomCollor') text-center">Limpar</button>
                                 </div>
                             </form>
                             @if ($errors->any())

@@ -11,7 +11,7 @@ class FornecedorController extends Controller
     //
     public function create()
     {
-        return view('cadastrosSistema\cadastroDeFornecedor', ['page' => 'cadastroFornecedor']);
+        return view('sistema\cadastrosSistema\cadastroDeFornecedor', ['page' => 'cadastroFornecedor']);
     }
     public function store(Request $request)
     {

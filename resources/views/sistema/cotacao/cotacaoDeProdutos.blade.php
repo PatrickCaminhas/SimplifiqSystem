@@ -98,8 +98,8 @@
                         </tbody>
                     </table>
                     <div class= "text-center mt-2 mb-4">
-                        <button type="submit" class="btn btn-success text-center">Salvar</button>
-                        <button type="reset" class="btn btn-success text-center">Limpar</button>
+                        <button type="submit" class="btn @include('partials.buttomCollor') text-center">Salvar</button>
+                        <button type="reset" class="btn @include('partials.buttomCollor') text-center">Limpar</button>
 
 
 

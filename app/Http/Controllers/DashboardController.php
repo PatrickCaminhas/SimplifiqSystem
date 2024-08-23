@@ -14,5 +14,10 @@ class DashboardController extends Controller
         return view('sistema\dashboard', ['contas' => $contas],['page'=>'dashboard']);
     }
 
+    public function cadastros(){
+
+        return view('sistema\cadastrosSistema\cadastros',['page'=> 'cadastros']);
+    }
+
     // Adicione outros métodos conforme necessário
 }

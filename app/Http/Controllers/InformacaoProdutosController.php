@@ -13,7 +13,7 @@ class InformacaoProdutosController extends Controller
     {
         $produtos = Produtos::all();
         if ($produtos) {
-            return view('produto/informacaoProdutoRequisicao', ['produtos' => $produtos], ['page' => 'informacaoProduto']);
+            return view('sistema\produto\informacaoProdutoRequisicao', ['produtos' => $produtos], ['page' => 'informacaoProduto']);
         } else {
             return redirect('informacaoProdutoRequisicao')->with('error', 'Produto não encontrado.');
         }
@@ -34,19 +34,39 @@ class InformacaoProdutosController extends Controller
     }
     public function createRead()
     {
-        return view('produto\informacaoProduto', ['page' => 'informacaoProduto']);
+        return view('sistema\produto\informacaoProduto', ['page' => 'informacaoProduto']);
     }
 
-    public function listar($nome)
+    public function listar($id)
     {
-        $produto = Produtos::where('nome', $nome)->first();
+        $produto = Produtos::where('id', $id)->first();
         if ($produto) {
-            return view('produto/informacaoProduto', ['produto' => $produto], ['page' => 'informacaoProduto']);
+            return view('sistema\produto\informacaoProduto', ['produto' => $produto], ['page' => 'informacaoProduto']);
         } else {
             return redirect('informacaoproduto')->with('error', 'Produto não encontrado.');
         }
     }
 
+    public function buscarProduto(Request $request)
+    {
+        $termo = $request->input('query');
+        $produtos = Produtos::where('nome', 'LIKE', "%{$termo}%")
+            ->orWhere('modelo', 'LIKE', "%{$termo}%")
+            ->orWhere('marca', 'LIKE', "%{$termo}%")
+            ->limit(10)
+            ->get();
+
+        $resultados = $produtos->map(function ($produto) {
+            return [
+                'id' => $produto->id,
+                'nome' => $produto->nome,
+                'modelo' => $produto->modelo,
+                'marca' => $produto->marca
+            ];
+        });
+
+        return response()->json($resultados);
+    }
 
     public function todosNomes()
     {
@@ -77,10 +97,10 @@ class InformacaoProdutosController extends Controller
             'unidade_medida' => $request->input('unidade_medida'),
             'medida' => $request->input('medida'),
             'descricao' => $request->input('descricao'),
-            'ultimo_fornecedor'=> "Nenhum",
-            'quantidade'=> 0,
-            'preco_compra'=> 0,
-            'preco_venda'=> 0,
+            'ultimo_fornecedor' => "Nenhum",
+            'quantidade' => 0,
+            'preco_compra' => 0,
+            'preco_venda' => 0,
 
         ]);
         if ($produto) {
@@ -89,7 +109,8 @@ class InformacaoProdutosController extends Controller
             return redirect('cadastroproduto')->with('error', 'Erro ao cadastrar produto.');
         }
     }
-    public function update(Request $request){
+    public function update(Request $request)
+    {
         $request->validate([
             'nome' => 'required|string',
             'marca' => 'string',

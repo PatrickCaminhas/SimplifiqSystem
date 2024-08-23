@@ -58,15 +58,7 @@
                         </table>
 
 
-                        <a href="ultimasatividades"
-                            class="btn
-                        @if ($padrao_cores == 'vermelho') btn-danger
-                        @elseif ($padrao_cores == 'verde') btn-success
-                        @elseif ($padrao_cores == 'amarelo') btn-warning
-                        @elseif ($padrao_cores == 'azul') btn-primary
-                        @else bg-primary @endif
-                        ">Ver
-                            todas</a>
+                        <a href="ultimasatividades" class="btn @include('partials.buttomCollor') ">Ver todas</a>
                     </div>
                 </div>
             </div>
@@ -88,7 +80,7 @@
                             <button type="button"
                                 class="btn
                             @if ($padrao_cores == 'vermelho') btn-danger
-                            @elseif ($padrao_cores == 'verde') btn-success
+                            @elseif ($padrao_cores == 'verde') @include('partials.buttomCollor')
                             @elseif ($padrao_cores == 'amarelo') btn-warning
                             @elseif ($padrao_cores == 'azul') btn-primary
                             @else bg-primary @endif
@@ -166,7 +158,7 @@
                             <a href="#"
                                 class="btn
                             @if ($padrao_cores == 'vermelho') btn-danger
-                            @elseif ($padrao_cores == 'verde') btn-success
+                            @elseif ($padrao_cores == 'verde') @include('partials.buttomCollor')
                             @elseif ($padrao_cores == 'amarelo') btn-warning
                             @elseif ($padrao_cores == 'azul') btn-primary
                             @else bg-primary @endif
@@ -211,7 +203,7 @@
                         <a href="{{ route('contas.read') }}"
                             class="btn
                         @if ($padrao_cores == 'vermelho') btn-danger
-                        @elseif ($padrao_cores == 'verde') btn-success
+                        @elseif ($padrao_cores == 'verde') @include('partials.buttomCollor')
                         @elseif ($padrao_cores == 'amarelo') btn-warning
                         @elseif ($padrao_cores == 'azul') btn-primary
                         @else bg-primary @endif

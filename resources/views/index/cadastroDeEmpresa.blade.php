@@ -75,13 +75,12 @@
                                             <option value="pequenaempresa">PEQUENA</option>
                                         </select>
                                     </div>
+
                                     <div class="form-group">
                                         <label for="tipoEmpresa">Tipo de empresa</label>
                                         <select class="form-control" id="tipoEmpresa" name="tipoempresa" required>
                                             <option selected disabled>Selecione o tipo de empresa</option>
-                                            <option value="Indústria">Indústria</option>
-                                            <option value="Comércio">Comércio</option>
-                                            <option value="Serviços">Serviços</option>
+                                            <!-- As opções serão alteradas dinamicamente com JavaScript -->
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -115,14 +114,14 @@
                                     </div>
                                 </form>
                                 @if ($errors->any())
-                                <div class="alert alert-danger mt-3">
+                                    <div class="alert alert-danger mt-3">
 
                                         @foreach ($errors->all() as $error)
                                             {{ $error }}
                                         @endforeach
 
-                                </div>
-                            @endif
+                                    </div>
+                                @endif
                             </div>
                         </div>
 
@@ -160,6 +159,62 @@
         // Adiciona o evento de input para chamar a função de formatação quando o usuário digitar no campo
         document.getElementById('telefone').addEventListener('input', formatarTelefone);
     </script>
+
+    <script>
+        document.getElementById('tamanhoempresa').addEventListener('change', function() {
+            const tipoEmpresaSelect = document.getElementById('tipoEmpresa');
+            const tamanhoEmpresa = this.value;
+
+            // Limpa as opções atuais do select de tipo de empresa
+            tipoEmpresaSelect.innerHTML = '<option selected disabled>Selecione o tipo de empresa</option>';
+
+            let options = [];
+
+            // Define as opções com base no tamanho da empresa
+            if (tamanhoEmpresa === 'mei') {
+                options = [{
+                        value: 'comercio',
+                        text: 'Somente comércio'
+                    },
+                    {
+                        value: 'industria',
+                        text: 'Indústria'
+                    },
+                    {
+                        value: 'servicos',
+                        text: 'Somente serviços'
+                    },
+                    {
+                        value: 'comercioEervicos',
+                        text: 'Serviços e comércio'
+                    }
+                ];
+            } else if (tamanhoEmpresa === 'microempresa' || tamanhoEmpresa === 'pequenaempresa') {
+                options = [{
+                        value: 'comercio',
+                        text: 'Comércio'
+                    },
+                    {
+                        value: 'industria',
+                        text: 'Indústria'
+                    },
+                    {
+                        value: 'servicos',
+                        text: 'Serviços'
+                    }
+                ];
+            }
+
+            // Adiciona as novas opções ao select de tipo de empresa
+            options.forEach(option => {
+                const newOption = document.createElement('option');
+                newOption.value = option.value;
+                newOption.textContent = option.text;
+                tipoEmpresaSelect.appendChild(newOption);
+            });
+        });
+    </script>
+
     <script>
         // Função para formatar o CNPJ enquanto o usuário digita
         function formatarCNPJ() {

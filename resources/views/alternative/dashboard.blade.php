@@ -17,7 +17,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-success sticky-top  ">
         <div class="container-fluid">
             <!-- Botão de menu offcanvas -->
-            <button class="navbar-dark btn btn-success text-light " type="button" data-bs-toggle="offcanvas"
+            <button class="navbar-dark btn @include('partials.buttomCollor') text-light " type="button" data-bs-toggle="offcanvas"
                 data-bs-target="#menuOffcanvas" aria-controls="menuOffcanvas">
                 <span class=" navbar-toggler-icon "></span>
             </button>
@@ -25,7 +25,7 @@
             <a href="/dashboard"><span class="navbar-brand mx-auto text-light " style="font-family: 'Quicksand', sans-serif;"><b>Simplifiq
                     System</b></span> </a>
             <!-- Botão para offcanvas de notificações -->
-            <button class="btn btn-success border border-light " type="button" data-bs-toggle="offcanvas"
+            <button class="btn @include('partials.buttomCollor') border border-light " type="button" data-bs-toggle="offcanvas"
                 data-bs-target="#notificacoesOffcanvas" aria-controls="notificacoesOffcanvas">
                 Notificações
             </button>
@@ -43,7 +43,7 @@
 
         <div class="offcanvas-body ">
              <h6 class="offcanvas-subtitle text-light">
-                <p>Bem-vindo, 
+                <p>Bem-vindo,
                 @if (session('funcionario'))
                      {{ session('funcionario')->nome }}!</p>
                 @endif
@@ -109,10 +109,10 @@
                         </div>
                     </div>
                 </div>
-                
+
             </div>
             <div class="mt-2">
-                <a href="/notificacoes" class="btn btn-success">Ver todas</a>
+                <a href="/notificacoes" class="btn @include('partials.buttomCollor')">Ver todas</a>
             </div>
         </div>
         <!-- Você pode usar qualquer componente Bootstrap ou elementos personalizados -->
@@ -126,7 +126,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Lucro e despesas dos ultimos 6 meses</h5>
                         <img src="{{ global_asset('img/Screenshot_1.png') }}" alt="Descrição da Imagem" class="img-fluid">
-                        
+
                     </div>
                 </div>
             </div>
@@ -152,7 +152,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <a href="ultimasatividades" class="btn btn-success">Ver todas</a>
+                        <a href="ultimasatividades" class="btn @include('partials.buttomCollor')">Ver todas</a>
                     </div>
                 </div>
             </div>
@@ -169,7 +169,7 @@
                         <h5 class="card-title">Enviar mensagem</h5>
                         <p class="card-text">Envie uma mensagem para um funcionario, todos os funcionarios ou para um fornecedor cadastrado no sistema.</p>
                        <!-- <a href="/enviarmensagem" class="btn btn-primary">Enviar mensagem</a> -->
-                       <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                       <button type="button" class="btn @include('partials.buttomCollor')" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                         Enviar mensagem
                       </button>
 <!-- Modal -->
@@ -181,9 +181,9 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body bg-secondary-subtle">
-        
+
             <form action="/dashboard" method="GET" class="row g-3">
-             
+
                 <div class="col-md-6">
                     <label for="exampleFormControlInput1" class="form-label">Destinatário</label>
                     <select class="form-select" aria-label="Default select example">
@@ -211,10 +211,10 @@
                     <label for="exampleFormControlTextarea1" class="form-label">Mensagem</label>
                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                 </div>
-                
-            
-           
-           
+
+
+
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
@@ -222,16 +222,16 @@
         </div>
             </form>
       </div>
-      
+
     </div>
-  </div>                      
+  </div>
                     </div>
                 </div>
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Mensagens recebidas</h5>
                         <p class="card-text">Acesse a sua caixa de mensagens recebidas.</p>
-                        <a href="#" class="btn btn-success">Acesse</a>
+                        <a href="#" class="btn @include('partials.buttomCollor')">Acesse</a>
                     </div>
                 </div>
                 </div>
@@ -278,7 +278,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <a href="#" class="btn btn-success">Ver todas</a>
+                        <a href="#" class="btn @include('partials.buttomCollor')">Ver todas</a>
                     </div>
                 </div>
             </div>

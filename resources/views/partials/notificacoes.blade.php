@@ -27,14 +27,7 @@
 
         </div>
         <div>
-            <a href="/notificacoes"
-                class="btn
-                @if ($padrao_cores == 'vermelho') btn-danger
-                @elseif ($padrao_cores == 'verde') btn-success
-                @elseif ($padrao_cores == 'amarelo') btn-warning
-                @elseif ($padrao_cores == 'azul') btn-primary
-                @else bg-primary @endif
-                ">Ver
+            <a href="/notificacoes" class="btn @include('partials.buttomCollor') ">Ver
                 todas</a>
         </div>
     </div>

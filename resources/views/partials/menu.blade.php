@@ -30,7 +30,7 @@
                      " aria-current="page" href="/dashboard">Inicio</a>
             </li>
 
-            @if (isset($menu) && $menu == 'Comércio' || isset($menu) && $menu == 'Indústria')
+            {{-- @if (isset($menu) && $menu == 'Comércio' || isset($menu) && $menu == 'Indústria')
                 <li class="nav-item">
                     <a class="nav-link
                     @if($page == 'cadastroProduto') active @endif
@@ -48,11 +48,17 @@
                 @if($page == 'cadastroFornecedor') active @endif
                 " href="{{ route('cadastrofornecedor') }}">Cadastro de fornecedor
                 </a>
+            </li> --}}
+            <li class="nav-item">
+                <a class="nav-link
+                @if($page == 'cadastros' || $page == 'cadastroProduto' || $page == 'cadastroServicos' || $page == 'cadastroFornecedor') active @endif
+                " href="{{ route('cadastros') }}">Cadastros V
+                </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link
                 @if($page == 'estoque') active @endif
-                " href="{{ route('estoque.create') }}">Estoque
+                " href="{{ route('estoque.create') }}">Estoque V
                 </a>
             </li>
             <li class="nav-item">
@@ -68,17 +74,17 @@
             <li class="nav-item">
                 <a class="nav-link
                 @if($page == 'informacaoEmpresa') active @endif
-                " href="#">Informação da empresa</a>
+                " href="{{route ('informacoes.empresa')}}">Informação da empresa</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link
                 @if($page == 'contas') active @endif
-                " href="{{ route('contas.read') }}">Contas</a>
+                " href="{{ route('contas.read') }}">Contas V</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link
                 @if($page == 'metas') active @endif
-                " href="{{ route('metas.read') }}">Metas</a>
+                " href="{{ route('metas.read') }}">Metas V </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link

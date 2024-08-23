@@ -67,7 +67,7 @@
                                                 <label> Data de vencimento:</label>
                                             </div>
                                             <div class=" text-center mt-3">
-                                                <button type="submit" class="btn btn-success">Cadastrar</button>
+                                                <button type="submit" class="btn @include('partials.buttomCollor')">Cadastrar</button>
                                             </div>
                                         </form>
                                         @if ($errors->any())

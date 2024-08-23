@@ -77,17 +77,17 @@
                                             placeholder="Digite sua senha" minlength="8" required>
                                     </div>
                                     <div class="text-center mt-2">
-                                        <button type="submit" class="btn btn-success text-center">Cadastrar</button>
-                                        <button type="reset" class="btn btn-success text-center">Limpar</button>
+                                        <button type="submit" class="btn @include('partials.buttomCollor') text-center">Cadastrar</button>
+                                        <button type="reset" class="btn @include('partials.buttomCollor') text-center">Limpar</button>
                                     </div>
                                 </form>
                                 @if ($errors->any())
                                 <div class="alert alert-danger mt-3">
-                                    
+
                                         @foreach ($errors->all() as $error)
                                             {{ $error }}
                                         @endforeach
-                                    
+
                                 </div>
                             @endif
                             </div>

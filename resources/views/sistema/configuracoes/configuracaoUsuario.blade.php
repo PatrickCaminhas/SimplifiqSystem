@@ -34,7 +34,7 @@
 
                         <h5 class="card-subtitle mb-2 text-muted text-center">Backup</h5>
                         <p class="card-text">Realize o backup de seus dados para garantir a segurança de suas informações.</p>
-                        <a href="#" class="btn btn-success">Realizar backup</a>
+                        <a href="#" class="btn @include('partials.buttomCollor')">Realizar backup</a>
                     </div>
                 </div>
             </div>
@@ -49,9 +49,9 @@
                         <p class="card-text">Cadastre um novo funcionário na empresa.</p>
 
                         @if($cadastro_funcionario == "negado")
-                        <button class="btn btn-success" disabled>Cadastrar funcionário</button>
+                        <button class="btn @include('partials.buttomCollor')" disabled>Cadastrar funcionário</button>
                         @else
-                        <a href="{{route('configuracoes.funcionario')}}" class="btn btn-success">Cadastrar funcionário</a>
+                        <a href="{{route('configuracoes.funcionario')}}" class="btn @include('partials.buttomCollor')">Cadastrar funcionário</a>
                         @endif
                     </div>
                 </div>
@@ -61,7 +61,7 @@
                     <div class="card-body">
                         <h5 class="card-subtitle mb-2 text-muted text-center">Alterar cargos</h5>
                         <p class="card-text">Altere os cargos dos usuarios da sua empresa.</p>
-                        <a href="#" class="btn btn-success">Alterar cargos</a>
+                        <a href="#" class="btn @include('partials.buttomCollor')">Alterar cargos</a>
                     </div>
                 </div>
             </div>
@@ -74,7 +74,7 @@
                     <div class="card-body">
                         <h5 class="card-subtitle mb-2 text-muted text-center">Alterar seus dados</h5>
                         <p class="card-text">Altere os seus dados cadastrais.</p>
-                        <a href="#" class="btn btn-success">Alterar senha</a>
+                        <a href="#" class="btn @include('partials.buttomCollor')">Alterar senha</a>
                     </div>
                 </div>
             </div>
@@ -83,7 +83,7 @@
                     <div class="card-body">
                         <h5 class="card-subtitle mb-2 text-muted text-center">Alterar senha</h5>
                         <p class="card-text">Altere sua senha para garantir a segurança de sua conta.</p>
-                        <a href="{{route('configuracoes.senha')}}" class="btn btn-success">Alterar senha</a>
+                        <a href="{{route('configuracoes.senha')}}" class="btn @include('partials.buttomCollor')">Alterar senha</a>
                     </div>
                 </div>
             </div>

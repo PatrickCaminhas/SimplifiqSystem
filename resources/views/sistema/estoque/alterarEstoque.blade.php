@@ -54,7 +54,7 @@
                                             <p> Valor a alterar </a> <input type="number" name="quantidade"
                                                     id="quantidade" min="1" required>
                                             <div class=" text-center mt-3">
-                                                <button type="submit" class="btn btn-success"
+                                                <button type="submit" class="btn @include('partials.buttomCollor')"
                                                     onclick="setAction('reposicao')">Reposição</button>
                                                 <button type="submit" class="btn btn-danger"
                                                     onclick="setAction('baixa')">Baixa</button>

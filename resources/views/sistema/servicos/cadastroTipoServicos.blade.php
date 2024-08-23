@@ -70,8 +70,8 @@
                                         placeholder="Digite a descrição do serviço."></textarea>
                                 </div>
                                 <div class="text-center mt-1">
-                                    <button type="submit" class="btn btn-success text-center">Cadastrar</button>
-                                    <button type="reset" class="btn btn-success text-center">Limpar</button>
+                                    <button type="submit" class="btn @include('partials.buttomCollor') text-center">Cadastrar</button>
+                                    <button type="reset" class="btn @include('partials.buttomCollor') text-center">Limpar</button>
                                 </div>
                             </form>
 
