@@ -50,67 +50,83 @@
                                             <td>{{ $produto->quantidade }}</td>
                                             <td>
                                                 <button type="button" class="btn bg-primary text-light"
-                                                    data-bs-toggle="modal" data-bs-target="#meta{{ $produto->id }}"
+                                                    data-bs-toggle="modal" data-bs-target="#estoque{{ $produto->id }}"
                                                     data-produto-id="{{ $produto->id }}">
                                                     Alterar
                                                 </button>
                                                 <!-- Modal -->
-                                                <div class="modal fade" id="meta{{ $produto->id }}"
+                                                <div class="modal fade" id="estoque{{ $produto->id }}"
                                                     data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
                                                     aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">
-                                                                    Produto #{{ $produto->id }}</h1>
-                                                                <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body bg-secondary-subtle">
+                                                            <form method="POST" action="{{ route('estoque.update') }}"
+                                                                id="form-estoque" class="">
+                                                                @csrf
+                                                                <div class="modal-header">
+                                                                    <h1 class="modal-title fs-5"
+                                                                        id="staticBackdropLabel">
+                                                                        Produto #{{ $produto->id }}</h1>
+                                                                    <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal"
+                                                                        aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body bg-secondary-subtle">
+                                                                    <div class="row">
+                                                                        <div class="col-md-12">
+                                                                            <label for="exampleFormControlInput1"
+                                                                                class="form-label">Produto:</label>
+                                                                            <a>{{ $produto->nome . ' ' . $produto->modelo . ' ' }}</a>
+                                                                        </div>
 
-                                                                    <div class="col-md-8">
-                                                                        <label for="exampleFormControlInput1"
-                                                                            class="form-label">Produto:</label>
-                                                                        <a>{{ $produto->nome . ' ' . $produto->modelo . ' ' }}</a>
-                                                                    </div>
-
-                                                                    <div class="col-md-4">
-                                                                        <p for="exampleFormControlInput1"
-                                                                            class="form-label">Marca:
-                                                                        <a>{{ $produto->marca }}</a></p>
-                                                                    </div>
-                                                                    <div class="col-md-6">
-                                                                        <p for="exampleFormControlInput1"
-                                                                            class="form-label">Quantidade atual:
-                                                                        <a>{{ $produto->quantidade }}</a></p>
-                                                                    </div>
-                                                                    <div class="col-md-6">
-                                                                        <p for="exampleFormControlInput1"
-                                                                            class="form-label">Ultima ação:</p>
-                                                                        <a id="ultima-acao-{{ $produto->id }}">
-                                                                          Nenhuma ação
-                                                                        </a>
-                                                                    </div>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <form method="POST" action="{{ route('estoque.update', $produto->id) }}" id="form-estoque">
-                                                                    @csrf
-                                                                    <div class="col-md-12">
-                                                                        <input type="hidden" name="produto_id" value="{{ $produto->id }}">
-                                                                        <input type="hidden" id="tipo_acao" name="tipo_acao" value="">
-                                                                        <div class="form-floating mb-3">
-                                                                            <input type="number" class="form-control" name="quantidade" id="quantidade" min="1" required>
-                                                                            <label for="quantidade">Quantidade:</label>
+                                                                        <div class="col-md-6">
+                                                                            <p for="exampleFormControlInput1"
+                                                                                class="form-label">Marca:
+                                                                                <a>{{ $produto->marca }}</a>
+                                                                            </p>
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <p for="exampleFormControlInput1"
+                                                                                class="form-label">Quantidade atual:
+                                                                                <a>{{ $produto->quantidade }}</a>
+                                                                            </p>
+                                                                        </div>
+                                                                        <div class="col-md-12">
+                                                                            <p for="exampleFormControlInput1"
+                                                                                class="form-label">Ultima ação:
+                                                                                <a
+                                                                                    id="ultima-acao-{{ $produto->id }}">
+                                                                                </a>
+                                                                            </p>
                                                                         </div>
                                                                     </div>
-                                                                    <button type="submit" class="btn btn-primary" onclick="definirAcao('baixa')" @if ($produto->quantidade == 0) disabled @endif>
-                                                                        Baixa
-                                                                    </button>
-                                                                    <button type="submit" class="btn btn-primary" onclick="definirAcao('reposicao')">
-                                                                        Reposição
-                                                                    </button>
-                                                                </form>
-                                                            </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+
+                                                                    <div class="col-md-12">
+                                                                        <input type="hidden" name="id_produto"
+                                                                            value="{{ $produto->id }}">
+
+                                                                        <div class="form-floating mb-3">
+                                                                            <input type="number" class="form-control"
+                                                                                name="quantidade{{$produto->id}}" id="quantidade{{$produto->id}}" min="1"
+                                                                                required>
+                                                                            <label for="quantidade">Quantidade:</label>
+                                                                        </div>
+
+
+                                                                        <div class="text-center mt-3">
+                                                                            <!-- Botões com valor da ação embutido -->
+                                                                            <button type="submit"
+                                                                                class="btn btn-success" name="acao"
+                                                                                value="reposicao">Reposição</button>
+                                                                            <button type="submit"
+                                                                                class="btn btn-danger" name="acao"
+                                                                                value="baixa">Baixa</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -119,7 +135,14 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            @if ($errors->any())
+                                <div class="alert alert-danger mt-3">
+                                    @foreach ($errors->all() as $error)
+                                        {{ $error }}
+                                    @endforeach
 
+                                </div>
+                            @endif
                         </div>
 
                     </div>
@@ -127,6 +150,12 @@
             </div>
         </div>
     </div>
+    <script>
+        function setActionAndSubmit(acao) {
+            document.getElementById('acao').value = acao;
+            document.getElementById('form-estoque').submit(); // Força o envio do formulário após setar a ação
+        }
+    </script>
 
     <!-- Features Section -->
 
@@ -156,23 +185,25 @@
                     fetch(`/estoque/recente/${produtoId}`)
                         .then(response => response.json())
                         .then(data => {
-                            const ultimaAcao = document.getElementById(`ultima-acao-${produtoId}`);
-                            if (data) {
-                                ultimaAcao.innerHTML = `Última ação: ${data.acao || 'Nenhuma ação'} de ${data.quantidade || '0'} unidades pelo usuário ${data.usuario || 'desconhecido'}`;
+                            const ultimaAcao = document.getElementById(
+                                `ultima-acao-${produtoId}`);
+                            console.log(data); // Adicionado para verificar a resposta
+                            if (data && data.acao) {
+                                ultimaAcao.innerHTML =
+                                    ` ${data.acao} de ${data.quantidade} unidades pelo usuário ${data.usuario || 'desconhecido'} em ${data.formatted_created_at}`;
                             } else {
-                                ultimaAcao.innerHTML = 'Nenhuma ação';
+                                ultimaAcao.innerHTML = 'Nenhuma ação registrada';
                             }
                         })
-                        .catch(error => console.error('Erro ao carregar a última ação:', error));
+                        .catch(error => {
+                            console.error('Erro ao carregar a última ação:', error);
+                        });
+
                 });
             });
         });
     </script>
-    <script>
-        function definirAcao(acao) {
-            document.getElementById('tipo_acao').value = acao;
-        }
-    </script>
+
 
 </body>
 

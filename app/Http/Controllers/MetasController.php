@@ -28,20 +28,20 @@ class MetasController extends Controller
         $meta = Metas::find($Request->input('meta_id'));
         $progressos = MetasProgresso::where('meta_id', $Request->input('meta_id'))->get();
         $informacoes = new \stdClass();
-        $informacoes->data_inicial =  Carbon::parse($meta->created_at)->format('d/m/Y');
-        $informacoes->data_final =  Carbon::parse($meta->ending_at)->format('d/m/Y');
+        $informacoes->data_inicial = Carbon::parse($meta->created_at)->format('d/m/Y');
+        $informacoes->data_final = Carbon::parse($meta->ending_at)->format('d/m/Y');
         $dataMaisAtual = $this->dataMaisAtual($progressos);
-        $diferencaDias = $this->diferencaDias($dataMaisAtual, $meta->ending_at );
+        $diferencaDias = $this->diferencaDias($dataMaisAtual, $meta->ending_at);
         $informacoes->diaComMaiorProgresso = $this->diaComMaiorProgresso($progressos);
         $informacoes->maiorProgresso = $this->maiorProgresso($progressos);
-        $informacoes->diaComMenorProgresso =  $this->diaComMenorProgresso($progressos);
+        $informacoes->diaComMenorProgresso = $this->diaComMenorProgresso($progressos);
         $informacoes->menorProgresso = $this->menorProgresso($progressos);
 
         $informacoes->diferencaDias = $diferencaDias;
         $informacoes->UltimoProgresso = Carbon::parse($dataMaisAtual)->format('d/m/Y');
         $informacoes->porcentagem = $this->porcentagem($meta);
-        $informacoes->total = "R$".$this->valorExcedidoOuFaltante($meta);
-        $informacoes->estado= $meta->estado;
+        $informacoes->total = "R$" . $this->valorExcedidoOuFaltante($meta);
+        $informacoes->estado = $meta->estado;
 
 
         return view('sistema.metas.metasInformacoes', ['meta' => $meta, 'progressos' => $progressos, 'informacoes' => $informacoes], ['page' => 'metas']);
@@ -110,24 +110,23 @@ class MetasController extends Controller
     public function valorExcedidoOuFaltante($meta)
     {
         if ($meta->valor_atual > $meta->valor) {
-            return number_format($meta->valor_atual - $meta->valor,2);
+            return number_format($meta->valor_atual - $meta->valor, 2);
         } else {
-            return number_format($meta->valor - $meta->valor_atual,2);
+            return number_format($meta->valor - $meta->valor_atual, 2);
         }
     }
     public function porcentagem($meta)
     {
-         $porcentegem=($meta->valor_atual * 100) / $meta->valor;
-         if($porcentegem>100){
-             $porcentegem-=100;
-         }
-         else if ($porcentegem<100){
-             $porcentegem=100-$porcentegem;
-         }
-         if($porcentegem==100){
-             $porcentegem=0;
-         }
-         return number_format($porcentegem,2)."%";
+        $porcentegem = ($meta->valor_atual * 100) / $meta->valor;
+        if ($porcentegem > 100) {
+            $porcentegem -= 100;
+        } else if ($porcentegem < 100) {
+            $porcentegem = 100 - $porcentegem;
+        }
+        if ($porcentegem == 100) {
+            $porcentegem = 0;
+        }
+        return number_format($porcentegem, 2) . "%";
     }
 
 }

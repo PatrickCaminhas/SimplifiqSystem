@@ -36,9 +36,11 @@
                                 <div class="card-body ">
                                     <h2 class="text-center">Estoque</h2>
                                     <div>
-                                        <form action="{{ route('estoque.update', $produto->id) }}" method="POST">
+                                        <form action="{{ route('estoque.update') }}" method="POST">
                                             @csrf
                                             <input type="hidden" name="acao" id="acao" value="">
+                                            <input type="hidden" name="id" id="id" value="{{$produto->id}}">
+
                                             <p> Nome do produto: {{ $produto->nome }}</p>
                                             <p> Quantidade atual: {{ $produto->quantidade }}</p>
                                             <p> Ultima ação:

@@ -25,20 +25,20 @@
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
 
             <li class="nav-item ">
-                <b> <a class="nav-link
+                 <a class="nav-link
                      @if($page == 'dashboard') active @endif
-                     " aria-current="page" href="/dashboard">Inicio</a></b>
+                     " aria-current="page" href="/dashboard">Inicio</a>
             </li>
 
             @if (isset($menu) && $menu == 'Comércio' || isset($menu) && $menu == 'Indústria')
                 <li class="nav-item">
                     <a class="nav-link
-                    @if($page == 'cadastroproduto') active @endif
+                    @if($page == 'cadastroProduto') active @endif
                     " href="{{ route('cadastroproduto') }}">Cadastro de produto</a>
                 </li>
             @elseif(isset($menu) && $menu == 'Serviços')
                 <li class="nav-item
-                @if($page == 'cadastroservicos') active @endif
+                @if($page == 'cadastroServicos') active @endif
                 ">
                     <a class="nav-link" href="{{ route('servicos.tipo.read') }}">Cadastro de serviços</a>
                 </li>
@@ -47,6 +47,12 @@
                 <a class="nav-link
                 @if($page == 'cadastroFornecedor') active @endif
                 " href="{{ route('cadastrofornecedor') }}">Cadastro de fornecedor
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link
+                @if($page == 'estoque') active @endif
+                " href="{{ route('estoque.create') }}">Estoque
                 </a>
             </li>
             <li class="nav-item">
@@ -66,17 +72,22 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link
-                @if($page == 'informacaoEmpresa') active @endif
+                @if($page == 'contas') active @endif
+                " href="{{ route('contas.read') }}">Contas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link
+                @if($page == 'metas') active @endif
                 " href="{{ route('metas.read') }}">Metas</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link
-                @if($page == 'calculadoraEmpresarial') active @endif
+                @if($page == 'simplesNacional') active @endif
                 " href="{{ route('simples.create.calculadora') }}">Calculadora Simples Nacional</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link
-                @if($page == 'confirguracoes') active @endif
+                @if($page == 'configuracoes') active @endif
                 " href="{{ route('configuracoes') }}">Configurações</a>
             </li>
             <li class="nav-item">
