@@ -4,13 +4,64 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade as PDF; ;
+use App\Models\Fornecedores;
+use App\Models\Produtos;
+use App\Models\Cotacoes;
+
+
 class CotacoesController extends Controller
 {
     //
-    public function create()
+    public function create(Request $request)
     {
-        return view('sistema\cotacao\cotacaoDeProdutos', ['page' => 'cotacao']);
+        $fornecedores = Fornecedores::all();
+
+        return view('sistema\cotacao\cotacaoDeProdutosInserir', ['page' => 'cotacao', 'fornecedores' => $fornecedores,]);
     }
+
+    public function createLista()
+    {
+        $produtos = Produtos::all();
+        return view('sistema.cotacao.cotacaoDeProdutos', ['page' => 'cotacao', 'produtos' => $produtos]);
+    }
+
+    public function processarProdutosSelecionados(Request $request)
+    {
+        // Receber os IDs dos produtos selecionados
+        $produtosSelecionadosIds = $request->input('produtos', []);
+
+        // Buscar os produtos e fornecedores
+        $produtosSelecionados = Produtos::whereIn('id', $produtosSelecionadosIds)->get();
+        $fornecedores = Fornecedores::all();
+
+        // Passar os produtos e fornecedores para a próxima view
+        return view('sistema.cotacao.cotacaoDeProdutosInserir', [
+            'page' => 'cotacao',
+            'produtos' => $produtosSelecionados,
+            'fornecedores' => $fornecedores,
+        ]);
+    }
+
+    public function inserirCotacao(Request $request)
+{
+    $produtosSelecionados = $request->input('produtos');
+
+    foreach ($produtosSelecionados as $produto_id => $fornecedores) {
+        foreach ($fornecedores as $fornecedor_id => $preco) {
+            if ($preco) {
+                $fornecedor_id = str_replace('fornecedor', '', $fornecedor_id);
+
+                $cotacao = new Cotacoes;
+                $cotacao->produto_id = $produto_id;
+                $cotacao->preco = $preco;
+                $cotacao->fornecedor_id = $fornecedor_id;
+                $cotacao->save();
+            }
+        }
+    }
+
+    return redirect()->back()->with('success', 'Cotações salvas com sucesso!');
+}
 
     public function createRevisao()
     {
@@ -22,7 +73,7 @@ class CotacoesController extends Controller
     }
 
     public function createEdicao(){
-        return view('sistama\cotacao\cotacaoDeProdutosEdicao', ['page' => 'cotacao']);
+        return view('cotacao\cotacaoDeProdutosEdicao', ['page' => 'cotacao']);
     }
     public function store(Request $request)
     {

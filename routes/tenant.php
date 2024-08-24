@@ -74,7 +74,12 @@ Route::middleware([
         Route::get('/cadastrarfuncionario', [ConfiguracoesController::class, 'createCadastroFuncionario'])->name('configuracoes.funcionario');
         Route::post('/cadastrarfuncionarioconfirmar', [ConfiguracoesController::class, 'storeFuncionario'])->name('configuracoes.funcionario.cadastrar');
 
-        Route::get('/cotacaoprodutos',[CotacoesController::class, 'create'])->name('cotacaProdutos');
+       // Route::get('/cotacaoprodutos',[CotacoesController::class, 'create'])->name('cotacaProdutos');
+        Route::get('/cotacaoprodutos',[CotacoesController::class, 'createLista'])->name('cotacaProdutos');
+        Route::get('/cotacao/lista', [CotacoesController::class, 'createLista'])->name('cotacao.lista');
+        Route::post('/cotacao/produtos-selecionados', [CotacoesController::class, 'processarProdutosSelecionados'])->name('cotacao.produtos.selecionados');
+        Route::post('/cotacao/inserir', [CotacoesController::class, 'inserirCotacao'])->name('inserirCotacao');
+
         Route::post('/cotacaoprodutosrevisao',[CotacoesController::class, 'createRevisao'])->name('cotacaoProdutosRevisao');
         Route::post('/cotacaoprodutosfinal',[CotacoesController::class, 'createFinal'])->name('cotacaoProdutosFinal');
         Route::post('/cotacaoprodutoseditar',[CotacoesController::class, 'createEdicao'])->name('cotacaoProdutosEditar');
