@@ -11,6 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (!Schema::hasTable('notificacoes')) {
+
         Schema::create('notificacoes', function (Blueprint $table) {
             $table->id();
             $table->string('mensagem',100);
@@ -19,6 +21,7 @@ return new class extends Migration
             $table->string('lido',3)->default('nao');
             $table->timestamps();
         });
+    }
     }
 
     /**

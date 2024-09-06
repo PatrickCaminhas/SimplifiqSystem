@@ -11,16 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (!Schema::hasTable('cotacoes')) {
+
         Schema::create('cotacoes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('produto_id');
-            $table->decimal('preco', 6,2); 
+            $table->decimal('preco', 6,2);
             $table->unsignedBigInteger('fornecedor_id');
             $table->foreign('produto_id')->references('id')->on('produtos');
             $table->foreign('fornecedor_id')->references('id')->on('fornecedores');
             $table->timestamps();
         });
     }
+}
+
 
     /**
      * Reverse the migrations.

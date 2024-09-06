@@ -11,28 +11,26 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (!Schema::hasTable('empresa_informations')) {
-            Schema::create('empresa_informations', function (Blueprint $table) {
+        if (!Schema::hasTable('clientes')) {
+            Schema::create('clientes', function (Blueprint $table) {
             $table->id();
-            $table->string('cnpj');
             $table->string('nome');
-            $table->string('tamanho_empresa');
-            $table->string('tipo_empresa');
-            $table->string('area_atuacao');
+            $table->string('cpfOuCnpj');
             $table->string('telefone');
-            $table->string('estado');
-            $table->string('padrao_cores');
-            $table->binary('logo')->nullable();
+            $table->string('email');
+            $table->string('endereco_completo');
+            $table->decimal('debitos', 8, 2);
+            $table->string('observacoes')->nullable();
             $table->timestamps();
         });
     }
-    }
+}
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('empresa_informations');
+        Schema::dropIfExists('clientes');
     }
 };

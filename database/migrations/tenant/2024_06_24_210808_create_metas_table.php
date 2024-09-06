@@ -11,7 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('metas', function (Blueprint $table) {
+        if (!Schema::hasTable('metas')) {
+            Schema::create('metas', function (Blueprint $table) {
             $table->id();
             $table->decimal('valor', 6,2);
             $table->decimal('valor_atual', 6,2);
@@ -19,6 +20,7 @@ return new class extends Migration
             $table->date('ending_at');
             $table->timestamps();
         });
+    }
     }
 
     /**

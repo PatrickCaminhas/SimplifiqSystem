@@ -22,4 +22,8 @@ class Produtos extends Model
         'preco_compra',
         'preco_venda',
     ];
+    public function itensVenda()
+    {
+        return $this->hasMany(Itens_venda::class);
+    }
 }

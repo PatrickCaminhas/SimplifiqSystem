@@ -32,10 +32,10 @@ class CadastroProdutos extends Controller
             'unidade_medida' => $request->input('unidade_medida'),
             'medida' => $request->input('medida'),
             'descricao' => $request->input('descricao'),
-            'ultimo_fornecedor'=> "Nenhum",
-            'quantidade'=> 0,
-            'preco_compra'=> 0,
-            'preco_venda'=> 0,
+            'ultimo_fornecedor' => "Nenhum",
+            'quantidade' => 0,
+            'preco_compra' => 0,
+            'preco_venda' => 0,
 
         ]);
         if ($produto) {
@@ -44,4 +44,19 @@ class CadastroProdutos extends Controller
             return redirect('cadastroproduto')->with('error', 'Erro ao cadastrar produto.');
         }
     }
+
+    public function search(Request $request)
+    {
+        $term = $request->input('term');
+
+        // Buscar produtos que correspondem ao termo digitado
+        $produtos = Produtos::where('nome', 'LIKE', '%' . $term . '%')
+            ->orWhere('modelo', 'LIKE', '%' . $term . '%')
+            ->orWhere('marca', 'LIKE', '%' . $term . '%')
+            ->get();
+
+        // Retornar como JSON para o autocomplete
+        return response()->json($produtos);
+    }
+
 }

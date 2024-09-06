@@ -11,6 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (!Schema::hasTable('produtos')) {
+
         Schema::create('produtos', function (Blueprint $table) {
             $table->id();
             $table->string("nome", 100);
@@ -26,6 +28,7 @@ return new class extends Migration
             $table->decimal('preco_venda', 6,2);
             $table->timestamps();
         });
+    }
     }
 
     /**

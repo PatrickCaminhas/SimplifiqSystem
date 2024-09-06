@@ -11,7 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('servicos', function (Blueprint $table) {
+        if (!Schema::hasTable('servicos')) {
+            Schema::create('servicos', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
             $table->string('nome_cliente');
@@ -27,6 +28,7 @@ return new class extends Migration
             $table->timestamps();
         });
     }
+}
 
     /**
      * Reverse the migrations.

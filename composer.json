@@ -23,7 +23,9 @@
         "pestphp/pest-plugin-laravel": "^2.4",
         "spatie/laravel-ignition": "^2.4"
     },
-    "autoload": {
+    "autoload": {"files": [
+        "app/Helpers/DespesaHelper.php"
+    ],
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",

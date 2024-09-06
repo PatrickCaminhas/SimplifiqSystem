@@ -8,10 +8,11 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.2/css/responsive.bootstrap5.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/plug-ins/2.0.8/i18n/pt-BR.json">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
 
-<body class="bg-black bg-gradient">
+<body class="bg-black ">
     <!-- Menu superior -->
     @include('partials.header')
 
@@ -27,11 +28,10 @@
             <div class="col-md-7">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Lucro e despesas dos ultimos 6 meses</h5>
-                        <img src="{{ global_asset('img/Screenshot_1.png') }}" alt="Descrição da Imagem"
-                            class="img-fluid">
-
+                        <h5 class="card-title">Despesas dos ultimos 6 meses</h5>
+                        <canvas id="despesasChart"></canvas>
                     </div>
+
                 </div>
             </div>
             <div class="col-md-5">
@@ -232,6 +232,34 @@
             });
         });
     </script>
+
+<script>
+    const ctxs = document.getElementById('despesasChart').getContext('2d');
+    const despesasData = @json(array_values($despesasPorMes));
+    const labelsm = @json(array_keys($despesasPorMes));
+
+    const despesasChart = new Chart(ctxs, {
+        type: 'bar', // ou 'line' para um gráfico de linha
+        data: {
+            labels: labelsm,
+            datasets: [{
+                label: 'Despesas',
+                data: despesasData,
+                backgroundColor: 'rgba(214, 11, 11, 1)',
+                borderColor: 'rgba(214, 11, 11, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
 </body>
 
 </html>

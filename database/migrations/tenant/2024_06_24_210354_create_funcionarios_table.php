@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (!Schema::hasTable('funcionarios')) {
         Schema::create('funcionarios', function (Blueprint $table) {
             $table->string('id',10)->primary();
             $table->string('nome',30);
@@ -20,6 +21,7 @@ return new class extends Migration
             $table->string('senha',255);
             $table->timestamps();
         });
+    }
     }
 
     /**

@@ -26,6 +26,7 @@ class CadastroController extends Controller
             'cnpj' => 'required|string',
             'tamanhoempresa' => 'required|string',
             'tipoempresa' => 'required|string',
+            'areaatuacao' => 'required|string',
             'telefone' => 'required|string',
             'nome' => 'required|string',
             'sobrenome' => 'required|string',
@@ -41,6 +42,7 @@ class CadastroController extends Controller
                 'cnpj' => $request->input('cnpj'),
                 'tamanho_empresa' => $request->input('tamanhoempresa'),
                 'tipo_empresa' => $request->input('tipoempresa'),
+                'area_atuacao' => $request->input('areaatuacao'),
                 'telefone' => $request->input('telefone'),
                 'estado' => 'inexistente',
             ]);

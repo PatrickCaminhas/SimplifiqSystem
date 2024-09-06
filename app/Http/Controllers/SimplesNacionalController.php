@@ -15,8 +15,13 @@ class SimplesNacionalController extends Controller
         $SimplesNacional = SimplesNacional::all();
         return view("administracao.simplesNacional", ['simplesNacional' => $SimplesNacional], ['page' => 'simplesNacional']);
     }
-    public function createCalculadora()
+    public function createCalculadora(Request $request)
     {
+        if($request->tamanho_empresa == "mei"){
+            $simplesMei = $this->calculateMEI();
+            return view("sistema.informativo.calculadoraSimplesNacional", ['page' => 'simplesNacional', 'simplesMei' => $simplesMei]);
+
+        }
         return view("sistema.informativo.calculadoraSimplesNacional", ['page' => 'simplesNacional']);
     }
     public function createStore()
@@ -98,7 +103,20 @@ class SimplesNacionalController extends Controller
         }
     }
 
-
+    public function calculateMEI(){
+        $empresa = Empresa_information::first();
+        $cincoPorcentoSalarioMinAtual = 70.6;
+        if($empresa->tipo_empresa =="comercio" || $empresa->tipo_empresa =="industria"){
+            $resultado= $cincoPorcentoSalarioMinAtual + 1;
+        }
+        elseif($empresa->tipo_empresa =="servicos"){
+            $resultado= $cincoPorcentoSalarioMinAtual + 5;
+        }
+        else{
+            $resultado= $cincoPorcentoSalarioMinAtual + 6;
+        }
+        return $resultado;
+    }
 
     public function calculate(Request $request)
     {
@@ -113,9 +131,9 @@ class SimplesNacionalController extends Controller
         $valor_bruto_mes = $request->input('receita_bruta_mes');
 
         $anexo = match ($empresa->tipo_empresa) {
-            'Comercio' => 1,
-            'Indústria' => 2,
-            'Serviços' => 3,
+            'comercio' => 1,
+            'industria' => 2,
+            'servicos' => 3,
             default => null,
         };
 

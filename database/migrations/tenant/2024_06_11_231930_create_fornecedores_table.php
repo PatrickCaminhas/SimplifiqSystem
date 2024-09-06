@@ -11,6 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (!Schema::hasTable('fornecedores')) {
+
         Schema::create('fornecedores', function (Blueprint $table) {
             $table->id();
             $table->string('nome',100);
@@ -23,6 +25,7 @@ return new class extends Migration
             $table->string('telefone',15);
             $table->timestamps();
         });
+    }
     }
 
     /**

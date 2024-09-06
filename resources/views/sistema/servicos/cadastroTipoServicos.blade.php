@@ -49,7 +49,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="materiaisservico">Materiais necessários</label>
-                                    <input type="text" class="form-control" id="materiais_necessarios" name="materiais_necessarios"
+                                    <input type="text" class="form-control" id="materiais" name="materiais"
                                         placeholder="Informe os materiais necessários para o serviço">
                                 </div>
                                 <div class="form-group">

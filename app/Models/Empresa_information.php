@@ -13,6 +13,7 @@ class Empresa_information extends Model
         'nome',
         'tamanho_empresa',
         'tipo_empresa',
+        'area_atuacao',
         'telefone',
         'estado',
         'padrao_cores',

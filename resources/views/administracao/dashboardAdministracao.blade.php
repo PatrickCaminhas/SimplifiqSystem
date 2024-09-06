@@ -70,7 +70,8 @@
                                                             value="{{ $empresa->tipo_empresa }}">
                                                         <input type="hidden" name="telefone"
                                                             value="{{ $empresa->telefone }}">
-
+                                                        <input type="hidden" name="area_atuacao"
+                                                            value="{{ $empresa->area_atuacao }}">
                                                         <button type="submit" class="btn btn-primary">
                                                             Criar empresa</button>
                                                     </form>

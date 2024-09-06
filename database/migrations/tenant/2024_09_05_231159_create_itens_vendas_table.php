@@ -11,25 +11,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (!Schema::hasTable('estoque')) {
-            Schema::create('estoque', function (Blueprint $table) {
+        if (!Schema::hasTable('itens_vendas')) {
+            Schema::create('itens_vendas', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_produto');
+            $table->foreignId('venda_id')->constrained();
+            $table->foreignId('produto_id')->constrained();
             $table->integer('quantidade');
-            $table->string('acao');
-            $table->integer('mes');
-            $table->string('ano');
-            $table->string('usuario');
+            $table->decimal('preco_unitario', 8, 2);
+            $table->decimal('subtotal', 8, 2);
             $table->timestamps();
         });
     }
-    }
+}
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('estoque');
+        Schema::dropIfExists('itens_vendas');
     }
 };

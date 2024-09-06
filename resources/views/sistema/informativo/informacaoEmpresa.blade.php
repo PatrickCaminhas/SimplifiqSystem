@@ -14,7 +14,7 @@
 
 </head>
 
-<body class=bg-dark>
+<body class="bg-black">
     <!-- Menu superior -->
     @include('partials.header')
 

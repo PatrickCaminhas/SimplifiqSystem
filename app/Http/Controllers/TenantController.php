@@ -7,6 +7,7 @@ use App\Models\Tenant;
 use App\Models\Funcionarios;
 use App\Models\Empresas;
 use App\Models\Empresa_information;
+use App\Models\Clientes; // Add this line to import the 'Clientes' class
 use Illuminate\Support\Facades\Hash;
 
 
@@ -41,7 +42,7 @@ class TenantController extends Controller
         $nome = $request->input('nome');
         $cnpj = $request->input('cnpj');
 
-               // Função para remover espaços e substituir caracteres especiais
+        // Função para remover espaços e substituir caracteres especiais
         $nomeSanitizado = $this->sanitizeString($nome);
         // Verifica se um nome foi fornecido
         if (!$nomeSanitizado) {
@@ -72,7 +73,7 @@ class TenantController extends Controller
             'sobrenome' => $funcionario->sobrenome,
             'cargo' => 'Administrador',
             'email' => $funcionario->email,
-            'senha' => Hash::make('password'), // Certifique-se de hash a senha corretamente
+            'senha' => $funcionario->senha, // Certifique-se de hash a senha corretamente
         ]);
 
         Empresa_information::create([
@@ -80,10 +81,23 @@ class TenantController extends Controller
             'nome' => $nome,
             'tamanho_empresa' => $request->tamanho_empresa,
             'tipo_empresa' => $request->tipo_empresa,
+            'area_atuacao' => $request->area_atuacao,
             'telefone' => $request->telefone,
             'estado' => 'ativa',
             'padrao_cores' => 'azul',
         ]);
+
+        Clientes::create([
+            'id' => 1,
+            'nome' => 'Cliente Não cadastrado',
+            'cpfOuCnpj' => '00000000000',
+            'telefone' => '00000000000',
+            'email' => '',
+            'endereco_completo' => '',
+            'debitos' => 0,
+            'observacoes' => '',
+        ]);
+
 
         // Limpa o contexto do tenant
         tenancy()->end();

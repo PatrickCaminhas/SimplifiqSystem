@@ -36,7 +36,7 @@ class ServicosController extends Controller
         $tipo_servico = new ServicosTipo();
         $tipo_servico->nome = request()->input('nome');
         $tipo_servico->duracao = request()->input('duracao');
-        $tipo_servico->materiais_necessarios = request()->input('materiais_necessarios');
+        $tipo_servico->materiais = request()->input('materiais');
         $tipo_servico->quantidade_de_funcionarios = request()->input('quantidade_de_funcionarios');
         $tipo_servico->valor_diario = request()->input('valor');
         $tipo_servico->descricao = request()->input('descricao');

@@ -11,7 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('servicos_tipos', function (Blueprint $table) {
+        if (!Schema::hasTable('servicos_tipos')) {
+            Schema::create('servicos_tipos', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
             $table->integer('duracao');
@@ -21,6 +22,7 @@ return new class extends Migration
             $table->string('descricao');
             $table->timestamps();
         });
+    }
     }
 
     /**

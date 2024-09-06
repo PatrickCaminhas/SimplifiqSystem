@@ -22,6 +22,9 @@ use App\Http\Middleware\CheckCompanyType;
 use App\Http\Controllers\MetasController;
 use App\Http\Controllers\CotacoesController;
 use App\Http\Controllers\SimplesNacionalController;
+use App\Http\Controllers\VendasController;
+use App\Http\Controllers\ClienteController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -118,6 +121,13 @@ Route::middleware([
         //Route::get('/tarefas/cadastro', [ServicosController::class, 'createStoreTarefas'])->name('tarefas.create');
 
         Route::get('/informacoes/empresa',[informacaoEmpresaController::class, 'createRead'])->name('informacoes.empresa');
+
+        Route::get('/clienteCadastro', [ClienteController::class, 'create'])->name('cliente.store.create');
+        Route::post('/clienteCadastro/store', [ClienteController::class, 'store'])->name('cliente.store');
+
+        Route::get('/vendas', [VendasController::class, 'create'])->name('vendas.create');
+        Route::get('/produtos/search', [CadastroProdutos::class, 'search'])->name('produtos.search');
+        Route::post('/vendas/store', [VendasController::class, 'store'])->name('vendas.store');
 
 
 

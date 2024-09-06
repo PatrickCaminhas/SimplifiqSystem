@@ -28,6 +28,8 @@ class CheckCompanyType
             View::share('empresa', $empresa->nome);
             View::share('menu', $empresa->tipo_empresa);
             View::share('padrao_cores', $empresa->padrao_cores);
+            View::share('tamanho_empresa', $empresa->tamanho_empresa);
+            $request->merge(['tamanho_empresa' => $empresa->tamanho_empresa]);
 
         } else {
             View::share('menu', 'not found');
