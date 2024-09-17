@@ -16,21 +16,20 @@
    <!-- Menu superior -->
    @include('partials.header')
 
-   <!-- Offcanvas para o menu -->
-  @include('partials.menu')
 
-   <!-- Offcanvas para notificações -->
-   @include('partials.notificacoes')
+
+
+
 
 
     <div class=" d-flex align-items-center justify-content-center" style="height: 90vh;">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-md-6 col-lg-4">
+                <div class="col-6 col-4">
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <h2 class="text-center">Cadastro de fornecedor</h2>
-                            <form method="POST" action="{{ route('cadastrofornecedor.store') }}">
+                            <form method="POST" action="{{ route(' cadastroFornecedor.store') }}">
                                 @csrf
                                 <div class="form-group">
                                     <label for="nomefornecedor">Nome</label>
@@ -56,12 +55,7 @@
                                     <label for="estadofornecedor">Estado</label>
                                         <select class="form-control" id="estado" name="estado">
                                             <option selected disabled>Selecione o estado</option>
-                                            <option value="BA">BA</option>
-                                            <option value="ES">ES</option>
-                                            <option value="MG">MG</option>
-                                            <option value="SP">SP</option>
-                                            <option value="RJ">RJ</option>
-                                            <option value="PR">PR</option>
+                                            @include('partials.estadosBrasil')
                                         </select>
                                 </div>
                                 <div class="form-group">

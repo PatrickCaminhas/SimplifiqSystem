@@ -16,19 +16,19 @@
     <!-- Menu superior -->
     @include('partials.header')
 
-    <!-- Offcanvas para o menu -->
-   @include('partials.menu')
 
-    <!-- Offcanvas para notificações -->
-    @include('partials.notificacoes')
 
-    <div class="container mt-5 bg-light pt-2 pb-4">
+
+
+
+
+    <div class="container mt-5 col-lg-6 col-md-8 col-sm-12 bg-light pt-2 pb-4">
 
         <h1 class="text-center">Configurações</h1>
 
     <div class="container mt-4">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <div class="card">
                     <div class="card-body">
 
@@ -42,7 +42,7 @@
     </div>
     <div class="container mt-4">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-6">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-subtitle mb-2 text-muted text-center">Cadastrar funcionario </h5>
@@ -56,7 +56,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-6">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-subtitle mb-2 text-muted text-center">Alterar cargos</h5>
@@ -69,7 +69,7 @@
     </div>
     <div class="container mt-4">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-6">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-subtitle mb-2 text-muted text-center">Alterar seus dados</h5>
@@ -78,7 +78,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-6">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-subtitle mb-2 text-muted text-center">Alterar senha</h5>

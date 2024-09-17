@@ -6,12 +6,12 @@ use App\Models\Produtos; // Add this line to import the Produto class
 
 use Illuminate\Http\Request;
 
-class CadastroProdutos extends Controller
+class ProdutoController extends Controller
 {
     //
     public function create()
     {
-        return view('sistema\cadastrosSistema\cadastroDeProduto', ['page' => 'cadastroProduto']);
+        return view('sistema.produto.cadastroDeProduto', ['page' => 'cadastroProduto']);
     }
     public function store(Request $request)
     {

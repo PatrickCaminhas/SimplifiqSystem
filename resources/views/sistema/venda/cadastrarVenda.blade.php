@@ -18,20 +18,20 @@
     <!-- Menu superior -->
     @include('partials.header')
 
-    <!-- Offcanvas para o menu -->
-    @include('partials.menu')
-
-    <!-- Offcanvas para notificações -->
-    @include('partials.notificacoes')
 
 
 
 
-    <!-- Offcanvas para notificações -->
+
+
+
+
+
+
 
 
     <div class="d-flex align-items-center justify-content-center " style="height: 92vh;">
-        <div class="container mt-5 col-md-4 ">
+        <div class="container mt-5 col-lg-6 col-md-8 col-sm-12 col-12 ">
             <div class="row align-items-center justify-content-center">
                 <div class="card">
                     <div class="card-body">
@@ -129,11 +129,11 @@
                                 // Criar os inputs para quantidade
                                 let produtoHtml = `
                     <div class="form-group row align-items-center" id="produto-${ui.item.id}">
-                        <label class="col-sm-4 col-form-label">${ui.item.label}</label>
-                        <div class="col-sm-3">
+                        <label class="col-4 col-form-label">${ui.item.label}</label>
+                        <div class="col-3">
                             <input type="number" name="quantidades[${ui.item.id}]" class="form-control" placeholder="Quantidade" min="1" required>
                         </div>
-                        <div class="col-sm-2">
+                        <div class="col-2">
                             <button type="button" class="btn btn-danger remove-produto" data-id="${ui.item.id}">Remover</button>
                         </div>
                     </div>

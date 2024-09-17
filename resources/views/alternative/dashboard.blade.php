@@ -32,7 +32,7 @@
         </div>
     </nav>
 
-    <!-- Offcanvas para o menu -->
+
     <div class="offcanvas navbar-dark offcanvas-start bg-success text-light" tabindex="-1" id="menuOffcanvas"
         aria-labelledby="menuOffcanvasLabel">
         <div data-bs-theme="dark" class="offcanvas-header">
@@ -58,7 +58,7 @@
                     <a class="nav-link" href="{{route('cadastroproduto')}}">Cadastro de produto</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('cadastrofornecedor')}}">Cadastro de fornecedor</a>
+                    <a class="nav-link" href="{{route(' cadastroFornecedor')}}">Cadastro de fornecedor</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="cotacaoprodutos">Cotação de produtos</a>
@@ -83,7 +83,7 @@
         </div>
     </div>
 
-    <!-- Offcanvas para notificações -->
+
     <div class="offcanvas offcanvas-end navbar-dark" tabindex="-1" id="notificacoesOffcanvas"
         aria-labelledby="notificacoesOffcanvasLabel" data-bs-theme="dark">
         <div class="offcanvas-header">
@@ -93,7 +93,7 @@
         <div class="offcanvas-body">
             <!-- Conteúdo das notificações aqui -->
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                     <div class="card mt-1">
                         <div class="card-body">
                             <p class="figure-caption">Usuario: Sistema</p>
@@ -119,9 +119,9 @@
     </div>
     </div>
 
-    <div class="container mt-5">
+    <div class="container mt-5 col-lg-6 col-md-8 col-sm-12 col-lg-6 col-md-8 col-sm-12">
         <div class="row">
-            <div class="col-md-7">
+            <div class="col-7">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Lucro e despesas dos ultimos 6 meses</h5>
@@ -130,7 +130,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-5">
+            <div class="col-5">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Ultimas atividades</h5>
@@ -160,9 +160,9 @@
         </div>
     </div>
     <!-- Features Section -->
-    <div class="container mt-5 mb-4">
+    <div class="container mt-5 col-lg-6 col-md-8 col-sm-12 mb-4">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-4">
                 <div>
                 <div class="card mb-4">
                     <div class="card-body">
@@ -184,7 +184,7 @@
 
             <form action="/dashboard" method="GET" class="row g-3">
 
-                <div class="col-md-6">
+                <div class="col-6">
                     <label for="exampleFormControlInput1" class="form-label">Destinatário</label>
                     <select class="form-select" aria-label="Default select example">
                         <option selected disabled>Selecione o destinatário</option>
@@ -203,7 +203,7 @@
 
                     </select>
                 </div>
-                <div class="col-md-6">
+                <div class="col-6">
                     <label for="exampleFormControlInput1" class="form-label">Assunto</label>
                     <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Assunto">
                 </div>
@@ -236,7 +236,7 @@
                 </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-4">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Fornecedores x Pedidos</h5>
@@ -244,7 +244,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-4">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Proximas contas</h5>

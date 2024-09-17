@@ -16,21 +16,21 @@
      <!-- Menu superior -->
      @include('partials.header')
 
-     <!-- Offcanvas para o menu -->
-    @include('partials.menu')
 
-     <!-- Offcanvas para notificações -->
-     @include('partials.notificacoes')
+
+
+
+
 
     <div class="container mt-4">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title display-6 text-center">PRODUTO {{ ucfirst($produto->nome)}}</h5>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-6">
                                     <h5 class="card-title">Informações do produto</h5>
                                     <p class="card-text">Nome: {{$produto->id}}</p>
                                     <p class="card-text">Nome: {{$produto->nome}}</p>
@@ -39,7 +39,7 @@
                                     <p class="card-text">Ultimo fornecedor: {{$produto->ultimo_fornecedor}}</p>
                                     <p class="card-text">Quantidade: {{$produto->quantidade}}</p>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-6">
                                     <p class="card-text">Preço: {{$produto->preco_venda}}</p>
                                     <p class="card-text">Descrição: {{$produto->descricao}}</p>
                                     <h5 class="card-title">Ações</h5>
@@ -54,7 +54,7 @@
             </div>
             <div class="container mt-4">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-4">
                         <div class="card mb-2">
                             <div class="card-body">
                                 <h5 class="card-title">Fácil de Usar</h5>
@@ -65,7 +65,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-4">
                         <div class="card mb-2">
                             <div class="card-body">
                                 <h5 class="card-title">Fornecedores por % de produto</h5>
@@ -73,7 +73,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-4">
                         <div class="card mb-2">
                             <div class="card-body">
                                 <h5 class="card-title">Proximas contas</h5>
@@ -113,9 +113,9 @@
                     </div>
                 </div>
             </div>
-            <div class="container mt-5 mb-5">
+            <div class="container mt-5 col-lg-6 col-md-8 col-sm-12 mb-5">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-6">
                         <div class="card mb-2">
                             <div class="card-body">
                                 <h5 class="card-title">Variação de custo unitário</h5>
@@ -125,7 +125,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-6">
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">Variação de preço</h5>

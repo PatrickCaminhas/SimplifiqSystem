@@ -16,19 +16,19 @@
     <!-- Menu superior -->
     @include('partials.header')
 
-    <!-- Offcanvas para o menu -->
-    @include('partials.menu')
 
-    <!-- Offcanvas para notificações -->
-    @include('partials.notificacoes')
+
+
+
+
 
     <div class="container mt-4 mb-4 bg-light text-dark">
         <div class="row">
-            <div class="col-md-12 text-center" style="overflow: auto;">
+            <div class="col-12 text-center" style="overflow: auto;">
                 <h4 class="display-6">Cotação de Produtos</h4>
                 <form method="POST" action="{{ route('inserirCotacao') }}">
                     @csrf
-                    <table class="col-md-12 table table-striped table-hover table-secondary">
+                    <table class="col-12 table table-striped table-hover table-secondary">
                         <thead>
                             <tr class="text-light">
                                 <th scope="col">Produto</th>

@@ -7,7 +7,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\CadastroController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TenantController;
-use App\Http\Controllers\CadastroProdutos;
+use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\FornecedorController;
 use App\Http\Controllers\InformacaoProdutosController;
 use App\Http\Middleware\AuthenticateDashboard;
@@ -81,16 +81,16 @@ foreach (config('tenancy.central_domains') as $domain) {
             Route::get('/dashboard/{id}', function () {
                 return view('sistema.dashboard');
             });
-            Route::get('/cadastroproduto', [CadastroProdutos::class, 'create'])->name('cadastroproduto');
-            Route::post('/cadastroproduto', [CadastroProdutos::class, 'store'])->name('cadastroproduto.store');
+            Route::get('/cadastroproduto', [ProdutoController::class, 'create'])->name('cadastroproduto');
+            Route::post('/cadastroproduto', [ProdutoController::class, 'store'])->name('cadastroproduto.store');
 
             Route::get('/informacaoproduto', [InformacaoProdutosController::class, 'createRead'])->name('produto.informacao');
             Route::get('/informacaoproduto/{nome}', [InformacaoProdutosController::class, 'listar'])->name('produto.listar.nome');
             Route::get('/informacaoprodutorequisicao', [InformacaoProdutosController::class, 'create'])->name('produto.listar');
             Route::get('alterarinformacoesproduto', [InformacaoProdutosController::class, 'update'])->name('produto.alterar');
 
-            Route::get('/cadastrofornecedor', [FornecedorController::class, 'create'])->name('cadastrofornecedor');
-            Route::post('/cadastrofornecedor', [FornecedorController::class, 'store'])->name('cadastrofornecedor.store');
+            Route::get('/ cadastroFornecedor', [FornecedorController::class, 'create'])->name(' cadastroFornecedor');
+            Route::post('/ cadastroFornecedor', [FornecedorController::class, 'store'])->name(' cadastroFornecedor.store');
 
             Route::get('/configuracoes', [ConfiguracoesController::class, 'createConfiguracoes'])->name('configuracoes');
             Route::get('/alterarSenha', [ConfiguracoesController::class, 'createAlterarSenha'])->name('configuracoes.senha');

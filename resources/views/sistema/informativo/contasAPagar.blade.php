@@ -21,15 +21,15 @@
   <!-- Menu superior -->
   @include('partials.header')
 
-  <!-- Offcanvas para o menu -->
- @include('partials.menu')
 
-  <!-- Offcanvas para notificações -->
-  @include('partials.notificacoes')
+
+
+
+
     <div class="d-flex align-items-center justify-content-center" style="height: 92vh;">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-md-6 col-lg-8">
+                <div class="col-6 col-8">
                     <div class="card shadow-sm">
                         <div class="card-body" style="overflow-x: auto;">
                             <h2 class="text-center">Contas</h2>
@@ -70,7 +70,7 @@
                                 </tbody>
                             </table>
 
-                            <canvas id="despesasChart"></canvas>
+
 
 
 
@@ -83,32 +83,7 @@
     </div>
 
     <!-- Features Section -->
-    <script>
-        const ctx = document.getElementById('despesasChart').getContext('2d');
-        const despesasData = @json(array_values($despesasPorMes));
-        const labels = @json(array_keys($despesasPorMes));
 
-        const despesasChart = new Chart(ctx, {
-            type: 'bar', // ou 'line' para um gráfico de linha
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Despesas nos últimos 6 meses',
-                    data: despesasData,
-                    backgroundColor: 'rgba(214, 11, 11, 1)',
-                    borderColor: 'rgba(214, 11, 11, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    </script>
     <!-- Inclua os arquivos JavaScript do Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
         crossorigin="anonymous"></script>

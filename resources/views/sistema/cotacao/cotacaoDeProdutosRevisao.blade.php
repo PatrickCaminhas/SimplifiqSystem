@@ -16,16 +16,16 @@
     <!-- Menu superior -->
     @include('partials.header')
 
-    <!-- Offcanvas para o menu -->
-   @include('partials.menu')
 
-    <!-- Offcanvas para notificações -->
-    @include('partials.notificacoes')
+
+
+
+
 
 
     <div class="container mt-4 mb-4 bg-light text-dark">
         <div class="row">
-            <div class="col-md-12 text-center" style="overflow: auto;">
+            <div class="col-12 text-center" style="overflow: auto;">
                 <h4 class="display-6">Resultado da cotação de produtos</h4>
                 <h4 class ="lead"> Data: $DATA $HORA</h4>
                 <form method="POST" action="/cotacaoprodutosfinal">
@@ -41,52 +41,52 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td class="col-md-3">Produto 1</td>
-                                <td class="col-md-3">Fornecedor 1</td>
-                                <td class="col-md-2">R$ 100,00</td>
-                                <td class="col-md-4"><input type="number" class="form-control" value="10"></td>
+                                <td class="col-3">Produto 1</td>
+                                <td class="col-3">Fornecedor 1</td>
+                                <td class="col-2">R$ 100,00</td>
+                                <td class="col-4"><input type="number" class="form-control" value="10"></td>
                             </tr>
                             <tr>
-                                <td class="col-md-3">Produto 2</td>
-                                <td class="col-md-3">Fornecedor 2</td>
-                                <td class="col-md-2">R$ 200,00</td>
-                                <td class="col-md-4"><input type="number" class="form-control" value="20"></td>
+                                <td class="col-3">Produto 2</td>
+                                <td class="col-3">Fornecedor 2</td>
+                                <td class="col-2">R$ 200,00</td>
+                                <td class="col-4"><input type="number" class="form-control" value="20"></td>
                             </tr>
                             <tr>
-                                <td class="col-md-3">Produto 3</td>
-                                <td class="col-md-3">Fornecedor 3</td>
-                                <td class="col-md-2">R$ 300,00</td>
-                                <td class="col-md-4"><input type="number" class="form-control" value="30"></td>
+                                <td class="col-3">Produto 3</td>
+                                <td class="col-3">Fornecedor 3</td>
+                                <td class="col-2">R$ 300,00</td>
+                                <td class="col-4"><input type="number" class="form-control" value="30"></td>
                             </tr>
                             <tr>
-                                <td class="col-md-3">Produto 4</td>
-                                <td class="col-md-3">Fornecedor 2</td>
-                                <td class="col-md-2">R$ 50,00</td>
-                                <td class="col-md-4"><input type="number" class="form-control" value="30"></td>
+                                <td class="col-3">Produto 4</td>
+                                <td class="col-3">Fornecedor 2</td>
+                                <td class="col-2">R$ 50,00</td>
+                                <td class="col-4"><input type="number" class="form-control" value="30"></td>
                             </tr>
                             <tr>
-                                <td class="col-md-3">Produto 5</td>
-                                <td class="col-md-3">Fornecedor 2</td>
-                                <td class="col-md-2">R$ 100,00</td>
-                                <td class="col-md-4"><input type="number" class="form-control" value="30"></td>
+                                <td class="col-3">Produto 5</td>
+                                <td class="col-3">Fornecedor 2</td>
+                                <td class="col-2">R$ 100,00</td>
+                                <td class="col-4"><input type="number" class="form-control" value="30"></td>
                             </tr>
                             <tr>
-                                <td class="col-md-3">Produto 6</td>
-                                <td class="col-md-3">Fornecedor 1</td>
-                                <td class="col-md-2">R$ 144,00</td>
-                                <td class="col-md-4"><input type="number" class="form-control" value="30"></td>
+                                <td class="col-3">Produto 6</td>
+                                <td class="col-3">Fornecedor 1</td>
+                                <td class="col-2">R$ 144,00</td>
+                                <td class="col-4"><input type="number" class="form-control" value="30"></td>
                             </tr>
                             <tr>
-                                <td class="col-md-3">Produto 7</td>
-                                <td class="col-md-3">Fornecedor 3</td>
-                                <td class="col-md-2">R$ 79,00</td>
-                                <td class="col-md-4"><input type="number" class="form-control" value="30"></td>
+                                <td class="col-3">Produto 7</td>
+                                <td class="col-3">Fornecedor 3</td>
+                                <td class="col-2">R$ 79,00</td>
+                                <td class="col-4"><input type="number" class="form-control" value="30"></td>
                             </tr>
                             <tr>
-                                <td class="col-md-3">Produto 8</td>
-                                <td class="col-md-3">Fornecedor 1</td>
-                                <td class="col-md-2">R$ 30,00</td>
-                                <td class="col-md-4"><input type="number" class="form-control" value="30"></td>
+                                <td class="col-3">Produto 8</td>
+                                <td class="col-3">Fornecedor 1</td>
+                                <td class="col-2">R$ 30,00</td>
+                                <td class="col-4"><input type="number" class="form-control" value="30"></td>
                             </tr>
                         </tbody>
                     </table>

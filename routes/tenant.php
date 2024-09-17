@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\ContasController;
-use App\Http\Controllers\informacaoEmpresaController;
+use App\Http\Controllers\InformacaoEmpresaController;
 use App\Http\Controllers\ServicosController;
 use App\Http\Middleware\CheckMetas;
 use App\Http\Middleware\RedirectIfAuthenticated;
@@ -12,7 +12,7 @@ use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\CadastroProdutos;
+use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\FornecedorController;
 use App\Http\Controllers\InformacaoProdutosController;
 use App\Http\Controllers\ConfiguracoesController;
@@ -24,7 +24,7 @@ use App\Http\Controllers\CotacoesController;
 use App\Http\Controllers\SimplesNacionalController;
 use App\Http\Controllers\VendasController;
 use App\Http\Controllers\ClienteController;
-
+use App\Http\Controllers\FaturamentoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,21 +54,22 @@ Route::middleware([
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
-        Route::get('/cadastros', [DashboardController::class,'cadastros'])->name('cadastros');
+        Route::get('/cadastros', [DashboardController::class, 'cadastros'])->name('cadastros');
 
-        Route::get('/cadastroproduto', [CadastroProdutos::class, 'create'])->name('cadastroproduto');
-        Route::post('/cadastroproduto', [CadastroProdutos::class, 'store'])->name('cadastroproduto.store');
+        Route::get('/cadastroproduto', [ProdutoController::class, 'create'])->name('cadastroproduto');
+        Route::post('/cadastroproduto', [ProdutoController::class, 'store'])->name('cadastroproduto.store');
 
         Route::get('/informacaoproduto', [InformacaoProdutosController::class, 'createRead'])->name('produto.informacao');
-       // Route::get('/informacaoproduto/{nome}', [InformacaoProdutosController::class, 'listar'])->name('produto.listar.nome');
+        // Route::get('/informacaoproduto/{nome}', [InformacaoProdutosController::class, 'listar'])->name('produto.listar.nome');
         Route::get('/informacaoproduto/{id}', [InformacaoProdutosController::class, 'listar']);
 
         Route::get('/buscar-produto', [InformacaoProdutosController::class, 'buscarProduto']);
         Route::get('/informacaoprodutorequisicao', [InformacaoProdutosController::class, 'create'])->name('produto.listar');
         Route::get('alterarinformacoesproduto', [InformacaoProdutosController::class, 'update'])->name('produto.alterar');
 
-        Route::get('/cadastrofornecedor', [FornecedorController::class, 'create'])->name('cadastrofornecedor');
-        Route::post('/cadastrofornecedor', [FornecedorController::class, 'store'])->name('cadastrofornecedor.store');
+        Route::get('/cadastroFornecedor', [FornecedorController::class, 'create'])->name('cadastroFornecedor');
+        Route::post('/cadastroFornecedor', [FornecedorController::class, 'store'])->name('cadastroFornecedor.store');
+        Route::get('/fornecedores', [FornecedorController::class, 'read'])->name('fornecedores');
 
         Route::get('/configuracoes', [ConfiguracoesController::class, 'createConfiguracoes'])->name('configuracoes');
         Route::get('/alterarSenha', [ConfiguracoesController::class, 'createAlterarSenha'])->name('configuracoes.senha');
@@ -77,15 +78,15 @@ Route::middleware([
         Route::get('/cadastrarfuncionario', [ConfiguracoesController::class, 'createCadastroFuncionario'])->name('configuracoes.funcionario');
         Route::post('/cadastrarfuncionarioconfirmar', [ConfiguracoesController::class, 'storeFuncionario'])->name('configuracoes.funcionario.cadastrar');
 
-       // Route::get('/cotacaoprodutos',[CotacoesController::class, 'create'])->name('cotacaProdutos');
-        Route::get('/cotacaoprodutos',[CotacoesController::class, 'createLista'])->name('cotacaProdutos');
+        // Route::get('/cotacaoprodutos',[CotacoesController::class, 'create'])->name('cotacaProdutos');
+        Route::get('/cotacaoprodutos', [CotacoesController::class, 'createLista'])->name('cotacaProdutos');
         Route::get('/cotacao/lista', [CotacoesController::class, 'createLista'])->name('cotacao.lista');
         Route::post('/cotacao/produtos-selecionados', [CotacoesController::class, 'processarProdutosSelecionados'])->name('cotacao.produtos.selecionados');
         Route::post('/cotacao/inserir', [CotacoesController::class, 'inserirCotacao'])->name('inserirCotacao');
 
-        Route::post('/cotacaoprodutosrevisao',[CotacoesController::class, 'createRevisao'])->name('cotacaoProdutosRevisao');
-        Route::post('/cotacaoprodutosfinal',[CotacoesController::class, 'createFinal'])->name('cotacaoProdutosFinal');
-        Route::post('/cotacaoprodutoseditar',[CotacoesController::class, 'createEdicao'])->name('cotacaoProdutosEditar');
+        Route::post('/cotacaoprodutosrevisao', [CotacoesController::class, 'createRevisao'])->name('cotacaoProdutosRevisao');
+        Route::post('/cotacaoprodutosfinal', [CotacoesController::class, 'createFinal'])->name('cotacaoProdutosFinal');
+        Route::post('/cotacaoprodutoseditar', [CotacoesController::class, 'createEdicao'])->name('cotacaoProdutosEditar');
 
 
 
@@ -120,15 +121,24 @@ Route::middleware([
         //Route::get('/tarefas', [ServicosController::class, 'createReadTarefas'])->name('tarefas.read');
         //Route::get('/tarefas/cadastro', [ServicosController::class, 'createStoreTarefas'])->name('tarefas.create');
 
-        Route::get('/informacoes/empresa',[informacaoEmpresaController::class, 'createRead'])->name('informacoes.empresa');
+        Route::get('/informacoes/empresa', [InformacaoEmpresaController::class, 'createRead'])->name('informacoes.empresa');
 
-        Route::get('/clienteCadastro', [ClienteController::class, 'create'])->name('cliente.store.create');
-        Route::post('/clienteCadastro/store', [ClienteController::class, 'store'])->name('cliente.store');
+        Route::get('/cliente/cadastro', [ClienteController::class, 'create'])->name('cliente.store.create');
+        Route::post('/cliente/cadastro/store', [ClienteController::class, 'store'])->name('cliente.store');
+        Route::get('/clientes', [ClienteController::class, 'read'])->name('cliente.read.all');
+        Route::post('/Clientes/editar', [ClienteController::class, 'edit'])->name('cliente.edit');
+        Route::post('/Clientes/editar/store', [ClienteController::class, 'update'])->name('cliente.update.store');
 
-        Route::get('/vendas', [VendasController::class, 'create'])->name('vendas.create');
-        Route::get('/produtos/search', [CadastroProdutos::class, 'search'])->name('produtos.search');
+        Route::get('/vendas/create', [VendasController::class, 'create'])->name('vendas.create');
+        Route::get('/produtos/search', [ProdutoController::class, 'search'])->name('produtos.search');
         Route::post('/vendas/store', [VendasController::class, 'store'])->name('vendas.store');
+        Route::get('/vendas', [VendasController::class, 'info'])->name('vendas.info');
 
+
+        Route::get('/faturamento', [FaturamentoController::class, 'create'])->name('faturamento.create');
+        Route::post('/faturamento', [FaturamentoController::class, 'store'])->name('faturamento.store');
+        Route::get('/faturamento/exibir', [FaturamentoController::class, 'read'])->name('faturamento.read');
+        Route::post('/faturamento/editar', [FaturamentoController::class, 'update'])->name('faturamento.update');
 
 
         Route::get('/calcularSimples', [SimplesNacionalController::class, 'createCalculadora'])->name('simples.create.calculadora');

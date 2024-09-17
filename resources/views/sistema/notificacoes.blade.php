@@ -16,15 +16,15 @@
      <!-- Menu superior -->
      @include('partials.header')
 
-     <!-- Offcanvas para o menu -->
-    @include('partials.menu')
 
-     <!-- Offcanvas para notificações -->
-     @include('partials.notificacoes')
+
+
+
+
 
     <div class="container mt-4 mb-4 bg-light text-dark">
         <div class="row">
-            <div class="col-md-12 text-center">
+            <div class="col-12 text-center">
                 <h4 class="display-6">Notificações</h4>
                <table class="table table-striped table-hover">
                     <tbody>

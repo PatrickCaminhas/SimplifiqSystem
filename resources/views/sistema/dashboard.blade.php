@@ -16,16 +16,15 @@
     <!-- Menu superior -->
     @include('partials.header')
 
-    <!-- Offcanvas para o menu -->
-    @include('partials.menu')
-
-    <!-- Offcanvas para notificações -->
-    @include('partials.notificacoes')
 
 
-    <div class="container mt-5">
+
+
+
+
+    <div class="container mt-5 col-lg-6 col-md-8 col-sm-12">
         <div class="row">
-            <div class="col-md-7">
+            <div class="col-7">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Despesas dos ultimos 6 meses</h5>
@@ -34,7 +33,7 @@
 
                 </div>
             </div>
-            <div class="col-md-5">
+            <div class="col-5">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Ultimas atividades</h5>
@@ -66,24 +65,22 @@
         </div>
     </div>
     <!-- Features Section -->
-    <div class="container mt-5 mb-4">
+    <div class="container mt-5 col-lg-6 col-md-8 col-sm-12 mb-4">
 
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-4">
                 <div>
                     <div class="card mb-4">
                         <div class="card-body">
                             <h5 class="card-title">Enviar mensagem</h5>
                             <p class="card-text">Envie uma mensagem para um funcionario, todos os funcionarios ou para
                                 um fornecedor cadastrado no sistema.</p>
+
                             <!-- <a href="/enviarmensagem" class="btn btn-primary">Enviar mensagem</a> -->
                             <button type="button"
-                                class="btn
-                            @if ($padrao_cores == 'vermelho') btn-danger
-                            @elseif ($padrao_cores == 'verde') @include('partials.buttomCollor')
-                            @elseif ($padrao_cores == 'amarelo') btn-warning
-                            @elseif ($padrao_cores == 'azul') btn-primary
-                            @else bg-primary @endif
+                            class="btn
+                             @include('partials.buttomCollor')
+
                             "
                                 data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                 Enviar mensagem
@@ -103,7 +100,7 @@
 
                                             <form action="/dashboard" method="GET" class="row g-3">
 
-                                                <div class="col-md-6">
+                                                <div class="col-6">
                                                     <label for="exampleFormControlInput1"
                                                         class="form-label">Destinatário</label>
                                                     <select class="form-select" aria-label="Default select example">
@@ -123,7 +120,7 @@
 
                                                     </select>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-6">
                                                     <label for="exampleFormControlInput1"
                                                         class="form-label">Assunto</label>
                                                     <input type="text" class="form-control"
@@ -167,7 +164,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-4">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Fornecedores x Pedidos</h5>
@@ -176,7 +173,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-4">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Proximas contas</h5>
@@ -202,11 +199,8 @@
                         </table>
                         <a href="{{ route('contas.read') }}"
                             class="btn
-                        @if ($padrao_cores == 'vermelho') btn-danger
-                        @elseif ($padrao_cores == 'verde') @include('partials.buttomCollor')
-                        @elseif ($padrao_cores == 'amarelo') btn-warning
-                        @elseif ($padrao_cores == 'azul') btn-primary
-                        @else bg-primary @endif
+                        @include('partials.buttomCollor')
+
                         ">Ver
                             todas</a>
                     </div>

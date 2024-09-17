@@ -20,16 +20,16 @@
    <!-- Menu superior -->
    @include('partials.header')
 
-   <!-- Offcanvas para o menu -->
-  @include('partials.menu')
 
-   <!-- Offcanvas para notificações -->
-   @include('partials.notificacoes')
+
+
+
+
 
     <div class="d-flex align-items-center justify-content-center" style="height: 92vh;">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-md-6 col-lg-8">
+                <div class="col-6 col-8">
                     <div class="card shadow-sm">
                         <div class="card-body" style="overflow-x: auto;">
                             <h2 class="text-center">Servicos</h2>
@@ -80,17 +80,17 @@
                                                                 <form action="{{ route('metas.storeProgresso') }}"
                                                                     method="POST" class="row g-3">
                                                                     @csrf
-                                                                    <div class="col-md-4">
+                                                                    <div class="col-4">
                                                                         <p for="exampleFormControlInput1"
                                                                             class="form-label">Serviço :
                                                                         <a>{{ $servico->nome }}</a></p>
                                                                     </div>
-                                                                    <div class="col-md-4">
+                                                                    <div class="col-4">
                                                                         <p for="exampleFormControlInput1"
                                                                             class="form-label">Cliente:
                                                                         <a>{{ $servico->nome_cliente }}</a></p>
                                                                     </div>
-                                                                    <div class="col-md-4">
+                                                                    <div class="col-4">
                                                                         <p for="exampleFormControlInput1"
                                                                             class="form-label">
                                                                             @if($servico->tipo_cliente =='CPF') CPF:
@@ -98,37 +98,37 @@
 
                                                                         <a>{{ $servico->identificacao_cliente }}</a></p>
                                                                     </div>
-                                                                    <div class="col-md-4">
+                                                                    <div class="col-4">
                                                                         <p for="exampleFormControlInput1"
                                                                             class="form-label">Tipo de serviço:
                                                                         <a>{{ $servico->tipo_servico}}</a></p>
                                                                     </div>
-                                                                    <div class="col-md-4">
+                                                                    <div class="col-4">
                                                                         <p for="exampleFormControlInput1"
                                                                             class="form-label">Estado :
                                                                         <a>{{ $servico->estado}}</a></p>
                                                                     </div>
-                                                                    <div class="col-md-4">
+                                                                    <div class="col-4">
                                                                         <p for="exampleFormControlInput1"
                                                                             class="form-label">Valor:
                                                                         <a>{{ $servico->valor}}</a></p>
                                                                     </div>
-                                                                    <div class="col-md-4">
+                                                                    <div class="col-4">
                                                                         <label for="exampleFormControlInput1"
                                                                             class="form-label">Criação:</label>
                                                                         <a>{{ \Carbon\Carbon::parse($servico->created_at)->format('d/m/Y') }}</a>
                                                                     </div>
-                                                                    <div class="col-md-4">
+                                                                    <div class="col-4">
                                                                         <label for="exampleFormControlInput1"
                                                                             class="form-label">Inicio:</label>
                                                                         <a>{{ \Carbon\Carbon::parse($servico->data_inicio)->format('d/m/Y') }}</a>
                                                                     </div>
-                                                                    <div class="col-md-4">
+                                                                    <div class="col-4">
                                                                         <label for="exampleFormControlInput1"
                                                                             class="form-label">Fim:</label>
                                                                         <a>{{ \Carbon\Carbon::parse($servico->data_fim)->format('d/m/Y') }}</a>
                                                                     </div>
-                                                                    <div class="col-md-12">
+                                                                    <div class="col-12">
                                                                         <p for="exampleFormControlInput1"
                                                                             class="form-label">Descrição:
                                                                         <a>{{ $servico->descricao}}</a></p>

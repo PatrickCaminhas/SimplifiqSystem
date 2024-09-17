@@ -22,26 +22,26 @@
     <!-- Menu superior -->
     @include('partials.header')
 
-    <!-- Offcanvas para o menu -->
-    @include('partials.menu')
 
-    <!-- Offcanvas para notificações -->
-    @include('partials.notificacoes')
+
+
+
+
 
     <div class="d-flex align-items-center justify-content-center" style="height: 92vh;">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-md-12">
+                <div class="col-12">
                     <div class="card shadow-sm">
                         <div class="card-body row" style="overflow-x: auto;">
                             <h2 class="text-center">Estatisticas da meta #{{ $meta->id }}</h2>
-                            <div class="col-md-6">
+                            <div class="col-6">
                                 <div style="width: 75%; margin: auto;">
                                     <canvas id="myChart"></canvas>
                                 </div>
 
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-6">
                                 <p>Começo: {{$informacoes->data_inicial}} | Fim:  {{$informacoes->data_final}}</p>
 
                                 <p>Maior progresso: {{$informacoes->maiorProgresso}} | Data: {{$informacoes->diaComMaiorProgresso}}</p>

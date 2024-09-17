@@ -18,21 +18,21 @@
     <!-- Menu superior -->
     @include('partials.header')
 
-    <!-- Offcanvas para o menu -->
-    @include('partials.menu')
 
-    <!-- Offcanvas para notificações -->
-    @include('partials.notificacoes')
+
+
+
+
 
     <div class="container mt-4">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title display-6 text-center">Dados da empresa</h5>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-6">
                                     <h5 class="card-title">Nome: {{ $informacaoEmpresa->nome }}</h5>
                                     <p class="card-text">CNPJ: {{ $informacaoEmpresa->cnpj }}</p>
                                     <p class="card-text">Tipo de empresa:
@@ -52,7 +52,7 @@
                                     <p class="card-text">Padrão de cores do sistema:
                                         {{ ucfirst($informacaoEmpresa->padrao_cores) }}</p>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-6">
                                     <p class="card-text">Logo:
                                         @if ($informacaoEmpresa->logo)
                                             <img src="{{ $informacaoEmpresa->logo }}" alt="Logo da empresa"
@@ -67,8 +67,9 @@
                                     <br>
                                     <p href="#" class="btn btn-primary">Alterar tema da empresa </p>
                                     <br>
-                                    <p href="#" class="btn btn-primary">Alterar logo da empresa </p>
-
+                                    <p href="#" class="btn btn-primary">Historico de faturamentos</p>
+                                    <br>
+                                    <p href="#" class="btn btn-primary">Cadastrar faturamento</p>
 
                                 </div>
 
@@ -77,9 +78,9 @@
                     </div>
                 </div>
             </div>
-            <div class="container mt-5 mb-5">
+            <div class="container mt-5 col-lg-6 col-md-8 col-sm-12 mb-5">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-6 col-6">
                         <div class="card mb-2">
                             <div class="card-body">
                                 <h5 class="card-title">Despesas dos ultimos 6 meses</h5>
@@ -88,7 +89,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-6 col-6">
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">Despesas diarias do mês atual</h5>
@@ -104,7 +105,7 @@
             </div>
             <div class="container mt-4">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-4">
                         <div class="card mb-2">
                             <div class="card-body">
                                 <h5 class="card-title">Fácil de Usar</h5>
@@ -115,7 +116,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-4">
                         <div class="card mb-2">
                             <div class="card-body">
                                 <h5 class="card-title">Fornecedores por % de produto</h5>
@@ -124,7 +125,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-4">
                         <div class="card mb-2">
                             <div class="card-body">
                                 <h5 class="card-title">Proximas contas</h5>

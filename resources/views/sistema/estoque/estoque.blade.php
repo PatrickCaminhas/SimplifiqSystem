@@ -20,16 +20,16 @@
     <!-- Menu superior -->
     @include('partials.header')
 
-    <!-- Offcanvas para o menu -->
-    @include('partials.menu')
 
-    <!-- Offcanvas para notificações -->
-    @include('partials.notificacoes')
+
+
+
+
 
     <div class="d-flex align-items-center justify-content-center" style="height: 92vh;">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-md-6 col-lg-8">
+                <div class="col-6 col-8">
                     <div class="card shadow-sm">
                         <div class="card-body" style="overflow-x: auto;">
                             <h2 class="text-center">Estoque</h2>
@@ -73,25 +73,25 @@
                                                                 </div>
                                                                 <div class="modal-body bg-secondary-subtle">
                                                                     <div class="row">
-                                                                        <div class="col-md-12">
+                                                                        <div class="col-12">
                                                                             <label for="exampleFormControlInput1"
                                                                                 class="form-label">Produto:</label>
                                                                             <a>{{ $produto->nome . ' ' . $produto->modelo . ' ' }}</a>
                                                                         </div>
 
-                                                                        <div class="col-md-6">
+                                                                        <div class="col-6">
                                                                             <p for="exampleFormControlInput1"
                                                                                 class="form-label">Marca:
                                                                                 <a>{{ $produto->marca }}</a>
                                                                             </p>
                                                                         </div>
-                                                                        <div class="col-md-6">
+                                                                        <div class="col-6">
                                                                             <p for="exampleFormControlInput1"
                                                                                 class="form-label">Quantidade atual:
                                                                                 <a>{{ $produto->quantidade }}</a>
                                                                             </p>
                                                                         </div>
-                                                                        <div class="col-md-12">
+                                                                        <div class="col-12">
                                                                             <p for="exampleFormControlInput1"
                                                                                 class="form-label">Ultima ação:
                                                                                 <a
@@ -103,7 +103,7 @@
                                                                 </div>
                                                                 <div class="modal-footer">
 
-                                                                    <div class="col-md-12">
+                                                                    <div class="col-12">
                                                                         <input type="hidden" name="id_produto"
                                                                             value="{{ $produto->id }}">
 

@@ -7,7 +7,7 @@
     <div class="offcanvas-body">
         <!-- Conteúdo das notificações aqui -->
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <div class="card mt-1">
                     <div class="card-body">
                         <p class="figure-caption">Usuario: Sistema</p>

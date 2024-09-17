@@ -20,14 +20,14 @@
       <!-- Menu superior -->
       @include('partials.header')
 
-      <!-- Offcanvas para o menu -->
-     @include('partials.menu')
 
-      <!-- Offcanvas para notificações -->
-      @include('partials.notificacoes')
+
+
+
+
 
     <div class="d-flex align-items-center justify-content-center " style="height: 92vh;">
-        <div class="container mt-5 col-md-6 ">
+        <div class="container mt-5 col-lg-6 col-md-8 col-sm-12 col-6 ">
             <div class="row align-items-center justify-content-center">
                 <div class="card">
                     <div class="card-body">

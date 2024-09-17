@@ -20,13 +20,13 @@
     <!-- Menu superior -->
     @include('partials.header')
 
-    <!-- Offcanvas para o menu -->
-    @include('partials.menu')
 
-    <!-- Offcanvas para notificações -->
-    @include('partials.notificacoes')
 
-    <div class="container mt-5  col-md-6 bg-light text-dark">
+
+
+
+
+    <div class="container mt-5 col-lg-6 col-md-8 col-sm-12  col-6 bg-light text-dark">
         <div class="row">
             <div class=" text-center">
                 <h4 class="display-6">Informação de produto</h4>

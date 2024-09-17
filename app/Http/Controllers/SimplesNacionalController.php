@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\SimplesNacional;
 use App\Models\Empresa_information;
+use App\Models\HistoricoFaturamento; // Add this line to import the Faturamento class
 use Stancl\Tenancy\Facades\Tenancy;
 
 class SimplesNacionalController extends Controller
@@ -22,7 +23,26 @@ class SimplesNacionalController extends Controller
             return view("sistema.informativo.calculadoraSimplesNacional", ['page' => 'simplesNacional', 'simplesMei' => $simplesMei]);
 
         }
-        return view("sistema.informativo.calculadoraSimplesNacional", ['page' => 'simplesNacional']);
+        $calculoAutomatico= $this->calculoDASAutomatico();
+        return view("sistema.informativo.calculadoraSimplesNacional",['informacoes' => $calculoAutomatico], ['page' => 'simplesNacional']);
+    }
+
+    public function calculoDASAutomatico(){
+        $empresa = Empresa_information::first();
+        $faturamentosDeAteDozeMeses = HistoricoFaturamento::orderBy('ano_mes', 'desc')->take(13)->get();
+        $Faturamento = array();
+        $Faturamento[0]=0;
+        $Faturamento[1]=$faturamentosDeAteDozeMeses[0]->renda_bruta;
+        $Faturamento[2]=$faturamentosDeAteDozeMeses[0]->ano_mes;
+        for($i= 1; $i < count($faturamentosDeAteDozeMeses); $i++){
+            $Faturamento[0] += $faturamentosDeAteDozeMeses[$i]->renda_bruta;
+        }
+        $Faturamento[3]= $Faturamento[0];
+        $Faturamento[4]= $faturamentosDeAteDozeMeses->count()-1;
+        $Faturamento[0]= ($Faturamento[0]/$Faturamento[4])*12;
+        $Faturamento[5]= $Faturamento[0];
+        $Faturamento[0]= $this->calculaDAS($Faturamento[0], $Faturamento[1], $empresa);
+        return $Faturamento;
     }
     public function createStore()
     {
@@ -118,18 +138,9 @@ class SimplesNacionalController extends Controller
         return $resultado;
     }
 
-    public function calculate(Request $request)
+    public function calculaDAS($renda_bruta_anual, $valor_bruto_mes, $empresa)
     {
-        $empresa = Empresa_information::first();
-
-        $request->validate([
-            'receita_bruta_anual' => 'required|numeric|regex:/^\d{1,9}(\.\d{1,2})?$/',
-            'receita_bruta_mes' => 'required|numeric|regex:/^\d{1,9}(\.\d{1,2})?$/',
-        ]);
-
-        $valor_bruto_anual = $request->input('receita_bruta_anual');
-        $valor_bruto_mes = $request->input('receita_bruta_mes');
-
+        // Determina o anexo baseado no tipo da empresa
         $anexo = match ($empresa->tipo_empresa) {
             'comercio' => 1,
             'industria' => 2,
@@ -141,21 +152,42 @@ class SimplesNacionalController extends Controller
             return redirect()->route('simples.create.calculadora')->with('error', 'Tipo de empresa inválido!');
         }
 
+        // Obtém as alíquotas e deduções da tabela Simples Nacional
         $simplesNacional = \DB::connection('mysql')
             ->table('simples_nacionals')
             ->where('nome_anexo', $anexo)
-            ->where('receita_bruta_anual_min', '<=', $valor_bruto_anual)
-            ->where('receita_bruta_anual_max', '>=', $valor_bruto_anual)
+            ->where('receita_bruta_anual_min', '<=', $renda_bruta_anual)
+            ->where('receita_bruta_anual_max', '>=', $renda_bruta_anual)
             ->first();
 
         if ($simplesNacional) {
             $aliquota = $simplesNacional->aliquota;
             $deducao = $simplesNacional->deducao;
 
-            $resultado = ((($valor_bruto_anual * ($aliquota / 100)) - $deducao) / $valor_bruto_anual) * $valor_bruto_mes;
-            return redirect()->route('simples.create.calculadora')->with('valor', "A previsão de imposto do DAS é de R$".$resultado);
-
+            // Cálculo do DAS
+            $resultado = ((($renda_bruta_anual * ($aliquota / 100)) - $deducao) / $renda_bruta_anual) * $valor_bruto_mes;
+            return $resultado;
         } else {
+            return "erro";
+        }
+    }
+
+    public function calculate(Request $request)
+    {
+        $empresa = Empresa_information::first();
+
+        $request->validate([
+            'receita_bruta_anual' => 'required|numeric|regex:/^\d{1,9}(\.\d{1,2})?$/',
+            'receita_bruta_mes' => 'required|numeric|regex:/^\d{1,9}(\.\d{1,2})?$/',
+        ]);
+
+        $valor_bruto_anual = $request->input('receita_bruta_anual');
+        $valor_bruto_mes = $request->input('receita_bruta_mes');
+        $resultado = $this->calculaDAS($valor_bruto_anual, $valor_bruto_mes, $empresa);
+        if($resultado != "erro"){
+            return redirect()->route('simples.create.calculadora')->with('valor', "A previsão de imposto do DAS é de R$".number_format($resultado, 2,',','.'));
+        }
+        else{
             return redirect()->route('simples.create.calculadora')->with('error', 'Registro não encontrado!');
         }
     }

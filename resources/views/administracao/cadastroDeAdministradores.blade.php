@@ -50,7 +50,7 @@
         <div class="d-flex align-items-center justify-content-center" style="height: 92vh;">
             <div class="container" style="height: 92vh;">
                 <div class="row justify-content-center">
-                    <div class="col-md-6 col-lg-4">
+                    <div class="col-6 col-4">
                         <div class="card shadow-sm">
                             <div class="card-body bg-dark text-light border">
                                 <h3 class="text-center">Cadastro</h3>

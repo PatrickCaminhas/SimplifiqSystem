@@ -21,16 +21,16 @@
     <!-- Menu superior -->
     @include('partials.header')
 
-    <!-- Offcanvas para o menu -->
-    @include('partials.menu')
 
-    <!-- Offcanvas para notificações -->
-    @include('partials.notificacoes')
+
+
+
+
 
     <div class="d-flex align-items-center justify-content-center" style="height: 92vh;">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-md-6 col-lg-8">
+                <div class="col-6 col-8">
                     <div class="card shadow-sm">
                         <div class="card-body" style="overflow-x: auto;">
                             <h2 class="text-center">Metas</h2>
@@ -77,27 +77,27 @@
                                                                 <form action="{{ route('metas.storeProgresso') }}"
                                                                     method="POST" class="row g-3">
                                                                     @csrf
-                                                                    <div class="col-md-6">
+                                                                    <div class="col-6">
                                                                         <label for="exampleFormControlInput1"
                                                                             class="form-label">Criação:</label>
                                                                         <a>{{ \Carbon\Carbon::parse($meta->created_at)->format('d/m/Y') }}</a>
                                                                     </div>
-                                                                    <div class="col-md-6">
+                                                                    <div class="col-6">
                                                                         <label for="exampleFormControlInput1"
                                                                             class="form-label">Vencimento:</label>
                                                                         <a>{{ \Carbon\Carbon::parse($meta->ending_at)->format('d/m/Y') }}</a>
                                                                     </div>
-                                                                    <div class="col-md-4">
+                                                                    <div class="col-4">
                                                                         <p for="exampleFormControlInput1"
                                                                             class="form-label">Valor final:</p>
                                                                         <a>R$ {{ $meta->valor }}</a>
                                                                     </div>
-                                                                    <div class="col-md-4">
+                                                                    <div class="col-4">
                                                                         <p for="exampleFormControlInput1"
                                                                             class="form-label">Valor atual:</p>
                                                                         <a>R$ {{ $meta->valor_atual }}</a>
                                                                     </div>
-                                                                    <div class="col-md-4">
+                                                                    <div class="col-4">
                                                                         @if ($meta->valor_atual >= $meta->valor)
                                                                             <p for="exampleFormControlInput1"
                                                                                 class="form-label">Valor excedido:</p>
@@ -112,7 +112,7 @@
                                                                     </div>
 
                                                             </div>
-                                                            <div class="modal-body bg-secondary-subtle col-md-12">
+                                                            <div class="modal-body bg-secondary-subtle col-12">
                                                                 <div class="progress bg-light" role="progressbar"
                                                                     aria-label="Default striped example"
                                                                     aria-valuenow="10" aria-valuemin="0"
@@ -130,7 +130,7 @@
 
 
                                                             <div class="modal-footer">
-                                                                <div class="col-md-8">
+                                                                <div class="col-8">
                                                                     <input type="hidden" name="meta_id"
                                                                         value="{{ $meta->id }}">
                                                                     <div class="form-floating mb-3">

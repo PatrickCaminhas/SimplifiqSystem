@@ -16,16 +16,16 @@
     <!-- Menu superior -->
     @include('partials.header')
 
-    <!-- Offcanvas para o menu -->
-   @include('partials.menu')
 
-    <!-- Offcanvas para notificações -->
-    @include('partials.notificacoes')
+
+
+
+
 
     <div class=" d-flex align-items-center justify-content-center" style="height: 90vh;">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-md-6 col-lg-4">
+                <div class="col-6 col-4">
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <h1 class="text-center">Configurações</h1>

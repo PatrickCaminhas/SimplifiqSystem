@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Clientes;
 
 class Vendas extends Model
 {
@@ -16,10 +17,10 @@ class Vendas extends Model
     ];
     public function cliente()
     {
-        return $this->belongsTo(Cliente::class);
+        return $this->belongsTo(Clientes::class);
     }
     public function itens()
-    {
-        return $this->hasMany(Itens_venda::class);
-    }
+{
+    return $this->hasMany(Itens_venda::class, 'venda_id');
+}
 }

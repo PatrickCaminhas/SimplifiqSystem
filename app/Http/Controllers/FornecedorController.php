@@ -11,7 +11,12 @@ class FornecedorController extends Controller
     //
     public function create()
     {
-        return view('sistema\cadastrosSistema\cadastroDeFornecedor', ['page' => 'cadastroFornecedor']);
+        return view('sistema.fornecedores.cadastroDeFornecedor', ['page' => ' cadastroFornecedor']);
+    }
+
+    public function read(){
+        $fornecedores = Fornecedores::all();
+        return view('sistema.fornecedores.listaFornecedores', ['page' => ' cadastroFornecedor', 'fornecedores' => $fornecedores]);
     }
     public function store(Request $request)
     {
@@ -39,7 +44,7 @@ class FornecedorController extends Controller
         if ($fornecedores) {
             return redirect('dashboard')->with('success', 'Cadastro realizado com sucesso!');
         } else {
-            return redirect('cadastrofornecedor')->with('error', 'Erro ao cadastrar fornecedor.');
+            return redirect(' cadastroFornecedor')->with('error', 'Erro ao cadastrar fornecedor.');
         }
     }
 }

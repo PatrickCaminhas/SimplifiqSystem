@@ -20,19 +20,19 @@
     <!-- Menu superior -->
     @include('partials.header')
 
-    <!-- Offcanvas para o menu -->
-    @include('partials.menu')
 
-    <!-- Offcanvas para notificações -->
-    @include('partials.notificacoes')
 
-    <div class="container mt-5  col-md-12 bg-light text-dark">
+
+
+
+
+    <div class="container mt-5 col-lg-6 col-md-8 col-sm-12  col-12 bg-light text-dark">
         <div class="row">
             <div class=" text-center">
                 <h4 class="display-6">Cadastros do sistema</h4>
 
                 <div class="row">
-                    <div class="col-sm-6 mb-3 mb-sm-0 mx-auto p-3">
+                    <div class="col-6 mb-3 mb-sm-0 mx-auto p-3">
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">Cadastro de produtos e materiais</h5>
@@ -41,17 +41,17 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 mx-auto p-3">
+                    <div class="col-6 mx-auto p-3">
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">Cadastro de fornecedores</h5>
                                 <p class="card-text">Registre um novo fornecedor no sistema para a realização de cotações de produtos e ativos.</p>
-                                <a href="{{ route('cadastrofornecedor') }}" class="btn btn-primary">Acessar</a>
+                                <a href="{{ route(' cadastroFornecedor') }}" class="btn btn-primary">Acessar</a>
                             </div>
                         </div>
                     </div>
                     @if(isset($menu) && $menu !== 'Serviços')
-                    <div class="col-sm-6 mx-auto p-3">
+                    <div class="col-6 mx-auto p-3">
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">Cadastro de tipos serviços</h5>
@@ -60,7 +60,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 mx-auto p-3">
+                    <div class="col-6 mx-auto p-3">
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">Cadastro de serviços</h5>

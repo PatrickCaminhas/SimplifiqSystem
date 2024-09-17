@@ -10,16 +10,30 @@ use App\Models\Clientes;
 use App\Models\Estoque;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Models\HistoricoFaturamento;
+use App\Services\metaService;
 
 class VendasController extends Controller
 {
     //
+    protected $metaService;
+
+    public function __construct(MetaService $metaService)
+    {
+        $this->metaService = $metaService;
+    }
     public function create()
     {
         $produtos = Produtos::all();
         $clientes = Clientes::all();
-        return view('sistema.venda.vendas', ['produtos' => $produtos, 'clientes' => $clientes], ['page' => 'servicos']);
+        return view('sistema.venda.cadastrarVenda', ['produtos' => $produtos, 'clientes' => $clientes], ['page' => 'servicos']);
 
+    }
+
+    public function info()
+    {
+        $vendas = Vendas::with(['cliente', 'itens.produto'])->get();
+        return view('sistema.venda.listaVendas', ['vendas' => $vendas], ['page' => 'servicos']);
     }
 
     public function store(Request $request)
@@ -31,7 +45,7 @@ class VendasController extends Controller
             $venda = new Vendas();
             $venda->cliente_id = $request->input('cliente_id');
             $venda->data_venda = now();
-            $venda->total = 0;  // Será atualizado depois
+            $venda->valor_total = 0;  // Será atualizado depois
             $venda->save();
 
             $totalVenda = 0;
@@ -76,7 +90,10 @@ class VendasController extends Controller
             }
 
             // Atualizar o total da venda
-            $venda->total = $totalVenda;
+            $venda->valor_total = $totalVenda;
+
+            $this->atualizarFaturamento($totalVenda);
+            $this->metaService->cadastrarProgressoEmTodasMetasAbertas($totalVenda);
             $venda->save();
 
             DB::commit(); // Confirma a transação se tudo der certo
@@ -99,5 +116,18 @@ class VendasController extends Controller
         }
     }
 
+    public function atualizarFaturamento($valorVenda)
+    {
+        $faturamento = HistoricoFaturamento::where('ano_mes', date('Y')."-".date('m'))->first();
+        if ($faturamento) {
+            $faturamento->renda_bruta += $valorVenda;
+            $faturamento->save();
+        } else {
+            $faturamento = new HistoricoFaturamento();
+            $faturamento->ano_mes = date('Y')."-".date('m');
+            $faturamento->renda_bruta = $valorVenda;
+            $faturamento->save();
+        }
+    }
 
 }

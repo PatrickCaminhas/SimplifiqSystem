@@ -7,12 +7,18 @@ use App\Models\Metas;
 use App\Models\MetasProgresso;
 use ConsoleTVs\Charts\Facades\Charts;
 use Carbon\Carbon;
-
+use App\Services\metaService;
 
 
 class MetasController extends Controller
 {
+    protected $metaService;
     //
+
+    public function __construct(MetaService $metaService)
+    {
+        $this->metaService = $metaService;
+    }
     public function createRead()
     {
         $metas = Metas::all();
@@ -60,18 +66,15 @@ class MetasController extends Controller
 
     public function storeProgresso(Request $request)
     {
-        $metaProgresso = new MetasProgresso();
-        $metaProgresso->meta_id = $request->input('meta_id');
-        $metaProgresso->valor = $request->input('valor');
-        $metaProgresso->save();
-        $meta = Metas::find($request->input('meta_id'));
-        $meta->valor_atual += $request->input('valor');
-        if ($meta->valor_atual > $meta->valor && $meta->ending_at > date('Y-m-d') && $meta->estado == 'Pendente') {
-            $meta->estado = 'Cumprida';
-        }
-        $meta->save();
+        $dados = new \stdClass();
+        $dados->meta_id = $request->input('meta_id');
+        $dados->valor = $request->input('valor');
+
+        $this->metaService->cadastrarProgresso($dados);
         return redirect()->route('metas.read');
     }
+
+
 
     public function diferencaDias($data1, $data2)
     {

@@ -22,7 +22,7 @@ class Itens_venda extends Model
     }
     public function venda()
     {
-        return $this->belongsTo(Vendas::class);
+        return $this->belongsTo(Vendas::class, 'venda_id');
     }
 
 }

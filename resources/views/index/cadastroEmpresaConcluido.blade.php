@@ -11,9 +11,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
 </head>
 <body class="bg-primary text-white">
-    <div class="container mt-5 ">
+    <div class="container mt-5 col-lg-6 col-md-8 col-sm-12 ">
         <div class="row">
-            <div class="col-md-6 offset-md-3 text-center">
+            <div class="col-6 offset-md-3 text-center">
                 <h1 class="display-4">Cadastro Confirmado!</h1>
                 <p class="lead">Seus dados foram enviados para análise. Em breve, você receberá uma mensagem no seu e-mail com os detalhes de acesso.</p>
                 <p>Obrigado por escolher nosso sistema!</p>

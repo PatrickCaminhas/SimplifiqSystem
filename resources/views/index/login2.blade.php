@@ -40,11 +40,11 @@
         </div>
     </nav>
     <div>
-        <div class="bg-dark bg-opacity-75 col-md-6">
+        <div class="bg-dark bg-opacity-75 col-6">
             <div class="d-flex align-items-center justify-content-center" style="height: 92vh;">
                 <div class="container-fluid ps-0 pe-0">
                     <div class="row justify-content-center">
-                        <div class="col-md-6">
+                        <div class="col-6">
                             <div class="card shadow-lg border border-dark">
                                 <div class="card-body bg-dark text-light">
                                     <h2 class="text-center">Login</h2>

@@ -1,8 +1,6 @@
 @if ($tamanho_empresa == 'mei')
-    <div class="form-text">Você é um Microempreendedor Individual (MEI) e o valor do DAS MEI é de R$ {{$simplesMei}}.</div>
-
-
-
+    <div class="form-text">Você é um Microempreendedor Individual (MEI) e o valor do DAS MEI é de R$ {{ $simplesMei }}.
+    </div>
 @else
     <div class="form-text">Esta calculadora é uma estimativa, contate o seu contador.</div>
 
@@ -21,8 +19,8 @@
             <div class="form-floating mb-3">
                 <input type="number" class="form-control" name="receita_bruta_anual" id="receita_bruta_anual"
                     min="1" step="0.01" required><label>
-                    Média da renda bruta dos ultimos 12 meses:</label>
-                <div class="form-text">Soma das rendas brutas dos 12 meses anteriores divididos por 12.</div>
+                    Renda bruta dos ultimos 12 meses:</label>
+                <div class="form-text">Soma do faturamento dos ultimos 12 meses.</div>
 
             </div>
             <div class=" text-center mt-3">
@@ -38,7 +36,7 @@
 
         @if (session('valor'))
             <div class="alert alert-success" role="alert">
-                {{ session('valor') }}
+                {{session('valor') }}
             </div>
         @endif
 

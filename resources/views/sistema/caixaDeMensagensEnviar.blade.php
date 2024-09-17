@@ -32,7 +32,7 @@
         </div>
     </nav>
 
-    <!-- Offcanvas para o menu -->
+
     <div class="offcanvas navbar-dark offcanvas-start bg-primary text-light" tabindex="-1" id="menuOffcanvas"
         aria-labelledby="menuOffcanvasLabel">
         <div data-bs-theme="dark" class="offcanvas-header">
@@ -43,7 +43,7 @@
 
         <div class="offcanvas-body ">
              <h6 class="offcanvas-subtitle text-light">
-                <p>Bem-vindo, 
+                <p>Bem-vindo,
                 @if (session('funcionario'))
                      {{ session('funcionario')->nome }}!</p>
                 @endif
@@ -83,7 +83,7 @@
         </div>
     </div>
 
-    <!-- Offcanvas para notificações -->
+
     <div class="offcanvas offcanvas-end navbar-dark" tabindex="-1" id="notificacoesOffcanvas"
         aria-labelledby="notificacoesOffcanvasLabel" data-bs-theme="dark">
         <div class="offcanvas-header">
@@ -93,7 +93,7 @@
         <div class="offcanvas-body">
             <!-- Conteúdo das notificações aqui -->
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                     <div class="card mt-1">
                         <div class="card-body">
                             <p class="figure-caption">Usuario: Sistema</p>
@@ -122,11 +122,11 @@
 
     <div class="container mt-4 mb-4 bg-light text-dark">
         <div class="row">
-            <div class="col-md-12 text-center mb-4">
+            <div class="col-12 text-center mb-4">
                 <h4 class="display-6">Enviar mensagem</h4>
                 <form action="/dashboard" method="post" class="row g-3">
-                 
-                    <div class="col-md-6">
+
+                    <div class="col-6">
                         <label for="exampleFormControlInput1" class="form-label">Destinatário</label>
                         <select class="form-select" aria-label="Default select example">
                             <option selected disabled>Selecione o destinatário</option>
@@ -145,7 +145,7 @@
 
                         </select>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-6">
                         <label for="exampleFormControlInput1" class="form-label">Assunto</label>
                         <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Assunto">
                     </div>
@@ -156,9 +156,9 @@
                     <div class="col-12">
                         <button type="submit" class="btn btn-primary">Enviar</button>
                     </div>
-                
-               
-               
+
+
+
             </div>
         </div>
 

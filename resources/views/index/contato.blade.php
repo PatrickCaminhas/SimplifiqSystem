@@ -45,9 +45,9 @@
     </nav>
 
     <!-- Main Content -->
-    <div class="container mt-5">
+    <div class="container mt-5 col-lg-6 col-md-8 col-sm-12">
         <div class="row">
-            <div class="col-md-12 text-center">
+            <div class="col-12 text-center">
                 <h1 class="display-4">Bem-vindo ao Sistema de Administração</h1>
                 <p class="lead">Gerencie suas operações de forma eficiente e eficaz com nosso sistema robusto e
                     intuitivo.</p>
@@ -58,9 +58,9 @@
     </div>
 
     <!-- Features Section -->
-    <div class="container mt-5">
+    <div class="container mt-5 col-lg-6 col-md-8 col-sm-12">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-4">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Fácil de Usar</h5>
@@ -68,7 +68,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-4">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Segurança</h5>
@@ -76,7 +76,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-4">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Suporte 24/7</h5>

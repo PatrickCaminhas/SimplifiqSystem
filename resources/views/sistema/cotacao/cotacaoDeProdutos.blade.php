@@ -14,13 +14,13 @@
     <!-- Menu superior -->
     @include('partials.header')
 
-    <!-- Offcanvas para o menu -->
-    @include('partials.menu')
 
-    <!-- Offcanvas para notificações -->
-    @include('partials.notificacoes')
 
-    <div class="col-md-6 container mt-4 mb-4 bg-light text-dark">
+
+
+
+
+    <div class="col-6 container mt-4 mb-4 bg-light text-dark">
         <div class="row">
             <div class="text-center" style="overflow: auto;">
                 <h4 class="display-6">Cotação de Produtos</h4>

@@ -18,14 +18,14 @@
     <!-- Menu superior -->
     @include('partials.header')
 
-    <!-- Offcanvas para o menu -->
-    @include('partials.menu')
 
-    <!-- Offcanvas para notificações -->
-    @include('partials.notificacoes')
+
+
+
+
 
     <div class="d-flex align-items-center justify-content-center " style="height: 92vh;">
-        <div class="container mt-5 col-md-4 ">
+        <div class="container mt-5 col-lg-6 col-md-8 col-sm-12 col-12 ">
             <div class="row align-items-center justify-content-center">
                 <div class="card">
                     <div class="card-body">
@@ -111,14 +111,14 @@
                                                 <label for="mediaTempo">Tempo para esse tipo de serviço: <span
                                                     id="duracao_servico"></span> minutos</label>
 
-                                                <div class="col-md-6">
+                                                <div class="col-6">
                                                     <div class="form-floating mb-3">
                                                         <input type="number" class="form-control" name="horas"
                                                             id="horas" placeholder="Quantidade de horas">
                                                         <label>Horas:</label>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-6">
                                                     <div class="form-floating mb-3">
                                                         <input type="number" class="form-control" name="minutos"
                                                             id="minutos" placeholder="Quantidade de minutos">

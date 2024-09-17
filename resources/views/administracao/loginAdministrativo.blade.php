@@ -41,13 +41,13 @@
                 </li>
             </ul>
         </div>
-    </nav> 
+    </nav>
     <div>
-        <div class="bg-dark bg-opacity-75 col-md-6">
+        <div class="bg-dark bg-opacity-75 col-6">
             <div class="d-flex align-items-center justify-content-center" style="height: 92vh;">
                 <div class="container-fluid ps-0 pe-0">
                     <div class="row justify-content-center">
-                        <div class="col-md-6">
+                        <div class="col-6">
                             <div class="card shadow-lg border border-dark">
                                 <div class="card-body bg-dark text-light">
                                     <h2 class="text-center">Login</h2>
@@ -72,11 +72,11 @@
                                     </form>
                                     @if ($errors->any())
                                         <div class="alert alert-danger mt-3">
-                                            
+
                                                 @foreach ($errors->all() as $error)
                                                     {{ $error }}
                                                 @endforeach
-                                            
+
                                         </div>
                                     @endif
                                 </div>
@@ -85,7 +85,7 @@
                     </div>
                 </div>
             </div>
-        </div>       
+        </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
