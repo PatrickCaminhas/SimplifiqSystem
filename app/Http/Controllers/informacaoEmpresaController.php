@@ -7,7 +7,7 @@ use App\Models\Empresa_information;
 use App\Models\Contas;
 use Carbon\Carbon;
 
-class InformacaoEmpresaController extends Controller
+class informacaoEmpresaController extends Controller
 {
     //
     public function createRead()

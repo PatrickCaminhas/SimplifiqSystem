@@ -13,8 +13,15 @@
 </head>
 
 <body class="bg-dark" style="height: 100vh;">
-    <!-- Menu superior -->
-    @include('partials.header')
+   <!-- Menu superior -->
+   @include('partials.header')
+
+
+
+
+
+
+
     <div class=" d-flex align-items-center justify-content-center" style="height: 90vh;">
         <div class="container">
             <div class="row justify-content-center">
@@ -22,7 +29,7 @@
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <h2 class="text-center">Cadastro de fornecedor</h2>
-                            <form method="POST" action="{{ route(' cadastroFornecedor.store') }}">
+                            <form method="POST" action="{{ route('cadastroFornecedor.store') }}">
                                 @csrf
                                 <div class="form-group">
                                     <label for="nomefornecedor">Nome</label>
@@ -46,15 +53,14 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="estadofornecedor">Estado</label>
-                                    <select class="form-control" id="estado" name="estado">
-                                        <option selected disabled>Selecione o estado</option>
-                                        @include('partials.estadosBrasil')
-                                    </select>
+                                        <select class="form-control" id="estado" name="estado">
+                                            <option selected disabled>Selecione o estado</option>
+                                            @include('partials.estadosBrasil')
+                                        </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="representantefornecedor">Representante</label>
-                                    <input type="text" class="form-control" id="nome_representante"
-                                        name="nome_representante"
+                                    <input type="text" class="form-control" id="nome_representante" name="nome_representante"
                                         placeholder="Digite o nome do representante do fornecedor">
                                 </div>
                                 <div class="form-group">
@@ -68,10 +74,8 @@
                                         placeholder="Digite o telefone do fornecedor">
                                 </div>
                                 <div class= "text-center mt-1">
-                                    <button type="submit"
-                                        class="btn @include('partials.buttomCollor') text-center">Cadastrar</button>
-                                    <button type="reset"
-                                        class="btn @include('partials.buttomCollor') text-center">Limpar</button>
+                                    <button type="submit" class="btn @include('partials.buttomCollor') text-center">Cadastrar</button>
+                                    <button type="reset" class="btn @include('partials.buttomCollor') text-center">Limpar</button>
                                 </div>
                             </form>
                         </div>

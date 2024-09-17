@@ -18,6 +18,23 @@ class ClienteController extends Controller
         $clientes = Clientes::all();
         return view('sistema.cliente.listaClientes', ['clientes' => $clientes, 'page' => 'lista']);
     }
+    public function quitarDividaView(Request $request)
+    {
+        $cliente = Clientes::find($request->id);
+        return view( 'sistema.cliente.quitarDivida', ['cliente' => $cliente, 'page' => 'quitar']);
+    }
+    public function quitarDividaStore(Request $request)
+    {
+        $cliente = Clientes::find($request->cliente_id);
+        $debito = $cliente->debitos;
+        if($debito < $request->valor_quitacao){
+            return redirect('clientes')->with('error', 'Valor de quitação maior que o valor da dívida!');
+        }
+        $cliente->debitos = $debito-$request->valor_quitacao;
+        $cliente->save();
+        return redirect('clientes')->with('success', 'Dívida quitada com sucesso!');
+    }
+
     public function store(Request $request)
     {
         $request->validate([

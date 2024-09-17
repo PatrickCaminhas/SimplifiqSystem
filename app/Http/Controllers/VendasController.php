@@ -36,6 +36,11 @@ class VendasController extends Controller
         return view('sistema.venda.listaVendas', ['vendas' => $vendas], ['page' => 'servicos']);
     }
 
+    public function clienteCrediario($clienteId, $valorDebito)
+    {
+        $cliente = Clientes::find($clienteId);
+        $cliente->debitos += $valorDebito;
+    }
     public function store(Request $request)
     {
         DB::beginTransaction(); // Inicia a transação
@@ -45,6 +50,7 @@ class VendasController extends Controller
             $venda = new Vendas();
             $venda->cliente_id = $request->input('cliente_id');
             $venda->data_venda = now();
+            $venda->metodo_pagamento = $request->input('metodo_pagamento');
             $venda->valor_total = 0;  // Será atualizado depois
             $venda->save();
 
@@ -91,7 +97,9 @@ class VendasController extends Controller
 
             // Atualizar o total da venda
             $venda->valor_total = $totalVenda;
-
+            if ($venda->metodo_pagamento == 'Crediario') {
+                $this->clienteCrediario($venda->cliente_id, $totalVenda);
+            }
             $this->atualizarFaturamento($totalVenda);
             $this->metaService->cadastrarProgressoEmTodasMetasAbertas($totalVenda);
             $venda->save();
@@ -118,13 +126,13 @@ class VendasController extends Controller
 
     public function atualizarFaturamento($valorVenda)
     {
-        $faturamento = HistoricoFaturamento::where('ano_mes', date('Y')."-".date('m'))->first();
+        $faturamento = HistoricoFaturamento::where('ano_mes', date('Y') . "-" . date('m'))->first();
         if ($faturamento) {
             $faturamento->renda_bruta += $valorVenda;
             $faturamento->save();
         } else {
             $faturamento = new HistoricoFaturamento();
-            $faturamento->ano_mes = date('Y')."-".date('m');
+            $faturamento->ano_mes = date('Y') . "-" . date('m');
             $faturamento->renda_bruta = $valorVenda;
             $faturamento->save();
         }

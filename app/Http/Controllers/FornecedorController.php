@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Fornecedores; // Add this line to import the Produto class
+use App\Models\Fornecedores;
 
 use Illuminate\Http\Request;
 
@@ -17,6 +17,25 @@ class FornecedorController extends Controller
     public function read(){
         $fornecedores = Fornecedores::all();
         return view('sistema.fornecedores.listaFornecedores', ['page' => ' cadastroFornecedor', 'fornecedores' => $fornecedores]);
+    }
+    public function edit(Request $request)
+    {
+        $fornecedor = Fornecedores::find($request->id);
+        return view('sistema.fornecedores.alterarFornecedor', ['page' => ' cadastroFornecedor', 'fornecedor' => $fornecedor]);
+    }
+    public function update(Request $request)
+    {
+        $fornecedor = Fornecedores::find($request->id);
+        $fornecedor->nome = $request->nome;
+        $fornecedor->cnpj = $request->cnpj;
+        $fornecedor->endereco = $request->endereco;
+        $fornecedor->cidade = $request->cidade;
+        $fornecedor->estado = $request->estado;
+        $fornecedor->nome_representante = $request->nome_representante;
+        $fornecedor->email = $request->email;
+        $fornecedor->telefone = $request->telefone;
+        $fornecedor->save();
+        return redirect('fornecedores')->with('success', 'Fornecedor editado com sucesso!');
     }
     public function store(Request $request)
     {
@@ -42,7 +61,7 @@ class FornecedorController extends Controller
         ]);
 
         if ($fornecedores) {
-            return redirect('dashboard')->with('success', 'Cadastro realizado com sucesso!');
+            return redirect('fornecedores')->with('success', 'Cadastro realizado com sucesso!');
         } else {
             return redirect(' cadastroFornecedor')->with('error', 'Erro ao cadastrar fornecedor.');
         }

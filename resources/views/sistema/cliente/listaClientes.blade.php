@@ -152,7 +152,16 @@
                                                                     <button type="submit" class="btn btn-primary">
                                                                         Alterar</button>
                                                                 </form>
-
+                                                                @if ($cliente->debitos > 0)
+                                                                    <form method="POST"
+                                                                        action="{{ route('cliente.quitar.view') }}">
+                                                                        @csrf
+                                                                        <input type="hidden" name="id"
+                                                                            value="{{ $cliente->id }}">
+                                                                        <button type="submit" class="btn btn-primary">
+                                                                            Quitar divida</button>
+                                                                    </form>
+                                                                @endif
                                                             </div>
 
                                                         </div>
@@ -163,7 +172,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            <p class="fs-6 fw-lighter">Para procurar clientes devedores procure por: Fiado, Devedor,
+                            <p class="fs-6 fw-lighter">Para ver todos os clientes devedores procure por: Fiado, Devedor,
                                 Debito ou Inadimplente</p>
                             @if ($errors->any())
                                 <div class="alert alert-danger mt-3">

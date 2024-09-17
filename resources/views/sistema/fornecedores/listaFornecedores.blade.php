@@ -96,7 +96,7 @@
                                                                         </p>
                                                                     </div>
                                                                     <div class="col-12 d-flex justify-content-center fw-semibold">
-                                                                        <a >Contatos</a>
+                                                                        <a>Contatos</a>
                                                                     </div>
                                                                     <div class="col-6">
                                                                         <p for="exampleFormControlInput1"
@@ -117,7 +117,7 @@
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <form method="POST"
-                                                                    action="#">
+                                                                    action="{{route('fornecedores.edit')}}">
                                                                     @csrf
                                                                     <input type="hidden" name="id"
                                                                         value="{{ $fornecedor->id }}">

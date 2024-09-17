@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Funcionarios;
 
-class ConfiguracoesController extends Controller
+class configuracoesController extends Controller
 {
     public function createConfiguracoes()
     {

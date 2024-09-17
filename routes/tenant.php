@@ -70,6 +70,8 @@ Route::middleware([
         Route::get('/cadastroFornecedor', [FornecedorController::class, 'create'])->name('cadastroFornecedor');
         Route::post('/cadastroFornecedor', [FornecedorController::class, 'store'])->name('cadastroFornecedor.store');
         Route::get('/fornecedores', [FornecedorController::class, 'read'])->name('fornecedores');
+        Route::post('/fornecedores/editar', [FornecedorController::class, 'edit'])->name('fornecedores.edit');
+        Route::post('/fornecedores/editar/store', [FornecedorController::class, 'update'])->name('fornecedores.edit.store');
 
         Route::get('/configuracoes', [ConfiguracoesController::class, 'createConfiguracoes'])->name('configuracoes');
         Route::get('/alterarSenha', [ConfiguracoesController::class, 'createAlterarSenha'])->name('configuracoes.senha');
@@ -128,6 +130,8 @@ Route::middleware([
         Route::get('/clientes', [ClienteController::class, 'read'])->name('cliente.read.all');
         Route::post('/Clientes/editar', [ClienteController::class, 'edit'])->name('cliente.edit');
         Route::post('/Clientes/editar/store', [ClienteController::class, 'update'])->name('cliente.update.store');
+        Route::post('/Clientes/quitar', [ClienteController::class, 'quitarDividaView'])->name('cliente.quitar.view');
+        Route::post('/Clientes/quitar/store', [ClienteController::class, 'quitarDividaStore'])->name('cliente.quitar');
 
         Route::get('/vendas/create', [VendasController::class, 'create'])->name('vendas.create');
         Route::get('/produtos/search', [ProdutoController::class, 'search'])->name('produtos.search');
