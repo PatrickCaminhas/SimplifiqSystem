@@ -84,7 +84,7 @@
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio"
-                                                        name="metodo_pagamento" id="Crediario" value="Crediario">
+                                                        name="metodo_pagamento" id="Crediario" value="Crediário">
                                                     <label class="form-check-label" for="Pix">
                                                         Crediário
                                                     </label>

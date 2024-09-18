@@ -17,8 +17,9 @@
                 <p>Bem-vindo,
                     @if (session('funcionario'))
                         {{ session('funcionario')->nome }}!
+                    @endif
                 </p>
-                @endif
+
             </h6>
             <!-- Conteúdo do menu aqui -->
             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">

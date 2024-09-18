@@ -4,255 +4,274 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    @include('partials.head')
+    <title>Dashboard - Simplifiq</title>
+    <!-- Inclua os arquivos CSS do Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.2/css/responsive.bootstrap5.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/plug-ins/2.0.8/i18n/pt-BR.json">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
 
-<body class="bg-black ">
+<body class="bg-black">
     <!-- Menu superior -->
     @include('partials.header')
 
-
-
-
-
-
-
-    <div class="container mt-5 col-lg-6 col-md-8 col-sm-12">
+    <div class="container mt-4">
         <div class="row">
-            <div class="col-7">
+            <div class="col-12">
+                <h5 class="display-6 text-white">Bem vindo,
+                    @if (session('funcionario'))
+                        {{ session('funcionario')->nome }}!
+                    @endif
+                </h5>
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Despesas dos ultimos 6 meses</h5>
-                        <canvas id="despesasChart"></canvas>
-                    </div>
-
-                </div>
-            </div>
-            <div class="col-5">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Ultimas atividades</h5>
-                        <table class="table table-light  border table-dorder table-hover">
-                            <thead class="table-group-divider">
-                                <tr class="">
-                                    <th class=" ">Atividade</th>
-                                    <th class="">Usuário</th>
-                                </tr>
-                            </thead>
-                            <tbody class="table-group-divider ">
-                                <tr class="">
-                                    <th class="">Produto cadastrado</th>
-                                    <th class="">João</th>
-                                </tr>
-                                <tr class="">
-                                    <th class="">Produto cadastrado</th>
-                                    <th class="">Maria</th>
-                                </tr>
-                            </tbody>
-                        </table>
-
-
-                        <a href="ultimasatividades" class="btn @include('partials.buttomCollor') ">Ver todas</a>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-    <!-- Features Section -->
-    <div class="container mt-5 col-lg-6 col-md-8 col-sm-12 mb-4">
-
-        <div class="row">
-            <div class="col-4">
-                <div>
-                    <div class="card mb-4">
+                        <h5 class="card-title display-6">Dashboard</h5>
                         <div class="card-body">
-                            <h5 class="card-title">Enviar mensagem</h5>
-                            <p class="card-text">Envie uma mensagem para um funcionario, todos os funcionarios ou para
-                                um fornecedor cadastrado no sistema.</p>
-
-                            <!-- <a href="/enviarmensagem" class="btn btn-primary">Enviar mensagem</a> -->
-                            <button type="button"
-                            class="btn
-                             @include('partials.buttomCollor')
-
-                            "
-                                data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                Enviar mensagem
-                            </button>
-                            <!-- Modal -->
-                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
-                                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
-                                aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Enviar mensagem</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="row">
+                                        <div class="card text-bg-primary m-2 col-md-3 col-sm-4">
+                                            <div class="card-body d-flex align-items-center">
+                                                <h6 class="card-text">{{ $cartoesDashboard->produtosCadastrados }}
+                                                    produtos cadastrados</h6>
+                                            </div>
                                         </div>
-                                        <div class="modal-body bg-secondary-subtle">
-
-                                            <form action="/dashboard" method="GET" class="row g-3">
-
-                                                <div class="col-6">
-                                                    <label for="exampleFormControlInput1"
-                                                        class="form-label">Destinatário</label>
-                                                    <select class="form-select" aria-label="Default select example">
-                                                        <option selected disabled>Selecione o destinatário</option>
-                                                        <optgroup label="Funcionarios">
-                                                            <option value="1">Usuário 1</option>
-                                                            <option value="2">Usuário 2</option>
-                                                            <option value="3">Usuário 3</option>
-                                                        </optgroup>
-                                                        <optgroup label="Todos os Funcionarios">
-                                                            <option value="4">Todos os Funcionarios</option>
-                                                        <optgroup label="Fornecedores">
-                                                            <option value="1">Fornecedor 1</option>
-                                                            <option value="2">Fornecedor 2</option>
-                                                            <option value="3">Fornecedor 3</option>
-                                                        </optgroup>
-
-                                                    </select>
-                                                </div>
-                                                <div class="col-6">
-                                                    <label for="exampleFormControlInput1"
-                                                        class="form-label">Assunto</label>
-                                                    <input type="text" class="form-control"
-                                                        id="exampleFormControlInput1" placeholder="Assunto">
-                                                </div>
-                                                <div class="col-12">
-                                                    <label for="exampleFormControlTextarea1"
-                                                        class="form-label">Mensagem</label>
-                                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                                </div>
-
-
-
-
+                                        <div class="card text-bg-primary m-2 col-md-3 col-sm-4">
+                                            <div class="card-body d-flex align-items-center">
+                                                <h6 class="card-text">{{ $cartoesDashboard->clientesCadastrados }}
+                                                    clientes cadastrados</h6>
+                                            </div>
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-danger"
-                                                data-bs-dismiss="modal">Cancelar</button>
-                                            <button type="submit" class="btn btn-primary">Enviar</button>
+                                        <div class="card text-bg-primary m-2 col-md-3 col-sm-4">
+                                            <div class="card-body d-flex align-items-center">
+                                                <h6 class="card-text">{{ $cartoesDashboard->vendasRealizadas }} vendas
+                                                    realizadas</h6>
+                                            </div>
                                         </div>
-                                        </form>
+                                        <div class="card text-bg-primary m-2 col-md-3 col-sm-4">
+                                            <div class="card-body d-flex align-items-center">
+                                                <h6 class="card-text">{{ $cartoesDashboard->itensNoEstoque }} bens em
+                                                    estoque</h6>
+                                            </div>
+                                        </div>
+                                        <div class="card text-bg-primary m-2 col-md-3 col-sm-4">
+                                            <div class="card-body d-flex align-items-center">
+                                                <h6 class="card-text">{{ $cartoesDashboard->metasCumpridas }} metas
+                                                    cumpridas</h6>
+                                            </div>
+                                        </div>
+                                        <div class="card text-bg-primary m-2 col-md-3 col-sm-4">
+                                            <div class="card-body d-flex align-items-center">
+                                                <h6 class="card-text">{{ $cartoesDashboard->metasEmAndamento }} metas em
+                                                    andamento</h6>
+                                            </div>
+                                        </div>
                                     </div>
+                                </div>
+                                <div class="col-6">
+                                    <p class="card-text">GRAFICO
+                                        [COLOCAR GRAFICO AQUI]
+                                    </p>
+
 
                                 </div>
+
                             </div>
                         </div>
                     </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Mensagens recebidas</h5>
-                            <p class="card-text">Acesse a sua caixa de mensagens recebidas.</p>
-                            <a href="#"
-                                class="btn
-                            @if ($padrao_cores == 'vermelho') btn-danger
-                            @elseif ($padrao_cores == 'verde') @include('partials.buttomCollor')
-                            @elseif ($padrao_cores == 'amarelo') btn-warning
-                            @elseif ($padrao_cores == 'azul') btn-primary
-                            @else bg-primary @endif
-                            ">Acesse</a>
+                </div>
+            </div>
+            <div class="container mt-2 col-12 mb-5 ">
+                <div class="row">
+
+                    <div class="col-md-6 col-lg-6 col-sm-12 mt-2">
+                        <div class="card mb-2">
+                            <div class="card-body">
+                                <h5 class="card-title">Ultimas vendas cadastradas</h5>
+                                <table id="vendasCadastradas" class="display">
+                                    <thead>
+                                        <tr>
+                                            <th>Cliente</th>
+                                            <th>Data</th>
+                                            <th>Valor</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($ultimas6Vendas as $venda)
+                                            <tr>
+                                                <td style="overflow-x: auto;">{{ $venda->cliente->nome }}</td>
+
+                                                <td>{{ \Carbon\Carbon::parse($venda->data_venda)->format('d/m/Y') }}
+                                                </td>
+                                                <td style="overflow-x: auto;">{{ $venda->valor_total }}</td>
+                                            </tr>
+                                        @endforeach
+
+                                    </tbody>
+                                </table>
+
+
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Fornecedores x Pedidos</h5>
-                        <img src="{{ global_asset('img/Screenshot_2.png') }}" alt="Descrição da Imagem"
-                            class="img-fluid">
-                    </div>
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Proximas contas</h5>
-                        <table id="myTable" class="display">
-                            <thead>
-                                <tr>
-                                    <th>Vencimento</th>
-                                    <th>Credor</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($contas as $conta)
-                                    @if ($conta->estado == 'Pendente' || $conta->estado == 'Vencida')
+                   <!-- <div class="col-md-6 col-lg-6 col-sm-12 mt-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Ultimos produtos cadastrados</h5>
+                                <table id="produtosCadastrados" class="display">
+                                    <thead>
                                         <tr>
-                                            <td>{{ \Carbon\Carbon::parse($conta->data_vencimento)->format('d/m/Y') }}
-                                            </td>
-                                            <td style="overflow-x: auto;">{{ $conta->credor }}</td>
+                                            <th>Nome</th>
+                                            <th>Quantidade</th>
+                                            <th>Preço de venda</th>
+
                                         </tr>
-                                    @endif
-                                @endforeach
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($ultimos6Produtos as $produto)
+                                            <tr>
+                                                <td style="overflow-x: auto;">
+                                                    {{ $produto->nome . ' ' . $produto->modelo . ' ' . $produto->marca }}
+                                                </td>
+                                                <td style="overflow-x: auto;">{{ $produto->quantidade }}</td>
+                                                <td style="overflow-x: auto;">R${{ $produto->preco_venda }}</td>
+                                            </tr>
+                                        @endforeach
 
-                            </tbody>
-                        </table>
-                        <a href="{{ route('contas.read') }}"
-                            class="btn
-                        @include('partials.buttomCollor')
+                                    </tbody>
+                                </table>
 
-                        ">Ver
-                            todas</a>
+
+                            </div>
+                        </div>
                     </div>
+
+                    <div class="col-md-6 col-lg-6 col-sm-12 mt-2">
+                        <div class="card mb-2">
+                            <div class="card-body">
+                                <h5 class="card-title">Metas faltando 1 semana</h5>
+                                @if ($metasFaltandoUmaSemana->count() == 0)
+                                    <tr>
+                                        <td colspan="2">Nenhuma meta faltando uma semana</td>
+                                    </tr>
+                                @else
+                                    <table id="metas" class="display">
+                                        <thead>
+                                            <tr>
+                                                <th>Objetivo</th>
+                                                <th>Valor atual</th>
+                                                <th>Final</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            @foreach ($metasFaltandoUmaSemana as $meta)
+                                                <tr>
+                                                    <td style="overflow-x: auto;">{{ $meta->valor }}</td>
+                                                    <td style="overflow-x: auto;">{{ $meta->valor_atual }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($meta->ending_at)->format('d/m/Y') }}
+
+                                                </tr>
+                                            @endforeach
+
+                                        </tbody>
+                                    </table>
+
+
+                                @endif
+                            </div>
+                        </div>
+                    </div>-->
+                    <div class="col-md-6 col-lg-6 col-sm-12 mt-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Proximas contas</h5>
+                                <table id="myTable" class="display">
+                                    <thead>
+                                        <tr>
+                                            <th>Vencimento</th>
+                                            <th>Credor</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($contas as $conta)
+                                            @if ($conta->estado == 'Pendente' || $conta->estado == 'Vencida')
+                                                <tr>
+                                                    <td>{{ \Carbon\Carbon::parse($conta->data_vencimento)->format('d/m/Y') }}
+                                                    </td>
+                                                    <td style="overflow-x: auto;">{{ $conta->credor }}</td>
+                                                </tr>
+                                            @endif
+                                        @endforeach
+
+                                    </tbody>
+                                </table>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
                 </div>
             </div>
-        </div>
-    </div>
-    <!-- Inclua os arquivos JavaScript do Bootstrap -->
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/3.0.2/js/responsive.bootstrap5.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#myTable').DataTable({
-                language: {
-                    url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json'
-                },
-                "pageLength": 5,
-                "lengthChange": false,
-            });
-        });
-    </script>
 
-<script>
-    const ctxs = document.getElementById('despesasChart').getContext('2d');
-    const despesasData = @json(array_values($despesasPorMes));
-    const labelsm = @json(array_keys($despesasPorMes));
 
-    const despesasChart = new Chart(ctxs, {
-        type: 'bar', // ou 'line' para um gráfico de linha
-        data: {
-            labels: labelsm,
-            datasets: [{
-                label: 'Despesas',
-                data: despesasData,
-                backgroundColor: 'rgba(214, 11, 11, 1)',
-                borderColor: 'rgba(214, 11, 11, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-</script>
+            <!-- Features Section -->
+
+            <!-- Inclua os arquivos JavaScript do Bootstrap -->
+            <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+                crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+            <script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.min.js"></script>
+            <script src="https://cdn.datatables.net/responsive/3.0.2/js/responsive.bootstrap5.min.js"></script>
+            <script>
+                $(document).ready(function() {
+                    $('#myTable').DataTable({
+                        language: {
+                            url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json'
+                        },
+                        "pageLength": 6,
+                        "lengthChange": false,
+                    });
+                });
+                $(document).ready(function() {
+                    $('#produtosCadastrados').DataTable({
+                        language: {
+                            url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json'
+                        },
+                        "pageLength": 6,
+                        "lengthChange": false,
+                    });
+                });
+                $(document).ready(function() {
+                    $('#vendasCadastradas').DataTable({
+                        language: {
+                            url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json'
+                        },
+                        "pageLength": 6,
+                        "lengthChange": false,
+                    });
+                });
+                $(document).ready(function() {
+                    $('#metas').DataTable({
+                        language: {
+                            url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json'
+                        },
+                        "pageLength": 6,
+                        "lengthChange": false,
+                    });
+                });
+            </script>
 
 </body>
 

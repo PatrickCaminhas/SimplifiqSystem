@@ -10,20 +10,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 
 </head>
 
 <body class="bg-black">
     <!-- Menu superior -->
     @include('partials.header')
-
-
-
-
-
-
-
     <div class="container mt-4">
         <div class="row">
             <div class="col-12">
@@ -78,106 +73,204 @@
                     </div>
                 </div>
             </div>
-            <div class="container mt-5 col-lg-6 col-md-8 col-sm-12 mb-5">
+            <div class="container mt-2 col-12 mb-5 ">
                 <div class="row">
-                    <div class="col-6 col-6">
+                    <div class="col-12 mt-2">
+                        <div class="card mb-2">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">Informações da empresa</h5>
+
+                                <div class=row>
+                                <div class="col-6">
+                                    <p class="card-text">Quantidade de clientes no crediário: {{$crediarioClientes->qtdClientes}}.</p>
+                                    <p class="card-text">Valor total a receber no crediário: R$ {{$crediarioClientes->valorTotal}}.</p>
+                                    <p class="card-text">Quantidade de produtos com estoque: {{$produtos->qtdProdutosEmEstoque}}.</p>
+                                <p class="card-text">Lista de produtos mais vendidos: </p>
+                                </div>
+                                <div class="col-6">
+                                    <p class="card-text">Quantidade de produtos em falta: {{$produtos->qtdProdutosSemEstoque}}.</p>
+                                    <p class="card-text">Total de produtos em estoque: {{$produtos->estoque}}.</p>
+                                    <p class="card-text">Valor total em estoque: R$ {{$produtos->valorTotalEmEstoque}},00</p>
+                                <p class="card-text">Lista de produtos menos vendidos: </p>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-sm-12 mt-2">
+                        <div class="card mb-2">
+                            <div class="card-body">
+                                <h5 class="card-title">Vendas nos ultimos 6 meses</h5>
+                                <canvas id="vendasChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-sm-12 mt-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Vendas diarias do mês atual</h5>
+                                <canvas id="vendasDiariasChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-lg-6 col-sm-12 mt-2">
                         <div class="card mb-2">
                             <div class="card-body">
                                 <h5 class="card-title">Despesas dos ultimos 6 meses</h5>
                                 <canvas id="despesasChart"></canvas>
-
                             </div>
                         </div>
                     </div>
-                    <div class="col-6 col-6">
+                    <div class="col-md-6 col-lg-6 col-sm-12 mt-2">
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">Despesas diarias do mês atual</h5>
                                 <canvas id="despesasDiariasChart"></canvas>
-
-
-
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-md-6 col-lg-6 col-sm-12 mt-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Vendas por metodo de pagamento nos ultimos 12 meses</h5>
+                                <canvas id="vendasPorMetodoPagamentoChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-sm-12 mt-2">
+                        <div class="card h-auto">
+                            <div class="card-body">
+                                <h5 class="card-title">Vendas por crédiario nos ultimos 6 meses</h5>
+                                <canvas id="crediarioSeisMesesChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
 
                 </div>
             </div>
-            <div class="container mt-4">
-                <div class="row">
-                    <div class="col-4">
-                        <div class="card mb-2">
-                            <div class="card-body">
-                                <h5 class="card-title">Fácil de Usar</h5>
-                                <p class="card-text">
-                                    aaa
 
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="card mb-2">
-                            <div class="card-body">
-                                <h5 class="card-title">Fornecedores por % de produto</h5>
-                                <img src="{{ global_asset('img/Screenshot_2.png') }}" alt="Descrição da Imagem"
-                                    class="img-fluid">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="card mb-2">
-                            <div class="card-body">
-                                <h5 class="card-title">Proximas contas</h5>
-                                <table class="table table-light  border table-dorder table-hover">
-                                    <thead class="table-group-divider">
-                                        <tr class="">
-                                            <th class=" ">Data</th>
-                                            <th class="">Conta</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="table-group-divider ">
-                                        <tr class="text-danger">
-                                            <th class="text-danger">03/05</th>
-                                            <th class="text-danger">Energia eletrica</th>
-                                        </tr>
-                                        <tr class="">
-                                            <th class="">11/05</th>
-                                            <th class="">Pedido #00077</th>
-                                        </tr>
-                                        <tr class="">
-                                            <th class="">15/05</th>
-                                            <th class="">Água e esgoto</th>
-                                        </tr>
-                                        <tr class="">
-                                            <th class="">15/05</th>
-                                            <th class="">Pedido #00078</th>
-                                        </tr>
-                                        <tr class="">
-                                            <th class="">19/05</th>
-                                            <th class="">Aluguel</th>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <a href="#" class="btn @include('partials.buttomCollor')">Ver todas</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <!-- Features Section -->
 
             <!-- Inclua os arquivos JavaScript do Bootstrap -->
             <script>
-                const ctxs = document.getElementById('despesasChart').getContext('2d');
-                const despesasData = @json(array_values($despesasPorMes));
-                const labelsm = @json(array_keys($despesasPorMes));
+                const chartvsmeses = document.getElementById('vendasChart').getContext('2d');
+                const vendasData = @json(array_values($vendasPorMes));
+                const labelvsm = @json(array_keys($vendasPorMes));
 
-                const despesasChart = new Chart(ctxs, {
+                const vendasChart = new Chart(chartvsmeses, {
                     type: 'bar', // ou 'line' para um gráfico de linha
                     data: {
-                        labels: labelsm,
+                        labels: labelvsm,
+                        datasets: [{
+                            label: 'Vendas',
+                            data: vendasData,
+                            backgroundColor: 'rgba(5, 171, 0, 0.8)',
+                            borderColor: 'rgba(5, 171, 0, 0.8)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            </script>
+            <script>
+                const chartvdiarias = document.getElementById('vendasDiariasChart').getContext('2d');
+                const vendasDiariasData = @json(array_values($vendasDiarias));
+                const labelvd = @json(array_keys($vendasDiarias));
+
+                const vendasDiariasChart = new Chart(chartvdiarias, {
+                    type: 'line', // ou 'line' para um gráfico de linha
+                    data: {
+                        labels: labelvd,
+                        datasets: [{
+                            label: 'Vendas',
+                            data: vendasDiariasData,
+                            backgroundColor: 'rgba(5, 171, 0, 0.8)',
+                            borderColor: 'rgba(5, 171, 0, 0.8)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            </script>
+            <script>
+                const ctx = document.getElementById('vendasPorMetodoPagamentoChart').getContext('2d');
+                const vendasPorMetodoPagamentoData = @json(array_values($vendasPorMetodoPagamento));
+                const labelsMetodosPagamento = @json(array_keys($vendasPorMetodoPagamento));
+
+                const vendasPorMetodoPagamentoChart = new Chart(ctx, {
+                    type: 'pie', // Gráfico de torta/pizza
+                    data: {
+                        labels: labelsMetodosPagamento,
+                        datasets: [{
+                            label: 'Métodos de Pagamento',
+                            data: vendasPorMetodoPagamentoData,
+                            backgroundColor: [
+                                'rgba(5, 149, 0, 1)', // Dinheiro
+                                'rgba(217, 0, 56, 1)', // Pix
+                                'rgba(106, 0, 157, 1)', // Cartão de crédito
+                                'rgba(0, 89, 208, 1)', // Cartão de débito
+                                'rgba(217, 102, 0, 1)' // Crediário
+                            ],
+                            borderColor: [
+                                'rgba(5, 149, 0, 1)',
+                                'rgba(217, 0, 56, 1)',
+                                'rgba(106, 0, 157, 1)',
+                                'rgba(0, 89, 208, 1)',
+                                'rgba(217, 102, 0, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            datalabels: {
+                                color: '#fff', // Cor do texto
+                                font: {
+                                    size: 16,
+                                    weight: 'bold'
+                                },
+                                formatter: (value, ctx) => {
+                                    if (value === 0) {
+                                        return ''; // Não exibe nada se o valor for zero
+                                    }
+                                    let total = ctx.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                    let percentage = (value / total * 100).toFixed(1) + "%";
+                                    return percentage; // Exibir a porcentagem dentro da fatia
+                                },
+                                align: 'center', // Alinha o texto ao centro da fatia
+                            }
+                        }
+                    },
+                    plugins: [ChartDataLabels] // Adiciona o plugin de Data Labels
+                });
+            </script>
+
+            <script>
+                const chartdsmeses = document.getElementById('despesasChart').getContext('2d');
+                const despesasData = @json(array_values($despesasPorMes));
+                const labeldsm = @json(array_keys($despesasPorMes));
+
+                const despesasChart = new Chart(chartdsmeses, {
+                    type: 'bar', // ou 'line' para um gráfico de linha
+                    data: {
+                        labels: labeldsm,
                         datasets: [{
                             label: 'Despesas',
                             data: despesasData,
@@ -187,6 +280,7 @@
                         }]
                     },
                     options: {
+                        responsive: true,
                         scales: {
                             y: {
                                 beginAtZero: true
@@ -196,14 +290,14 @@
                 });
             </script>
             <script>
-                const ctxm = document.getElementById('despesasDiariasChart').getContext('2d');
+                const chartddiarias = document.getElementById('despesasDiariasChart').getContext('2d');
                 const despesasDiariasData = @json(array_values($despesasDiarias));
-                const labelsd = @json(array_keys($despesasDiarias));
+                const labeldd = @json(array_keys($despesasDiarias));
 
-                const despesasDiariasChart = new Chart(ctxm, {
+                const despesasDiariasChart = new Chart(chartddiarias, {
                     type: 'line', // ou 'line' para um gráfico de linha
                     data: {
-                        labels: labelsd,
+                        labels: labeldd,
                         datasets: [{
                             label: 'Despesas',
                             data: despesasDiariasData,
@@ -213,6 +307,7 @@
                         }]
                     },
                     options: {
+                        responsive: true,
                         scales: {
                             y: {
                                 beginAtZero: true
@@ -221,6 +316,35 @@
                     }
                 });
             </script>
+            <script>
+                const chartcredsmeses = document.getElementById('crediarioSeisMesesChart').getContext('2d');
+                const crediarioData = @json(array_values($despesasPorMes));
+                const labelcsm = @json(array_keys($despesasPorMes));
+
+                const crediarioSeisMesesChart = new Chart(chartcredsmeses, {
+                    type: 'bar', // ou 'line' para um gráfico de linha
+                    data: {
+                        labels: labelcsm,
+                        datasets: [{
+                            label: 'Crediário',
+                            data: crediarioData,
+                            backgroundColor: 'rgba(44, 43, 43, 1)',
+                            borderColor: 'rgba(44, 43, 43, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y', // Esta linha inverte os eixos para exibir o gráfico horizontal
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            </script>
+
+
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
