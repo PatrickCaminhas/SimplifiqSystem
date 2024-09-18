@@ -32,7 +32,9 @@ class VendasController extends Controller
 
     public function info()
     {
-        $vendas = Vendas::with(['cliente', 'itens.produto'])->get();
+        $vendas = Vendas::with(['cliente', 'itens.produto'])
+                ->orderBy('created_at', 'desc')  // Ordena pela coluna 'created_at' de forma decrescente
+                ->get();
         return view('sistema.venda.listaVendas', ['vendas' => $vendas], ['page' => 'servicos']);
     }
 

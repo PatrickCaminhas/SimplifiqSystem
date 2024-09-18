@@ -47,5 +47,18 @@ class FaturamentoService
             ]);
         }
     }
+    public function atualizarFaturamento($valorVenda)
+    {
+        $faturamento = HistoricoFaturamento::where('ano_mes', date('Y') . "-" . date('m'))->first();
+        if ($faturamento) {
+            $faturamento->renda_bruta += $valorVenda;
+            $faturamento->save();
+        } else {
+            $faturamento = new HistoricoFaturamento();
+            $faturamento->ano_mes = date('Y') . "-" . date('m');
+            $faturamento->renda_bruta = $valorVenda;
+            $faturamento->save();
+        }
+    }
 
 }

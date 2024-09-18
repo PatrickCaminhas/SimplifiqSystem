@@ -17,8 +17,8 @@
 </head>
 
 <body class="bg-black bg-gradient">
-   <!-- Menu superior -->
-   @include('partials.header')
+    <!-- Menu superior -->
+    @include('partials.header')
 
 
 
@@ -49,7 +49,7 @@
                                 <tbody>
                                     @foreach ($servicos as $servico)
                                         <tr>
-                                            <td style="overflow-x: auto;">{{ $servico->id }}</td>
+                                            <td style="overflow-x: auto;">{{$servico->id}}</td>
 
                                             <td>{{ $servico->nome }}</td>
                                             <td>{{ $servico->nome_cliente }}</td>
@@ -59,11 +59,11 @@
                                             <td>{{ $servico->estado }}</td>
                                             <td>
                                                 <button type="button" class="btn bg-primary text-light"
-                                                    data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                                    data-bs-toggle="modal" data-bs-target="#modalServico{{$servico->id}}">
                                                     Verificar
                                                 </button>
                                                 <!-- Modal -->
-                                                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
+                                                <div class="modal fade" id="modalServico{{$servico->id}}" data-bs-backdrop="static"
                                                     data-bs-keyboard="false" tabindex="-1"
                                                     aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                     <div class="modal-dialog modal-lg modal-dialog-scrollable">
@@ -72,67 +72,74 @@
                                                                 <h1 class="modal-title fs-5" id="staticBackdropLabel">
                                                                     Serviço #{{ $servico->id }}</h1>
                                                                 <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="modal"
-                                                                    aria-label="Close"></button>
+                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
                                                             <div class="modal-body bg-secondary-subtle">
 
-                                                                <form action="{{ route('metas.storeProgresso') }}"
-                                                                    method="POST" class="row g-3">
-                                                                    @csrf
-                                                                    <div class="col-4">
-                                                                        <p for="exampleFormControlInput1"
-                                                                            class="form-label">Serviço :
-                                                                        <a>{{ $servico->nome }}</a></p>
-                                                                    </div>
-                                                                    <div class="col-4">
-                                                                        <p for="exampleFormControlInput1"
-                                                                            class="form-label">Cliente:
-                                                                        <a>{{ $servico->nome_cliente }}</a></p>
-                                                                    </div>
-                                                                    <div class="col-4">
-                                                                        <p for="exampleFormControlInput1"
-                                                                            class="form-label">
-                                                                            @if($servico->tipo_cliente =='CPF') CPF:
-                                                                            @else CNPJ: @endif
 
-                                                                        <a>{{ $servico->identificacao_cliente }}</a></p>
-                                                                    </div>
-                                                                    <div class="col-4">
-                                                                        <p for="exampleFormControlInput1"
-                                                                            class="form-label">Tipo de serviço:
-                                                                        <a>{{ $servico->tipo_servico}}</a></p>
-                                                                    </div>
-                                                                    <div class="col-4">
-                                                                        <p for="exampleFormControlInput1"
-                                                                            class="form-label">Estado :
-                                                                        <a>{{ $servico->estado}}</a></p>
-                                                                    </div>
-                                                                    <div class="col-4">
-                                                                        <p for="exampleFormControlInput1"
-                                                                            class="form-label">Valor:
-                                                                        <a>{{ $servico->valor}}</a></p>
-                                                                    </div>
-                                                                    <div class="col-4">
-                                                                        <label for="exampleFormControlInput1"
-                                                                            class="form-label">Criação:</label>
-                                                                        <a>{{ \Carbon\Carbon::parse($servico->created_at)->format('d/m/Y') }}</a>
-                                                                    </div>
-                                                                    <div class="col-4">
-                                                                        <label for="exampleFormControlInput1"
-                                                                            class="form-label">Inicio:</label>
-                                                                        <a>{{ \Carbon\Carbon::parse($servico->data_inicio)->format('d/m/Y') }}</a>
-                                                                    </div>
-                                                                    <div class="col-4">
-                                                                        <label for="exampleFormControlInput1"
-                                                                            class="form-label">Fim:</label>
-                                                                        <a>{{ \Carbon\Carbon::parse($servico->data_fim)->format('d/m/Y') }}</a>
-                                                                    </div>
-                                                                    <div class="col-12">
-                                                                        <p for="exampleFormControlInput1"
-                                                                            class="form-label">Descrição:
-                                                                        <a>{{ $servico->descricao}}</a></p>
-                                                                    </div>
+                                                                <div class="col-4">
+                                                                    <p for="exampleFormControlInput1"
+                                                                        class="form-label">Serviço :
+                                                                        <a>{{ $servico->nome }}</a>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <p for="exampleFormControlInput1"
+                                                                        class="form-label">Cliente:
+                                                                        <a>{{ $servico->nome_cliente }}</a>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <p for="exampleFormControlInput1"
+                                                                        class="form-label">
+                                                                        @if ($servico->tipo_cliente == 'CPF')
+                                                                            CPF:
+                                                                        @else
+                                                                            CNPJ:
+                                                                        @endif
+
+                                                                        <a>{{ $servico->identificacao_cliente }}</a>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <p for="exampleFormControlInput1"
+                                                                        class="form-label">Tipo de serviço:
+                                                                        <a>{{ $servico->tipo_servico }}</a>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <p for="exampleFormControlInput1"
+                                                                        class="form-label">Estado :
+                                                                        <a>{{ $servico->estado }}</a>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <p for="exampleFormControlInput1"
+                                                                        class="form-label">Valor:
+                                                                        <a>{{ $servico->valor }}</a>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <label for="exampleFormControlInput1"
+                                                                        class="form-label">Criação:</label>
+                                                                    <a>{{ \Carbon\Carbon::parse($servico->created_at)->format('d/m/Y') }}</a>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <label for="exampleFormControlInput1"
+                                                                        class="form-label">Inicio:</label>
+                                                                    <a>{{ \Carbon\Carbon::parse($servico->data_inicio)->format('d/m/Y') }}</a>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <label for="exampleFormControlInput1"
+                                                                        class="form-label">Fim:</label>
+                                                                    <a>{{ \Carbon\Carbon::parse($servico->data_fim)->format('d/m/Y') }}</a>
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    <p for="exampleFormControlInput1"
+                                                                        class="form-label">Descrição:
+                                                                        <a>{{ $servico->descricao }}</a>
+                                                                    </p>
+                                                                </div>
 
                                                             </div>
 
@@ -140,19 +147,29 @@
 
                                                             <div class="modal-footer">
 
-                                                                    <input type="hidden" name="meta_id"
+
+
+                                                                <form action="{{ route('servicos.cancelar') }}"
+                                                                    method="POST" class="row g-3">
+                                                                    @csrf
+                                                                    <input type="hidden" name="servico_id"
                                                                         value="{{ $servico->id }}">
-
-
-                                                                <a href="{{route('tarefas.create')}}" type="submit" class="btn btn-primary inline"
-                                                                    @if ($servico->estado == 'Finalizado' || $servico->estado == 'Não cumprido') disabled @endif>
-                                                                    Nova tarefa</a>
-                                                                    <button type="submit" class="btn btn-primary inline"
-                                                                    @if ($servico->estado == 'Finalizado' || $servico->estado == 'Não cumprido') disabled @endif>
-                                                                    Verificar tarefas</button>
-
+                                                                    <button type="submit" class="btn btn-danger inline"
+                                                                        @if ($servico->estado == 'Finalizado' || $servico->estado == 'Cancelado') disabled @endif>
+                                                                        Cancelar serviço</button>
+                                                                </form>
+                                                                <form action="{{ route('servicos.finalizar') }}"
+                                                                    method="POST" class="row g-3">
+                                                                    @csrf
+                                                                    <input type="hidden" name="servico_id"
+                                                                        value="{{ $servico->id }}">
+                                                                    <button type="submit"
+                                                                        class="btn btn-primary inline"
+                                                                        @if ($servico->estado == 'Finalizado' || $servico->estado == 'Cancelado') disabled @endif>
+                                                                        Finalizar serviço</button>
+                                                                </form>
                                                             </div>
-                                                            </form>
+
                                                         </div>
 
                                                     </div>
@@ -190,6 +207,7 @@
                 language: {
                     url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json'
                 },
+                order: [[3, 'desc']],
             });
         });
     </script>

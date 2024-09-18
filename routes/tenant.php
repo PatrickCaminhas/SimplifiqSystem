@@ -119,6 +119,8 @@ Route::middleware([
         Route::post('/servicos/cadastro', [ServicosController::class, 'store'])->name('servicos.store');
         Route::get('/servicos/cadastro/tipo', [ServicosController::class, 'createTipoRead'])->name('servicos.tipo.read');
         Route::post('/servicos/cadastro/tipo', [ServicosController::class, 'storeTipo'])->name('servicos.tipo.store');
+        Route::post('/servicos/finalizar', [ServicosController::class, 'finalizarServico'])->name('servicos.finalizar');
+        Route::post('/servicos/cancelar', [ServicosController::class, 'cancelarServico'])->name('servicos.cancelar');
 
         //Route::get('/tarefas', [ServicosController::class, 'createReadTarefas'])->name('tarefas.read');
         //Route::get('/tarefas/cadastro', [ServicosController::class, 'createStoreTarefas'])->name('tarefas.create');

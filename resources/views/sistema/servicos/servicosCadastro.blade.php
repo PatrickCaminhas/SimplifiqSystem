@@ -42,9 +42,13 @@
                                                 <label>Serviço:</label>
                                             </div>
                                             <div class="form-floating mb-3">
-                                                <input type="text" class="form-control" name="nome_cliente"
-                                                    id="nome_cliente" placeholder="" required>
-                                                <label>Nome do cliente:</label>
+
+                                                <select name="nome_cliente" class="form-control">
+                                                    @foreach ($clientes as $cliente)
+                                                        <option value="{{ $cliente->nome }}">{{ $cliente->nome }}
+                                                        </option>
+                                                    @endforeach
+                                                </select><label for="cliente">Cliente:</label>
                                             </div>
                                             <label for="tipo_cliente">Tipo de cliente:</label>
                                             <div class="form-check form-check-inline">
@@ -66,7 +70,7 @@
                                             </div>
 
                                             <div class="form-floating mb-3">
-                                                <select class="form-select" id="tipo_servico"
+                                                <select class="form-select" id="tipo_servico" name="tipo_servico"
                                                     aria-label="Floating label select example">
                                                     <option selected disabled>Selecione o tipo de serviço</option>
                                                     @foreach ($tipos_servico as $tipo_servico)

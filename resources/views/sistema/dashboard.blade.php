@@ -41,31 +41,31 @@
                                                     produtos cadastrados</h6>
                                             </div>
                                         </div>
-                                        <div class="card text-bg-primary m-2 col-md-3 col-sm-4">
+                                        <div class="card text-bg-warning m-2 col-md-3 col-sm-4">
                                             <div class="card-body d-flex align-items-center">
                                                 <h6 class="card-text">{{ $cartoesDashboard->clientesCadastrados }}
                                                     clientes cadastrados</h6>
                                             </div>
                                         </div>
-                                        <div class="card text-bg-primary m-2 col-md-3 col-sm-4">
+                                        <div class="card text-bg-dark m-2 col-md-3 col-sm-4">
                                             <div class="card-body d-flex align-items-center">
                                                 <h6 class="card-text">{{ $cartoesDashboard->vendasRealizadas }} vendas
                                                     realizadas</h6>
                                             </div>
                                         </div>
-                                        <div class="card text-bg-primary m-2 col-md-3 col-sm-4">
+                                        <div class="card text-bg-success m-2 col-md-3 col-sm-4">
                                             <div class="card-body d-flex align-items-center">
                                                 <h6 class="card-text">{{ $cartoesDashboard->itensNoEstoque }} bens em
                                                     estoque</h6>
                                             </div>
                                         </div>
-                                        <div class="card text-bg-primary m-2 col-md-3 col-sm-4">
+                                        <div class="card text-bg-danger m-2 col-md-3 col-sm-4">
                                             <div class="card-body d-flex align-items-center">
                                                 <h6 class="card-text">{{ $cartoesDashboard->metasCumpridas }} metas
                                                     cumpridas</h6>
                                             </div>
                                         </div>
-                                        <div class="card text-bg-primary m-2 col-md-3 col-sm-4">
+                                        <div class="card text-bg-info m-2 col-md-3 col-sm-4">
                                             <div class="card-body d-flex align-items-center">
                                                 <h6 class="card-text">{{ $cartoesDashboard->metasEmAndamento }} metas em
                                                     andamento</h6>

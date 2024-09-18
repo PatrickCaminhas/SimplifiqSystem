@@ -43,7 +43,7 @@
                                     <div class="container">
                                         <h2>Registrar Faturamento</h2>
 
-                                        <p> Está faltando algum mês do faturamento? Clique em <a class="btn btn-primary"
+                                        <p> Está faltando faturamento de algum mês? Clique em <a class="btn btn-primary"
                                             href="{{ route('faturamento.create') }}">Registrar</a></p>
                                         <table id="myTable" class="display">
                                             <thead>
@@ -175,6 +175,7 @@
                 language: {
                     url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json'
                 },
+                order: [[0, 'desc']],
             });
         });
     </script>

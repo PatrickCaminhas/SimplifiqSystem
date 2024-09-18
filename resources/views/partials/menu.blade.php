@@ -47,6 +47,16 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle
                         @if ($page == 'informacaoProduto' || $page == 'cadastroProduto') active @endif"
+                        href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Vendas
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark @include('partials.bgCollor')">
+                        <li><a class="dropdown-item" href="{{ route('vendas.create') }}">Cadastro</a></li>
+                        <li><a class="dropdown-item" href="{{ route('vendas.info') }}">Informação</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle
+                        @if ($page == 'informacaoProduto' || $page == 'cadastroProduto') active @endif"
                         href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Serviços
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark @include('partials.bgCollor')">
@@ -82,8 +92,11 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark @include('partials.bgCollor')">
                         <li><a class="dropdown-item" href="{{ route('contas.read') }}">Contas</a></li>
+                        <li><a class="dropdown-item" href="{{ route('faturamento.read') }}">Faturamento</a></li>
+
                         <li><a class="dropdown-item" href="{{ route('informacoes.empresa') }}">Informações</a></li>
                         <li><a class="dropdown-item" href="{{ route('metas.read') }}">Metas</a></li>
+
                         <li><a class="dropdown-item" href="{{ route('simples.create.calculadora') }}">Simples Nacional</a></li>
 
 
