@@ -9,8 +9,20 @@ class Cotacoes extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'id_cotacao',
         'produto_id',
         'preco',
-        'fornecedor'
+        'fornecedor_id'
     ];
+    // Em Cotacoes.php
+    public function produto()
+    {
+        return $this->belongsTo(Produtos::class, 'produto_id');
+    }
+
+    public function fornecedor()
+    {
+        return $this->belongsTo(Fornecedores::class, 'fornecedor_id');
+    }
+
 }

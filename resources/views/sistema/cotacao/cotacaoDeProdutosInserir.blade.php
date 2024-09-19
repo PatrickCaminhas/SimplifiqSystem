@@ -30,6 +30,8 @@
                     @csrf
                     <table class="col-12 table table-striped table-hover table-secondary">
                         <thead>
+                            <input type="hidden" name="fornecedores" value="{{ $fornecedores }}">
+                            <input type="hidden" name="produtos" value="{{ $produtos }}">
                             <tr class="text-light">
                                 <th scope="col">Produto</th>
                                 @foreach ($fornecedores as $fornecedor)
@@ -46,7 +48,7 @@
                                     @foreach ($fornecedores as $fornecedor)
                                         <td>
                                             <input type="number" class="form-control"
-                                                name="produtos[{{ $produto->id }}][fornecedor{{ $fornecedor->id }}]"
+                                               name="cotacao[{{ $produto->id }}][{{ $fornecedor->id }}]"
                                                 placeholder="Digite o preço">
                                         </td>
                                     @endforeach
