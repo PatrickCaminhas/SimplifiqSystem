@@ -1,3 +1,17 @@
+## Tema
+
+O tema proposto para este trabalho consiste na implementação de um sistema web voltado para micro e pequenos empresas, visando o auxílio administrativo de seus negócios de forma simples e intuitiva. As principais funcionalidades permitirão que o lojista compreenda melhor seus negócios, apresentando informações da empresa e dos produtos, além de possibilitar a realização de cálculos para o planejamento futuro.
+
+## Objetivo
+
+O objetivo geral deste trabalho é o desenvolvimento do sistema para auxilio administrativo simples e intuitivo para negócios de pequenos e micro lojistas. Por meio do sistema o lojista ou algum funcionário do setor administrativo poderia cadastrar dados de produtos e fornecedores e com esses cadastros podem fazer cálculos referentes a compra e venda dos produtos, além de também poderem verificar informações construídas com base nas vendas do negócio.
+
+### Os objetivos específicos deste trabalho são:
+1. Modelar e implementar um sistema web para auxiliar os micros e pequenos lojistas.
+2. Validar a aplicação por meio de testes unitários e testes de usabilidade.
+3. Disponibilizar o sistema no Github ou em plataforma equivalente para utilização sob
+licença livre para a comunidade de desenvolvedores.
+
 ## Diagramas
 ### Diagrama de caso de uso
 <center><img src="resources/diagramas/diagrama_casos_uso.png"></center>
@@ -16,8 +30,15 @@
 #### Cadastro de venda
 <center><img src="resources/diagramas/diagrama_atividade_venda.png" ></center>
 
-#### Calculadora do simples
-<center><img src="resources/diagramas/diagrama_atividade_simples.png" ></center>
+#### Cadastro e finalização de conta
+<center><img src="resources/diagramas/diagrama_atividade_conta.png" ></center>
+
+#### Baixa no estoque
+<center><img src="resources/diagramas/diagrama_atividade_estoque.png" ></center>
+
+#### Cadastro e finalização de serviço
+<center><img src="resources/diagramas/diagrama_atividade_servico.png" ></center>
+
 
 ## Levantamento de Requisitos 
 #### Requisitos Funcionais: 
