@@ -30,12 +30,12 @@ class FaturamentoController extends Controller
 
     public function create()
     {
-        return view('sistema/faturamento/cadastroManualFaturamento', ['page' => 'faturamento']);
+        return view('sistema/faturamento/cadastroManualFaturamento', ['page' => 'empresa']);
     }
     public function read()
     {
         $todosFaturamentos = HistoricoFaturamento::all();
-        return view('sistema/faturamento/HistoricoFaturamento',['faturamentos' => $todosFaturamentos], ['page' => 'faturamento']);
+        return view('sistema/faturamento/HistoricoFaturamento',['faturamentos' => $todosFaturamentos], ['page' => 'empresa']);
     }
 
 
@@ -110,5 +110,11 @@ class FaturamentoController extends Controller
         }
     }
         */
+        public function delete(Request $request)
+        {
+            $faturamento = HistoricoFaturamento::find($request->input('id'));
+            $faturamento->delete();
+            return redirect('faturamento/exibir')->with('success', 'Faturamento excluído com sucesso!');
+        }
 
 }

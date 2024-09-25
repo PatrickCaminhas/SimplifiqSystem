@@ -14,4 +14,8 @@ class Metas extends Model
         'valor_atual',
         'ending_at',
     ];
+    public function progresso()
+{
+    return $this->hasMany(MetasProgresso::class, 'meta_id');
+}
 }

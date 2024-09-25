@@ -145,5 +145,11 @@ class ServicosController extends Controller
     }
 
 
+    public function delete(Request $request)
+    {
+        $servico = Servicos::find($request->input('id'));
+        $servico->delete();
+        return redirect()->route('servicos.read');
+    }
 
 }

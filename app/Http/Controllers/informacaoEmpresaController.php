@@ -29,7 +29,7 @@ class InformacaoEmpresaController extends Controller
 
         return view('sistema.informativo.informacaoEmpresa', [
             'informacaoEmpresa' => $informacaoEmpresa,
-            'page' => 'informacaoEmpresa',
+            'page' => 'empresa',
             'despesasPorMes' => $despesasPorMes,
             'despesasDiarias' => $despesasDiarias,
             'vendasPorMes' => $vendasPorMes,

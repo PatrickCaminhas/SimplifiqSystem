@@ -10,18 +10,18 @@ class ClienteController extends Controller
     //
     public function create()
     {
-        return view('sistema.cliente.cadastroCliente', ['page' => 'cadastro']);
+        return view('sistema.cliente.cadastroCliente', ['page' => 'cliente']);
 
     }
     public function read()
     {
         $clientes = Clientes::all();
-        return view('sistema.cliente.listaClientes', ['clientes' => $clientes, 'page' => 'lista']);
+        return view('sistema.cliente.listaClientes', ['clientes' => $clientes, 'page' => 'cliente']);
     }
     public function quitarDividaView(Request $request)
     {
         $cliente = Clientes::find($request->id);
-        return view( 'sistema.cliente.quitarDivida', ['cliente' => $cliente, 'page' => 'quitar']);
+        return view( 'sistema.cliente.quitarDivida', ['cliente' => $cliente, 'page' => 'cliente']);
     }
     public function quitarDividaStore(Request $request)
     {
@@ -64,12 +64,12 @@ class ClienteController extends Controller
 
         $cliente->save();
 
-        return response()->json($cliente);
+        return redirect('clientes')->with('success', 'Cliente cadastrado com sucesso!');
     }
     public function edit(Request $request)
     {
         $cliente = Clientes::find($request->id);
-        return view('sistema.cliente.alterarCliente', ['cliente' => $cliente, 'page' => 'editar']);
+        return view('sistema.cliente.alterarCliente', ['cliente' => $cliente, 'page' => 'cliente']);
     }
     public function update(Request $request)
     {
@@ -96,6 +96,13 @@ class ClienteController extends Controller
         $cliente->save();
 
         return redirect('clientes')->with('success', 'Cliente atualizado com sucesso!');
+    }
+
+    public function delete(Request $request)
+    {
+        $cliente = Clientes::find($request->id);
+        $cliente->delete();
+        return redirect('clientes')->with('success', 'Cliente deletado com sucesso!');
     }
 
 }

@@ -4,18 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Itens_cotacoes;
 
-class MetasProgresso extends Model
+class Cotacoescopy extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'id',
-        'meta_id',
-        'valor',
-    ];
-    public function meta()
-    {
-        return $this->belongsTo(Metas::class, 'meta_id');
-    }
 
+    protected $fillable = [
+        'data_cotacao',
+    ];
+
+    public function itens()
+    {
+        return $this->hasMany(Itens_cotacoes::class, 'cotacao_id');
+    }
 }

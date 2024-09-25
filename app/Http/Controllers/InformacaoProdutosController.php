@@ -13,7 +13,7 @@ class InformacaoProdutosController extends Controller
     {
         $produtos = Produtos::all();
         if ($produtos) {
-            return view('sistema\produto\informacaoProdutoRequisicao', ['produtos' => $produtos], ['page' => 'informacaoProduto']);
+            return view('sistema\produto\informacaoProdutoRequisicao', ['produtos' => $produtos], ['page' => 'produto']);
         } else {
             return redirect('informacaoProdutoRequisicao')->with('error', 'Produto não encontrado.');
         }
@@ -34,14 +34,14 @@ class InformacaoProdutosController extends Controller
     }
     public function createRead()
     {
-        return view('sistema\produto\informacaoProduto', ['page' => 'informacaoProduto']);
+        return view('sistema\produto\informacaoProduto', ['page' => 'produto']);
     }
 
     public function listar($id)
     {
         $produto = Produtos::where('id', $id)->first();
         if ($produto) {
-            return view('sistema\produto\informacaoProduto', ['produto' => $produto], ['page' => 'informacaoProduto']);
+            return view('sistema\produto\informacaoProduto', ['produto' => $produto], ['page' => 'produto']);
         } else {
             return redirect('informacaoproduto')->with('error', 'Produto não encontrado.');
         }
@@ -136,6 +136,15 @@ class InformacaoProdutosController extends Controller
             return redirect('dashboard')->with('success', 'Alteração de dados produto com sucesso!');
         } else {
             return redirect('cadastroproduto')->with('error', 'Erro ao alterar produto.');
+        }
+    }
+    public function delete(Request $request)
+    {
+        $produto = Produtos::where('nome', $request->input('nome'))->delete();
+        if ($produto) {
+            return redirect('dashboard')->with('success', 'Produto deletado com sucesso!');
+        } else {
+            return redirect('cadastroproduto')->with('error', 'Erro ao deletar produto.');
         }
     }
 

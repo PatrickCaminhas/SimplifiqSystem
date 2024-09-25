@@ -22,11 +22,11 @@ class MetasController extends Controller
     public function createRead()
     {
         $metas = Metas::all();
-        return view('sistema.metas.metas', ['metas' => $metas], ['page' => 'metas']);
+        return view('sistema.metas.metas', ['metas' => $metas], ['page' => 'empresa']);
     }
     public function createStoreMeta()
     {
-        return view('sistema.metas.metasCadastro', ['page' => 'metas']);
+        return view('sistema.metas.metasCadastro', ['page' => 'empresa']);
     }
 
     public function createInformacoes(Request $Request)
@@ -50,7 +50,7 @@ class MetasController extends Controller
         $informacoes->estado = $meta->estado;
 
 
-        return view('sistema.metas.metasInformacoes', ['meta' => $meta, 'progressos' => $progressos, 'informacoes' => $informacoes], ['page' => 'metas']);
+        return view('sistema.metas.metasInformacoes', ['meta' => $meta, 'progressos' => $progressos, 'informacoes' => $informacoes], ['page' => 'empresa']);
     }
 
     public function store(Request $request)
@@ -130,6 +130,12 @@ class MetasController extends Controller
             $porcentegem = 0;
         }
         return number_format($porcentegem, 2) . "%";
+    }
+    public function delete(Request $request)
+    {
+        $meta = Metas::find($request->input('id'));
+        $meta->delete();
+        return redirect()->route('metas.read');
     }
 
 }

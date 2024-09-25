@@ -10,7 +10,6 @@ class Vendas extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'id',
         'cliente_id',
         'data_venda',
         'valor_total',

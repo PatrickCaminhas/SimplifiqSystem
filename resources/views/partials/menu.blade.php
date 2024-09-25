@@ -34,7 +34,7 @@
                 <!-- Submenu Dropdown -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle
-                        @if ($page == 'informacaoProduto' || $page == 'cadastroProduto') active @endif"
+                        @if ($page == 'produto' ) active @endif"
                         href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Produtos
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark @include('partials.bgCollor')">
@@ -46,7 +46,7 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle
-                        @if ($page == 'informacaoProduto' || $page == 'cadastroProduto') active @endif"
+                        @if ($page == 'vendas') active @endif"
                         href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Vendas
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark @include('partials.bgCollor')">
@@ -56,7 +56,7 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle
-                        @if ($page == 'informacaoProduto' || $page == 'cadastroProduto') active @endif"
+                        @if ($page == 'servicos' ) active @endif"
                         href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Serviços
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark @include('partials.bgCollor')">
@@ -66,12 +66,22 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle
-                        @if ($page == 'informacaoProduto' || $page == 'cadastroProduto') active @endif"
+                        @if ($page == 'cliente' ) active @endif"
                         href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Clientes
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark @include('partials.bgCollor')">
                         <li><a class="dropdown-item" href="{{ route('cliente.store.create') }}">Cadastrar</a></li>
                         <li><a class="dropdown-item" href="{{ route('cliente.read.all') }}">Listagem</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle
+                        @if ($page == 'fornecedor' ) active @endif"
+                        href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Fornecedores
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark @include('partials.bgCollor')">
+                        <li><a class="dropdown-item" href="{{ route('cadastroFornecedor') }}">Cadastrar</a></li>
+                        <li><a class="dropdown-item" href="{{ route('fornecedores') }}">Listagem</a></li>
                     </ul>
                 </li>
 
@@ -81,13 +91,14 @@
                     <a class="nav-link
                 @if ($page == 'cotacao') active @endif
                 "
-                        href="cotacaoprodutos">Cotação de produtos</a>
+                        href="{{ route('cotacaoProdutos') }}">Cotação de produtos</a>
                 </li>
 
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle
-                        @if ($page == 'informacaoEmpresa' || $page == 'simplesNacional' || $page == 'contas' || $page == 'metas' || $page == 'simplesNacional') active @endif"
+                        @if ($page == 'empresa') active @endif
+                        "
                         href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Empresa
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark @include('partials.bgCollor')">

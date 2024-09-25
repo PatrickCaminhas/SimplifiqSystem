@@ -11,7 +11,7 @@ class ProdutoController extends Controller
     //
     public function create()
     {
-        return view('sistema.produto.cadastroDeProduto', ['page' => 'cadastroProduto']);
+        return view('sistema.produto.cadastroDeProduto', ['page' => 'produto']);
     }
     public function store(Request $request)
     {

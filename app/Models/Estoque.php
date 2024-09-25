@@ -10,7 +10,6 @@ class Estoque extends Model
     use HasFactory;
     protected $table = 'estoque';
     protected $fillable = [
-        'id',
         'id_produto',
         'quantidade',
         'acao',

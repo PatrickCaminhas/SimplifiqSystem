@@ -21,4 +21,9 @@ class Servicos extends Model
         'estado',
         'descricao',
     ];
+    public function cliente()
+{
+    return $this->belongsTo(Clientes::class, 'cliente_id');
+}
+
 }

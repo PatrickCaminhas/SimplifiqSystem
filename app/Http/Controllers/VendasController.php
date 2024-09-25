@@ -26,7 +26,7 @@ class VendasController extends Controller
     {
         $produtos = Produtos::all();
         $clientes = Clientes::all();
-        return view('sistema.venda.cadastrarVenda', ['produtos' => $produtos, 'clientes' => $clientes], ['page' => 'servicos']);
+        return view('sistema.venda.cadastrarVenda', ['produtos' => $produtos, 'clientes' => $clientes], ['page' => 'vendas']);
 
     }
 
@@ -35,7 +35,7 @@ class VendasController extends Controller
         $vendas = Vendas::with(['cliente', 'itens.produto'])
                 ->orderBy('created_at', 'desc')  // Ordena pela coluna 'created_at' de forma decrescente
                 ->get();
-        return view('sistema.venda.listaVendas', ['vendas' => $vendas], ['page' => 'servicos']);
+        return view('sistema.venda.listaVendas', ['vendas' => $vendas], ['page' => 'vendas']);
     }
 
     public function clienteCrediario($clienteId, $valorDebito)
@@ -140,4 +140,17 @@ class VendasController extends Controller
         }
     }
 
+    public function delete(Request $request)
+    {
+        $venda = Vendas::find($request->id);
+        $itensVenda = Itens_venda::where('venda_id', $request->id)->get();
+        foreach ($itensVenda as $item) {
+            $produto = Produtos::find($item->produto_id);
+            $produto->quantidade += $item->quantidade;
+            $produto->save();
+            $item->delete();
+        }
+        $venda->delete();
+        return redirect()->back()->with('success', 'Venda excluída com sucesso!');
+    }
 }

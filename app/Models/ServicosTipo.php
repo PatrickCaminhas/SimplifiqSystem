@@ -17,4 +17,9 @@ class ServicosTipo extends Model
         'valor_diario',
         'descricao',
     ];
+    public function servicos()
+    {
+        return $this->hasMany(Servicos::class, 'tipo_id');
+    }
+
 }

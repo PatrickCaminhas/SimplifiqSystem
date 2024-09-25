@@ -20,12 +20,5 @@ class Empresas extends Authenticatable
         'padrao_cores',
     ];
 
-    protected $hidden = [
 
-    ];
-
-    public function getAuthPassword()
-    {
-        return $this->senha;
-    }
 }

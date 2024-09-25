@@ -9,9 +9,10 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Fornecedores;
 use App\Models\Produtos;
 use App\Models\Cotacoes;
+use App\Models\Itens_cotacoes;
 
 
-class CotacoesController extends Controller
+class CotacoesControllercopy extends Controller
 {
     //
     public function create(Request $request)
@@ -47,7 +48,7 @@ class CotacoesController extends Controller
     public function inserirCotacao(Request $request)
     {
         // Buscar o maior id_cotacao e incrementar
-        $ultimoIdCotacao = Cotacoes::max('id_cotacao');
+        $ultimoIdCotacao = Itens_cotacoes::max('id_cotacao');
         $novoIdCotacao = $ultimoIdCotacao ? $ultimoIdCotacao + 1 : 1;
 
         $produtosCotados = []; // Para armazenar os resultados
@@ -76,7 +77,7 @@ class CotacoesController extends Controller
             }
 
             // Inserir a cotação no banco de dados com o menor preço encontrado
-            $cotacao = new Cotacoes();
+            $cotacao = new Itens_cotacoes();
             $cotacao->produto_id = $produtoId;
             $cotacao->preco = $menorPreco;
             $cotacao->fornecedor_id = $fornecedorEscolhido;
@@ -99,7 +100,7 @@ class CotacoesController extends Controller
     public function mostrarResultados($id_cotacao)
     {
         // Busca a cotação pelo id_cotacao com relacionamentos
-        $cotacoes = Cotacoes::where('id_cotacao', $id_cotacao)
+        $cotacoes = Itens_cotacoes::where('id_cotacao', $id_cotacao)
             ->with('produto', 'fornecedor') // Eager loading dos relacionamentos
             ->get();
 
@@ -176,13 +177,6 @@ class CotacoesController extends Controller
 
         // Faça o download do PDF
 //return $pdf->download('invoice.pdf');
-    }
-
-    public function delete(Request $request)
-    {
-        $cotacao = Cotacoes::find($request->input('id'));
-        $cotacao->delete();
-        return redirect()->route('cotacao.read');
     }
 
 }

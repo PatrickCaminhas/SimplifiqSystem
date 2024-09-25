@@ -11,17 +11,17 @@ class FornecedorController extends Controller
     //
     public function create()
     {
-        return view('sistema.fornecedores.cadastroDeFornecedor', ['page' => ' cadastroFornecedor']);
+        return view('sistema.fornecedores.cadastroDeFornecedor', ['page' => ' fornecedor']);
     }
 
     public function read(){
         $fornecedores = Fornecedores::all();
-        return view('sistema.fornecedores.listaFornecedores', ['page' => ' cadastroFornecedor', 'fornecedores' => $fornecedores]);
+        return view('sistema.fornecedores.listaFornecedores', ['page' => ' fornecedor', 'fornecedores' => $fornecedores]);
     }
     public function edit(Request $request)
     {
         $fornecedor = Fornecedores::find($request->id);
-        return view('sistema.fornecedores.alterarFornecedor', ['page' => ' cadastroFornecedor', 'fornecedor' => $fornecedor]);
+        return view('sistema.fornecedores.alterarFornecedor', ['page' => ' fornecedor', 'fornecedor' => $fornecedor]);
     }
     public function update(Request $request)
     {
@@ -65,5 +65,11 @@ class FornecedorController extends Controller
         } else {
             return redirect(' cadastroFornecedor')->with('error', 'Erro ao cadastrar fornecedor.');
         }
+    }
+    public function delete(Request $request)
+    {
+        $fornecedor = Fornecedores::find($request->id);
+        $fornecedor->delete();
+        return redirect('fornecedores')->with('success', 'Fornecedor deletado com sucesso!');
     }
 }
