@@ -8,25 +8,20 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     *
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('cotacoes', function (Blueprint $table) {
-            $table->id();
-            $table->date('data_cotacao');
-            $table->timestamps();
+        //
+        Schema::table('empresa_informations', function (Blueprint $table) {
+            $table->dropColumn('area_atuacao');
         });
     }
 
     /**
      * Reverse the migrations.
-     *
-     *
      */
-    public function down()
+    public function down(): void
     {
-        Schema::dropIfExists('cotacoes');
+        //
     }
 };

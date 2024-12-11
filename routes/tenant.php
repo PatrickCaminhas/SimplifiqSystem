@@ -26,6 +26,7 @@ use App\Http\Controllers\SimplesNacionalController;
 use App\Http\Controllers\VendasController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\FaturamentoController;
+use App\Http\Controllers\Auth\SenhaResetController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +52,12 @@ Route::middleware([
     Route::get('/handle-login', [LoginController::class, 'handleSubdomainLogin'])->name('handle-login')->middleware('web');
 
     Route::post('/redirect-post', [LoginController::class, 'redirectPost'])->name('redirect-post');
+
+    Route::get('password/reset', [SenhaResetController::class, 'requestForm'])->name('password.request');
+    Route::post('password/email', [SenhaResetController::class, 'sendResetLink'])->name('password.email');
+    Route::get('password/reset/{token}', [SenhaResetController::class, 'resetForm'])->name('password.reset');
+    Route::post('password/reset', [SenhaResetController::class, 'resetPassword'])->name('password.update');
+
 
     Route::middleware([AuthenticateDashboard::class, CheckCompanyType::class])->group(function () {
 

@@ -109,6 +109,12 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
+        'funcionarios' => [
+        'provider' => 'funcionarios', // O mesmo nome do provider configurado
+        'table' => 'password_resets', // Certifique-se de que essa tabela existe
+        'expire' => 60, // Tempo de expiração do token em minutos
+        'throttle' => 60, // Tempo de espera antes de reenviar um e-mail
+    ],
     ],
 
     /*

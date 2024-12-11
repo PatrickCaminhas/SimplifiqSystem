@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('cnpj',18)->primary();
             $table->string('tamanho_empresa',15);
             $table->string('tipo_empresa',20);
-            $table->string('telefone',14);
+            $table->string('telefone',18);
             $table->timestamps();
         });
     }

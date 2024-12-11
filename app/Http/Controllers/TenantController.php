@@ -81,7 +81,6 @@ class TenantController extends Controller
             'nome' => $nome,
             'tamanho_empresa' => $request->tamanho_empresa,
             'tipo_empresa' => $request->tipo_empresa,
-            'area_atuacao' => $request->area_atuacao,
             'telefone' => $request->telefone,
             'estado' => 'ativa',
             'padrao_cores' => 'azul',

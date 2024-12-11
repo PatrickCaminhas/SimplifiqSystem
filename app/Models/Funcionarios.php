@@ -26,6 +26,8 @@ class Funcionarios extends Authenticatable implements JWTSubject
         'senha',
     ];
 
+
+
     public function empresa()
     {
         return $this->belongsTo(Empresas::class, 'cnpj');  // Associa a chave estrangeira empresa_id
