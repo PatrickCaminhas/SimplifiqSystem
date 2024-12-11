@@ -44,56 +44,69 @@ class CotacoesController extends Controller
         ]);
     }
 
+
+
     public function inserirCotacao(Request $request)
     {
-        // Buscar o maior id_cotacao e incrementar
-        $ultimoIdCotacao = Cotacoes::max('id_cotacao');
-        $novoIdCotacao = $ultimoIdCotacao ? $ultimoIdCotacao + 1 : 1;
+        DB::beginTransaction();
+        try {
+            // Inicialmente, busca o maior id_cotacao para começar
+            $ultimoIdCotacao = Cotacoes::max('id_cotacao');
+            $novoIdCotacao= $ultimoIdCotacao + 1;
 
-        $produtosCotados = []; // Para armazenar os resultados
+            // Verificar se a estrutura de cotacao está sendo passada corretamente
+            if (!isset($request->cotacao) || !is_array($request->cotacao)) {
+                return back()->withErrors('Nenhum produto foi selecionado para cotação.');
+            }
 
-        // Verificar se a estrutura de cotacao está sendo passada corretamente
-        if (!isset($request->cotacao) || !is_array($request->cotacao)) {
-            return back()->withErrors('Nenhum produto foi selecionado para cotação.');
-        }
+            $produtosCotados = []; // Para armazenar os resultados
 
-        // Percorrer os produtos e seus fornecedores para encontrar o menor preço
-        foreach ($request->cotacao as $produtoId => $fornecedores) {
-            $menorPreco = null;
-            $fornecedorEscolhido = null;
+            // Percorrer os produtos e seus fornecedores para encontrar o menor preço
+            foreach ($request->cotacao as $produtoId => $fornecedores) {
+                $menorPreco = null;
+                $fornecedorEscolhido = null;
 
-            foreach ($fornecedores as $fornecedorId => $preco) {
-                // Verificar se o preço é válido e menor que o atual menor preço
-                if ($preco !== null && ($menorPreco === null || $preco < $menorPreco)) {
-                    $menorPreco = $preco;
-                    $fornecedorEscolhido = $fornecedorId;
+                foreach ($fornecedores as $fornecedorId => $preco) {
+                    // Verificar se o preço é válido e menor que o atual menor preço
+                    if ($preco !== null && ($menorPreco === null || $preco < $menorPreco)) {
+                        $menorPreco = $preco;
+                        $fornecedorEscolhido = $fornecedorId;
+                    }
                 }
+
+                // Se não houver um fornecedor com preço válido, continuar
+                if ($menorPreco === null || $fornecedorEscolhido === null) {
+                    continue; // Pular para o próximo produto se não encontrar um preço válido
+                }
+
+                // Incrementar o id_cotacao para cada novo produto cotado
+
+
+                // Inserir a cotação no banco de dados com o menor preço encontrado
+                Cotacoes::create([
+                    'produto_id' => $produtoId,
+                    'preco' => $menorPreco,
+                    'fornecedor_id' => $fornecedorEscolhido,
+                    'id_cotacao' => $novoIdCotacao, // Inserir com o ID incrementado
+                ]);
+
+                // Armazenar os dados para exibir na view
+                $produtosCotados[] = [
+                    'produto' => $produtoId,
+                    'fornecedor' => $fornecedorEscolhido,
+                    'preco' => $menorPreco,
+                ];
             }
 
-            // Se não houver um fornecedor com preço válido, continuar
-            if ($menorPreco === null || $fornecedorEscolhido === null) {
-                continue; // Pular para o próximo produto se não encontrar um preço válido
-            }
+            DB::commit();
 
-            // Inserir a cotação no banco de dados com o menor preço encontrado
-            $cotacao = new Cotacoes();
-            $cotacao->produto_id = $produtoId;
-            $cotacao->preco = $menorPreco;
-            $cotacao->fornecedor_id = $fornecedorEscolhido;
-            $cotacao->id_cotacao = $novoIdCotacao;
-            $cotacao->save();
+            // Enviar os resultados para a view de resultados
+            return redirect()->route('cotacao.resultados', ['id_cotacao' => $novoIdCotacao]);
 
-            // Armazenar os dados para exibir na view
-            $produtosCotados[] = [
-                'produto' => $produtoId,
-                'fornecedor' => $fornecedorEscolhido,
-                'preco' => $menorPreco,
-            ];
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->withErrors('Erro ao cadastrar a cotação: ' . $e->getMessage());
         }
-
-        // Enviar os resultados para a view de resultados
-        return redirect()->route('cotacao.resultados', ['id_cotacao' => $novoIdCotacao]);
-        // return view('sistema.cotacao.cotacaoDeProdutos', compact('produtosCotados'));
     }
 
     public function mostrarResultados($id_cotacao)

@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Http\Controllers\ContasController;
 use App\Http\Controllers\InformacaoEmpresaController;
 use App\Http\Controllers\ServicosController;
+use App\Http\Middleware\AuthenticateWithJWT;
 use App\Http\Middleware\CheckMetas;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Support\Facades\Route;
@@ -46,7 +47,10 @@ Route::middleware([
     Route::get('login', [LoginController::class, 'showLoginFormTenant'])->name('login');
     Route::post('login', [LoginController::class, 'login']);
     Route::get('/', [LoginController::class, 'showLoginFormTenant'])->name('login');
+    Route::post('/handle-login', [LoginController::class, 'handleSubdomainLogin'])->name('handle-login')->middleware('web');
+    Route::get('/handle-login', [LoginController::class, 'handleSubdomainLogin'])->name('handle-login')->middleware('web');
 
+    Route::post('/redirect-post', [LoginController::class, 'redirectPost'])->name('redirect-post');
 
     Route::middleware([AuthenticateDashboard::class, CheckCompanyType::class])->group(function () {
 

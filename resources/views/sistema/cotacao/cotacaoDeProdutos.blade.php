@@ -20,7 +20,7 @@
 
 
 
-    <div class="col-6 container mt-4 mb-4 bg-light text-dark">
+    <div class="col-md-8 col-sm-12 container mt-4 mb-4 bg-light text-dark">
         <div class="row">
             <div class="text-center" style="overflow: auto;">
                 <h4 class="display-6">Cotação de Produtos</h4>
@@ -29,7 +29,7 @@
                     <table class="table table-striped table-hover table-secondary">
                         <thead>
                             <tr class="text-light">
-                                <th scope="col">Quantidade</th>
+                                <th scope="col">Estoque</th>
                                 <th scope="col">Produto</th>
                                 <th scope="col">Selecione</th>
                             </tr>

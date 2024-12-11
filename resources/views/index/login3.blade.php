@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
 </head>
 
-<body class="bg-image" style="height: 100vh; background-image: url({{ asset('img/login.jpg') }}); background-size: cover; background-repea: no-repeat;">
+<body class="bg-image" style="height: 100vh; background-image: url({{ global_asset('img/login.jpg') }}); background-size: cover; background-repea: no-repeat;">
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary text-dark sticky-top" style="height: 8vh;">
         <a class="navbar-brand ms-2" style="font-family: 'Quicksand', sans-serif;">Simplifiq System</a>
         <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -22,7 +22,7 @@
         <div class="collapse navbar-collapse ml-auto text-dark" id="navbarNav">
             <ul class="navbar-nav bg-primary">
                 <li class="nav-item ">
-                    <a class="nav-link" href="/">Início</a>
+                    <a class="nav-link" href="{{ route('inicio') }}">Início</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Sobre</a>
@@ -50,26 +50,22 @@
                         <div class="col-6">
                             <div class="card shadow-lg border border-dark">
                                 <div class="card-body bg-dark text-light">
-                                    <h2 class="text-center">Procure a empresa</h2>
-                                    <form method="POST" action="{{ route('paginalogin') }}">
+                                    <h2 class="text-center">Login</h2>
+                                    <form method="POST" action="{{ route('central-login') }}">
                                         @csrf
                                         <div class="form-group">
-
-                                            <select class="select2 form-control" id="empresa" name="empresa"
-                                            onchange="updateFormAction()">
-                                            <option selected disabled>Selecione a sua empresa</option>
-
-                                            @foreach ($empresas as $empresa)
-                                                <option value="{{$empresa->nome }}">{{$empresa->nome}} </option>
-                                            @endforeach
-                                        </select>
+                                            <label for="email">Email</label>
+                                            <input type="email" class="form-control" id="email" name="email" placeholder="Digite seu email" required>
                                         </div>
-
-
+                                        <div class="form-group">
+                                            <label for="senha">Senha</label>
+                                            <input type="password" class="form-control" id="senha" name="senha" placeholder="Digite sua senha" required>
+                                        </div>
                                         <div class="text-center mt-3">
                                             <button type="submit" class="btn btn-primary text-center">Entrar</button>
                                         </div>
                                     </form>
+
                                     @if ($errors->any())
                                         <div class="alert alert-danger mt-3">
 
@@ -80,7 +76,6 @@
                                         </div>
                                     @endif
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -88,12 +83,6 @@
             </div>
         </div>
     </div>
-
-    <script>
-        $(document).ready(function() {
-            $('.select2').select2();
-        });
-    </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

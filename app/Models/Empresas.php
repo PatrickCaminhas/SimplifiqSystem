@@ -10,6 +10,9 @@ class Empresas extends Authenticatable
 {
     use HasFactory;
 
+    protected $primaryKey = 'cnpj'; // Define a chave primária como 'cnpj'
+    public $incrementing = false;   // Desativa incremento automático, já que CNPJ não é um número sequencial
+    protected $keyType = 'string'; // Define que a chave primária é uma string
     protected $fillable = [
         'nome',
         'cnpj',
@@ -20,5 +23,9 @@ class Empresas extends Authenticatable
         'padrao_cores',
     ];
 
+    public function funcionarios()
+    {
+        return $this->hasMany(Funcionarios::class);  // A empresa tem muitos funcionários
+    }
 
 }

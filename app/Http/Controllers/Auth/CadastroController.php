@@ -21,59 +21,89 @@ class CadastroController extends Controller
     public function store(Request $request)
     {
         // Validação dos dados
+        $this->ValidarEmpresa($request);
+
+        // Verificar e criar a empresa
+        $empresa = $this->createEmpresa($request);
+        if (!$empresa) {
+            return redirect()->back()->withErrors([
+                'cnpj' => 'O CNPJ fornecido já está cadastrado.',
+            ]);
+        }
+
+        // Gerar ID único para o funcionário
+        $idFuncionario = $this->generateUniqueFuncionarioId();
+
+        // Criar o funcionário
+        $funcionario = $this->createFuncionario($request, $idFuncionario);
+
+        // Redirecionamento após o cadastro
+        if ($funcionario) {
+            return redirect('cadastroConcluido')->with('success', 'Cadastro realizado com sucesso!');
+        }
+
+        return view('index/inicio');
+    }
+
+    private function ValidarEmpresa($request)
+    {
         $request->validate([
             'nomeempresa' => 'required|string',
             'cnpj' => 'required|string',
             'tamanhoempresa' => 'required|string',
             'tipoempresa' => 'required|string',
-            'areaatuacao' => 'required|string',
             'telefone' => 'required|string',
             'nome' => 'required|string',
             'sobrenome' => 'required|string',
             'email' => 'required|string|email|unique:funcionarios,email',
             'senha' => 'required|string|min:8',
         ]);
+    }
 
-        // Verificar se a empresa já existe
-        if (!Empresas::where('cnpj', $request->input('cnpj'))->exists()) {
-            // Criando a empresa
-            $empresa = Empresas::create([
-                'nome' => $request->input('nomeempresa'),
-                'cnpj' => $request->input('cnpj'),
-                'tamanho_empresa' => $request->input('tamanhoempresa'),
-                'tipo_empresa' => $request->input('tipoempresa'),
-                'area_atuacao' => $request->input('areaatuacao'),
-                'telefone' => $request->input('telefone'),
-                'estado' => 'inexistente',
-            ]);
-        } else {
-            return redirect()->back()->withErrors([
-                'cnpj' => 'O CNPJ fornecido já está cadastrado.',
-            ]);
-        }
+    private function createEmpresa($request)
+    {
+        if (Empresas::where('cnpj', $request->input('cnpj'))->exists()) {
+            return null;
+        } // Se já existir retorna null
 
-        // Gerando ID único para o funcionário
+        $areaAtuacao = match ([$request->tamanhoempresa, $request->tipoempresa]) {
+            ['MEI', 'comercio'] => "mei_comercio",
+            ['MEI', 'comercioEservicos'] => "mei_servico",
+            default => "anexo1",
+        };
+
+        return Empresas::create([
+            'nome' => $request->input('nomeempresa'),
+            'cnpj' => $request->input('cnpj'),
+            'area_atuacao' => $areaAtuacao,
+            'tamanho_empresa' => $request->input('tamanhoempresa'),
+            'tipo_empresa' => $request->input('tipoempresa'),
+            'telefone' => $request->input('telefone'),
+            'estado' => 'inexistente',
+        ]);
+    }
+
+    private function generateUniqueFuncionarioId()
+    {
         do {
-            $id_funcionario = mt_rand(100, 999);
-        } while (Funcionarios::where('id', $id_funcionario)->exists());
+            $id = mt_rand(100, 999);
+        } while (Funcionarios::where('id', $id)->exists());
 
-        // Criando o funcionário
-        $funcionario = Funcionarios::create([
-            'id' => $id_funcionario,
+        return $id;
+    }
+
+    // Criar o funcionário
+    private function createFuncionario($request, $idFuncionario)
+    {
+        return Funcionarios::create([
+            'id' => $idFuncionario,
             'nome' => $request->input('nome'),
             'sobrenome' => $request->input('sobrenome'),
             'cargo' => 'Administrador',
             'email' => $request->input('email'),
-            'cnpj' => $request->input('cnpj'), // Certifique-se de que o nome do campo está correto
+            'cnpj' => $request->input('cnpj'),
             'senha' => Hash::make($request->input('senha')),
         ]);
-
-        // Redirecionamento após o cadastro
-        if ($funcionario) {
-            return redirect('cadastroConcluido')->with('success', 'Cadastro realizado com sucesso!');
-        } else {
-            return view('index/inicio');
-        }
     }
 
 }

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         //
         Schema::table('funcionarios', function (Blueprint $table) {
-            $table->foreign('empresas')->references('cnpj')->on('empresas')->onDelete('cascade');
+            $table->foreign('cnpj')->references('cnpj')->on('empresas')->onDelete('cascade');
         });
 
     }

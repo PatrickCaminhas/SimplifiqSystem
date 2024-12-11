@@ -17,6 +17,7 @@ use App\Http\Controllers\SimplesNacionalController;
 
 foreach (config('tenancy.central_domains') as $domain) {
     Route::domain($domain)->group(function () {
+        Route::post('/redirect-post', [LoginController::class, 'redirectPost'])->name('redirect-post');
 
         Route::get('/', function () {
             return view('index.inicio');
@@ -38,6 +39,10 @@ foreach (config('tenancy.central_domains') as $domain) {
         Route::get('/sanitize-string/{nome}', [LoginController::class, 'sanitizeString'])->name('sanitize.string');
 
         Route::get('/buscar-empresa', [LoginController::class, 'buscar'])->name('buscar.empresa');
+
+
+
+
 
         /*Route::match(['get', 'post'], '/cadastroempresaconcluido', function () {
             return view('index/cadastroEmpresaConcluido');
@@ -130,5 +135,9 @@ foreach (config('tenancy.central_domains') as $domain) {
         Route::match(['get', 'post'], '/login2', function () {
             return view('alternative/login');
         });
+        Route::get('/login3', [LoginController::class, 'login3'])->name('login3');
+        Route::post('/central-login', [LoginController::class, 'centralLogin'])->name('central-login');
+        Route::post('/handle-login', [LoginController::class, 'handleSubdomainLogin'])->name('handle-login');
+
     });
 }

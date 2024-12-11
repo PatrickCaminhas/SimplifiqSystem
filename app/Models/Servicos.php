@@ -22,8 +22,11 @@ class Servicos extends Model
         'descricao',
     ];
     public function cliente()
-{
-    return $this->belongsTo(Clientes::class, 'cliente_id');
-}
-
+    {
+        return $this->belongsTo(Clientes::class, 'cliente_id');
+    }
+    public function tipo()
+    {
+        return $this->belongsTo(ServicosTipo::class, 'tipo_id');
+    }
 }

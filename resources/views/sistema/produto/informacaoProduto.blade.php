@@ -10,6 +10,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 </head>
 
 <body class=bg-dark>
@@ -27,17 +29,16 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title display-6 text-center">PRODUTO {{ ucfirst($produto->nome)}}</h5>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-6">
                                     <h5 class="card-title">Informações do produto</h5>
-                                    <p class="card-text">Nome: {{$produto->id}}</p>
+                                    <p class="card-text">ID: {{$produto->id}}</p>
                                     <p class="card-text">Nome: {{$produto->nome}}</p>
                                     <p class="card-text">Categoria: {{$produto->categoria}}</p>
                                     <p class="card-text">Valor Compra: R$ {{$produto->preco_compra}}</p>
                                     <p class="card-text">Ultimo fornecedor: {{$produto->ultimo_fornecedor}}</p>
-                                    <p class="card-text">Quantidade: {{$produto->quantidade}}</p>
+                                    <p class="card-text">Estoque: {{$produto->quantidade}}</p>
                                 </div>
                                 <div class="col-6">
                                     <p class="card-text">Preço: {{$produto->preco_venda}}</p>
@@ -54,94 +55,96 @@
             </div>
             <div class="container mt-4">
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-12">
                         <div class="card mb-2">
                             <div class="card-body">
-                                <h5 class="card-title">Fácil de Usar</h5>
+                                <h5 class="card-title">Estoque</h5>
                                 <p class="card-text">
-                                    aaa
-
+                                    <!-- GRAFICO DE ESTOQUE -->
+                                    <div>
+                                        <canvas id="estoqueChart"></canvas>
+                                    </div>
                                 </p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-4">
-                        <div class="card mb-2">
-                            <div class="card-body">
-                                <h5 class="card-title">Fornecedores por % de produto</h5>
-                                <img src="{{ global_asset('img/Screenshot_2.png') }}" alt="Descrição da Imagem" class="img-fluid">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="card mb-2">
-                            <div class="card-body">
-                                <h5 class="card-title">Proximas contas</h5>
-                                <table class="table table-light  border table-dorder table-hover">
-                                    <thead class="table-group-divider">
-                                        <tr class="">
-                                            <th class=" ">Data</th>
-                                            <th class="">Conta</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="table-group-divider ">
-                                        <tr class="text-danger">
-                                            <th class="text-danger">03/05</th>
-                                            <th class="text-danger">Energia eletrica</th>
-                                        </tr>
-                                        <tr class="">
-                                            <th class="">11/05</th>
-                                            <th class="">Pedido #00077</th>
-                                        </tr>
-                                        <tr class="">
-                                            <th class="">15/05</th>
-                                            <th class="">Água e esgoto</th>
-                                        </tr>
-                                        <tr class="">
-                                            <th class="">15/05</th>
-                                            <th class="">Pedido #00078</th>
-                                        </tr>
-                                        <tr class="">
-                                            <th class="">19/05</th>
-                                            <th class="">Aluguel</th>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <a href="#" class="btn @include('partials.buttomCollor')">Ver todas</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="container mt-5 col-lg-6 col-md-8 col-sm-12 mb-5">
-                <div class="row">
-                    <div class="col-6">
-                        <div class="card mb-2">
-                            <div class="card-body">
-                                <h5 class="card-title">Variação de custo unitário</h5>
-                                <img src="{{ global_asset('img/Screenshot_3.png') }}" alt="Descrição da Imagem"
-                                    class="img-fluid">
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Variação de preço</h5>
-                                <img src="{{ global_asset('img/Screenshot_3.png') }}" alt="Descrição da Imagem"
-                                    class="img-fluid">
-
-                            </div>
-                        </div>
-                    </div>
 
                 </div>
             </div>
+
             <!-- Features Section -->
 
             <!-- Inclua os arquivos JavaScript do Bootstrap -->
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const estoqueData = {!! json_encode($estoque) !!};
+
+                    // Filtra os dados de baixas, vendas e reposições
+                    const baixas = estoqueData.filter(item => item.acao === 'baixa');
+                    const vendas = estoqueData.filter(item => item.acao === 'Venda');
+                    const reposicoes = estoqueData.filter(item => item.acao === 'reposicao');
+
+                    // Extrai os meses (presumindo que os meses estão no formato de string)
+                    const meses = estoqueData.map(item => item.mes);
+
+                    // Extrai as quantidades para baixas e reposições
+                    const quantidadeBaixas = baixas.map(item => item.quantidade);
+                    const quantidadeVendas = vendas.map(item => item.quantidade);
+                    const quantidadeReposicoes = reposicoes.map(item => item.quantidade);
+
+                    const ctx = document.getElementById('estoqueChart').getContext('2d');
+                    const estoqueChart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: [...new Set(meses)], // Remove duplicatas dos meses
+                            datasets: [
+                                {
+                                    label: 'Baixas',
+                                    data: quantidadeBaixas, // Quantidade de baixas
+                                    borderColor: 'rgba(247, 39, 39, 1)',
+                                    backgroundColor: 'rgba(247, 39, 39, 1)',
+                                    fill: false,
+                                    tension: 0.1
+                                },
+                                {
+                                    label: 'Vendas',
+                                    data: quantidadeVendas, // Quantidade de vendas
+                                    borderColor: 'rgba(39, 247, 46, 1)',
+                                    backgroundColor: 'rgba(39, 247, 46, 1)',
+                                    fill: false,
+                                    tension: 0.1
+                                },
+                                {
+                                    label: 'Reposições',
+                                    data: quantidadeReposicoes, // Quantidade de reposições
+                                    borderColor: 'rgba(38, 72, 255, 1)',
+                                    backgroundColor: 'rgba(38, 72, 255, 1)',
+                                    fill: false,
+                                    tension: 0.1
+                                }
+                            ]
+                        },
+                        options: {
+                            scales: {
+                                x: {
+                                    title: {
+                                        display: true,
+                                        text: 'Meses'
+                                    }
+                                },
+                                y: {
+                                    title: {
+                                        display: true,
+                                        text: 'Quantidade'
+                                    }
+                                }
+                            }
+                        }
+                    });
+                });
+            </script>
 </body>
 
 </html>

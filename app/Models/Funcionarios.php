@@ -6,9 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
-class Funcionarios extends Authenticatable
+use Tymon\JWTAuth\Contracts\JWTSubject;
+
+class Funcionarios extends Authenticatable implements JWTSubject
 {
-    use HasFactory;
+    use HasFactory,  Notifiable;
 
     protected $fillable = [
         'id',
@@ -24,8 +26,21 @@ class Funcionarios extends Authenticatable
         'senha',
     ];
 
+    public function empresa()
+    {
+        return $this->belongsTo(Empresas::class, 'cnpj');  // Associa a chave estrangeira empresa_id
+    }
     public function getAuthPassword()
     {
         return $this->senha;
+    }
+    public function getJWTIdentifier()
+    {
+        return $this->getKey(); // Retorna a chave primária do modelo
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return []; // Retorna um array de claims customizadas (opcional)
     }
 }

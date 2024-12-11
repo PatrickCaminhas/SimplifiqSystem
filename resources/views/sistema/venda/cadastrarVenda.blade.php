@@ -20,16 +20,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
     <div class="d-flex align-items-center justify-content-center " style="height: 92vh;">
         <div class="container mt-5 col-lg-6 col-md-8 col-sm-12 col-12 ">
             <div class="row align-items-center justify-content-center">
@@ -166,7 +156,7 @@
 
                         // Criar os inputs para quantidade
                         let produtoHtml = `
-                    <div class="form-group row align-items-center" id="produto-${ui.item.id}">
+                    <div class="form-group row align-items-center mb-2" id="produto-${ui.item.id}">
                         <label class="col-4 col-form-label">${ui.item.label}</label>
                         <div class="col-3">
                             <input type="number" name="quantidades[${ui.item.id}]" class="form-control" placeholder="Quantidade" min="1" required>
@@ -175,6 +165,7 @@
                             <button type="button" class="btn btn-danger remove-produto" data-id="${ui.item.id}">Remover</button>
                         </div>
                     </div>
+
                 `;
 
                         // Adicionar o HTML no form

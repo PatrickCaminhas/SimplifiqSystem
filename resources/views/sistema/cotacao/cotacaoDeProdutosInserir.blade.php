@@ -35,7 +35,7 @@
                             <tr class="text-light">
                                 <th scope="col">Produto</th>
                                 @foreach ($fornecedores as $fornecedor)
-                                    <th scope="col">{{ $fornecedor->nome }}</th>
+                                    <th scope="col-3">{{ $fornecedor->nome }}</th>
                                 @endforeach
                             </tr>
                         </thead>
@@ -48,8 +48,8 @@
                                     @foreach ($fornecedores as $fornecedor)
                                         <td>
                                             <input type="number" class="form-control"
-                                               name="cotacao[{{ $produto->id }}][{{ $fornecedor->id }}]"
-                                                placeholder="Digite o preço">
+                                                name="cotacao[{{ $produto->id }}][{{ $fornecedor->id }}]"
+                                                step="0.01" placeholder="Digite o preço">
                                         </td>
                                     @endforeach
                                 </tr>

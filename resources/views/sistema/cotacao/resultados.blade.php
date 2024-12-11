@@ -29,14 +29,14 @@
                     <tbody>
                         @foreach ($cotacoes as $cotacao)
                             <tr>
-                                <td>{{ $cotacao->produto->nome }}</td>
+
+                                <td>{{ $cotacao->produto->nome . " " . $cotacao->produto->modelo . " " . $cotacao->produto->marca  }}</td>
                                 <td>{{ $cotacao->fornecedor->nome }}</td>
                                 <td>R$ {{ number_format($cotacao->preco, 2, ',', '.') }}</td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
-
                 <div class="mt-4">
                     <a href="{{ route('dashboard') }}" class="btn btn-primary">Voltar ao Dashboard</a>
                     <button class="btn btn-dark" onclick="window.print()">Salvar em PDF/Imprimir</button>

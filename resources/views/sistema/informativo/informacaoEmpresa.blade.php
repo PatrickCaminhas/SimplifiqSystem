@@ -48,23 +48,23 @@
                                         {{ ucfirst($informacaoEmpresa->padrao_cores) }}</p>
                                 </div>
                                 <div class="col-6">
-                                    <p class="card-text">Logo:
+                                    <!--<p class="card-text">Logo:
                                         @if ($informacaoEmpresa->logo)
                                             <img src="{{ $informacaoEmpresa->logo }}" alt="Logo da empresa"
                                                 class="img-fluid">
                                         @else
                                             a empresa não possui logo!
                                         @endif
-                                    </p>
+                                    </p>-->
                                     <p class="card-text">Inicio no sistema: {{ $informacaoEmpresa->created_at }}</p>
                                     <h5 class="card-title">Ações</h5>
                                     <p href="#" class="btn btn-primary">Alterar dados da empresa</p>
                                     <br>
-                                    <p href="#" class="btn btn-primary">Alterar tema da empresa </p>
+                                    <p href="#" class="btn btn-primary">Alterar tema da empresa</p>
                                     <br>
-                                    <p href="#" class="btn btn-primary">Historico de faturamentos</p>
+                                    <p href="#" class="btn btn-primary">Historico de contas</p>
                                     <br>
-                                    <p href="#" class="btn btn-primary">Cadastrar faturamento</p>
+                                    <p href="#" class="btn btn-primary">Lista de metas</p>
 
                                 </div>
 
@@ -85,13 +85,13 @@
                                     <p class="card-text">Quantidade de clientes no crediário: {{$crediarioClientes->qtdClientes}}.</p>
                                     <p class="card-text">Valor total a receber no crediário: R$ {{$crediarioClientes->valorTotal}}.</p>
                                     <p class="card-text">Quantidade de produtos com estoque: {{$produtos->qtdProdutosEmEstoque}}.</p>
-                                <p class="card-text">Lista de produtos mais vendidos: </p>
+                                <!--<p class="card-text">Lista de produtos mais vendidos: </p> -->
                                 </div>
                                 <div class="col-6">
                                     <p class="card-text">Quantidade de produtos em falta: {{$produtos->qtdProdutosSemEstoque}}.</p>
                                     <p class="card-text">Total de produtos em estoque: {{$produtos->estoque}}.</p>
                                     <p class="card-text">Valor total em estoque: R$ {{$produtos->valorTotalEmEstoque}},00</p>
-                                <p class="card-text">Lista de produtos menos vendidos: </p>
+                                <!--<p class="card-text">Lista de produtos menos vendidos: </p>-->
                                 </div>
                             </div>
                             </div>

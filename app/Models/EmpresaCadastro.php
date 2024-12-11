@@ -15,6 +15,7 @@ class EmpresaCadastro extends Authenticatable
         'cnpj',
         'tamanho_empresa',
         'tipo_empresa',
+        'area_atuacao',
         'telefone',
     ];
 

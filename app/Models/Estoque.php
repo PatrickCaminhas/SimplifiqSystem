@@ -17,4 +17,9 @@ class Estoque extends Model
         'ano',
         'usuario',
     ];
+
+    public function produto()
+    {
+        return $this->belongsTo(Produtos::class, 'id_produto');
+    }
 }

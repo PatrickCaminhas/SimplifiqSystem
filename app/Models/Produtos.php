@@ -26,4 +26,16 @@ class Produtos extends Model
     {
         return $this->hasMany(Itens_venda::class);
     }
+    public function estoque()
+    {
+        return $this->hasMany(Estoque::class, 'id_produto');
+    }
+    public function fornecedores()
+    {
+        return $this->belongsToMany(Fornecedores::class, 'produtos_fornecedores', 'produto_id', 'fornecedor_id');
+    }
+    public function vendas()
+    {
+        return $this->hasManyThrough(Vendas::class, Itens_venda::class, 'produto_id', 'id', 'id', 'venda_id');
+    }
 }

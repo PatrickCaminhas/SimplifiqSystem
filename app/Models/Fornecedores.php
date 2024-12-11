@@ -18,7 +18,6 @@ class Fornecedores extends Model
         'nome_representante',
         'email',
         'telefone',
-
-  
     ];
+
 }

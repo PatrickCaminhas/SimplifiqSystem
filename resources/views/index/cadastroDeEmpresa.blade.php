@@ -78,36 +78,9 @@
 
                                     <div class="form-group">
                                         <label for="tipoEmpresa">Tipo de empresa</label>
-                                        <select class="form-control" id="tipoEmpresa" name="tipoempresa" required>
+                                        <select class="form-control" id="tipoempresa" name="tipoempresa" required>
                                             <option selected disabled>Selecione o tipo de empresa</option>
                                             <!-- As opções serão alteradas dinamicamente com JavaScript -->
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="areaatuacao">Tipo de empresa</label>
-                                        <select class="form-control" id="areaatuacao" name="areaatuacao" required>
-                                            <option selected disabled>Selecione a area de atuação da empresa</option>
-                                            <option value="anexo1">Comércio</option>
-                                            <option value="anexo2">Indústria</option>
-                                            <option value="anexo3">Ensino</option>
-                                            <option value="anexo3">Instalação, reparos ou manutenção</option>
-                                            <option value="anexo3">Agência de viagens</option>
-                                            <option value="anexo3">Escritorio de contabilidade</option>
-                                            <option value="anexo3">Academia</option>
-                                            <option value="anexo3">Laboratório</option>
-                                            <option value="anexo3">Clinica médica</option>
-                                            <option value="anexo3">Clinica odontológica</option>
-                                            <option value="anexo4">Limpeza </option>
-                                            <option value="anexo4">Obras</option>
-                                            <option value="anexo4">Construção de imóveis</option>
-                                            <option value="anexo5">Clínica de exames médicos</option>
-                                            <option value="anexo5">Auditoria</option>
-                                            <option value="anexo5">Jornalismo</option>
-                                            <option value="anexo5">Tecnologia</option>
-                                            <option value="anexo5">Eventos</option>
-                                            <option value="anexo5">Publicidade</option>
-                                            <option value="anexo5">Engenharia</option>
-
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -189,7 +162,7 @@
 
     <script>
         document.getElementById('tamanhoempresa').addEventListener('change', function() {
-            const tipoEmpresaSelect = document.getElementById('tipoEmpresa');
+            const tipoEmpresaSelect = document.getElementById('tipoempresa');
             const tamanhoEmpresa = this.value;
 
             // Limpa as opções atuais do select de tipo de empresa
@@ -204,31 +177,55 @@
                         text: 'Somente comércio'
                     },
                     {
-                        value: 'industria',
-                        text: 'Indústria'
-                    },
-                    {
-                        value: 'servicos',
-                        text: 'Somente serviços'
-                    },
-                    {
-                        value: 'comercioEervicos',
+                        value: 'comercioEservicos',
                         text: 'Serviços e comércio'
                     }
                 ];
             } else if (tamanhoEmpresa === 'microempresa' || tamanhoEmpresa === 'pequenaempresa') {
                 options = [{
-                        value: 'comercio',
-                        text: 'Comércio'
+                        value: 'alimentosEbebidas',
+                        text: 'Alimentos e bebidas'
                     },
                     {
-                        value: 'industria',
-                        text: 'Indústria'
+                        value: 'agropecuarios',
+                        text: 'Produtos Agropecuários'
                     },
                     {
-                        value: 'servicos',
-                        text: 'Serviços'
-                    }
+                        value: 'Atacado',
+                        text: 'Atacado'
+                    },
+                    {
+                        value: 'autopecas',
+                        text: 'Autopeças'
+                    },
+                    {
+                        value: 'construcao',
+                        text: 'Materiais de construção'
+                    },
+                    {
+                        value: 'livrosJornaisPapelaria',
+                        text: 'Livros, jornais, revistas e artigos de papelaria.'
+                    },
+                    {
+                        value: 'moveis',
+                        text: 'Móveis e eletrodomésticos'
+                    },
+                    {
+                        value: 'farmaceuticos',
+                        text: 'Produtos farmacêuticos'
+                    },
+                    {
+                        value: 'informatica',
+                        text: 'Produtos de informática'
+                    },
+                    {
+                        value: 'vestuario',
+                        text: 'Vestuario'
+                    },
+                    {
+                        value: 'outros',
+                        text: 'Outros'
+                    },
                 ];
             }
 

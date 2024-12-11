@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Produtos; // Add this line to import the Produto class
-
+use App\Models\Estoque;
 use Illuminate\Http\Request;
 
 class InformacaoProdutosController extends Controller
@@ -40,8 +40,9 @@ class InformacaoProdutosController extends Controller
     public function listar($id)
     {
         $produto = Produtos::where('id', $id)->first();
+        $estoque = $this->estoqueDoProdutoAoLongoDoTempo($id);
         if ($produto) {
-            return view('sistema\produto\informacaoProduto', ['produto' => $produto], ['page' => 'produto']);
+            return view('sistema\produto\informacaoProduto', ['produto' => $produto,'page' => 'produto', 'estoque' => $estoque]);
         } else {
             return redirect('informacaoproduto')->with('error', 'Produto não encontrado.');
         }
@@ -147,6 +148,17 @@ class InformacaoProdutosController extends Controller
             return redirect('cadastroproduto')->with('error', 'Erro ao deletar produto.');
         }
     }
+
+    public function estoqueDoProdutoAoLongoDoTempo($id){
+        $estoque = Estoque::where('id_produto', $id)->get();
+        if($estoque){
+            return $estoque;
+        }else{
+            return "sem estoque";;
+        }
+
+    }
+
 
 }
 

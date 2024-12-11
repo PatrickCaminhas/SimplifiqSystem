@@ -54,9 +54,7 @@
 
 
 
-                    <div class="mt-4 mb-4">
-                        <button type="submit" class="btn @include('partials.buttomCollor')">Visualizar</button>
-                    </div>
+
                 </form>
 
 

@@ -10,7 +10,8 @@
         "laravel/framework": "^11.0",
         "laravel/telescope": "^5.0",
         "laravel/tinker": "^2.9",
-        "stancl/tenancy": "^3.8"
+        "stancl/tenancy": "^3.8",
+        "tymon/jwt-auth": "^2.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.13",

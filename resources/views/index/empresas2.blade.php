@@ -51,7 +51,7 @@
                         <div class="col-6">
                             <div class="card shadow-lg border border-dark">
                                 <div class="card-body bg-dark text-light">
-                                    <h2 class="text-center">Escolha da empresa</h2>
+                                    <h2 class="text-center">Procure a empresa</h2>
 
 
                                         <div class="form-group">
