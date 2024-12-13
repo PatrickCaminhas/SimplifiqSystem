@@ -5,7 +5,7 @@ declare(strict_types=1);
 use App\Http\Controllers\ContasController;
 use App\Http\Controllers\InformacaoEmpresaController;
 use App\Http\Controllers\ServicosController;
-use App\Http\Middleware\AuthenticateWithJWT;
+use App\Http\Controllers\Auth\CadastroController;
 use App\Http\Middleware\CheckMetas;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Support\Facades\Route;
@@ -92,7 +92,7 @@ Route::middleware([
         Route::post('/alterarSenhaConfirmar', [ConfiguracoesController::class, 'update'])->name('configuracoes.senha.alterar');
 
         Route::get('/cadastrarfuncionario', [ConfiguracoesController::class, 'createCadastroFuncionario'])->name('configuracoes.funcionario');
-        Route::post('/cadastrarfuncionarioconfirmar', [ConfiguracoesController::class, 'storeFuncionario'])->name('configuracoes.funcionario.cadastrar');
+        Route::post('/cadastrarfuncionarioconfirmar', [CadastroController::class, 'cadastrarNovoFuncionarioEmpresaExiste'])->name('configuracoes.funcionario.cadastrar');
 
         // Route::get('/cotacaoprodutos',[CotacoesController::class, 'create'])->name('cotacaoProdutos');
         Route::get('/cotacaoprodutos', [CotacoesController::class, 'createLista'])->name('cotacaoProdutos');

@@ -51,12 +51,12 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="confirmanovasenha">E-mail</label>
+                                    <label for="email">E-mail</label>
                                     <input type="text" class="form-control" id="email" name="email"
                                         placeholder="Digite o e-mail do funcionario" required>
                                 </div>
                                 <div class="form-group alert alert-success mt-3">
-                                    <label for="confirmanovasenha">A senha sempre será padronizada como as 3 primeiras
+                                    <label for="senha">A senha sempre será padronizada como as 3 primeiras
                                         letras do nome mais as 3 primeiras letras do sobrenome mais o 12.
                                         <br>
                                         Exemplo: João Silva = JOASIL12

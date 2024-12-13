@@ -76,7 +76,6 @@ class CadastroController extends Controller
                 'sobrenome' => 'required|string',
                 'cargo' => 'required|string',
                 'email' => 'required|string|email|unique:funcionarios,email',
-                'senha' => 'required|string|min:8',
             ]);
         } else {
             $request->validate([
@@ -145,24 +144,49 @@ class CadastroController extends Controller
 
     }
 
-    private function cadastrarNovoFuncionarioEmpresaExiste(Request $request)
+
+    public function cadastrarNovoFuncionarioEmpresaExiste(Request $request)
     {
         $this->ValidarFuncionario($request);
-        $idFuncionario = new Integer();
-
+        $idFuncionario = 0;
+        $tenant = tenant(); // Obtém o tenant atual
+        $senha = strtoupper(substr($request->input('nome'), 0, 3) . substr($request->input('sobrenome'), 0, 3) . '12');
+        $empresa=0;
         // *** Inserir funcionário no escopo global ***
-        Tenancy::setTenant(null); // Desativa temporariamente o tenant atual
+        tenancy()->end(); // Desativa temporariamente o tenant atual
         try {
-            $idFuncionario = $this->cadastroService->generateUniqueFuncionarioId();
+            // Busca a empresa do tenant
+            $empresa = Empresas::where('tenant', $tenant->id)->first();
+            if (!$empresa) {
+                return redirect()->back()->withErrors(['error' => 'Empresa não encontrada para o tenant atual.']);
+            }
 
+            // Gerar ID único para o funcionário
+            $idFuncionario = $this->cadastroService->generateUniqueFuncionarioId();
+            $request->merge(['senha' => $senha, 'cnpj' => $empresa->cnpj]);
             $funcionario = $this->createFuncionario($request, $idFuncionario);
+
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => 'Erro ao cadastrar o funcionário no escopo global: ' . $e->getMessage()]);
-        } finally {
-            Tenancy::setTenant($funcionario->empresa); // Reativa o tenant atual
+        }
+        tenancy()->initialize($empresa); // Reativa o tenant atual
+
+
+        // *** Inserir funcionário no tenant ***
+        try {
+            $request->merge($request->except('cnpj')); // Atualiza o request sem o campo 'cnpj'
+            $funcionarioTenant = $this->createFuncionario($request, $idFuncionario);
+
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => 'Erro ao cadastrar o funcionário no escopo do tenant: ' . $e->getMessage()]);
         }
 
+        if ($funcionario && $funcionarioTenant) {
+            return redirect('configuracoes.configuracaoUsuario')->with('success', 'Cadastro realizado com sucesso!');
+        }
 
+        return view('sistema.dashboard');
     }
+
 
 }
