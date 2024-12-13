@@ -16,6 +16,7 @@ use App\Http\Controllers\CotacoesController;
 use App\Http\Controllers\SimplesNacionalController;
 use App\Mail\MensagemMail;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
 
 foreach (config('tenancy.central_domains') as $domain) {
     Route::domain($domain)->group(function () {
@@ -30,9 +31,11 @@ foreach (config('tenancy.central_domains') as $domain) {
         Route::get('/create-tenant', [TenantController::class, 'createTenant']);
 
 
+
         Route::get('/login3', [LoginController::class, 'login3'])->name('login3');
         Route::post('/identificarLocatario', [LoginController::class, 'identificarLocatario'])->name('identify.tenant');
 
+        Auth::routes(['verify' => true]);
 
         Route::get('paginalogin', [LoginController::class, 'showLoginForm'])->name('paginalogin');
         Route::post('paginalogin', [LoginController::class, 'showLoginForm'])->name('paginalogin');

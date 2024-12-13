@@ -7,9 +7,19 @@ use App\Models\Empresas;
 use App\Models\Funcionarios;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use App\Services\AuxiliarService;
+use phpDocumentor\Reflection\Types\Integer;
+use Stancl\Tenancy\Facades\Tenancy;
 
 class CadastroController extends Controller
 {
+    private $cadastroService;
+
+    public function __construct(AuxiliarService $cadastroService)
+    {
+        $this->cadastroService = $cadastroService;
+    }
+
     public function create()
     {
         return view('index\cadastroDeEmpresa');
@@ -22,7 +32,7 @@ class CadastroController extends Controller
     {
         // Validação dos dados
         $this->ValidarEmpresa($request);
-
+        $this->ValidarFuncionario($request);
         // Verificar e criar a empresa
         $empresa = $this->createEmpresa($request);
         if (!$empresa) {
@@ -30,9 +40,8 @@ class CadastroController extends Controller
                 'cnpj' => 'O CNPJ fornecido já está cadastrado.',
             ]);
         }
-
+        $idFuncionario = $this->cadastroService->generateUniqueFuncionarioId();
         // Gerar ID único para o funcionário
-        $idFuncionario = $this->generateUniqueFuncionarioId();
 
         // Criar o funcionário
         $funcionario = $this->createFuncionario($request, $idFuncionario);
@@ -59,6 +68,26 @@ class CadastroController extends Controller
             'senha' => 'required|string|min:8',
         ]);
     }
+    private function ValidarFuncionario($request)
+    {
+        if ($request->input('cnpj') == null) {
+            $request->validate([
+                'nome' => 'required|string',
+                'sobrenome' => 'required|string',
+                'cargo' => 'required|string',
+                'email' => 'required|string|email|unique:funcionarios,email',
+                'senha' => 'required|string|min:8',
+            ]);
+        } else {
+            $request->validate([
+                'nome' => 'required|string',
+                'sobrenome' => 'required|string',
+                'cnpj' => 'required|string',
+                'email' => 'required|string|email|unique:funcionarios,email',
+                'senha' => 'required|string|min:8',
+            ]);
+        }
+    }
 
     private function createEmpresa($request)
     {
@@ -83,27 +112,57 @@ class CadastroController extends Controller
         ]);
     }
 
-    private function generateUniqueFuncionarioId()
-    {
-        do {
-            $id = mt_rand(100, 999);
-        } while (Funcionarios::where('id', $id)->exists());
 
-        return $id;
-    }
 
     // Criar o funcionário
     private function createFuncionario($request, $idFuncionario)
     {
-        return Funcionarios::create([
-            'id' => $idFuncionario,
-            'nome' => $request->input('nome'),
-            'sobrenome' => $request->input('sobrenome'),
-            'cargo' => 'Administrador',
-            'email' => $request->input('email'),
-            'cnpj' => $request->input('cnpj'),
-            'senha' => Hash::make($request->input('senha')),
-        ]);
+        if ($request->input('cnpj') != null) {
+            //Se foi informado CNPJ o usuario é o administrador no momento da criação da empresa
+            $cargo = 'Administrador';
+            return Funcionarios::create([
+                'id' => $idFuncionario,
+                'nome' => $request->input('nome'),
+                'sobrenome' => $request->input('sobrenome'),
+                'cargo' => $cargo,
+                'email' => $request->input('email'),
+                'cnpj' => $request->input('cnpj'),
+                'senha' => Hash::make($request->input('senha')),
+            ]);
+        } else {
+            //Se não foi informado CNPJ o usuario é usuario de uma empresa existente
+
+            $cargo = $request->input('cargo');
+            return Funcionarios::create([
+                'id' => $idFuncionario,
+                'nome' => $request->input('nome'),
+                'sobrenome' => $request->input('sobrenome'),
+                'cargo' => $cargo,
+                'email' => $request->input('email'),
+                'senha' => Hash::make($request->input('senha')),
+            ]);
+        }
+
+    }
+
+    private function cadastrarNovoFuncionarioEmpresaExiste(Request $request)
+    {
+        $this->ValidarFuncionario($request);
+        $idFuncionario = new Integer();
+
+        // *** Inserir funcionário no escopo global ***
+        Tenancy::setTenant(null); // Desativa temporariamente o tenant atual
+        try {
+            $idFuncionario = $this->cadastroService->generateUniqueFuncionarioId();
+
+            $funcionario = $this->createFuncionario($request, $idFuncionario);
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => 'Erro ao cadastrar o funcionário no escopo global: ' . $e->getMessage()]);
+        } finally {
+            Tenancy::setTenant($funcionario->empresa); // Reativa o tenant atual
+        }
+
+
     }
 
 }

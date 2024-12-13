@@ -21,16 +21,16 @@ class ClienteController extends Controller
     public function quitarDividaView(Request $request)
     {
         $cliente = Clientes::find($request->id);
-        return view( 'sistema.cliente.quitarDivida', ['cliente' => $cliente, 'page' => 'cliente']);
+        return view('sistema.cliente.quitarDivida', ['cliente' => $cliente, 'page' => 'cliente']);
     }
     public function quitarDividaStore(Request $request)
     {
         $cliente = Clientes::find($request->cliente_id);
         $debito = $cliente->debitos;
-        if($debito < $request->valor_quitacao){
+        if ($debito < $request->valor_quitacao) {
             return redirect('clientes')->with('error', 'Valor de quitação maior que o valor da dívida!');
         }
-        $cliente->debitos = $debito-$request->valor_quitacao;
+        $cliente->debitos = $debito - $request->valor_quitacao;
         $cliente->save();
         return redirect('clientes')->with('success', 'Dívida quitada com sucesso!');
     }
@@ -55,9 +55,10 @@ class ClienteController extends Controller
         $cliente->cpfOuCnpj = $request->cpfOuCnpj;
         $cliente->telefone = $request->telefone;
         if ($request->email == null) {
-            $request->email = "-";
+            $cliente->email = "-";
+        } else {
+            $cliente->email = $request->email;
         }
-        $cliente->email = $request->email;
         $cliente->endereco_completo = $request->endereco_completo;
         $cliente->debitos = 0;
         $cliente->observacoes = "-";
@@ -86,9 +87,10 @@ class ClienteController extends Controller
         $cliente->cpfOuCnpj = $request->cpfOuCnpj;
         $cliente->telefone = $request->telefone;
         if ($request->email == null) {
-            $request->email = "-";
+            $cliente->email = "-";
+        } else {
+            $cliente->email = $request->email;
         }
-        $cliente->email = $request->email;
         $cliente->endereco_completo = $request->endereco_completo;
         $cliente->debitos = 0;
         $cliente->observacoes = $request->observacoes;

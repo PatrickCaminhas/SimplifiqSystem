@@ -3,13 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\Empresa_information;
+use App\Models\Empresas;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Funcionarios;
+use App\Http\Controllers\Auth\CadastroController;
+use App\Services\AuxiliarService;
 
-class ConfiguracoesController extends Controller
+class configuracoesController extends Controller
 {
+    private $cadastroService;
+
+    public function __construct( AuxiliarService $cadastroService)
+    {
+        $this->cadastroService = $cadastroService;
+    }
     public function createConfiguracoes()
     {
         $status_cadastro = $this->verificarFuncionario();
@@ -89,26 +99,39 @@ class ConfiguracoesController extends Controller
 
             'email' => 'required|string|email|unique:funcionarios,email',
         ]);
-        do {
-            $id_funcionario = mt_rand(100, 999);
-        } while (Funcionarios::where('id', $id_funcionario)->exists());
-        $user = Auth::user();
+
+        $id=0;
+
+        $id_funcionario=$this->cadastroService->generateUniqueFuncionarioId();
+
         $nome = $request->input('nome');
         $sobrenome = $request->input('sobrenome');
         $senha = strtoupper(substr($nome, 0, 3) . substr($sobrenome, 0, 3) . '12');
-        $funcionario = Funcionarios::create([
-            'id' => $id_funcionario,
-            'nome' => $request->input('nome'),
-            'sobrenome' => $request->input('sobrenome'),
-            'cargo' => 'Administrador',
-            'email' => $request->input('email'),
-            'senha' => Hash::make($senha),
-        ]);
+
+
+
+        $funcionario = $this->createFuncionario($request, $id_funcionario);
+
+
         if ($funcionario) {
             return redirect('configuracoes')->with('success', 'Cadastro realizado com sucesso!');
         } else {
             return view('index/inicio');
         }
+
+
+    }
+
+    private function createFuncionario($request, $id_funcionario)
+    {
+        return Funcionarios::create([
+            'id' => $id_funcionario,
+            'nome' => $request->input('nome'),
+            'sobrenome' => $request->input('sobrenome'),
+            'cargo' => 'Administrador',
+            'email' => $request->input('email'),
+            'senha' => Hash::make($request->input('senha')),
+        ]);
     }
 
 }

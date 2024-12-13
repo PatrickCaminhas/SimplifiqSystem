@@ -10,8 +10,9 @@ use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use App\Notifications\ResetPasswordNotification;
 use App\Models\Empresa_information;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-class Funcionarios extends Authenticatable implements JWTSubject
+class Funcionarios extends Authenticatable implements MustVerifyEmail, JWTSubject
 {
     use HasFactory,  Notifiable;
 
