@@ -58,6 +58,9 @@ Route::middleware([
     Route::get('password/reset/{token}', [SenhaResetController::class, 'resetForm'])->name('password.reset');
     Route::post('password/reset', [SenhaResetController::class, 'resetPassword'])->name('password.update');
 
+    Route::get('/login_second', [LoginController::class, 'formularioLoginTenant'])->name('tenant.login');
+    Route::post('/login_second', [LoginController::class, 'loginTenant'])->name('tenant.login');
+
 
     Route::middleware([AuthenticateDashboard::class, CheckCompanyType::class])->group(function () {
 

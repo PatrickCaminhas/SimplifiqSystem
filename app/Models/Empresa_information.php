@@ -17,5 +17,11 @@ class Empresa_information extends Model
         'telefone',
         'estado',
         'padrao_cores',
+        'dominio',
     ];
+    public function funcionarios()
+    {
+        return $this->hasMany(Funcionarios::class);  // A empresa tem muitos funcionários
+    }
+
 }

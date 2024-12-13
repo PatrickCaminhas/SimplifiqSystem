@@ -84,6 +84,7 @@ class TenantController extends Controller
             'telefone' => $request->telefone,
             'estado' => 'ativa',
             'padrao_cores' => 'azul',
+            'dominio' => $nomeSanitizado,
         ]);
 
         Clientes::create([

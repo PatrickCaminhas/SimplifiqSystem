@@ -12,6 +12,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Crypt;
 
 
 class LoginController extends Controller
@@ -129,79 +130,119 @@ class LoginController extends Controller
 
         return redirect('/login');
     }
-/*
-    public function centralLogin(Request $request)
+
+    public function identificarLocatario(Request $request)
     {
         // Valida os dados de entrada
         $request->validate([
             'email' => 'required|email',
-            'senha' => 'required',
+
         ]);
 
+        $email = $request['email'];
         // Tenta autenticar o usuário
-           $funcionario = Funcionarios::where('email', $request['email'])->first();
-           if ($funcionario) {
-               $subdominio = $this->sanitizeString($funcionario->empresa->nome);
-               return redirect()->away('http://' . $subdominio . '.localhost:8000/handle-login?email=' . $request['email'] . '&senha=' . $request['senha'])
-               ->with('email', $request['email'])->with('senha', $request['senha']);
-           }
-
-
-
-        $funcionario = Funcionarios::where('email', $request['email'])->first();
-
-
+        $funcionario = Funcionarios::where('email', $email)->first();
         if ($funcionario) {
-            $subdominio = $this->sanitizeString($funcionario->empresa->nome);
-            $url = 'http://' . $subdominio . '.localhost:8000/handle-login';
+            $data = ['email' => $email, 'timestamp' => now()->timestamp];
 
-            // Envia os dados via POST para o subdomínio
-            $response = Http::post($url, [
-                'email' => $request['email'],
-                'senha' => $request['senha'],
-            ]);
+            $encryptedEmail = Crypt::encryptString(json_encode($data));
 
-            // Processa a resposta
-            if ($response->successful()) {
-                // Redireciona ou lida com a resposta do tenant
-                return redirect()->route('tenant.dashboard');
-            } else {
-                return redirect()->route('login')->withErrors(['message' => 'Falha ao enviar dados ao tenant']);
-            }
-        }
-    }
-
-
-
-    public function handleSubdomainLogin(Request $request)
-    {
-
-
-
-        // Autentica o funcionário no subdomínio
-        $funcionario = Funcionarios::where('email', $request['email'])->first();
-
-        if ($funcionario && Hash::check($request['senha'], $funcionario->senha)) {
-            Auth::login($funcionario);
-            return redirect()->intended('dashboard'); // Redireciona para o dashboard do subdomínio
-        } elseif ($funcionario) {
-            return redirect()->away('http://localhost:8000/login3')->withErrors([
-                'email' => 'Senha incorreta.'
-            ]);
+            $subdominio = $funcionario->empresa->getDomain();
+            return redirect()->away('http://' . $subdominio . ':8000/login_second?token=' . $encryptedEmail)
+                ->with('email', $request['email'])->with('senha', $request['senha']);
         }
         return redirect()->away('http://localhost:8000/login3')->withErrors([
             'email' => 'E-mail incorreto.',
         ]);
     }
 
+    public function formularioLoginTenant(Request $request)
+    {
+        $encryptedToken = $request->query('token');
 
+        try {
+            // Desencriptar o email
+
+            $decryptedData = Crypt::decryptString($encryptedToken);
+            $data = json_decode($decryptedData, true);
+
+            $email = $data['email'];
+            $timestamp = $data['timestamp'];
+
+            // Verificar se o token expirou (expira em 15 minutos, por exemplo)
+            if (now()->timestamp - $timestamp > 300) { // 300 segundos = 5 minutos
+                return response()->json(['error' => 'Token expirado.'], 403);
+            }
+        } catch (\Exception $e) {
+            return redirect()->route('tenant.login')->withErrors(['error' => 'Token inválido ou expirado.']);
+        }
+
+        return view('index.login3-2', ['email' => $email]);
+    }
+    public function loginTenant(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'senha' => 'required',
+        ]);
+
+        $credentials = $request->only('email', 'senha');
+
+        // Tentar autenticar o usuário
+        $funcionario = Funcionarios::where('email', $credentials['email'])->first();
+
+        if ($funcionario && Hash::check($credentials['senha'], $funcionario->senha)) {
+
+            Auth::login($funcionario);
+            session(['funcionario' => $funcionario]);
+            return redirect()->intended('dashboard');
+        }
+        if ($funcionario) {
+            return redirect()->back()->withErrors([
+                'email' => 'As credenciais fornecidas não correspondem aos nossos registros.',
+            ]);
+        } else {
+            return redirect()->back()->withErrors([
+                'email' => 'O e-mail fornecido não corresponde aos nossos registros.',
+            ]);
+        }
+    }
+
+
+
+    /*
+        public function handleSubdomainLogin(Request $request)
+        {
+
+
+
+            // Autentica o funcionário no subdomínio
+            $funcionario = Funcionarios::where('email', $request['email'])->first();
+
+            if ($funcionario && Hash::check($request['senha'], $funcionario->senha)) {
+                Auth::login($funcionario);
+                return redirect()->intended('dashboard'); // Redireciona para o dashboard do subdomínio
+            } elseif ($funcionario) {
+                return redirect()->away('http://localhost:8000/login3')->withErrors([
+                    'email' => 'Senha incorreta.'
+                ]);
+            }
+            return redirect()->away('http://localhost:8000/login3')->withErrors([
+                'email' => 'E-mail incorreto.',
+            ]);
+        }
+
+    */
     public function login3()
     {
         return view('index.login3');
     }
-    public function redirectPost()
+    public function loginSubdominio(Request $request)
     {
-        return view('index.redirect-post');
-    }*/
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+
+    }
 
 }

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Hash;
-
+use App\Rules\PasswordComplexity;
 
 
 class SenhaResetController extends Controller
@@ -50,7 +50,7 @@ class SenhaResetController extends Controller
     {
         $request->validate([
             'email' => 'required|email',
-            'password' => 'required|confirmed|min:8',
+            'password' => [new PasswordComplexity(), 'required', 'confirmed', 'min:6'],
             'token' => 'required'
         ]);
 

@@ -14,6 +14,8 @@ use App\Http\Middleware\AuthenticateDashboard;
 use App\Http\Controllers\ConfiguracoesController;
 use App\Http\Controllers\CotacoesController;
 use App\Http\Controllers\SimplesNacionalController;
+use App\Mail\MensagemMail;
+use Illuminate\Support\Facades\Mail;
 
 foreach (config('tenancy.central_domains') as $domain) {
     Route::domain($domain)->group(function () {
@@ -28,6 +30,10 @@ foreach (config('tenancy.central_domains') as $domain) {
         Route::get('/create-tenant', [TenantController::class, 'createTenant']);
 
 
+        Route::get('/login3', [LoginController::class, 'login3'])->name('login3');
+        Route::post('/identificarLocatario', [LoginController::class, 'identificarLocatario'])->name('identify.tenant');
+
+
         Route::get('paginalogin', [LoginController::class, 'showLoginForm'])->name('paginalogin');
         Route::post('paginalogin', [LoginController::class, 'showLoginForm'])->name('paginalogin');
         Route::post('login', [LoginController::class, 'login']);
@@ -39,6 +45,15 @@ foreach (config('tenancy.central_domains') as $domain) {
         Route::get('/sanitize-string/{nome}', [LoginController::class, 'sanitizeString'])->name('sanitize.string');
 
         Route::get('/buscar-empresa', [LoginController::class, 'buscar'])->name('buscar.empresa');
+
+
+
+        Route::get('/mensagem',function(){
+            return new MensagemMail();
+           // Mail::to('patrickcaminhasm@gmail.com')->send(new MensagemMail());
+            //return 'E-mail enviado com sucesso!';
+        });
+
 
 
 
@@ -135,9 +150,6 @@ foreach (config('tenancy.central_domains') as $domain) {
         Route::match(['get', 'post'], '/login2', function () {
             return view('alternative/login');
         });
-        Route::get('/login3', [LoginController::class, 'login3'])->name('login3');
-        Route::post('/central-login', [LoginController::class, 'centralLogin'])->name('central-login');
-        Route::post('/handle-login', [LoginController::class, 'handleSubdomainLogin'])->name('handle-login');
 
     });
 }

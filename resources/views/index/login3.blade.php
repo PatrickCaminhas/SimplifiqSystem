@@ -50,19 +50,16 @@
                         <div class="col-6">
                             <div class="card shadow-lg border border-dark">
                                 <div class="card-body bg-dark text-light">
-                                    <h2 class="text-center">Login</h2>
-                                    <form method="POST" action="{{ route('central-login') }}">
+                                    <h2 class="text-center">Login3</h2>
+                                    <form method="POST" action="{{ route('identify.tenant') }}">
                                         @csrf
                                         <div class="form-group">
                                             <label for="email">Email</label>
                                             <input type="email" class="form-control" id="email" name="email" placeholder="Digite seu email" required>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="senha">Senha</label>
-                                            <input type="password" class="form-control" id="senha" name="senha" placeholder="Digite sua senha" required>
-                                        </div>
+
                                         <div class="text-center mt-3">
-                                            <button type="submit" class="btn btn-primary text-center">Entrar</button>
+                                            <button type="submit" class="btn btn-primary text-center">Acessar</button>
                                         </div>
                                     </form>
 

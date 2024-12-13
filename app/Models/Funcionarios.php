@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Notifications\RedefinirSenhaNotification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use App\Notifications\ResetPasswordNotification;
+use App\Models\Empresa_information;
 
 class Funcionarios extends Authenticatable implements JWTSubject
 {
@@ -44,5 +47,12 @@ class Funcionarios extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return []; // Retorna um array de claims customizadas (opcional)
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $dominio = tenant('id');
+
+        $this->notify( new RedefinirSenhaNotification($token, $this->email,$this->nome,$dominio) );
     }
 }
