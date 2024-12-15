@@ -4,13 +4,20 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use App\Models\Empresa_information; // Add this line to import the 'EmpresaInformation' class
-use App\Models\Empresas;
+use App\Services\AdministradorService;
 
 class CheckCompanyType
 {
+
+    protected $administradorService;
+
+    // Injeção de dependência para o serviço do administrador
+    public function __construct(AdministradorService $administradorService)
+    {
+        $this->administradorService = $administradorService;
+    }
     /**
      * Handle an incoming request.
      *
@@ -21,7 +28,6 @@ class CheckCompanyType
     public function handle(Request $request, Closure $next)
     {
         // Supondo que o usuário autenticado tem um relacionamento com a empresa
-        $user = Auth::user();
         $empresa = Empresa_information::first();
 
         if ($empresa) {
@@ -29,6 +35,11 @@ class CheckCompanyType
             View::share('menu', $empresa->tipo_empresa);
             View::share('padrao_cores', $empresa->padrao_cores);
             View::share('tamanho_empresa', $empresa->tamanho_empresa);
+
+
+            $administrador = $this->administradorService->privilegiosAdministrativos();
+            View::share('Administrador', $administrador);
+
             $request->merge(['tamanho_empresa' => $empresa->tamanho_empresa]);
 
         } else {

@@ -26,77 +26,108 @@
 
         <h1 class="text-center">Configurações</h1>
 
-    <div class="container mt-4">
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
 
-                        <h5 class="card-subtitle mb-2 text-muted text-center">Backup</h5>
-                        <p class="card-text">Realize o backup de seus dados para garantir a segurança de suas informações.</p>
-                        <a href="#" class="btn @include('partials.buttomCollor')">Realizar backup</a>
+        @if ($Administrador == true)
+            <div class="container mt-4">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <h5 class="card-subtitle mb-2 text-muted text-center">Backup</h5>
+                                <p class="card-text">Realize o backup do dados do sistema.</p>
+                                <a href="#" class="btn @include('partials.buttomCollor')">Realizar backup</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <h5 class="card-subtitle mb-2 text-muted text-center">Cadastrar funcionario </h5>
+                                <p class="card-text">Cadastre um novo funcionário na empresa.</p>
+
+
+
+                                @if ($cadastro_funcionario == 'negado')
+                                    <a class="btn btn-secondary "disabled>
+                                    @else
+                                        <a class="btn @include('partials.buttomCollor')"
+                                            href="{{ route('configuracoes.funcionario') }}">
+                                @endif
+                                Cadastraar funcionário</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="container mt-4">
+                <div class="row">
+
+
+                    <div class="col-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-subtitle mb-2 text-muted text-center">Alterar cargo de usuário</h5>
+                                <p class="card-text">Altere os cargos dos usuarios da sua empresa.</p>
+                                <a href="{{ route('configuracoes.cargos') }}"
+                                    class="btn @include('partials.buttomCollor')">Alterar cargos</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <h5 class="card-subtitle mb-2 text-muted text-center">Excluir funcionario </h5>
+                                <p class="card-text">Exclua um usuario do sistema.</p>
+
+
+                                <a href="{{ route('configuracoes.funcionario') }}"
+                                    class="btn @include('partials.buttomCollor')">Cadastrar funcionário</a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+        <div class="container mt-4">
+            <div class="row">
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-subtitle mb-2 text-muted text-center">Alterar dados pessoais</h5>
+                            <p class="card-text">Altere os seus dados cadastrais.</p>
+                            <a href="{{ route('configuracoes.dados') }}"
+                                class="btn @include('partials.buttomCollor')">Alterar dados</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-subtitle mb-2 text-muted text-center">Alterar senha</h5>
+                            <p class="card-text">Altere sua senha para garantir a segurança de sua conta.</p>
+                            <a href="{{ route('configuracoes.senha') }}"
+                                class="btn @include('partials.buttomCollor')">Alterar senha</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="container mt-4">
-        <div class="row">
-            <div class="col-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-subtitle mb-2 text-muted text-center">Cadastrar funcionario </h5>
-                        <p class="card-text">Cadastre um novo funcionário na empresa.</p>
-
-                        @if($cadastro_funcionario == "negado")
-                        <button class="btn @include('partials.buttomCollor')" disabled>Cadastrar funcionário</button>
-                        @else
-                        <a href="{{route('configuracoes.funcionario')}}" class="btn @include('partials.buttomCollor')">Cadastrar funcionário</a>
-                        @endif
-                    </div>
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-subtitle mb-2 text-muted text-center">Alterar cargos</h5>
-                        <p class="card-text">Altere os cargos dos usuarios da sua empresa.</p>
-                        <a href="#" class="btn @include('partials.buttomCollor')">Alterar cargos</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container mt-4">
-        <div class="row">
-            <div class="col-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-subtitle mb-2 text-muted text-center">Alterar seus dados</h5>
-                        <p class="card-text">Altere os seus dados cadastrais.</p>
-                        <a href="#" class="btn @include('partials.buttomCollor')">Alterar senha</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-subtitle mb-2 text-muted text-center">Alterar senha</h5>
-                        <p class="card-text">Altere sua senha para garantir a segurança de sua conta.</p>
-                        <a href="{{route('configuracoes.senha')}}" class="btn @include('partials.buttomCollor')">Alterar senha</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
 
 
 
-            <!-- Features Section -->
+    <!-- Features Section -->
 
-            <!-- Inclua os arquivos JavaScript do Bootstrap -->
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Inclua os arquivos JavaScript do Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

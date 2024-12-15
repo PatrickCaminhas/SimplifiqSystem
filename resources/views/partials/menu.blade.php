@@ -34,7 +34,7 @@
                 <!-- Submenu Dropdown -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle
-                        @if ($page == 'produto' ) active @endif"
+                        @if ($page == 'produto') active @endif"
                         href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Produtos
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark @include('partials.bgCollor')">
@@ -56,7 +56,7 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle
-                        @if ($page == 'servicos' ) active @endif"
+                        @if ($page == 'servicos') active @endif"
                         href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Serviços
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark @include('partials.bgCollor')">
@@ -66,7 +66,7 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle
-                        @if ($page == 'cliente' ) active @endif"
+                        @if ($page == 'cliente') active @endif"
                         href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Clientes
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark @include('partials.bgCollor')">
@@ -76,7 +76,7 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle
-                        @if ($page == 'fornecedor' ) active @endif"
+                        @if ($page == 'fornecedor') active @endif"
                         href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Fornecedores
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark @include('partials.bgCollor')">
@@ -102,14 +102,18 @@
                         href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Empresa
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark @include('partials.bgCollor')">
+
+                        @if($Administrador == true)
                         <li><a class="dropdown-item" href="{{ route('contas.read') }}">Contas</a></li>
                         <li><a class="dropdown-item" href="{{ route('faturamento.read') }}">Faturamento</a></li>
 
                         <li><a class="dropdown-item" href="{{ route('informacoes.empresa') }}">Informações</a></li>
+
+
+                        <li><a class="dropdown-item" href="{{ route('simples.create.calculadora') }}">Simples
+                                Nacional</a></li>
+                        @endif
                         <li><a class="dropdown-item" href="{{ route('metas.read') }}">Metas</a></li>
-
-                        <li><a class="dropdown-item" href="{{ route('simples.create.calculadora') }}">Simples Nacional</a></li>
-
 
                     </ul>
                 </li>
@@ -119,7 +123,7 @@
                     <a class="nav-link
                 @if ($page == 'configuracoes') active @endif
                 "
-                        href="{{ route('configuracoes') }}">Configurações da conta</a>
+                        href="{{ route('configuracoes') }}">Configurações</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('logout') }}">Logout</a>

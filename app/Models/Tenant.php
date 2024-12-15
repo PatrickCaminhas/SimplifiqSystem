@@ -12,5 +12,9 @@ use Stancl\Tenancy\Database\Concerns\HasDomains;
 class Tenant extends BaseTenant implements TenantWithDatabase
 {
     use HasDatabase, HasDomains;
-    
+    public function getDatabaseName(): string
+    {
+        // Defina o nome do banco para cada tenant (exemplo: tenant_1, tenant_2)
+        return 'tenant' . $this->id;
+    }
 }

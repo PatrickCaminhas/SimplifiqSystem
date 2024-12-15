@@ -29,33 +29,42 @@
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <a href="{{route('configuracoes')}}" class="btn @include('partials.buttomCollor')">Voltar</a>
-                            <h1 class="text-center">Alterar dados pessoais</h1>
-                            <form method="POST" action="{{ route('configuracoes.funcionario.cadastrar') }}">
+                            <h1 class="text-center">Alterar cargos</h1>
+                            <form method="POST" action="{{ route('configuracoes.cargos.alterar') }}">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="nome">Nome</label>
-                                    <input type="text" class="form-control" id="nome" name="nome"
-                                        placeholder="{{$funcionario->nome}}"
-                                         value="{{ old('nome', $funcionario->nome) }}" required>
+                                    <label for="funcionario">Funcionários</label>
+                                    <select class="form-control" id="funcionario" name="funcionario" required>
+                                        <option selected disabled>Selecione o funcionário</option>
+                                        @foreach ($funcionarios as $funcionario)
+                                            <option value="{{ $funcionario->id }}">{{ $funcionario->nome }}</option>
+                                        @endforeach
 
+                                    </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="sobrenome">Sobrenome</label>
-                                    <input type="text" class="form-control" id="sobrenome" name="sobrenome"
-                                        placeholder="{{$funcionario->sobrenome}}"
-                                         value="{{ old('sobrenome', $funcionario->sobrenome) }}" required>
+                                    <label for="cargo">Cargo</label>
+                                    <select class="form-control" id="cargo" name="cargo" required>
+                                        <option selected disabled>Selecione o cargo</option>
+                                        <option value="PPT">1. Proprietário</option>
+                                        <option value="GRT">1. Gerente</option>
+                                        <option value="ADM">1. Administrador do sistema</option>
+                                        <option value="VND">2. Atendente/Vendedor</option>
+                                        <option value="CAX">2. Caixa</option>
+                                        <option value="AXA">2. Auxiliar Administrativo</option>
 
+                                    </select>
                                 </div>
-                                <div class="form-group">
-                                    <label for="email">E-mail</label>
-                                    <input type="text" class="form-control" id="email" name="email"
-                                        placeholder="{{$funcionario->email}}"
-                                         value="{{ old('email', $funcionario->email) }}" required>
+                                <div class="form-group alert alert-primary mt-3">
+                                    <label for="senha">Os cargos são divididos em 2 niveis, sendo o nivel 1 para cargos com permissões
+                                        administrativas nas configurações do sistema e o nivel 2 para cargos com permissões operacionais.
+                                        <br>
+                                        Ex: Gerente (nivel 1) e Atendente/Vendedor (nivel 2).
+                                    </label>
                                 </div>
-
                                 <div class="text-center mt-3">
                                     <button type="submit"
-                                        class="btn @include('partials.buttomCollor') text-center">Atualizar</button>
+                                        class="btn @include('partials.buttomCollor') text-center">Cadastrar</button>
                                     <button type="reset"
                                         class="btn @include('partials.buttomCollor') text-center">Limpar</button>
                                 </div>

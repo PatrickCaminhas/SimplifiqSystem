@@ -13,8 +13,8 @@
 </head>
 
 <body class=bg-dark>
-     <!-- Menu superior -->
-     @include('partials.header')
+    <!-- Menu superior -->
+    @include('partials.header')
 
 
 
@@ -28,7 +28,8 @@
                 <div class="col-6 col-4">
                     <div class="card shadow-sm">
                         <div class="card-body">
-                            <h1 class="text-center">Configurações</h1>
+                            <a href="{{route('configuracoes')}}" class="btn @include('partials.buttomCollor')">Voltar</a>
+                            <h1 class="text-center">Cadastro de novo funcionário</h1>
                             <form method="POST" action="{{ route('configuracoes.funcionario.cadastrar') }}">
                                 @csrf
                                 <div class="form-group">
@@ -55,7 +56,7 @@
                                     <input type="text" class="form-control" id="email" name="email"
                                         placeholder="Digite o e-mail do funcionario" required>
                                 </div>
-                                <div class="form-group alert alert-success mt-3">
+                                <div class="form-group alert alert-primary mt-3">
                                     <label for="senha">A senha sempre será padronizada como as 3 primeiras
                                         letras do nome mais as 3 primeiras letras do sobrenome mais o 12.
                                         <br>
@@ -63,8 +64,10 @@
                                     </label>
                                 </div>
                                 <div class="text-center mt-3">
-                                    <button type="submit" class="btn @include('partials.buttomCollor') text-center">Cadastrar</button>
-                                    <button type="reset" class="btn @include('partials.buttomCollor') text-center">Limpar</button>
+                                    <button type="submit"
+                                        class="btn @include('partials.buttomCollor') text-center">Cadastrar</button>
+                                    <button type="reset"
+                                        class="btn @include('partials.buttomCollor') text-center">Limpar</button>
                                 </div>
                             </form>
                             @if ($errors->any())
@@ -74,6 +77,11 @@
                                         {{ $error }}
                                     @endforeach
 
+                                </div>
+                            @endif
+                            @if (session('success'))
+                                <div class="alert alert-success mt-3">
+                                    {{ session('success') }}
                                 </div>
                             @endif
                         </div>

@@ -24,9 +24,26 @@ class CotacoesController extends Controller
     public function createLista()
     {
         $produtos = Produtos::all();
-        return view('sistema.cotacao.cotacaoDeProdutos', ['page' => 'cotacao', 'produtos' => $produtos]);
+        $checagem = $this->checarProdutosEFornecedores();
+        return view('sistema.cotacao.cotacaoDeProdutos', ['page' => 'cotacao', 'produtos' => $produtos, 'checagem' => $checagem]);
     }
+    public function checarProdutosEFornecedores()
+    {
+        $produtos = Produtos::all();
+        $fornecedores = Fornecedores::all();
 
+        if ($produtos->isEmpty() && $fornecedores->isEmpty()) {
+            return 'produtos e fornecedores';
+        }
+        if ($produtos->isEmpty()) {
+            return 'produtos';
+        }
+        if ($fornecedores->isEmpty()) {
+            return 'fornecedores';
+        }
+        return 'true';
+
+    }
     public function processarProdutosSelecionados(Request $request)
     {
         // Receber os IDs dos produtos selecionados

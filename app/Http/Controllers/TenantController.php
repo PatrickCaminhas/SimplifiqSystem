@@ -62,6 +62,7 @@ class TenantController extends Controller
         // Usa o contexto do tenant para adicionar o funcionário admin
         tenancy()->initialize($tenant);
 
+
         do {
             $id_funcionario = mt_rand(100, 999);
         } while (Funcionarios::where('id', $id_funcionario)->exists());

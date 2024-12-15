@@ -89,11 +89,13 @@ Route::middleware([
 
         Route::get('/configuracoes', [ConfiguracoesController::class, 'createConfiguracoes'])->name('configuracoes');
         Route::get('/alterarSenha', [ConfiguracoesController::class, 'createAlterarSenha'])->name('configuracoes.senha');
-        Route::post('/alterarSenhaConfirmar', [ConfiguracoesController::class, 'update'])->name('configuracoes.senha.alterar');
-
+        Route::post('/alterarSenhaConfirmar', [ConfiguracoesController::class, 'alterarSenha'])->name('configuracoes.senha.alterar');
+        Route::get('/alterarDadosPessoais', [ConfiguracoesController::class, 'createAlteraDadosPessoais'])->name('configuracoes.dados');
+        Route::post('/alterarDadosPessoais', [ConfiguracoesController::class, 'alterarDadosPessoais'])->name('configuracoes.dados.alterar');
         Route::get('/cadastrarfuncionario', [ConfiguracoesController::class, 'createCadastroFuncionario'])->name('configuracoes.funcionario');
         Route::post('/cadastrarfuncionarioconfirmar', [CadastroController::class, 'cadastrarNovoFuncionarioEmpresaExiste'])->name('configuracoes.funcionario.cadastrar');
-
+        Route::get('/alterarCargos', [ConfiguracoesController::class,'createAlterarCargos'])->name('configuracoes.cargos');
+        Route::post('/alterarCargos', [ConfiguracoesController::class, 'alterarCargos'])->name('configuracoes.cargos.alterar');
         // Route::get('/cotacaoprodutos',[CotacoesController::class, 'create'])->name('cotacaoProdutos');
         Route::get('/cotacaoprodutos', [CotacoesController::class, 'createLista'])->name('cotacaoProdutos');
         Route::get('/cotacao/lista', [CotacoesController::class, 'createLista'])->name('cotacao.lista');

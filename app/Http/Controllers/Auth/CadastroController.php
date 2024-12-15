@@ -9,7 +9,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Services\AuxiliarService;
 use phpDocumentor\Reflection\Types\Integer;
+use Illuminate\Support\Facades\DB;
 use Stancl\Tenancy\Facades\Tenancy;
+use App\Models\Tenant;
 
 class CadastroController extends Controller
 {
@@ -44,7 +46,8 @@ class CadastroController extends Controller
         // Gerar ID único para o funcionário
 
         // Criar o funcionário
-        $funcionario = $this->createFuncionario($request, $idFuncionario);
+        $request->merge(['cargo' => "Administrador"]);
+        $funcionario = $this->createFuncionarioGlobal($request, $idFuncionario);
 
         // Redirecionamento após o cadastro
         if ($funcionario) {
@@ -111,26 +114,37 @@ class CadastroController extends Controller
         ]);
     }
 
-
+    public function generateUniqueFuncionarioId()
+    {
+        do {
+            $id = mt_rand(100, 99999);
+        } while (Funcionarios::on('mysql')->where('id', $id)->exists());
+        return $id;
+    }
 
     // Criar o funcionário
-    private function createFuncionario($request, $idFuncionario)
+    private function createFuncionarioGlobal($request, $idFuncionario)
     {
-        if ($request->input('cnpj') != null) {
             //Se foi informado CNPJ o usuario é o administrador no momento da criação da empresa
-            $cargo = 'Administrador';
-            return Funcionarios::create([
+
+            return Funcionarios::on('mysql')->create([
                 'id' => $idFuncionario,
                 'nome' => $request->input('nome'),
                 'sobrenome' => $request->input('sobrenome'),
-                'cargo' => $cargo,
+                'cargo' => $request->input('cargo'),
                 'email' => $request->input('email'),
                 'cnpj' => $request->input('cnpj'),
                 'senha' => Hash::make($request->input('senha')),
             ]);
-        } else {
+
             //Se não foi informado CNPJ o usuario é usuario de uma empresa existente
 
+
+
+    }
+    private function createNovoFuncionarioTenant($request, $idFuncionario)
+    {
+            //Se não foi informado CNPJ o usuario é usuario de uma empresa existente
             $cargo = $request->input('cargo');
             return Funcionarios::create([
                 'id' => $idFuncionario,
@@ -140,7 +154,7 @@ class CadastroController extends Controller
                 'email' => $request->input('email'),
                 'senha' => Hash::make($request->input('senha')),
             ]);
-        }
+
 
     }
 
@@ -149,44 +163,50 @@ class CadastroController extends Controller
     {
         $this->ValidarFuncionario($request);
         $idFuncionario = 0;
-        $tenant = tenant(); // Obtém o tenant atual
+
         $senha = strtoupper(substr($request->input('nome'), 0, 3) . substr($request->input('sobrenome'), 0, 3) . '12');
-        $empresa=0;
+        $empresa = null;
+
         // *** Inserir funcionário no escopo global ***
-        tenancy()->end(); // Desativa temporariamente o tenant atual
+        DB::beginTransaction();
         try {
+
+
             // Busca a empresa do tenant
-            $empresa = Empresas::where('tenant', $tenant->id)->first();
+            $tenant = tenant();
+            $empresa = Empresas::on('mysql')->where('tenant', $tenant->id)->first();
             if (!$empresa) {
                 return redirect()->back()->withErrors(['error' => 'Empresa não encontrada para o tenant atual.']);
             }
 
             // Gerar ID único para o funcionário
-            $idFuncionario = $this->cadastroService->generateUniqueFuncionarioId();
+            $idFuncionario = $this->generateUniqueFuncionarioId();
             $request->merge(['senha' => $senha, 'cnpj' => $empresa->cnpj]);
-            $funcionario = $this->createFuncionario($request, $idFuncionario);
+            $funcionario = $this->createFuncionarioGlobal($request, $idFuncionario);
+
+            // Reativa o tenant atual
+            $request->merge($request->except('cnpj')); // Atualiza o request sem o campo 'cnpj'
+            $funcionarioTenant = $this->createNovoFuncionarioTenant($request, $idFuncionario);
+            DB::commit(); // Confirma a transação
 
         } catch (\Exception $e) {
-            return redirect()->back()->withErrors(['error' => 'Erro ao cadastrar o funcionário no escopo global: ' . $e->getMessage()]);
+            DB::rollback(); // Reverte a transação em caso de erro
+            return redirect()->back()->withErrors(['success' => 'Erro ao cadastrar o funcionário: ' . $e->getMessage()]);
         }
-        tenancy()->initialize($empresa); // Reativa o tenant atual
+
 
 
         // *** Inserir funcionário no tenant ***
-        try {
-            $request->merge($request->except('cnpj')); // Atualiza o request sem o campo 'cnpj'
-            $funcionarioTenant = $this->createFuncionario($request, $idFuncionario);
 
-        } catch (\Exception $e) {
-            return redirect()->back()->withErrors(['error' => 'Erro ao cadastrar o funcionário no escopo do tenant: ' . $e->getMessage()]);
-        }
 
         if ($funcionario && $funcionarioTenant) {
-            return redirect('configuracoes.configuracaoUsuario')->with('success', 'Cadastro realizado com sucesso!');
+            return redirect()->back()->with('success' , 'Cadastro realizado com sucesso!');
         }
 
         return view('sistema.dashboard');
     }
+
+
 
 
 }

@@ -28,7 +28,8 @@
                 <div class="col-6 col-4">
                     <div class="card shadow-sm">
                         <div class="card-body">
-                            <h1 class="text-center">Configurações</h1>
+                            <a href="{{route('configuracoes')}}" class="btn @include('partials.buttomCollor')">Voltar</a>
+                            <h1 class="text-center">Alterar senha</h1>
                             <form method="POST" action="{{ route('configuracoes.senha.alterar') }}">
                                 @csrf
                                 <div class="form-group">
@@ -47,19 +48,26 @@
                                         name="confirmasenhanova" placeholder="Confirme a nova senha" required>
                                 </div>
                                 <div class="text-center mt-3">
-                                    <button type="submit" class="btn @include('partials.buttomCollor') text-center">Cadastrar</button>
-                                    <button type="reset" class="btn @include('partials.buttomCollor') text-center">Limpar</button>
+                                    <button type="submit"
+                                        class="btn @include('partials.buttomCollor') text-center">Cadastrar</button>
+                                    <button type="reset"
+                                        class="btn @include('partials.buttomCollor') text-center">Limpar</button>
                                 </div>
                             </form>
                             @if ($errors->any())
-                            <div class="alert alert-danger mt-3">
+                                <div class="alert alert-danger mt-3">
 
                                     @foreach ($errors->all() as $error)
                                         {{ $error }}
                                     @endforeach
 
-                            </div>
-                        @endif
+                                </div>
+                            @endif
+                            @if (session('success'))
+                                <div class="alert alert-success mt-3">
+                                    {{ session('success') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
