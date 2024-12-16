@@ -29,8 +29,8 @@
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <a href="{{route('configuracoes')}}" class="btn @include('partials.buttomCollor')">Voltar</a>
-                            <h1 class="text-center">Alterar cargos</h1>
-                            <form method="POST" action="{{ route('configuracoes.cargos.alterar') }}">
+                            <h1 class="text-center">Excluir funcionario do sistema</h1>
+                            <form method="POST" action="{{ route('configuracoes.funcionario.excluir') }}">
                                 @csrf
                                 <div class="form-group">
                                     <label for="funcionario">Funcionários</label>
@@ -43,28 +43,10 @@
 
                                     </select>
                                 </div>
-                                <div class="form-group">
-                                    <label for="cargo">Cargo</label>
-                                    <select class="form-control" id="cargo" name="cargo" required>
-                                        <option selected disabled>Selecione o cargo</option>
-                                        <option value="Proprietário">1. Proprietário</option>
-                                        <option value="Gerente">1. Gerente</option>
-                                        <option value="Administrador do sistema">1. Administrador do sistema</option>
-                                        <option value="Atendente/Vendedor">2. Atendente/Vendedor</option>
-                                        <option value="Caixa">2. Caixa</option>
-                                        <option value="Auxiliar Administrativo">2. Auxiliar Administrativo</option>
-                                    </select>
-                                </div>
-                                <div class="form-group alert alert-primary mt-3">
-                                    <label for="senha">Os cargos são divididos em 2 niveis, sendo o nivel 1 para cargos com permissões
-                                        administrativas nas configurações do sistema e o nivel 2 para cargos com permissões operacionais.
-                                        <br>
-                                        Ex: Gerente (nivel 1) e Atendente/Vendedor (nivel 2).
-                                    </label>
-                                </div>
+
                                 <div class="text-center mt-3">
                                     <button type="submit"
-                                        class="btn @include('partials.buttomCollor') text-center">Cadastrar</button>
+                                        class="btn @include('partials.buttomCollor') text-center">Excluir</button>
                                     <button type="reset"
                                         class="btn @include('partials.buttomCollor') text-center">Limpar</button>
                                 </div>

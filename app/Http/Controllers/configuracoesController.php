@@ -65,16 +65,49 @@ class configuracoesController extends Controller
         }
     }
 
-
-
-    public function alteraDadosPessoais()
+    public function createExcluirFuncionario()
     {
+        $usuarioAtual = auth()->user();
+        if ($usuarioAtual->cargo == 'Administrador' || $usuarioAtual->cargo == 'Gerente' || $usuarioAtual->cargo == 'Proprietario') {
+            $funcionarios = Funcionarios::all();
+            return view('sistema.configuracoes.excluirFuncionario', ['page' => 'configuracoes', 'funcionarios' => $funcionarios]);
+        } else {
+            return redirect()->back()->with('error', 'Você não tem permissão para acessar essa página!');
+        }
+    }
 
+    public function excluirFuncionario(Request $request){
+        Funcionarios::where('id', $request->input('funcionario'))->delete();
+        return redirect()->back()->with('success','Funcionário excluído do sistema com sucesso!');
+    }
+
+    public function alterarDadosPessoais(Request $request)
+    {
+        $request->validate([
+            'nome' => 'string',
+            'sobrenome' => 'string',
+            'email' => 'email',
+        ]);
+        $idUsuario = auth()->id();
+
+        Funcionarios::where('id', $idUsuario)->update([
+            'nome' => $request->input('nome'),
+            'sobrenome' => $request->input('sobrenome'),
+            'email' => $request->input('email'),
+        ]);
+        return redirect()->back()->with('success', 'Dados atualizados com sucesso!');
     }
 
     public function alterarCargos(Request $request)
     {
+        $request->validate([
+            'cargo' => 'required|string',
+        ]);
+        Funcionarios::where('id', $request->input('funcionario'))->update([
+            'cargo' => $request->input('cargo'),
+        ]);
 
+        return redirect()->back()->with('success','Cargo alterado com sucesso!');
     }
 
     public function createCadastroFuncionario()

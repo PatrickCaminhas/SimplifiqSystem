@@ -30,7 +30,7 @@
                         <div class="card-body">
                             <a href="{{route('configuracoes')}}" class="btn @include('partials.buttomCollor')">Voltar</a>
                             <h1 class="text-center">Alterar dados pessoais</h1>
-                            <form method="POST" action="{{ route('configuracoes.funcionario.cadastrar') }}">
+                            <form method="POST" action="{{ route('configuracoes.dados.alterar') }}">
                                 @csrf
                                 <div class="form-group">
                                     <label for="nome">Nome</label>

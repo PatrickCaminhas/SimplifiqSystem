@@ -26,78 +26,9 @@
 
         <h1 class="text-center">Configurações</h1>
 
-
-        @if ($Administrador == true)
-            <div class="container mt-4">
-                <div class="row">
-                    <div class="col-6">
-                        <div class="card">
-                            <div class="card-body">
-
-                                <h5 class="card-subtitle mb-2 text-muted text-center">Backup</h5>
-                                <p class="card-text">Realize o backup do dados do sistema.</p>
-                                <a href="#" class="btn @include('partials.buttomCollor')">Realizar backup</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-6">
-                        <div class="card">
-                            <div class="card-body">
-
-                                <h5 class="card-subtitle mb-2 text-muted text-center">Cadastrar funcionario </h5>
-                                <p class="card-text">Cadastre um novo funcionário na empresa.</p>
-
-
-
-                                @if ($cadastro_funcionario == 'negado')
-                                    <a class="btn btn-secondary "disabled>
-                                    @else
-                                        <a class="btn @include('partials.buttomCollor')"
-                                            href="{{ route('configuracoes.funcionario') }}">
-                                @endif
-                                Cadastraar funcionário</a>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="container mt-4">
-                <div class="row">
-
-
-                    <div class="col-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-subtitle mb-2 text-muted text-center">Alterar cargo de usuário</h5>
-                                <p class="card-text">Altere os cargos dos usuarios da sua empresa.</p>
-                                <a href="{{ route('configuracoes.cargos') }}"
-                                    class="btn @include('partials.buttomCollor')">Alterar cargos</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-6">
-                        <div class="card">
-                            <div class="card-body">
-
-                                <h5 class="card-subtitle mb-2 text-muted text-center">Excluir funcionario </h5>
-                                <p class="card-text">Exclua um usuario do sistema.</p>
-
-
-                                <a href="{{ route('configuracoes.funcionario') }}"
-                                    class="btn @include('partials.buttomCollor')">Cadastrar funcionário</a>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endif
         <div class="container mt-4">
             <div class="row">
+                <h4> Configurações pessoais</h3>
                 <div class="col-6">
                     <div class="card">
                         <div class="card-body">
@@ -120,6 +51,63 @@
                 </div>
             </div>
         </div>
+
+        @if ($Administrador == true)
+            <div class="container mt-4">
+                <div class="row">
+                    <h4> Configurações do sistema</h3>
+                    <div class="col-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-subtitle mb-2 text-muted text-center">Cadastrar funcionario </h5>
+                                <p class="card-text">Cadastre um novo funcionário na empresa.</p>
+                                @if ($cadastro_funcionario == 'negado')
+                                    <a class="btn btn-secondary "disabled>
+                                    @else
+                                        <a class="btn @include('partials.buttomCollor')"
+                                            href="{{ route('configuracoes.funcionario') }}">
+                                @endif
+                                Cadastraar funcionário</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <h5 class="card-subtitle mb-2 text-muted text-center">Excluir funcionario </h5>
+                                <p class="card-text">Exclua um usuario do sistema.</p>
+
+
+                                <a href="{{ route('configuracoes.excluir') }}"
+                                    class="btn @include('partials.buttomCollor')">Cadastrar funcionário</a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container mt-4">
+                <div class="row">
+
+
+                    <div class="col-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-subtitle mb-2 text-muted text-center">Alterar cargo de usuário</h5>
+                                <p class="card-text">Altere os cargos dos usuarios da sua empresa.</p>
+                                <a href="{{ route('configuracoes.cargos') }}"
+                                    class="btn @include('partials.buttomCollor')">Alterar cargos</a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        @endif
+
     </div>
 
 

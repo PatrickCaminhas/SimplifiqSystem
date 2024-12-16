@@ -96,6 +96,9 @@ Route::middleware([
         Route::post('/cadastrarfuncionarioconfirmar', [CadastroController::class, 'cadastrarNovoFuncionarioEmpresaExiste'])->name('configuracoes.funcionario.cadastrar');
         Route::get('/alterarCargos', [ConfiguracoesController::class,'createAlterarCargos'])->name('configuracoes.cargos');
         Route::post('/alterarCargos', [ConfiguracoesController::class, 'alterarCargos'])->name('configuracoes.cargos.alterar');
+        Route::get('/excluirFuncionario', [ConfiguracoesController::class, 'createExcluirFuncionario'])->name('configuracoes.excluir');
+        Route::post('/excluirFuncionario', [ConfiguracoesController::class, 'excluirFuncionario'])->name('configuracoes.funcionario.excluir');
+
         // Route::get('/cotacaoprodutos',[CotacoesController::class, 'create'])->name('cotacaoProdutos');
         Route::get('/cotacaoprodutos', [CotacoesController::class, 'createLista'])->name('cotacaoProdutos');
         Route::get('/cotacao/lista', [CotacoesController::class, 'createLista'])->name('cotacao.lista');
