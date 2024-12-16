@@ -40,8 +40,7 @@ class VendasController extends Controller
 
     public function clienteCrediario($clienteId, $valorDebito)
     {
-        $cliente = Clientes::find($clienteId);
-        $cliente->debitos += $valorDebito;
+        Clientes::where('id',$clienteId)->increment('debitos', $valorDebito);
     }
     public function store(Request $request)
     {
@@ -99,8 +98,10 @@ class VendasController extends Controller
 
             // Atualizar o total da venda
             $venda->valor_total = $totalVenda;
-            if ($venda->metodo_pagamento == 'Crediario') {
+            if ($venda->metodo_pagamento == 'Crediário') {
                 $this->clienteCrediario($venda->cliente_id, $totalVenda);
+
+                $venda->crediario= $totalVenda;
             }
             $this->atualizarFaturamento($totalVenda);
             $this->metaService->cadastrarProgressoEmTodasMetasAbertas($totalVenda);

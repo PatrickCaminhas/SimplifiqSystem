@@ -91,10 +91,16 @@ class MetasController extends Controller
     public function diaComMaiorProgresso($progressos)
     {
         $progresso = $progressos->where('valor', $this->maiorProgresso($progressos))->first();
+        if($progresso == null){
+            return "Nenhum progresso";
+        }
         return Carbon::parse($progresso->created_at)->format('d/m/Y');
     }
     public function maiorProgresso($progressos)
     {
+        if( $progressos->max == null ){
+            return 0;
+        }
         return $progressos->max('valor');
     }
 
@@ -102,11 +108,17 @@ class MetasController extends Controller
     {
 
         $progresso = $progressos->where('valor', $this->menorProgresso($progressos))->first();
+        if($progresso == null){
+            return "Nenhum progresso";
+        }
         return Carbon::parse($progresso->created_at)->format('d/m/Y');
     }
 
     public function menorProgresso($progressos)
     {
+        if( $progressos->min == null ){
+            return 0;
+        }
         return $progressos->min('valor');
     }
 

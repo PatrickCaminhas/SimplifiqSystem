@@ -61,21 +61,21 @@
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio"
                                                         name="metodo_pagamento" id="Cartão de credito" value="Cartão de credito">
-                                                    <label class="form-check-label" for="Pix">
+                                                    <label class="form-check-label" for="Cartão de credito">
                                                         Cartão de credito
                                                     </label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio"
                                                         name="metodo_pagamento" id="Cartão de debito" value="Cartão de debito">
-                                                    <label class="form-check-label" for="Pix">
+                                                    <label class="form-check-label" for="Cartão de debito">
                                                         Cartão de debito
                                                     </label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio"
                                                         name="metodo_pagamento" id="Crediario" value="Crediário">
-                                                    <label class="form-check-label" for="Pix">
+                                                    <label class="form-check-label" for="Crediário">
                                                         Crediário
                                                     </label>
                                                 </div>

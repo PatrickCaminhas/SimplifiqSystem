@@ -54,6 +54,7 @@
                         <li><a class="dropdown-item" href="{{ route('vendas.info') }}">Informação</a></li>
                     </ul>
                 </li>
+                <!--
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle
                         @if ($page == 'servicos') active @endif"
@@ -63,7 +64,7 @@
                         <li><a class="dropdown-item" href="{{ route('servicos.create') }}">Cadastrar</a></li>
                         <li><a class="dropdown-item" href="{{ route('servicos.read') }}">Informações</a></li>
                     </ul>
-                </li>
+                </li>-->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle
                         @if ($page == 'cliente') active @endif"
@@ -71,7 +72,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark @include('partials.bgCollor')">
                         <li><a class="dropdown-item" href="{{ route('cliente.store.create') }}">Cadastrar</a></li>
-                        <li><a class="dropdown-item" href="{{ route('cliente.read.all') }}">Listagem</a></li>
+                        <li><a class="dropdown-item" href="{{ route('cliente.read.all') }}">Lista</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -81,7 +82,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark @include('partials.bgCollor')">
                         <li><a class="dropdown-item" href="{{ route('cadastroFornecedor') }}">Cadastrar</a></li>
-                        <li><a class="dropdown-item" href="{{ route('fornecedores') }}">Listagem</a></li>
+                        <li><a class="dropdown-item" href="{{ route('fornecedores') }}">Lista</a></li>
                     </ul>
                 </li>
 
