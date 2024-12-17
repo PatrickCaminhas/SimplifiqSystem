@@ -7,6 +7,7 @@ use App\Models\Tenant;
 use App\Models\Funcionarios;
 use App\Models\Empresas;
 use App\Models\Empresa_information;
+use App\Models\Produtos_categoria;
 use App\Models\Clientes; // Add this line to import the 'Clientes' class
 use Illuminate\Support\Facades\Hash;
 
@@ -68,6 +69,7 @@ class TenantController extends Controller
         } while (Funcionarios::where('id', $id_funcionario)->exists());
 
         // Adiciona o funcionário admin na tabela funcionarios do tenant
+
         Funcionarios::create([
             'id' => $id_funcionario,
             'nome' => $funcionario->nome,
@@ -88,6 +90,18 @@ class TenantController extends Controller
             'dominio' => $nomeSanitizado,
         ]);
 
+        $this->criarClienteNaoCadastrado();
+
+
+        // Limpa o contexto do tenant
+        tenancy()->end();
+
+        // Retorna uma resposta de sucesso
+        return response()->json(['message' => "Tenant {$nomeSanitizado} foi criado com sucesso com o domínio {$nomeSanitizado}.localhost"]);
+    }
+
+    public function criarClienteNaoCadastrado()
+    {
         Clientes::create([
             'id' => 1,
             'nome' => 'Cliente Não cadastrado',
@@ -98,12 +112,132 @@ class TenantController extends Controller
             'debitos' => 0,
             'observacoes' => '',
         ]);
-
-
-        // Limpa o contexto do tenant
-        tenancy()->end();
-
-        // Retorna uma resposta de sucesso
-        return response()->json(['message' => "Tenant {$nomeSanitizado} foi criado com sucesso com o domínio {$nomeSanitizado}.localhost"]);
     }
+
+    public function criarCategorias($tipo_empresa)
+    {
+        if ($tipo_empresa == "alimentosEbebidas") {
+            Produtos_categoria::create([
+                'nome' => 'Cereais e Grãos',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Carnes e frios',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Hortifruti',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Bebidas alcoólicas',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Bebidas não alcoólicas',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Doces e Sobremesas',
+            ]);
+        } else if ($tipo_empresa == "agropecuarios") {
+            Produtos_categoria::create([
+                'nome' => 'Alimentação Animal',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Fertilizantes e adubo',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Sementes e Mudas',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Medicamentos Veterinários',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Defensivos Agrícolas',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Produtos para Jardinagem',
+            ]);
+        } else if ($tipo_empresa == "atacado") {
+            Produtos_categoria::create([
+                'nome' => 'Alimentos e Bebidas',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Produtos de Limpeza',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Produtos de Higiene e cuidados pessoais',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Eletrônicos',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Móveis e Decoração',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Embalagens e Descartáveis',
+            ]);
+
+
+        } else if ($tipo_empresa == "autopecas") {
+            Produtos_categoria::create([
+                'nome' => 'Peças de Motor',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Baterias e Acessórios Elétricos',
+            ]);
+
+            Produtos_categoria::create([
+                'nome' => 'Pneus e Rodas',
+            ]);
+
+            Produtos_categoria::create([
+                'nome' => 'Peças de Suspensão e Direção',
+            ]);
+
+            Produtos_categoria::create([
+                'nome' => 'Peças de Freio',
+            ]);
+
+            Produtos_categoria::create([
+                'nome' => 'Óleos e Lubrificantes',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Produtos de Manutenção e Limpeza Automotiva',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Acessórios Internos e Externos',
+            ]);
+
+        } else if ($tipo_empresa == "construcao") {
+            Produtos_categoria::create([
+                'nome' => 'Materiais de Construção',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Ferramentas',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Elétrica',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Hidráulica',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Tintas e Acessórios',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Pisos e Azulejos',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Portas e Janelas',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Telhas e Materiais de Cobertura',
+            ]);
+        } else if ($tipo_empresa == "livrosJornaisPapelaria") {
+        } else if ($tipo_empresa == "moveis") {
+        } else if ($tipo_empresa == "farmaceuticos") {
+        } else if ($tipo_empresa == "informatica") {
+        } else if ($tipo_empresa == "vestuario") {
+        } else {
+
+        }
+    }
+
 }

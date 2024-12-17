@@ -33,14 +33,14 @@ class VendasController extends Controller
     public function info()
     {
         $vendas = Vendas::with(['cliente', 'itens.produto'])
-                ->orderBy('created_at', 'desc')  // Ordena pela coluna 'created_at' de forma decrescente
-                ->get();
+            ->orderBy('created_at', 'desc')  // Ordena pela coluna 'created_at' de forma decrescente
+            ->get();
         return view('sistema.venda.listaVendas', ['vendas' => $vendas], ['page' => 'vendas']);
     }
 
     public function clienteCrediario($clienteId, $valorDebito)
     {
-        Clientes::where('id',$clienteId)->increment('debitos', $valorDebito);
+        Clientes::where('id', $clienteId)->increment('debitos', $valorDebito);
     }
     public function store(Request $request)
     {
@@ -101,7 +101,7 @@ class VendasController extends Controller
             if ($venda->metodo_pagamento == 'Crediário') {
                 $this->clienteCrediario($venda->cliente_id, $totalVenda);
 
-                $venda->crediario= $totalVenda;
+                $venda->crediario = $totalVenda;
             }
             $this->atualizarFaturamento($totalVenda);
             $this->metaService->cadastrarProgressoEmTodasMetasAbertas($totalVenda);
@@ -154,4 +154,76 @@ class VendasController extends Controller
         $venda->delete();
         return redirect()->back()->with('success', 'Venda excluída com sucesso!');
     }
+
+    public function cancelarVenda(Request $request)
+    {
+        DB::beginTransaction();
+
+        try {
+            // Buscar a venda
+            $venda = Vendas::findOrFail($request->id);
+
+            if (
+                $venda->metodo_pagamento == 'Dinheiro(Cancelado)' ||
+                $venda->metodo_pagamento == 'Pix(Cancelado)' ||
+                $venda->metodo_pagamento == 'Cartão de credito(Cancelado)' ||
+                $venda->metodo_pagamento == 'Cartão de debito(Cancelado)' ||
+                $venda->metodo_pagamento == 'Crediario(Cancelado)'
+            ) {
+                return redirect()->back()->withErrors('Esta venda já foi cancelada.');
+            }
+
+            // Reverter o progresso nas metas
+            $this->metaService->removerProgressoEmTodasMetasAbertas($venda->valor_total);
+
+            // Reverter o faturamento
+            $this->atualizarFaturamento(-$venda->valor_total);
+
+            // Repor o estoque
+            $itensVenda = Itens_venda::where('venda_id', $venda->id)->get();
+            foreach ($itensVenda as $item) {
+                $produto = Produtos::find($item->produto_id);
+
+                if ($produto) {
+                    $produto->quantidade += $item->quantidade;
+                    $produto->save();
+
+                    // Registrar no histórico de estoque
+                    $estoque = new Estoque();
+                    $estoque->id_produto = $item->produto_id;
+                    $estoque->quantidade = $item->quantidade;
+                    $estoque->acao = "Cancelamento";
+                    $estoque->mes = date('m');
+                    $estoque->ano = date('Y');
+                    $estoque->usuario = Auth::user()->nome . ' ' . Auth::user()->sobrenome;
+                    $estoque->save();
+                }
+            }
+
+            // Alterar status da venda para cancelado
+            if ($venda->metodo_pagamento == "Dinheiro") {
+                $venda->metodo_pagamento = 'Dinheiro(Cancelado)';
+            } else if ($venda->metodo_pagamento == 'Pix') {
+                $venda->metodo_pagamento = 'Pix(Cancelado)';
+            } else if ($venda->metodo_pagamento == 'Cartão de credito') {
+                $venda->metodo_pagamento = 'Cartão de credito(Cancelado)';
+            } else if ($venda->metodo_pagamento == 'Cartão de debito') {
+                $venda->metodo_pagamento = 'Cartão de debito(Cancelado)';
+            } else if ($venda->metodo_pagamento == 'Crediario') {
+                $venda->metodo_pagamento = 'Crediario(Cancelado)';
+            }
+
+
+            $venda->save();
+
+            DB::commit();
+            return redirect()->back()->with('success', 'Venda cancelada com sucesso!');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->back()->withErrors('Erro ao cancelar a venda: ' . $e->getMessage());
+        }
+    }
+
+
+
 }

@@ -191,7 +191,7 @@
                         text: 'Produtos Agropecuários'
                     },
                     {
-                        value: 'Atacado',
+                        value: 'atacado',
                         text: 'Atacado'
                     },
                     {

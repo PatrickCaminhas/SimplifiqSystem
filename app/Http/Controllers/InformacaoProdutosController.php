@@ -11,9 +11,9 @@ class InformacaoProdutosController extends Controller
     //
     public function create()
     {
-        $produtos = Produtos::all();
+        $produtos = Produtos::where('Estado', 'Ativo');
         if ($produtos) {
-            return view('sistema\produto\informacaoProdutoRequisicao', ['produtos' => $produtos], ['page' => 'produto']);
+            return view('sistema\produto\informacaoProdutoLista', ['produtos' => $produtos], ['page' => 'produto']);
         } else {
             return redirect('informacaoProdutoRequisicao')->with('error', 'Produto não encontrado.');
         }
@@ -36,6 +36,7 @@ class InformacaoProdutosController extends Controller
     {
         return view('sistema\produto\informacaoProduto', ['page' => 'produto']);
     }
+
 
     public function listar($id)
     {

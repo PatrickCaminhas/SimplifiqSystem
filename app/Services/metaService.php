@@ -36,4 +36,36 @@ class metaService
             $this->cadastrarProgresso((object)['meta_id' => $meta->id, 'valor' => $valor]);
         }
     }
+
+    public function removerProgresso($dados)
+    {
+        // Registrar progresso negativo no histórico
+        $metaProgresso = new MetasProgresso();
+        $metaProgresso->meta_id = $dados->meta_id;
+        $metaProgresso->valor = -$dados->valor; // Progresso negativo
+        $metaProgresso->save();
+
+        $meta = Metas::find($dados->meta_id);
+        if ($meta) {
+            $meta->valor_atual -= $dados->valor;
+
+            // Garantir que o valor atual não seja negativo
+            if ($meta->valor_atual < 0) {
+                $meta->valor_atual = 0;
+            }
+
+            // Atualizar estado da meta se necessário
+            if ($meta->valor_atual < $meta->valor && $meta->estado == 'Cumprida') {
+                $meta->estado = 'Pendente';
+            }
+            $meta->save();
+        }
+    }
+    public function removerProgressoEmTodasMetasAbertas($valor)
+    {
+        $metas = $this->buscarMetasEmAberto();
+        foreach ($metas as $meta) {
+            $this->removerProgresso((object)['meta_id' => $meta->id, 'valor' => $valor]);
+        }
+    }
 }

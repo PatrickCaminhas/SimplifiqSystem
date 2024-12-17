@@ -75,7 +75,7 @@ Route::middleware([
 
         Route::get('/informacaoproduto', [InformacaoProdutosController::class, 'createRead'])->name('produto.informacao');
         // Route::get('/informacaoproduto/{nome}', [InformacaoProdutosController::class, 'listar'])->name('produto.listar.nome');
-        Route::get('/informacaoproduto/{id}', [InformacaoProdutosController::class, 'listar']);
+        Route::get('/informacaoproduto/{id}', [InformacaoProdutosController::class, 'listar'])->name('produto.listar.id');
 
         Route::get('/buscar-produto', [InformacaoProdutosController::class, 'buscarProduto']);
         Route::get('/informacaoprodutorequisicao', [InformacaoProdutosController::class, 'create'])->name('produto.listar');

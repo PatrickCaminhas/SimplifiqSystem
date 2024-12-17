@@ -60,5 +60,33 @@ class ProdutoController extends Controller
         return response()->json($produtos);
     }
 
+    public function atualizarDadosProduto(Request $request, $id){
+        Produtos::find( $id )->update([
+            'nome' => $request->input('nome'),
+            'marca' => $request->input('marca'),
+            'modelo' => $request->input('modelo'),
+            'categoria' => $request->input('categoria'),
+            'unidade_medida' => $request->input('unidade_medida'),
+            'medida' => $request->input('medida'),
+            'preco_compra' => $request->input('preco_compra'),
+            'descricao' => $request->input('descricao'),
+            'desconto_maximo' => $request->input('desconto_maximo'),
+        ]);
+
+    }
+
+    public function atualizarPrecoProduto(Request $request, $id){
+        Produtos::find( $id )->update([
+            'preco_venda' => $request->input('preco_venda'),
+        ]);
+    }
+
+    public function createAtualizarDadosProduto(Request $request, $id){
+        $categorias = Produtos_categoria::all();
+        $produto = Produtos::find($id);
+        return view('sistema.produto.atualizarDadosProduto', ['page' => 'produto','categorias' => $categorias, 'produto' => $produto]);
+
+    }
+
 
 }
