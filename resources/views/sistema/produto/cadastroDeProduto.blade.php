@@ -15,19 +15,6 @@
 <body class=bg-dark>
     <!-- Menu superior -->
     @include('partials.header')
-
-
-
-
-
-
-
-
-
-
-
-
-
     <div class=" d-flex align-items-center justify-content-center" style="height: 91vh;">
         <div class="container">
             <div class="row justify-content-center">
@@ -54,14 +41,26 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="categoriaproduto">Categoria</label>
-                                    <select class="form-control" id="categoriaproduto" name="categoria">
-                                        <option selected disabled>Selecione a categoria do produto</option>
-                                        <option value="eletronico">Eletronico</option>
-                                        <option value="vestuario">Vestuario</option>
-                                        <option value="alimentos">Alimento</option>
-                                        <option value="bebidas">Bebida</option>
-                                        <option value="iluminacao">Iluminação</option>
-                                    </select>
+                                    @if ($categorias->count() == 1)
+                                        <input type="hidden" name="categoria" value="{{ $categorias[0]->nome }}">
+                                        <label class="fst-italic">[Nenhuma categoria cadastrada]</label>
+                                        <div id="emailHelp" class="form-text">Irá cadastrar o produto como "Sem categoria".</div>
+
+                                    @else
+                                        <select class="form-control" id="categoriaproduto" name="categoria">
+                                            <option selected disabled>Selecione a categoria do produto</option>
+                                            @foreach ($categorias as $categoria)
+                                                <option value="{{ $categoria->id }}">{{ $categoria->nome }}</option>
+                                            @endforeach
+
+                                        </select>
+
+                                    @endif
+                                    <label >Para cadastrar uma nova categoria clique aqui: <a type="submit"
+                                            class="btn @include('partials.buttomCollor') text-center"
+                                            style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+                                            href="#">Cadastrar categoria</a></label>
+
                                 </div>
                                 <div class="form-group">
                                     <label for="unidadeproduto">Unidade de medida</label>

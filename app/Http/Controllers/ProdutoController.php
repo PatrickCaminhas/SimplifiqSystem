@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Produtos; // Add this line to import the Produto class
-
+use App\Models\Produtos_categoria; // Add this line to import the Categoria class
 use Illuminate\Http\Request;
 
 class ProdutoController extends Controller
@@ -11,7 +11,8 @@ class ProdutoController extends Controller
     //
     public function create()
     {
-        return view('sistema.produto.cadastroDeProduto', ['page' => 'produto']);
+        $categorias = Produtos_categoria::all();
+        return view('sistema.produto.cadastroDeProduto', ['page' => 'produto','categorias' => $categorias]);
     }
     public function store(Request $request)
     {

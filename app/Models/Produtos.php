@@ -38,4 +38,10 @@ class Produtos extends Model
     {
         return $this->hasManyThrough(Vendas::class, Itens_venda::class, 'produto_id', 'id', 'id', 'venda_id');
     }
+
+    public function categoria()
+    {
+        // Defina o relacionamento correto, onde 'categoria' é a chave estrangeira na tabela 'produtos'
+        return $this->belongsTo(Produtos_categoria::class, 'categoria_id', 'id');
+    }
 }

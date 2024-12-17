@@ -17,13 +17,6 @@
 <body class=bg-dark>
      <!-- Menu superior -->
      @include('partials.header')
-
-
-
-
-
-
-
     <div class="container mt-4">
         <div class="row">
             <div class="col-12">
@@ -35,7 +28,7 @@
                                     <h5 class="card-title">Informações do produto</h5>
                                     <p class="card-text">ID: {{$produto->id}}</p>
                                     <p class="card-text">Nome: {{$produto->nome}}</p>
-                                    <p class="card-text">Categoria: {{$produto->categoria}}</p>
+                                    <p class="card-text">Categoria: {{$produto->categoria->nome}}</p>
                                     <p class="card-text">Valor Compra: R$ {{$produto->preco_compra}}</p>
                                     <p class="card-text">Ultimo fornecedor: {{$produto->ultimo_fornecedor}}</p>
                                     <p class="card-text">Estoque: {{$produto->quantidade}}</p>
