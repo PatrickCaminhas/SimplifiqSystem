@@ -35,69 +35,79 @@ class TenantController extends Controller
     }
     public function createTenant(Request $request)
     {
-        $request->validate([
-            'nome' => 'required|string',
-            'cnpj' => 'required|string',
-        ]);
+        try {
+            $request->validate([
+                'nome' => 'required|string',
+                'cnpj' => 'required|string',
+            ]);
 
-        $nome = $request->input('nome');
-        $cnpj = $request->input('cnpj');
+            $nome = $request->input('nome');
+            $cnpj = $request->input('cnpj');
 
-        // Função para remover espaços e substituir caracteres especiais
-        $nomeSanitizado = $this->sanitizeString($nome);
-        // Verifica se um nome foi fornecido
-        if (!$nomeSanitizado) {
-            return response()->json(['message' => 'Nenhum nome de tenant fornecido.'], 400);
+            // Função para remover espaços e substituir caracteres especiais
+            $nomeSanitizado = $this->sanitizeString($nome);
+            // Verifica se um nome foi fornecido
+            if (!$nomeSanitizado) {
+                return response()->json(['message' => 'Nenhum nome de tenant fornecido.'], 400);
+            }
+
+            $funcionario = Funcionarios::where('cnpj', $cnpj)->first();
+
+            $empresa = Empresas::where('cnpj', $cnpj)->update([
+                'estado' => 'ativa',
+            ]);
+
+            // Cria o tenant com o nome fornecido
+            $tenant = Tenant::create(['id' => $nomeSanitizado]);
+            $tenant->domains()->create(['domain' => "{$nomeSanitizado}.localhost"]);
+
+            // Usa o contexto do tenant para adicionar o funcionário admin
+            tenancy()->initialize($tenant);
+
+
+            do {
+                $id_funcionario = mt_rand(100, 999);
+            } while (Funcionarios::where('id', $id_funcionario)->exists());
+
+            // Adiciona o funcionário admin na tabela funcionarios do tenant
+
+            Funcionarios::create([
+                'id' => $id_funcionario,
+                'nome' => $funcionario->nome,
+                'sobrenome' => $funcionario->sobrenome,
+                'cargo' => 'Administrador',
+                'email' => $funcionario->email,
+                'senha' => $funcionario->senha, // Certifique-se de hash a senha corretamente
+            ]);
+
+            Empresa_information::create([
+                'cnpj' => $cnpj,
+                'nome' => $nome,
+                'tamanho_empresa' => $request->tamanho_empresa,
+                'tipo_empresa' => $request->tipo_empresa,
+                'telefone' => $request->telefone,
+                'estado' => 'ativa',
+                'padrao_cores' => 'azul',
+                'dominio' => $nomeSanitizado,
+            ]);
+
+            $this->criarClienteNaoCadastrado();
+            $this->criarCategorias($request->tipo_empresa);
+
+            // Limpa o contexto do tenant
+            tenancy()->end();
+
+            $domain = $tenant->domains()->where('tenant_id', $tenant->id)->first();
+
+            Empresas::where('cnpj', $cnpj)->update([
+                'tenant' => $nomeSanitizado,
+                'dominio' => $domain ? $domain->id : null, // Armazena o domínio completo
+            ]);
+            // Retorna uma resposta de sucesso
+            return response()->json(['message' => "Tenant {$nomeSanitizado} foi criado com sucesso com o domínio {$nomeSanitizado}.localhost"]);
+        } catch (\Exception $e) {
+            return response()->json(["message" => $e->getMessage()]);
         }
-
-        $funcionario = Funcionarios::where('cnpj', $cnpj)->first();
-
-        $empresa = Empresas::where('cnpj', $cnpj)->update([
-            'estado' => 'ativa',
-        ]);
-
-        // Cria o tenant com o nome fornecido
-        $tenant = Tenant::create(['id' => $nomeSanitizado]);
-        $tenant->domains()->create(['domain' => "{$nomeSanitizado}.localhost"]);
-
-        // Usa o contexto do tenant para adicionar o funcionário admin
-        tenancy()->initialize($tenant);
-
-
-        do {
-            $id_funcionario = mt_rand(100, 999);
-        } while (Funcionarios::where('id', $id_funcionario)->exists());
-
-        // Adiciona o funcionário admin na tabela funcionarios do tenant
-
-        Funcionarios::create([
-            'id' => $id_funcionario,
-            'nome' => $funcionario->nome,
-            'sobrenome' => $funcionario->sobrenome,
-            'cargo' => 'Administrador',
-            'email' => $funcionario->email,
-            'senha' => $funcionario->senha, // Certifique-se de hash a senha corretamente
-        ]);
-
-        Empresa_information::create([
-            'cnpj' => $cnpj,
-            'nome' => $nome,
-            'tamanho_empresa' => $request->tamanho_empresa,
-            'tipo_empresa' => $request->tipo_empresa,
-            'telefone' => $request->telefone,
-            'estado' => 'ativa',
-            'padrao_cores' => 'azul',
-            'dominio' => $nomeSanitizado,
-        ]);
-
-        $this->criarClienteNaoCadastrado();
-        $this->criarCategorias($request->tipo_empresa);
-
-        // Limpa o contexto do tenant
-        tenancy()->end();
-
-        // Retorna uma resposta de sucesso
-        return response()->json(['message' => "Tenant {$nomeSanitizado} foi criado com sucesso com o domínio {$nomeSanitizado}.localhost"]);
     }
 
     public function criarClienteNaoCadastrado()

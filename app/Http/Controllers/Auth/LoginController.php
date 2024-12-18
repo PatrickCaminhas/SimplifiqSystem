@@ -142,12 +142,14 @@ class LoginController extends Controller
         $email = $request['email'];
         // Tenta autenticar o usuário
         $funcionario = Funcionarios::where('email', $email)->first();
+
         if ($funcionario) {
             $data = ['email' => $email, 'timestamp' => now()->timestamp];
 
             $encryptedEmail = Crypt::encryptString(json_encode($data));
 
             $subdominio = $funcionario->empresa->getDomain();
+
             return redirect()->away('http://' . $subdominio . ':8000/login_second?token=' . $encryptedEmail)
                 ->with('email', $request['email'])->with('senha', $request['senha']);
         }
