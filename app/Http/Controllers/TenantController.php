@@ -91,7 +91,7 @@ class TenantController extends Controller
         ]);
 
         $this->criarClienteNaoCadastrado();
-
+        $this->criarCategorias($request->tipo_empresa);
 
         // Limpa o contexto do tenant
         tenancy()->end();
@@ -231,12 +231,122 @@ class TenantController extends Controller
                 'nome' => 'Telhas e Materiais de Cobertura',
             ]);
         } else if ($tipo_empresa == "livrosJornaisPapelaria") {
-        } else if ($tipo_empresa == "moveis") {
-        } else if ($tipo_empresa == "farmaceuticos") {
-        } else if ($tipo_empresa == "informatica") {
-        } else if ($tipo_empresa == "vestuario") {
-        } else {
+            Produtos_categoria::create([
+                'nome' => 'Livros',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Revistas',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Papelaria',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Material de Escritório',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Material Escolar',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Material para Desenho e Pintura',
+            ]);
 
+        } else if ($tipo_empresa == "moveis") {
+            Produtos_categoria::create([
+                'nome' => 'Sala de Estar',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Sala de Jantar',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Quarto',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Cozinha',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Escritório',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Banheiro',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Área Externa',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Decoração',
+            ]);
+
+        } else if ($tipo_empresa == "farmaceuticos") {
+            Produtos_categoria::create([
+                'nome' => 'Medicamentos',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Suplementos Alimentares',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Higiene Pessoal',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Cosméticos e Dermocosméticos',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Cuidados com Bebês',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Equipamentos Médicos',
+            ]);
+
+        } else if ($tipo_empresa == "informatica") {
+            Produtos_categoria::create([
+                'nome' => 'Computadores e Notebooks',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Periféricos e Acessórios',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Impressoras e Multifuncionais',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Softwares',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Redes e Conectividade',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Armazenamento',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Gamer',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Hardware',
+            ]);
+
+        } else if ($tipo_empresa == "vestuario") {
+            Produtos_categoria::create([
+                'nome' => 'Masculino',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Feminino',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Infantil',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Calçados',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Acessórios',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Moda Praia',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Moda Íntima',
+            ]);
+            Produtos_categoria::create([
+                'nome' => 'Moda Fitness',
+            ]);
         }
     }
 

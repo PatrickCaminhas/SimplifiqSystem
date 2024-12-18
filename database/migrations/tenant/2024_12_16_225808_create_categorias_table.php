@@ -12,14 +12,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('produto_categoria', function (Blueprint $table) {
+        Schema::create('produtos_categoria', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
             $table->timestamps();
         });
                 // Inserção da tupla com dados iniciais
 
-        DB::table('produto_categoria')->insert([
+        DB::table('produtos_categoria')->insert([
             'nome' => 'Sem categoria',
             'created_at' => now(),
             'updated_at' => now(),

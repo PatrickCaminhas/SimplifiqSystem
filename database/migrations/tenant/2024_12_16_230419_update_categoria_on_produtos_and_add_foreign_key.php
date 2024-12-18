@@ -12,12 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('produtos', function (Blueprint $table) {
-            $table->renameColumn('categoria', 'categoria_id');
-            // 1. Permite que o campo categoria seja NULL e muda para unsignedBigInteger
+            // Renomeia a coluna 'categoria' para 'categoria_id'
             $table->unsignedBigInteger('categoria')->nullable()->change();
 
-            // 2. Cria a chave estrangeira referenciando produtos_categoria
-            $table->foreign('categoria')
+            $table->renameColumn('categoria', 'categoria_id');
+
+            // Modifica 'categoria_id' para unsignedBigInteger e permite NULL
+
+
+            // Cria a chave estrangeira referenciando 'produtos_categoria'
+            $table->foreign('categoria_id')
                 ->references('id')
                 ->on('produtos_categoria')
                 ->onUpdate('cascade')
@@ -32,10 +36,13 @@ return new class extends Migration
     {
         Schema::table('produtos', function (Blueprint $table) {
             // Remove a chave estrangeira
-            $table->dropForeign(['categoria']);
+            $table->dropForeign(['categoria_id']);
 
-            // Reverte o campo categoria para NOT NULL e string (ou o tipo original)
-            $table->string('categoria')->change();
+            // Reverte 'categoria_id' para string e NOT NULL (ou o tipo original)
+            $table->string('categoria_id')->change();
+
+            // Renomeia a coluna de volta para 'categoria'
+            $table->renameColumn('categoria_id', 'categoria');
         });
     }
 };
