@@ -21,8 +21,10 @@ class DashboardController extends Controller
         $ultimos6Produtos = $this->ultimosProdutosCadastrados();
         $metasFaltandoUmaSemana = $this->metasQueFaltamUmaSemana();
         $contas = $this->proximasContasAVencer();
+        $vendasSemana = $this->vendasNaUltimaSemana();
         $cartoesDashboard = $this->cartoesDashboard();
         $cartoesDashboard = (object) $cartoesDashboard;
+
         return view('sistema\dashboard', [
             'page' => 'dashboard',
             'contas' => $contas,
@@ -30,7 +32,8 @@ class DashboardController extends Controller
             'ultimas6Vendas' => $ultimas6Vendas,
             'ultimos6Produtos' => $ultimos6Produtos,
             'metasFaltandoUmaSemana' => $metasFaltandoUmaSemana,
-            'cartoesDashboard' => $cartoesDashboard
+            'cartoesDashboard' => $cartoesDashboard,
+            'vendasSemana' => $vendasSemana
 
         ]);
     }
@@ -42,7 +45,8 @@ class DashboardController extends Controller
     }
 
 
-    public function cartoesDashboard(){
+    public function cartoesDashboard()
+    {
         $produtosCadastrados = $this->quantidadeProdutosCadastrados();
         $vendasRealizadas = $this->quantidadeVendasRealizadas();
         $clientesCadastrados = $this->quantidadeClientesCadastrados();
@@ -58,15 +62,18 @@ class DashboardController extends Controller
             'itensNoEstoque' => $itensNoEstoque
         ];
     }
-    public function quantidadeProdutosCadastrados(){
+    public function quantidadeProdutosCadastrados()
+    {
         $produtos = Produtos::all()->count();
         return $produtos;
     }
-    public function quantidadeVendasRealizadas(){
+    public function quantidadeVendasRealizadas()
+    {
         $vendas = Vendas::all()->count();
         return $vendas;
     }
-    public function quantidadeClientesCadastrados(){
+    public function quantidadeClientesCadastrados()
+    {
         $clientes = Clientes::all()->count();
         return $clientes;
     }
@@ -111,11 +118,20 @@ class DashboardController extends Controller
             ->get();
         return $metas;
     }
-    public function proximasContasAVencer(){
+    public function proximasContasAVencer()
+    {
         $contas = Contas::where('data_vencimento', '>', now())
             ->orderBy('data_vencimento', 'asc')
             ->get();
         return $contas;
+    }
+
+    public function vendasNaUltimaSemana()
+    {
+        $vendas = Vendas::where('created_at', '>', now()->subWeek())
+            ->where('metodo_pagamento', '!=', 'Crediário')
+            ->get();
+        return $vendas;
     }
 
     // Adicione outros métodos conforme necessário

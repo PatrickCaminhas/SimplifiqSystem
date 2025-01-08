@@ -13,7 +13,7 @@ class Produtos extends Model
         'nome',
         'marca',
         'modelo',
-        'categoria',
+        'categoria_id',
         'unidade_medida',
         'medida',
         'descricao',
@@ -21,6 +21,7 @@ class Produtos extends Model
         'ultimo_fornecedor',
         'preco_compra',
         'preco_venda',
+        'desconto_maximo',
     ];
     public function itensVenda()
     {

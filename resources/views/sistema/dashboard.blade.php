@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.2/css/responsive.bootstrap5.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/plug-ins/2.0.8/i18n/pt-BR.json">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 
 </head>
 
@@ -30,7 +32,7 @@
                 </h5>
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title display-6">Dashboard</h5>
+                        <h5 class="card-title display-6">Pagina inicial</h5>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-12 col-md-6">
@@ -74,9 +76,9 @@
                                     </div>
                                 </div>
                                 <div class="col-6">
-                                    <p class="card-text">GRAFICO
-                                        [COLOCAR GRAFICO AQUI]
-                                    </p>
+                                    <h5 class="card-title">Vendas da ultima semana</h5>
+                                        <canvas id="vendasChart"></canvas>
+
 
 
                                 </div>
@@ -188,7 +190,8 @@
                                 @endif
                             </div>
                         </div>
-                    </div>-->
+                    </div>
+                -->
                     <div class="col-md-6 col-lg-6 col-sm-12 mt-2">
                         <div class="card">
                             <div class="card-body">
@@ -272,6 +275,35 @@
                     });
                 });
             </script>
+
+            <script>
+                const chartvsmeses = document.getElementById('vendasChart').getContext('2d');
+                const vendasData = @json($vendasSemana->pluck('valor_total')->toArray());
+                const labelvsm = @json($vendasSemana->pluck('data_venda')->toArray());
+
+
+                const vendasChart = new Chart(chartvsmeses, {
+                    type: 'bar', // ou 'line' para um gráfico de linha
+                    data: {
+                        labels: labelvsm,
+                        datasets: [{
+                            label: 'Vendas',
+                            data: vendasData,
+                            backgroundColor: 'rgba(5, 171, 0, 0.8)',
+                            borderColor: 'rgba(5, 171, 0, 0.8)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            </script>
+
 
 </body>
 

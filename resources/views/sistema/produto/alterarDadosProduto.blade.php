@@ -22,8 +22,9 @@
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <h2 class="text-center">Alterar dados do produto</h2>
-                            <form method="POST" action="{{ route('cadastroproduto.store') }}">
+                            <form method="POST" action="{{ route('produto.edit.store') }}">
                                 @csrf
+                                <input type="hidden" name="id" value="{{ $produto->id }}">
                                 <div class="form-group">
                                     <label for="nomeproduto">Nome</label>
                                     <input type="text" class="form-control" id="nome" name="nome"
@@ -103,16 +104,19 @@
                                             min='1' placeholder="{{ $produto->medida }}"
                                         value="{{ old('nome', $produto->medida) }}" required>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="medidaproduto">Preço de compra</label>
-                                        <input type="number" class="form-control" id="medidaproduto" name="medida"
+                                    <div class=" form-group">
+                                        <label for="precocompraproduto">Preço de compra</label>
+                                        <div class="input-group">
+                                        <span class="input-group-text" id="basic-addon1">R$</span>
+                                        <input type="number" class="form-control" id="precocompraproduto" name="preco_compra"
                                             min='1' placeholder="{{ $produto->preco_compra }}"
-                                        value="{{ old('nome', $produto->preco_compra) }}" required>
+                                        value="{{ old('nome', $produto->preco_compra) }}" step="0.01" required>
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="descricao">Descrição</label>
                                         <textarea class="form-control" id="descricao" name="descricao" rows="3" style="resize: none;"
-                                            placeholder="{{ $produto->marca }}" value="{{ old('nome', $produto->marca) }}"></textarea>
+                                            placeholder="{{ $produto->descricao }}" value="{{ old('nome', $produto->descricao) }}">{{$produto->descricao}}</textarea>
                                     </div>
                                     <div class="text-center mt-1">
                                         <button type="submit"

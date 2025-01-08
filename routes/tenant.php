@@ -81,6 +81,11 @@ Route::middleware([
         Route::get('/informacaoprodutorequisicao', [InformacaoProdutosController::class, 'create'])->name('produto.listar');
         Route::get('alterarinformacoesproduto', [InformacaoProdutosController::class, 'update'])->name('produto.alterar');
 
+        Route::get('/produto/editar/{id}', [ProdutoController::class, 'createAtualizarDadosProduto'])->name('produto.edit');
+        Route::post('/produto/editar', [ProdutoController::class, 'atualizarDadosProduto'])->name('produto.edit.store');
+        Route::get('/produto/preco/{id}', [ProdutoController::class, 'createAtualizarPrecoProduto'])->name('produto.preco');
+        Route::post('/produto/preco', [ProdutoController::class, 'atualizarPrecoProduto'])->name('produto.preco.store');
+
         Route::get('/cadastroFornecedor', [FornecedorController::class, 'create'])->name('cadastroFornecedor');
         Route::post('/cadastroFornecedor', [FornecedorController::class, 'store'])->name('cadastroFornecedor.store');
         Route::get('/fornecedores', [FornecedorController::class, 'read'])->name('fornecedores');

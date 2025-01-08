@@ -47,7 +47,7 @@
                                         <div id="emailHelp" class="form-text">Irá cadastrar o produto como "Sem categoria".</div>
 
                                     @else
-                                        <select class="form-control" id="categoriaproduto" name="categoria">
+                                        <select class="form-control" id="categoria" name="categoria">
                                             <option selected disabled>Selecione a categoria do produto</option>
                                             @foreach ($categorias as $categoria)
                                                 <option value="{{ $categoria->id }}">{{ $categoria->nome }}</option>

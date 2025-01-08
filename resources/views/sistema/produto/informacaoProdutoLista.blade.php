@@ -27,7 +27,7 @@
             <div class=" text-center">
                 <h4 class="display-6">Lista de produtos</h4>
 
-
+                
                 <table id="myTable" class="display">
                     <thead>
                         <tr>

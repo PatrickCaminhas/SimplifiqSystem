@@ -11,7 +11,7 @@ class InformacaoProdutosController extends Controller
     //
     public function create()
     {
-        $produtos = Produtos::where('Estado', 'Ativo');
+        $produtos = Produtos::where('estado', 'ativo')->get();  
         if ($produtos) {
             return view('sistema\produto\informacaoProdutoLista', ['produtos' => $produtos], ['page' => 'produto']);
         } else {

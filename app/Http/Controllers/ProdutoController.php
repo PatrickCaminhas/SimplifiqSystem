@@ -12,7 +12,7 @@ class ProdutoController extends Controller
     public function create()
     {
         $categorias = Produtos_categoria::all();
-        return view('sistema.produto.cadastroDeProduto', ['page' => 'produto','categorias' => $categorias]);
+        return view('sistema.produto.cadastroDeProduto', ['page' => 'produto', 'categorias' => $categorias]);
     }
     public function store(Request $request)
     {
@@ -20,7 +20,7 @@ class ProdutoController extends Controller
             'nome' => 'required|string',
             'marca' => 'string',
             'modelo' => 'string',
-            'categoria' => 'string',
+            'categoria' => 'integer',
             'unidade_medida' => 'string',
             'medida' => 'string',
             'descricao' => 'string',
@@ -29,7 +29,7 @@ class ProdutoController extends Controller
             'nome' => $request->input('nome'),
             'marca' => $request->input('marca'),
             'modelo' => $request->input('modelo'),
-            'categoria' => $request->input('categoria'),
+            'categoria_id' => $request->input('categoria'),
             'unidade_medida' => $request->input('unidade_medida'),
             'medida' => $request->input('medida'),
             'descricao' => $request->input('descricao'),
@@ -37,6 +37,7 @@ class ProdutoController extends Controller
             'quantidade' => 0,
             'preco_compra' => 0,
             'preco_venda' => 0,
+            'desconto_maximo' => 0,
 
         ]);
         if ($produto) {
@@ -60,33 +61,62 @@ class ProdutoController extends Controller
         return response()->json($produtos);
     }
 
-    public function atualizarDadosProduto(Request $request, $id){
-        Produtos::find( $id )->update([
-            'nome' => $request->input('nome'),
-            'marca' => $request->input('marca'),
-            'modelo' => $request->input('modelo'),
-            'categoria' => $request->input('categoria'),
-            'unidade_medida' => $request->input('unidade_medida'),
-            'medida' => $request->input('medida'),
-            'preco_compra' => $request->input('preco_compra'),
-            'descricao' => $request->input('descricao'),
-            'desconto_maximo' => $request->input('desconto_maximo'),
-        ]);
+    public function atualizarDadosProduto(Request $request)
+    {
+        try {
+            Produtos::find($request->id)->update([
+                'nome' => $request->input('nome'),
+                'marca' => $request->input('marca'),
+                'modelo' => $request->input('modelo'),
+                'categoria' => $request->input('categoria'),
+                'unidade_medida' => $request->input('unidade_medida'),
+                'medida' => $request->input('medida'),
+                'preco_compra' => $request->input('preco_compra'),
+                'descricao' => $request->input('descricao'),
+            ]);
+        } catch (\Exception $e) {
 
+            return redirect()->back()->with('error', 'Erro ao atualizar produto.');
+        }
+        return redirect('informacaoprodutorequisicao')->with('success', 'Produto atualizado com sucesso!');
     }
 
-    public function atualizarPrecoProduto(Request $request, $id){
-        Produtos::find( $id )->update([
-            'preco_venda' => $request->input('preco_venda'),
-        ]);
+    public function atualizarPrecoProduto(Request $request)
+    {
+
+        try {
+
+            if ($request->input('desconto_maximo') == null) {
+                $desconto_maximo = $request->input('preco_venda');
+            } else {
+                if ($request->input('desconto_maximo') > $request->input('preco_venda')) {
+                    return redirect()->back()->with('error', 'O desconto máximo não pode ser maior que o preço de venda.');
+                } else {
+                    $desconto_maximo = $request->input('desconto_maximo');
+                }
+            }
+            Produtos::find($request->id)->update([
+                'preco_venda' => $request->input('preco_venda'),
+                'desconto_maximo' => $desconto_maximo,
+            ]);
+        } catch (\Exception $e) {
+            dd($e);
+            //return redirect()->back()->with('error', 'Erro ao atualizar preço do produto.');
+        }
+        return redirect('informacaoprodutorequisicao')->with('success', 'Preço do produto atualizado com sucesso!');
     }
 
-    public function createAtualizarDadosProduto(Request $request, $id){
+
+    public function createAtualizarDadosProduto($id)
+    {
         $categorias = Produtos_categoria::all();
         $produto = Produtos::find($id);
-        return view('sistema.produto.atualizarDadosProduto', ['page' => 'produto','categorias' => $categorias, 'produto' => $produto]);
-
+        return view('sistema.produto.alterarDadosProduto', ['page' => 'produto', 'categorias' => $categorias, 'produto' => $produto]);
     }
 
-
+    public function createAtualizarPrecoProduto($id)
+    {
+        $produto = Produtos::find($id);
+        return view('sistema.produto.alterarPrecoProduto', ['page' => 'produto', 'produto' => $produto]);
+    }
 }
