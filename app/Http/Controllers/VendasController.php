@@ -48,6 +48,7 @@ class VendasController extends Controller
 
         try {
             // Criar a venda
+           
             $venda = new Vendas();
             $venda->cliente_id = $request->input('cliente_id');
             $venda->data_venda = now();
@@ -97,7 +98,15 @@ class VendasController extends Controller
             }
 
             // Atualizar o total da venda
-            $venda->valor_total = $totalVenda;
+            if($request->input('valor_venda')!=null){
+                if($request->input('valor_venda')<$request->input('desconto_maximo')){
+                    $venda->valor_total = $totalVenda;
+                }
+                $venda->valor_total=$request->input('valor_venda');
+            }
+            else{
+                $venda->valor_total = $totalVenda;
+            }
             if ($venda->metodo_pagamento == 'Crediário') {
                 $this->clienteCrediario($venda->cliente_id, $totalVenda);
 

@@ -96,30 +96,9 @@
                                                     <!-- Produtos serão adicionados aqui dinamicamente -->
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="valor-total">Valor Total: </label>
-                                                <span type="text" id="valor-total"
-                                                    class="form-control-static"></span>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="desconto-maximo">Desconto Máximo: </label>
-                                                <span type="text" id="desconto-maximo" class="form-control-static">
-                                                </span>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="valor_venda">Valor da venda:</label>
-                                                <input type="number" name="valor_venda" id="valor_venda"
-                                                    class="form-control" placeholder="Digite o valor da venda"
-                                                    step="0.01">
-                                                <input type="hidden" name="desconto_maximo"
-                                                    id="input_desconto_maximo" value="0">
-                                                <input type="hidden" name="valor_total" id="input_valor_total"
-                                                    value="0">
-                                            </div>
 
                                             <!-- Botão de Registrar Venda -->
-                                            <button type="submit" class="btn btn-primary mt-3">Registrar
-                                                Venda</button>
+                                            <button type="submit" class="btn btn-primary mt-3">Registrar Venda</button>
                                         </form>
                                         @if ($errors->any())
                                             <div class="alert alert-danger mt-3">
@@ -149,13 +128,13 @@
 
     <script>
         $(document).ready(function() {
-            let produtos = {}; // Armazena os produtos selecionados com valores
+            let produtos = {}; // Para armazenar os produtos selecionados
 
             // Função para buscar produtos via AJAX
             $("#produto-search").autocomplete({
                 source: function(request, response) {
                     $.ajax({
-                        url: "{{ route('produtos.search') }}",
+                        url: "{{ route('produtos.search') }}", // Rota para buscar produtos
                         dataType: "json",
                         data: {
                             term: request.term
@@ -163,43 +142,39 @@
                         success: function(data) {
                             response($.map(data, function(item) {
                                 return {
-                                    label: item.nome + " " + item.modelo +
-                                        " / " + item.marca,
+                                    label: item.nome + ' ' + item.modelo +
+                                        ' / ' + item.marca,
                                     value: item.nome,
-                                    id: item.id,
-                                    preco_venda: item.preco_venda,
-                                    desconto_maximo: item
-                                        .desconto_maximo // Adicionar o desconto máximo do produto
+                                    id: item.id
                                 };
                             }));
                         }
                     });
                 },
                 select: function(event, ui) {
-                    // Adicionar o produto à lista, se ainda não estiver
+                    // Quando um produto for selecionado, adicionar à lista
                     if (!produtos[ui.item.id]) {
-                        produtos[ui.item.id] = {
-                            nome: ui.item.label,
-                            preco_venda: parseFloat(ui.item.preco_venda),
-                            desconto_maximo: parseFloat(ui.item.desconto_maximo),
-                            quantidade: 1
-                        };
+                        produtos[ui.item.id] = ui.item.label;
 
+                        // Criar os inputs para quantidade
                         let produtoHtml = `
-                <div class="form-group row align-items-center mb-2" id="produto-${ui.item.id}">
-                    <label class="col-4 col-form-label">${ui.item.label}</label>
-                    <div class="col-3">
-                        <input type="number" name="quantidades[${ui.item.id}]" class="form-control quantidade-produto" data-id="${ui.item.id}" value="1" min="1" required>
+                    <div class="form-group row align-items-center mb-2" id="produto-${ui.item.id}">
+                        <label class="col-4 col-form-label">${ui.item.label}</label>
+                        <div class="col-3">
+                            <input type="number" name="quantidades[${ui.item.id}]" class="form-control" placeholder="Quantidade" min="1" required>
+                        </div>
+                        <div class="col-2">
+                            <button type="button" class="btn btn-danger remove-produto" data-id="${ui.item.id}">Remover</button>
+                        </div>
                     </div>
-                    <div class="col-2">
-                        <button type="button" class="btn btn-danger remove-produto" data-id="${ui.item.id}">Remover</button>
-                    </div>
-                </div>`;
-                        $("#produtos-list").append(produtoHtml);
 
-                        atualizarValores();
+                `;
+
+                        // Adicionar o HTML no form
+                        $('#produtos-list').append(produtoHtml);
                     }
 
+                    // Limpar o campo de busca
                     $(this).val('');
                     return false;
                 }
@@ -209,51 +184,8 @@
             $(document).on('click', '.remove-produto', function() {
                 let id = $(this).data('id');
                 delete produtos[id];
-                $(`#produto-${id}`).remove();
-                atualizarValores();
+                $('#produto-' + id).remove();
             });
-
-            // Atualizar os valores quando a quantidade mudar
-            $(document).on('input', '.quantidade-produto', function() {
-                let id = $(this).data('id');
-                let quantidade = parseInt($(this).val()) || 1;
-                produtos[id].quantidade = quantidade;
-                atualizarValores();
-            });
-
-            // Função para atualizar valores total e desconto máximo
-            function atualizarValores() {
-                let valorTotal = 0;
-                let descontoMaximo = 0;
-
-                Object.values(produtos).forEach(produto => {
-                    let subtotal = produto.preco_venda * produto.quantidade;
-                    let desconto = produto.desconto_maximo * produto.quantidade;
-
-                    valorTotal += subtotal;
-                    descontoMaximo += desconto;
-                });
-
-                function formatarMoeda(valor) {
-                    return valor.toLocaleString('pt-BR', {
-                        style: 'currency',
-                        currency: 'BRL'
-                    });
-                }
-
-                // Atualiza os valores na interface
-                document.getElementById('valor-total').innerText = formatarMoeda(valorTotal);
-                document.getElementById('desconto-maximo').innerText = formatarMoeda(descontoMaximo);
-
-                // Define os valores de min e max no input de valor de venda
-                const inputValorVenda = document.getElementById('valor_venda');
-                inputValorVenda.min = descontoMaximo.toFixed(2);
-                inputValorVenda.max = valorTotal.toFixed(2);
-
-                document.getElementById('input_desconto_maximo').value = descontoMaximo.toFixed(2);
-                document.getElementById('input_valor_total').value = valorTotal.toFixed(2);
-            }
-
         });
     </script>
     <script>
@@ -262,7 +194,7 @@
             $('select[name="cliente_id"]').on('change', function() {
                 let clienteSelecionado = $(this).find('option:selected').text().trim();
                 let crediarioSelecionado = $('input[name="metodo_pagamento"]:checked').val() ===
-                    'Crediário';
+                'Crediário';
 
                 if (clienteSelecionado === 'Cliente Não cadastrado') {
                     // Se "Cliente Não cadastrado" for selecionado, desabilita o crediário
@@ -281,7 +213,7 @@
             $('input[name="metodo_pagamento"]').on('change', function() {
                 let metodoSelecionado = $(this).val();
                 let clienteSelecionado = $('select[name="cliente_id"]').find('option:selected').text()
-                    .trim();
+                .trim();
 
                 if (metodoSelecionado === 'Crediário' && clienteSelecionado === 'Cliente Não cadastrado') {
                     // Se crediário for selecionado e o cliente não for cadastrado, volta ao estado anterior
@@ -292,7 +224,6 @@
             });
         });
     </script>
-  
 </body>
 
 </html>

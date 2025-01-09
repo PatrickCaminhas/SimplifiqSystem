@@ -14,9 +14,9 @@
 
         <div class="offcanvas-body ">
             <h6 class="offcanvas-subtitle">
-                <p>Bem-vindo,
+                <p>Usuário: 
                     @if (session('funcionario'))
-                        {{ session('funcionario')->nome }}!
+                        {{ session('funcionario')->nome }}
                     @endif
                 </p>
 
