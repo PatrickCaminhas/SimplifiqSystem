@@ -17,19 +17,6 @@
 <body class=bg-dark>
     <!-- Menu superior -->
     @include('partials.header')
-
-
-
-
-
-
-
-
-
-
-
-
-
     <div class="d-flex align-items-center justify-content-center " style="height: 92vh;">
         <div class="container mt-5 col-lg-6 col-md-8 col-sm-12 col-12 ">
             <div class="row align-items-center justify-content-center">

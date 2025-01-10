@@ -81,43 +81,45 @@
         document.addEventListener('DOMContentLoaded', function() {
             const estoqueData = {!! json_encode($estoque) !!};
 
-            // Agrupar as quantidades de cada ação por mês
+            // Agrupar as quantidades de cada ação por mês/ano
             const groupedData = estoqueData.reduce((acc, item) => {
-                const mes = item.mes;
-                if (!acc[mes]) {
-                    acc[mes] = {
+                const mesAno = `${String(item.mes).padStart(2, '0')}/${item.ano}`; // Formato MM/YYYY
+                if (!acc[mesAno]) {
+                    acc[mesAno] = {
                         baixa: 0,
                         venda: 0,
                         reposicao: 0
-                    }; // Inicializa as quantidades para o mês
+                    }; // Inicializa as quantidades para o mês/ano
                 }
                 // Sumariza as quantidades de acordo com a ação
                 if (item.acao === 'baixa') {
-                    acc[mes].baixa += item.quantidade;
+                    acc[mesAno].baixa += item.quantidade;
                 } else if (item.acao === 'Venda') {
-                    acc[mes].venda += item.quantidade;
+                    acc[mesAno].venda += item.quantidade;
                 } else if (item.acao === 'reposicao') {
-                    acc[mes].reposicao += item.quantidade;
+                    acc[mesAno].reposicao += item.quantidade;
                 }
                 return acc;
             }, {});
 
-            // Extrair os meses ordenados e as quantidades para cada ação
-            const meses = Object.keys(groupedData).sort((a, b) => {
-                // Ordenar os meses no formato YYYY-MM
-                return new Date(a) - new Date(b);
+            // Extrair os meses/anos ordenados e as quantidades para cada ação
+            const mesesAnos = Object.keys(groupedData).sort((a, b) => {
+                // Ordenar os meses/anos no formato MM/YYYY
+                const [mesA, anoA] = a.split('/').map(Number);
+                const [mesB, anoB] = b.split('/').map(Number);
+                return new Date(anoA, mesA - 1) - new Date(anoB, mesB - 1);
             });
 
             // Preencher os arrays de quantidades, garantindo que todos os meses estejam no gráfico
-            const quantidadeBaixas = meses.map(mes => groupedData[mes].baixa);
-            const quantidadeVendas = meses.map(mes => groupedData[mes].venda);
-            const quantidadeReposicoes = meses.map(mes => groupedData[mes].reposicao);
+            const quantidadeBaixas = mesesAnos.map(mesAno => groupedData[mesAno].baixa);
+            const quantidadeVendas = mesesAnos.map(mesAno => groupedData[mesAno].venda);
+            const quantidadeReposicoes = mesesAnos.map(mesAno => groupedData[mesAno].reposicao);
 
             const ctx = document.getElementById('estoqueChart').getContext('2d');
             const estoqueChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: meses, // Meses ordenados
+                    labels: mesesAnos, // Meses/anos ordenados
                     datasets: [{
                             label: 'Baixas',
                             data: quantidadeBaixas, // Quantidade de baixas
@@ -149,7 +151,7 @@
                         x: {
                             title: {
                                 display: true,
-                                text: 'Meses'
+                                text: 'Meses/Ano'
                             }
                         },
                         y: {
