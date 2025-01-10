@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Simplifiq</title>
+    <title>Simplifiq - Fornecedores</title>
     <!-- Inclua os arquivos CSS do Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -50,7 +50,7 @@
                                         <tr>
                                             <td style="overflow-x: auto;">{{ $fornecedor->id }}</td>
                                             <td>{{ $fornecedor->nome }}</td>
-                                            <td>{{ $fornecedor->cnpj }}</td>
+                                            <td>{{ $fornecedor->CNPJ }}</td>
                                             <td>{{ $fornecedor->telefone }}</td>
                                             <td>
                                                 <button type="button" class="btn bg-primary text-light"
@@ -107,7 +107,7 @@
                                                                     <div class="col-6">
                                                                         <p for="exampleFormControlInput1"
                                                                             class="form-label">E-mail:
-                                                                            <a>{{ $fornecedor->telefone }}</a>
+                                                                            <a>{{ $fornecedor->email }}</a>
                                                                         </p>
                                                                     </div>
 

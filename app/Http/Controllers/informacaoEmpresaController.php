@@ -46,19 +46,23 @@ class InformacaoEmpresaController extends Controller
     public function despesasUltimosSeisMeses()
     {
         $despesasPorMes = [];
-
-        for ($i = 6; $i > 0; $i--) {
-            $mes = now()->subMonths($i)->format('Y-m');
+    
+        // Incluir o mês atual (0) e os 5 meses anteriores
+        for ($i = 0; $i < 6; $i++) {
+            $mes = now()->subMonths($i)->format('Y-m'); // Formato de data para busca
+    
+            // Somar as despesas mensais para o mês atual e os anteriores
             $despesaMensal = Contas::where('data_pagamento', 'like', $mes . '%')
                 ->sum('valor');
-            $mes = now()->subMonths($i)->format('m/Y');
-
-            $despesasPorMes[$mes] = $despesaMensal;
+    
+            // Formato para exibição (mes/ano)
+            $mesFormatado = now()->subMonths($i)->format('m/Y');
+            $despesasPorMes[$mesFormatado] = $despesaMensal;
         }
-
+    
         return $despesasPorMes;
     }
-
+    
     public function despesasDiariasMesAtual()
     {
         $despesasPorDia = [];
@@ -79,18 +83,20 @@ class InformacaoEmpresaController extends Controller
     public function vendasUltimosSeisMeses()
     {
         $vendasPorMes = [];
-
-        for ($i = 6; $i > 0; $i--) {
-            $mes = now()->subMonths($i)->format('Y-m');
+    
+        // Incluir o mês atual (0)
+        for ($i = 0; $i < 6; $i++) {
+            $mes = now()->subMonths($i)->format('Y-m'); // Formato de data para busca
             $vendasMensal = Vendas::where('data_venda', 'like', $mes . '%')
                 ->sum('valor_total');
-            $mes = now()->subMonths($i)->format('m/Y');
-
-            $vendasPorMes[$mes] = $vendasMensal;
+    
+            $mesFormatado = now()->subMonths($i)->format('m/Y'); // Formato para exibição (mes/ano)
+            $vendasPorMes[$mesFormatado] = $vendasMensal;
         }
-
+    
         return $vendasPorMes;
     }
+    
 
     public function vendasDiariasMesAtual()
     {
@@ -143,21 +149,28 @@ class InformacaoEmpresaController extends Controller
         ];
     }
 
-    public function vendaCrediarioUltimosSeisMeses()
-    {
-        $crediarioPorMes = [];
+public function vendaCrediarioUltimosSeisMeses()
+{
+    $crediarioPorMes = [];
 
-        for ($i = 5; $i >= 0; $i--) {
-            $mes = now()->subMonths($i)->format('Y-m');
-            $crediarioMensal = Vendas::where('data_venda', 'like', $mes . '%')->where('metodo_pagamento', 'Crediário')
-                ->sum('valor_total');
-            $mes = now()->subMonths($i)->format('m/Y');
+    // Incluir o mês atual (0)
+    for ($i = 0; $i < 6; $i++) {
+        $mes = now()->subMonths($i)->format('Y-m'); // Formato de data para busca
 
-            $crediarioPorMes[$mes] = $crediarioMensal;
-        }
+        // Filtrando as vendas do crediário usando a data formatada (ano-mês) no campo 'data_venda'
+        $crediarioMensal = Vendas::whereDate('data_venda', '>=', now()->subMonths($i)->startOfMonth())
+            ->whereDate('data_venda', '<=', now()->subMonths($i)->endOfMonth())
+            ->where('metodo_pagamento', 'Crediário')
+            ->sum('valor_total');
 
-        return $crediarioPorMes;
+        // Formato para exibição (mes/ano)
+        $mesFormatado = now()->subMonths($i)->format('m/Y');
+        $crediarioPorMes[$mesFormatado] = $crediarioMensal;
     }
+
+    return $crediarioPorMes;
+}
+
 
     public function crediarioClientesValor()
     {

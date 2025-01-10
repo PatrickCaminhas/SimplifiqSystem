@@ -22,6 +22,8 @@
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <h2 class="text-center">Cadastro de produto</h2>
+                            @include('partials.errorAndSuccess')
+
                             <form method="POST" action="{{ route('cadastroproduto.store') }}">
                                 @csrf
                                 <div class="form-group">
@@ -59,21 +61,26 @@
                                     <label >Para cadastrar uma nova categoria clique aqui: <a type="submit"
                                             class="btn @include('partials.buttomCollor') text-center"
                                             style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
-                                            href="#">Cadastrar categoria</a></label>
+                                            href="{{route('produto.categoria')}}">Cadastrar categoria</a></label>
 
                                 </div>
                                 <div class="form-group">
                                     <label for="unidadeproduto">Unidade de medida</label>
                                     <select class="form-control" id="unidadeproduto" name="unidade_medida">
                                         <option selected disabled>Selecione a unidade de medida do produto</option>
-                                        <option value="peso">Peso (gramas)</option>
-                                        <option value="volume">Volume (mililitros)</option>
+                                        <option value="peso">Peso (Kg)</option>
+                                        <option value="volume">Volume (Litros)</option>
                                         <option value="energia">Energia (Watt)</option>
+                                        <option value="comprimento">Comprimento (Metros)</option>
+                                        <option value="area_quadrado">Área (Metros quadrados)</option>
+                                        <option value="area_cubico">Área (Metros cubicos)</option>
+                                        <option value="unidade">Unidade</option>
+
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="medidaproduto">Medida</label>
-                                    <input type="number" class="form-control" id="medidaproduto" name="medida"
+                                    <input type="text" class="form-control" id="medidaproduto" name="medida"
                                         min='1' placeholder="Digite a medida do produto">
                                 </div>
                                 <div class="form-group">
@@ -88,7 +95,6 @@
                                         class="btn @include('partials.buttomCollor') text-center">Limpar</button>
                                 </div>
                             </form>
-
                         </div>
 
                     </div>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Simplifiq</title>
+    <title>Simplifiq - Produto</title>
     <!-- Inclua os arquivos CSS do Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -81,24 +81,43 @@
         document.addEventListener('DOMContentLoaded', function() {
             const estoqueData = {!! json_encode($estoque) !!};
 
-            // Filtra os dados de baixas, vendas e reposições
-            const baixas = estoqueData.filter(item => item.acao === 'baixa');
-            const vendas = estoqueData.filter(item => item.acao === 'Venda');
-            const reposicoes = estoqueData.filter(item => item.acao === 'reposicao');
+            // Agrupar as quantidades de cada ação por mês
+            const groupedData = estoqueData.reduce((acc, item) => {
+                const mes = item.mes;
+                if (!acc[mes]) {
+                    acc[mes] = {
+                        baixa: 0,
+                        venda: 0,
+                        reposicao: 0
+                    }; // Inicializa as quantidades para o mês
+                }
+                // Sumariza as quantidades de acordo com a ação
+                if (item.acao === 'baixa') {
+                    acc[mes].baixa += item.quantidade;
+                } else if (item.acao === 'Venda') {
+                    acc[mes].venda += item.quantidade;
+                } else if (item.acao === 'reposicao') {
+                    acc[mes].reposicao += item.quantidade;
+                }
+                return acc;
+            }, {});
 
-            // Extrai os meses (presumindo que os meses estão no formato de string)
-            const meses = estoqueData.map(item => item.mes);
+            // Extrair os meses ordenados e as quantidades para cada ação
+            const meses = Object.keys(groupedData).sort((a, b) => {
+                // Ordenar os meses no formato YYYY-MM
+                return new Date(a) - new Date(b);
+            });
 
-            // Extrai as quantidades para baixas e reposições
-            const quantidadeBaixas = baixas.map(item => item.quantidade);
-            const quantidadeVendas = vendas.map(item => item.quantidade);
-            const quantidadeReposicoes = reposicoes.map(item => item.quantidade);
+            // Preencher os arrays de quantidades, garantindo que todos os meses estejam no gráfico
+            const quantidadeBaixas = meses.map(mes => groupedData[mes].baixa);
+            const quantidadeVendas = meses.map(mes => groupedData[mes].venda);
+            const quantidadeReposicoes = meses.map(mes => groupedData[mes].reposicao);
 
             const ctx = document.getElementById('estoqueChart').getContext('2d');
             const estoqueChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: [...new Set(meses)], // Remove duplicatas dos meses
+                    labels: meses, // Meses ordenados
                     datasets: [{
                             label: 'Baixas',
                             data: quantidadeBaixas, // Quantidade de baixas

@@ -9,10 +9,7 @@ class Cotacoes extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'id_cotacao',
-        'produto_id',
-        'preco',
-        'fornecedor_id'
+        'data_cotacao',
     ];
     // Em Cotacoes.php
     public function produto()

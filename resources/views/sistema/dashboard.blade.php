@@ -29,66 +29,7 @@
                     {{ session('funcionario')->nome }}!
                 @endif
             </h5>
-            <!--   <div class="col-12">
-               
-                <div class="card">
-                    <div class="card-body">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-12 col-md-6">
-                                    <div class="row">
-                                        <div class="card text-bg-primary m-2 col-md-3 col-sm-4">
-                                            <div class="card-body d-flex align-items-center">
-                                                <h6 class="card-text">{{ $cartoesDashboard->produtosCadastrados }}
-                                                    produtos cadastrados</h6>
-                                            </div>
-                                        </div>
-                                        <div class="card text-bg-warning m-2 col-md-3 col-sm-4">
-                                            <div class="card-body d-flex align-items-center">
-                                                <h6 class="card-text">{{ $cartoesDashboard->clientesCadastrados }}
-                                                    clientes cadastrados</h6>
-                                            </div>
-                                        </div>
-                                        <div class="card text-bg-dark m-2 col-md-3 col-sm-4">
-                                            <div class="card-body d-flex align-items-center">
-                                                <h6 class="card-text">{{ $cartoesDashboard->vendasRealizadas }} vendas
-                                                    realizadas</h6>
-                                            </div>
-                                        </div>
-                                        <div class="card text-bg-success m-2 col-md-3 col-sm-4">
-                                            <div class="card-body d-flex align-items-center">
-                                                <h6 class="card-text">{{ $cartoesDashboard->itensNoEstoque }} bens em
-                                                    estoque</h6>
-                                            </div>
-                                        </div>
-                                        <div class="card text-bg-danger m-2 col-md-3 col-sm-4">
-                                            <div class="card-body d-flex align-items-center">
-                                                <h6 class="card-text">{{ $cartoesDashboard->metasCumpridas }} metas
-                                                    cumpridas</h6>
-                                            </div>
-                                        </div>
-                                        <div class="card text-bg-info m-2 col-md-3 col-sm-4">
-                                            <div class="card-body d-flex align-items-center">
-                                                <h6 class="card-text">{{ $cartoesDashboard->metasEmAndamento }} metas em
-                                                    andamento</h6>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <h5 class="card-title">Vendas da ultima semana</h5>
-                                    <canvas id="vendasChart"></canvas>
 
-
-
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            -->
 
             <div class="container mt-2 col-12 mb-5 ">
                 <div class="row">
@@ -277,19 +218,21 @@
 
                 <script>
                     const chartvsmeses = document.getElementById('vendasChart').getContext('2d');
-                    const vendasData = @json($vendasSemana->pluck('valor_total')->toArray());
-                    const labelvsm = @json($vendasSemana->pluck('data_venda')->toArray());
 
+                    // Passando os dados do controlador
+                    const vendasData = @json($vendasSemana->pluck('total_vendas')->toArray()); // Valores somados de vendas
+                    const labelvsm = @json($vendasSemana->pluck('data')->toArray()); // Datas das vendas
 
+                    // Criando o gráfico
                     const vendasChart = new Chart(chartvsmeses, {
-                        type: 'bar', // ou 'line' para um gráfico de linha
+                        type: 'bar', // Gráfico de barras
                         data: {
                             labels: labelvsm,
                             datasets: [{
                                 label: 'Vendas',
                                 data: vendasData,
-                                backgroundColor: 'rgba(5, 171, 0, 0.8)',
-                                borderColor: 'rgba(5, 171, 0, 0.8)',
+                                backgroundColor: 'rgba(5, 171, 0, 0.8)', // Cor da barra
+                                borderColor: 'rgba(5, 171, 0, 0.8)', // Cor da borda da barra
                                 borderWidth: 1
                             }]
                         },
@@ -297,6 +240,23 @@
                             scales: {
                                 y: {
                                     beginAtZero: true
+                                }
+                            },
+                            // Exibir o valor no topo de cada barra
+                            plugins: {
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(tooltipItem) {
+                                            return 'R$ ' + tooltipItem.raw.toFixed(2); // Exibe o valor formatado
+                                        }
+                                    }
+                                },
+                                datalabels: {
+                                    display: true,
+                                    align: 'end',
+                                    formatter: function(value) {
+                                        return 'R$ ' + value.toFixed(2); // Exibe o valor na barra
+                                    }
                                 }
                             }
                         }

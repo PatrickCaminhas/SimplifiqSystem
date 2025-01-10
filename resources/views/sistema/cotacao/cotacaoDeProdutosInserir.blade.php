@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Simplifiq</title>
+    <title>Simplifiq - Cotação</title>
     <!-- Inclua os arquivos CSS do Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,23 +15,18 @@
 <body class="bg-dark">
     <!-- Menu superior -->
     @include('partials.header')
-
-
-
-
-
-
-
     <div class="container mt-4 mb-4 bg-light text-dark">
         <div class="row">
             <div class="col-12 text-center" style="overflow: auto;">
                 <h4 class="display-6">Cotação de Produtos</h4>
-                <form method="POST" action="{{ route('inserirCotacao') }}">
+                @include('partials.errorAndSuccess')
+                <form method="POST" action="{{ route('inserir.cotacao') }}">
                     @csrf
                     <table class="col-12 table table-striped table-hover table-secondary">
                         <thead>
-                            <input type="hidden" name="fornecedores" value="{{ $fornecedores }}">
-                            <input type="hidden" name="produtos" value="{{ $produtos }}">
+                            <input type="hidden" name="fornecedores" value="{{ json_encode($fornecedores->pluck('id')->toArray()) }}">
+                            <input type="hidden" name="produtos" value="{{ json_encode($produtos->pluck('id')->toArray()) }}">
+                            
                             <tr class="text-light">
                                 <th scope="col">Produto</th>
                                 @foreach ($fornecedores as $fornecedor)
@@ -61,7 +56,6 @@
                         <button type="reset" class="btn @include('partials.buttomCollor') text-center">Limpar</button>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>

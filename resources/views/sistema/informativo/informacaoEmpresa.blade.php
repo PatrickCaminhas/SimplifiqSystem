@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Simplifiq</title>
+    <title>Simplifiq - Empresa</title>
     <!-- Inclua os arquivos CSS do Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -62,9 +62,9 @@
                                     <br>
                                     <p href="#" class="btn btn-primary">Alterar tema da empresa</p>
                                     <br>
-                                    <p href="#" class="btn btn-primary">Historico de contas</p>
-                                    <br>
-                                    <p href="#" class="btn btn-primary">Lista de metas</p>
+                                    <p><a href="{{route('contas.read')}}" class="btn btn-primary">Historico de contas</a></p>
+                                    
+                                    <p><a href="{{route('metas.read')}}" class="btn btn-primary">Lista de metas</a></p>
 
                                 </div>
 
@@ -78,7 +78,7 @@
                     <div class="col-12 mt-2">
                         <div class="card mb-2">
                             <div class="card-body">
-                                <h5 class="card-title text-center">Informações da empresa</h5>
+                                <h5 class="card-title text-center">Informações de clientes e produtos</h5>
 
                                 <div class=row>
                                 <div class="col-6">
@@ -140,7 +140,7 @@
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-6 col-sm-12 mt-2">
-                        <div class="card h-auto">
+                        <div class="card h-100 d-flex">
                             <div class="card-body">
                                 <h5 class="card-title">Vendas por crédiario nos ultimos 6 meses</h5>
                                 <canvas id="crediarioSeisMesesChart"></canvas>
@@ -318,8 +318,8 @@
             </script>
             <script>
                 const chartcredsmeses = document.getElementById('crediarioSeisMesesChart').getContext('2d');
-                const crediarioData = @json(array_values($despesasPorMes));
-                const labelcsm = @json(array_keys($despesasPorMes));
+                const crediarioData = @json(array_values($crediarioMensal));
+                const labelcsm = @json(array_keys($crediarioMensal));
 
                 const crediarioSeisMesesChart = new Chart(chartcredsmeses, {
                     type: 'bar', // ou 'line' para um gráfico de linha

@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Fornecedores;
 use App\Models\Produtos;
 use App\Models\Cotacoes;
+use App\Models\Itens_cotacoes;
+
 
 
 class CotacoesController extends Controller
@@ -65,21 +67,26 @@ class CotacoesController extends Controller
 
     public function inserirCotacao(Request $request)
     {
+        $fornecedores = json_decode($request->fornecedores); // fornecedores
+        $produtos = json_decode($request->produtos); //produtos cotados
+        
         DB::beginTransaction();
+        
         try {
+            
             // Inicialmente, busca o maior id_cotacao para começar
-            $ultimoIdCotacao = Cotacoes::max('id_cotacao');
-            $novoIdCotacao= $ultimoIdCotacao + 1;
-
             // Verificar se a estrutura de cotacao está sendo passada corretamente
             if (!isset($request->cotacao) || !is_array($request->cotacao)) {
                 return back()->withErrors('Nenhum produto foi selecionado para cotação.');
             }
-
+           
+            $cotacaoAtual = Cotacoes::create(['data_cotacao' => now()]);
+           
             $produtosCotados = []; // Para armazenar os resultados
 
             // Percorrer os produtos e seus fornecedores para encontrar o menor preço
             foreach ($request->cotacao as $produtoId => $fornecedores) {
+                
                 $menorPreco = null;
                 $fornecedorEscolhido = null;
 
@@ -100,11 +107,11 @@ class CotacoesController extends Controller
 
 
                 // Inserir a cotação no banco de dados com o menor preço encontrado
-                Cotacoes::create([
+                Itens_cotacoes::create([
+                    'id_cotacao' => $cotacaoAtual->id,
                     'produto_id' => $produtoId,
                     'preco' => $menorPreco,
                     'fornecedor_id' => $fornecedorEscolhido,
-                    'id_cotacao' => $novoIdCotacao, // Inserir com o ID incrementado
                 ]);
 
                 // Armazenar os dados para exibir na view
@@ -114,11 +121,10 @@ class CotacoesController extends Controller
                     'preco' => $menorPreco,
                 ];
             }
-
+            
             DB::commit();
-
             // Enviar os resultados para a view de resultados
-            return redirect()->route('cotacao.resultados', ['id_cotacao' => $novoIdCotacao]);
+            return redirect()->route('cotacao.resultados',['id_cotacao' => $cotacaoAtual->id]);
 
         } catch (\Exception $e) {
             DB::rollBack();
@@ -129,7 +135,7 @@ class CotacoesController extends Controller
     public function mostrarResultados($id_cotacao)
     {
         // Busca a cotação pelo id_cotacao com relacionamentos
-        $cotacoes = Cotacoes::where('id_cotacao', $id_cotacao)
+        $cotacoes = Itens_cotacoes::where('id_cotacao', $id_cotacao)
             ->with('produto', 'fornecedor') // Eager loading dos relacionamentos
             ->get();
 

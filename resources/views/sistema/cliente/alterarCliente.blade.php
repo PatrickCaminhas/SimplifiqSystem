@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Simplifiq</title>
+    <title>Simplifiq - Cliente</title>
     <!-- Inclua os arquivos CSS do Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,19 +17,6 @@
 <body class=bg-dark>
     <!-- Menu superior -->
     @include('partials.header')
-
-
-
-
-
-
-
-
-
-
-
-
-
     <div class="d-flex align-items-center justify-content-center " style="height: 92vh;">
         <div class="container mt-5 col-lg-6 col-md-8 col-sm-12 col-12 ">
             <div class="row align-items-center justify-content-center">

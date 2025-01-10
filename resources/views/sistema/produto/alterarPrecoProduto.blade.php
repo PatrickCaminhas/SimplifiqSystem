@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Simplifiq</title>
+    <title>Simplifiq - Produto</title>
     <!-- Inclua os arquivos CSS do Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,11 +22,13 @@
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <h2 class="text-center">Alterar preço</h2>
+                            @include('partials.errorAndSuccess')
                             <form method="POST" action="{{ route('produto.preco.store') }}">
                                 @csrf
                                 <input type="hidden" name="id" value="{{ $produto->id }}">
                                 <div class=" form-group">
-                                    <label for="descontomaximoproduto">Produto: {{$produto->nome." ".$produto->modelo." / ".$produto->marca}}</label>
+                                    <label for="descontomaximoproduto">Produto:
+                                        {{ $produto->nome . ' ' . $produto->modelo . ' / ' . $produto->marca }}</label>
                                 </div>
                                 <div class=" form-group">
                                     <label for="precovendaproduto">Preço de venda<label

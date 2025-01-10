@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string("modelo", 50);
             $table->string("categoria", 50);
             $table->string("unidade_medida", 20);
-            $table->integer("medida");
+            $table->string("medida",30);
             $table->string("descricao", 200);
             $table->integer("quantidade");
             $table->string("ultimo_fornecedor", 100);

@@ -14,6 +14,48 @@ class ProdutoController extends Controller
         $categorias = Produtos_categoria::all();
         return view('sistema.produto.cadastroDeProduto', ['page' => 'produto', 'categorias' => $categorias]);
     }
+
+
+    public function createAtualizarDadosProduto($id)
+    {
+        $categorias = Produtos_categoria::all();
+        $produto = Produtos::find($id);
+        return view('sistema.produto.alterarDadosProduto', ['page' => 'produto', 'categorias' => $categorias, 'produto' => $produto]);
+    }
+
+    public function createAtualizarPrecoProduto($id)
+    {
+        $produto = Produtos::find($id);
+        return view('sistema.produto.alterarPrecoProduto', ['page' => 'produto', 'produto' => $produto]);
+    }
+
+    public function createCadastroCategoria()
+    {
+        return view('sistema.produto.cadastroDeCategoria', ['page' => 'produto']);
+    }
+
+    public function storeCategoria(Request $request)
+    {
+        $request->validate([
+            'nome' => 'required|string',
+        ]);
+        $existeCategoria = Produtos_categoria::where('nome', $request->input('nome'))->first();
+        if ($existeCategoria) {
+            return redirect()->back()->with('error', 'Categoria já cadastrada.');
+        }
+        $categoria = Produtos_categoria::create([
+            'nome' => $request->input('nome'),
+        ]);
+        if ($categoria) {
+            return redirect()->back()->with('success', 'Categoria cadastrada com sucesso!');
+        } else {
+            return redirect()->back()->with('error', 'Erro ao cadastrar categoria.');
+        }
+    }
+
+
+
+
     public function store(Request $request)
     {
         $request->validate([
@@ -41,9 +83,9 @@ class ProdutoController extends Controller
 
         ]);
         if ($produto) {
-            return redirect('dashboard')->with('success', 'Cadastro realizado com sucesso!');
+            return redirect()->back()->with('success', 'Produto cadastrado com sucesso!');
         } else {
-            return redirect('cadastroproduto')->with('error', 'Erro ao cadastrar produto.');
+            return redirect()->back()->with('error', 'Erro ao cadastrar produto.');
         }
     }
 
@@ -78,7 +120,7 @@ class ProdutoController extends Controller
 
             return redirect()->back()->with('error', 'Erro ao atualizar produto.');
         }
-        return redirect('informacaoprodutorequisicao')->with('success', 'Produto atualizado com sucesso!');
+        return redirect()->back()->with('success', 'Produto atualizado com sucesso!');
     }
 
     public function atualizarPrecoProduto(Request $request)
@@ -100,23 +142,9 @@ class ProdutoController extends Controller
                 'desconto_maximo' => $desconto_maximo,
             ]);
         } catch (\Exception $e) {
-            dd($e);
-            //return redirect()->back()->with('error', 'Erro ao atualizar preço do produto.');
+           
+            return redirect()->back()->with('error', 'Erro ao atualizar preço do produto.');
         }
-        return redirect('informacaoprodutorequisicao')->with('success', 'Preço do produto atualizado com sucesso!');
-    }
-
-
-    public function createAtualizarDadosProduto($id)
-    {
-        $categorias = Produtos_categoria::all();
-        $produto = Produtos::find($id);
-        return view('sistema.produto.alterarDadosProduto', ['page' => 'produto', 'categorias' => $categorias, 'produto' => $produto]);
-    }
-
-    public function createAtualizarPrecoProduto($id)
-    {
-        $produto = Produtos::find($id);
-        return view('sistema.produto.alterarPrecoProduto', ['page' => 'produto', 'produto' => $produto]);
+        return redirect()->back()->with('success', 'Preço do produto atualizado com sucesso!');
     }
 }

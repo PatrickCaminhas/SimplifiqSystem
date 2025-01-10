@@ -61,9 +61,9 @@ class FornecedorController extends Controller
         ]);
 
         if ($fornecedores) {
-            return redirect('fornecedores')->with('success', 'Cadastro realizado com sucesso!');
+            return redirect()->back()->with('success', 'Cadastro realizado com sucesso!');
         } else {
-            return redirect(' cadastroFornecedor')->with('error', 'Erro ao cadastrar fornecedor.');
+            return redirect()->back()->with('error', 'Erro ao cadastrar fornecedor.');
         }
     }
     public function delete(Request $request)

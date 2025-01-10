@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Contas; // Import the Contas class
 use App\Helpers\DespesaHelper;
@@ -126,11 +127,17 @@ class DashboardController extends Controller
         return $contas;
     }
 
+
     public function vendasNaUltimaSemana()
     {
+        // Agrupando por data e somando as vendas
         $vendas = Vendas::where('created_at', '>', now()->subWeek())
             ->where('metodo_pagamento', '!=', 'Crediário')
+            ->selectRaw('DATE(data_venda) as data, SUM(valor_total) as total_vendas') // Agrupando por data e somando os valores
+            ->groupBy('data')
+            ->orderBy('data') // Para ordenar as datas de forma cronológica
             ->get();
+    
         return $vendas;
     }
 

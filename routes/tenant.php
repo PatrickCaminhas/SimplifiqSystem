@@ -86,6 +86,9 @@ Route::middleware([
         Route::get('/produto/preco/{id}', [ProdutoController::class, 'createAtualizarPrecoProduto'])->name('produto.preco');
         Route::post('/produto/preco', [ProdutoController::class, 'atualizarPrecoProduto'])->name('produto.preco.store');
 
+        Route::get('/produto/categoria/cadastro', [ProdutoController::class, 'createCadastroCategoria'])->name('produto.categoria');
+        Route::post('/produto/categoria/cadastro', [ProdutoController::class, 'storeCategoria'])->name('produto.categoria.store');
+
         Route::get('/cadastroFornecedor', [FornecedorController::class, 'create'])->name('cadastroFornecedor');
         Route::post('/cadastroFornecedor', [FornecedorController::class, 'store'])->name('cadastroFornecedor.store');
         Route::get('/fornecedores', [FornecedorController::class, 'read'])->name('fornecedores');
@@ -108,7 +111,7 @@ Route::middleware([
         Route::get('/cotacaoprodutos', [CotacoesController::class, 'createLista'])->name('cotacaoProdutos');
         Route::get('/cotacao/lista', [CotacoesController::class, 'createLista'])->name('cotacao.lista');
         Route::post('/cotacao/produtos-selecionados', [CotacoesController::class, 'processarProdutosSelecionados'])->name('cotacao.produtos.selecionados');
-        Route::post('/cotacao/inserir', [CotacoesController::class, 'inserirCotacao'])->name('inserirCotacao');
+        Route::post('/cotacao/inserir', [CotacoesController::class, 'inserirCotacao'])->name('inserir.cotacao');
         Route::get('/cotacao/resultados/{id_cotacao}', [CotacoesController::class, 'mostrarResultados'])->name('cotacao.resultados');
 
         Route::post('/cotacaoprodutosrevisao', [CotacoesController::class, 'createRevisao'])->name('cotacaoProdutosRevisao');

@@ -21,8 +21,9 @@
                 <div class="col-6 col-4">
                     <div class="card shadow-sm">
                         <div class="card-body">
-                            <h2 class="text-center">Cadastro de produto</h2>
-                            <form method="POST" action="{{ route('') }}">
+                            <h2 class="text-center">Cadastro de categoria</h2>
+                            @include('partials.errorAndSuccess')
+                            <form method="POST" action="{{ route('produto.categoria.store') }}">
                                 @csrf
                                 <div class="form-group">
                                     <label for="nomeproduto">Nome</label>

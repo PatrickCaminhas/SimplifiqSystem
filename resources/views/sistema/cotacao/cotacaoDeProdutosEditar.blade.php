@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Simplifiq</title>
+    <title>Simplifiq - Cotação</title>
     <!-- Inclua os arquivos CSS do Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,14 +15,6 @@
 <body class=bg-dark>
      <!-- Menu superior -->
      @include('partials.header')
-
-
-
-
-
-
-
-
     <div class="container mt-4 mb-4 bg-light text-dark">
         <div class="row">
             <div class="col-12 text-center">

@@ -22,6 +22,7 @@
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <h2 class="text-center">Alterar dados do produto</h2>
+                            @include('partials.errorAndSuccess')
                             <form method="POST" action="{{ route('produto.edit.store') }}">
                                 @csrf
                                 <input type="hidden" name="id" value="{{ $produto->id }}">
@@ -77,46 +78,51 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="unidadeproduto">Unidade de medida</label>
+                                        @php
+                                            // Lista de opções de unidades de medida
+                                            $unidadesMedida = [
+                                                'peso' => 'Peso (gramas)',
+                                                'volume' => 'Volume (mililitros)',
+                                                'energia' => 'Energia (Watt)',
+                                                'comprimento' => 'Comprimento (Metros)',
+                                                'area_quadrado' => 'Área (metro quadrado)',
+                                                'area_cubico' => 'Área (metro cubico)',
+                                                 'unidade' => 'Unidade',
+                                            ];
+                                        @endphp
+
                                         <select class="form-control" id="unidadeproduto" name="unidade_medida" required>
                                             <option selected disabled>Selecione a unidade de medida do produto</option>
-                                            @if ($produto->unidade_medida == 'peso')
-                                                {
-                                                <option value="peso" selected>Peso (gramas)</option>
-                                                <option value="volume">Volume (mililitros)</option>
-                                                <option value="energia">Energia (Watt)</option>
-                                                }
-                                            @elseif($produto->unidade_medida == 'volume')
-                                                {
-                                                <option value="peso">Peso (gramas)</option>
-                                                <option value="volume" selected>Volume (mililitros)</option>
-                                                <option value="energia">Energia (Watt)</option>
-                                            }@else{
-                                                <option value="peso">Peso (gramas)</option>
-                                                <option value="volume">Volume (mililitros)</option>
-                                                <option value="energia" selected>Energia (Watt)</option>
-                                                }
-                                            @endif
+                                            @foreach ($unidadesMedida as $value => $label)
+                                                <option value="{{ $value }}"
+                                                    {{ $produto->unidade_medida == $value ? 'selected' : '' }}>
+                                                    {{ $label }}
+                                                </option>
+                                            @endforeach
                                         </select>
+
                                     </div>
                                     <div class="form-group">
                                         <label for="medidaproduto">Medida</label>
-                                        <input type="number" class="form-control" id="medidaproduto" name="medida"
+                                        <input type="text" class="form-control" id="medidaproduto" name="medida"
                                             min='1' placeholder="{{ $produto->medida }}"
-                                        value="{{ old('nome', $produto->medida) }}" required>
+                                            value="{{ old('nome', $produto->medida) }}" required>
                                     </div>
                                     <div class=" form-group">
                                         <label for="precocompraproduto">Preço de compra</label>
                                         <div class="input-group">
-                                        <span class="input-group-text" id="basic-addon1">R$</span>
-                                        <input type="number" class="form-control" id="precocompraproduto" name="preco_compra"
-                                            min='1' placeholder="{{ $produto->preco_compra }}"
-                                        value="{{ old('nome', $produto->preco_compra) }}" step="0.01" required>
+                                            <span class="input-group-text" id="basic-addon1">R$</span>
+                                            <input type="number" class="form-control" id="precocompraproduto"
+                                                name="preco_compra" min='1'
+                                                placeholder="{{ $produto->preco_compra }}"
+                                                value="{{ old('nome', $produto->preco_compra) }}" step="0.01"
+                                                required>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="descricao">Descrição</label>
                                         <textarea class="form-control" id="descricao" name="descricao" rows="3" style="resize: none;"
-                                            placeholder="{{ $produto->descricao }}" value="{{ old('nome', $produto->descricao) }}">{{$produto->descricao}}</textarea>
+                                            placeholder="{{ $produto->descricao }}" value="{{ old('nome', $produto->descricao) }}">{{ $produto->descricao }}</textarea>
                                     </div>
                                     <div class="text-center mt-1">
                                         <button type="submit"

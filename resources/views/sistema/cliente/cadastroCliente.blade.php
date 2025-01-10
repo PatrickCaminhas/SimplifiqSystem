@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Simplifiq</title>
+    <title>Simplifiq - Cliente</title>
     <!-- Inclua os arquivos CSS do Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,26 +43,44 @@
                                         <form action="{{ route('cliente.store') }}" method="POST" id="form-clientes">
                                             @csrf
                                             <div class="form-group">
-                                                <label for="cliente">Nome do cliente:</label>
-                                                <input type="text" class="form-control" name="nome" id="nome" required>
+                                                <label for="cliente">Nome do cliente
+                                                    @include('partials.campoObrigatorio')    
+                                                </label></label>
+                                                <input type="text" class="form-control" name="nome" id="nome"
+                                                    placeholder="Digite o nome do cliente"
+                                                    required>
                                             </div>
                                             <div class="form-group">
-                                                <label for="cpf">CPF:</label>
-                                                <input type="number" class="form-control" name="cpfOuCnpj" id="cpfOuCnpj" required>
+                                                <label for="cpf">CPF/CNPJ
+                                                    @include('partials.campoObrigatorio')</label>
+                                                    </label>
+                                                <input type="number" class="form-control" name="cpfOuCnpj"
+                                                    id="cpfOuCnpj" placeholder="Somente numeros" required>
                                             </div>
                                             <div class="form-group">
-                                                <label for="telefone">Telefone:</label>
-                                                <input type="number" class="form-control" name="telefone" id="telefone" required>
+                                                <label for="telefone">Telefone
+                                                    @include('partials.campoObrigatorio')</label>
+                                                    </label>
+                                                <input type="number" class="form-control" name="telefone"
+                                                    id="telefone" placeholder="Somente numeros" required>
                                             </div>
                                             <div class="form-group">
-                                                <label for="email">E-mail:</label>
-                                                <input type="email" class="form-control" name="email" id="email" required>
+                                                <label for="email">E-mail</label>
+                                                <input type="email" class="form-control" name="email"
+                                                    placeholder="Digite o e-mail" 
+                                                    id="email">
                                             </div>
                                             <div class="form-group">
-                                                <label for="endereco">Endereço completo:</label>
-                                                <input type="text" class="form-control" name="endereco_completo" id="endereco_completo" required>
+                                                <label for="endereco">Endereço completo
+                                                    @include('partials.campoObrigatorio')</label>
+                                                    </label>
+                                                <input type="text" class="form-control" name="endereco_completo"
+                                                    placeholder="Digite o endereço completo"
+                                                    id="endereco_completo" required>
                                             </div>
-                                            <button type="submit" class="btn btn-primary mt-3">Cadastrar cliente</button>
+                                            <button type="submit" class="btn btn-primary mt-3">Cadastrar
+                                                cliente</button>
+                                                <button type="reset" class="btn btn-primary mt-3">Limpar</button>
                                         </form>
                                     </div>
                                     @if ($errors->any())
