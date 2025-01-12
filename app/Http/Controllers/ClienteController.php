@@ -77,7 +77,6 @@ class ClienteController extends Controller
             'nome' => 'required|string',
             'cpfOuCnpj' => 'required|string',
             'telefone' => 'required|string',
-            'email' => 'string',
             'endereco_completo' => 'required|string',
         ]);
         // Verificar se o cliente já está cadastrado pelo cpfOuCnpj
