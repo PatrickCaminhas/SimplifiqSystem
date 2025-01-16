@@ -29,7 +29,7 @@ class InformacaoEmpresaController extends Controller
 
         return view('sistema.informativo.informacaoEmpresa', [
             'informacaoEmpresa' => $informacaoEmpresa,
-            'page' => 'empresa',
+            'page' => 'Empresa',
             'despesasPorMes' => $despesasPorMes,
             'despesasDiarias' => $despesasDiarias,
             'vendasPorMes' => $vendasPorMes,
@@ -46,23 +46,23 @@ class InformacaoEmpresaController extends Controller
     public function despesasUltimosSeisMeses()
     {
         $despesasPorMes = [];
-    
+
         // Incluir o mês atual (0) e os 5 meses anteriores
         for ($i = 0; $i < 6; $i++) {
             $mes = now()->subMonths($i)->format('Y-m'); // Formato de data para busca
-    
+
             // Somar as despesas mensais para o mês atual e os anteriores
             $despesaMensal = Contas::where('data_pagamento', 'like', $mes . '%')
                 ->sum('valor');
-    
+
             // Formato para exibição (mes/ano)
             $mesFormatado = now()->subMonths($i)->format('m/Y');
             $despesasPorMes[$mesFormatado] = $despesaMensal;
         }
-    
+
         return $despesasPorMes;
     }
-    
+
     public function despesasDiariasMesAtual()
     {
         $despesasPorDia = [];
@@ -83,20 +83,20 @@ class InformacaoEmpresaController extends Controller
     public function vendasUltimosSeisMeses()
     {
         $vendasPorMes = [];
-    
+
         // Incluir o mês atual (0)
         for ($i = 0; $i < 6; $i++) {
             $mes = now()->subMonths($i)->format('Y-m'); // Formato de data para busca
             $vendasMensal = Vendas::where('data_venda', 'like', $mes . '%')
                 ->sum('valor_total');
-    
+
             $mesFormatado = now()->subMonths($i)->format('m/Y'); // Formato para exibição (mes/ano)
             $vendasPorMes[$mesFormatado] = $vendasMensal;
         }
-    
+
         return $vendasPorMes;
     }
-    
+
 
     public function vendasDiariasMesAtual()
     {

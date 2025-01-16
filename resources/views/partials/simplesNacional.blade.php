@@ -1,4 +1,4 @@
-@if ($tamanho_empresa == 'mei')
+@if (session('tamanho_empresa') == 'mei')
     <div class="form-text">Você é um Microempreendedor Individual (MEI) e o valor do DAS MEI é de R$ {{ $simplesMei }}.
     </div>
 @else

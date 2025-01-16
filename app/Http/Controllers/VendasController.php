@@ -26,7 +26,7 @@ class VendasController extends Controller
     {
         $produtos = Produtos::all();
         $clientes = Clientes::all();
-        return view('sistema.venda.cadastrarVenda', ['produtos' => $produtos, 'clientes' => $clientes], ['page' => 'vendas']);
+        return view('sistema.venda.cadastrarVenda', ['produtos' => $produtos, 'clientes' => $clientes], ['page' => 'Vendas']);
 
     }
 
@@ -35,7 +35,7 @@ class VendasController extends Controller
         $vendas = Vendas::with(['cliente', 'itens.produto'])
             ->orderBy('created_at', 'desc')  // Ordena pela coluna 'created_at' de forma decrescente
             ->get();
-        return view('sistema.venda.listaVendas', ['vendas' => $vendas], ['page' => 'vendas']);
+        return view('sistema.venda.listaVendas', ['vendas' => $vendas], ['page' => 'Vendas']);
     }
 
     public function clienteCrediario($clienteId, $valorDebito)
@@ -48,7 +48,7 @@ class VendasController extends Controller
 
         try {
             // Criar a venda
-           
+
             $venda = new Vendas();
             $venda->cliente_id = $request->input('cliente_id');
             $venda->data_venda = now();

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+    @include('partials.head')
 
 <head>
     <meta charset="UTF-8">

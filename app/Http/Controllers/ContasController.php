@@ -18,18 +18,18 @@ class ContasController extends Controller
         return view('sistema.informativo.contasAPagar', [
             'contas' => $contas,
             'despesasPorMes' => $despesasPorMes,
-            'page' => 'empresa'
+            'page' => 'Empresa'
         ]);
     }
 
     public function create()
     {
-        return view('sistema.informativo.contasAPagarCadastro', ['page' => 'empresa']);
+        return view('sistema.informativo.contasAPagarCadastro', ['page' => 'Empresa']);
     }
     public function update(Request $request)
     {
         $conta = Contas::find($request->input('id'));
-        return view('sistema.informativo.contasAPagarFinalizar', ['conta' => $conta], ['page' => 'empresa']);
+        return view('sistema.informativo.contasAPagarFinalizar', ['conta' => $conta], ['page' => 'Empresa']);
     }
     public function createConta(Request $request)
     {

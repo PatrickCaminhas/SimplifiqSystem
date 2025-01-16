@@ -52,7 +52,7 @@
             </div>
         </div>
 
-        @if ($Administrador == true)
+        @if (session('Administrador') == true)
             <div class="container mt-4">
                 <div class="row">
                     <h4> Configurações do sistema</h3>

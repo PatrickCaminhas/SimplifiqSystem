@@ -1,16 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simplifiq - Cotação</title>
-    <!-- Inclua os arquivos CSS do Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
-</head>
+@include('partials.head')
+
 
 <body class="bg-dark">
     <!-- Menu superior -->
@@ -26,7 +18,7 @@
                         <thead>
                             <input type="hidden" name="fornecedores" value="{{ json_encode($fornecedores->pluck('id')->toArray()) }}">
                             <input type="hidden" name="produtos" value="{{ json_encode($produtos->pluck('id')->toArray()) }}">
-                            
+
                             <tr class="text-light">
                                 <th scope="col">Produto</th>
                                 @foreach ($fornecedores as $fornecedor)

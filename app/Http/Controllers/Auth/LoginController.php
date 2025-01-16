@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -13,10 +14,43 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Crypt;
+use App\Models\Empresa_information;
+use App\Services\AdministradorService;
 
 
 class LoginController extends Controller
 {
+    /*
+    |--------------------------------------------------------------------------
+    | Login Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller handles authenticating users for the application and
+    | redirecting them to your home screen. The controller uses a trait
+    | to conveniently provide its functionality to your applications.
+    |
+    */
+
+    use AuthenticatesUsers;
+
+    /**
+     * Where to redirect users after login.
+     *
+     * @var string
+     */
+    protected $redirectTo = '/home';
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('guest')->except('logout');
+        $this->middleware('auth')->only('logout');
+    }
+
     public function showLoginForm(Request $request)
     {
         $empresa = $request->input('empresa');
@@ -106,7 +140,7 @@ class LoginController extends Controller
         if ($funcionario && Hash::check($credentials['password'], $funcionario->senha)) {
 
             Auth::login($funcionario);
-            session(['funcionario' => $funcionario]);
+            $this->informacoesDaEmpresa($funcionario);
             return redirect()->intended('dashboard');
         }
         if ($funcionario) {
@@ -118,6 +152,18 @@ class LoginController extends Controller
                 'email' => 'O e-mail fornecido não corresponde aos nossos registros.',
             ]);
         }
+    }
+
+    public function informacoesDaEmpresa($funcionario){
+
+        $empresa = Empresa_information::first();
+            session([  'funcionario' => $funcionario,
+                            'tema' => $empresa->padrao_cores,
+                            'empresa' => $empresa->nome,
+                            'tamanho_empresa' => $empresa->tamanho_empresa,
+                            'menu' => $empresa->tipo_empresa,
+                            'Administrador' => $this->verificaPrivilegiosAdministrativos(),
+        ]);
     }
 
     public function logout(Request $request)
@@ -246,5 +292,17 @@ class LoginController extends Controller
         ]);
 
     }
+
+    public function verificaPrivilegiosAdministrativos()
+    {
+        $usuarioAtual = auth()->user();
+        if ($usuarioAtual->cargo == 'Administrador' || $usuarioAtual->cargo == 'Gerente' || $usuarioAtual->cargo == 'Proprietario') {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
 
 }

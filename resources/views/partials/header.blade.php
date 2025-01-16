@@ -1,9 +1,9 @@
 <header
     class="navbar  navbar-light
-        @if ($padrao_cores == 'vermelho') bg-danger
-        @elseif ($padrao_cores == 'verde') bg-success
-        @elseif ($padrao_cores == 'amarelo') bg-warning
-        @elseif ($padrao_cores == 'azul') bg-primary
+        @if (session('tema') == 'vermelho') bg-danger
+        @elseif (session('tema') == 'verde') bg-success
+        @elseif (session('tema') == 'amarelo') bg-warning
+        @elseif (session('tema') == 'azul') bg-primary
         @else bg-primary @endif
     sticky-top  ">
 

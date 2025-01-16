@@ -1,10 +1,10 @@
-@if ($padrao_cores == 'vermelho')
+@if (session('tema') == 'vermelho')
     bg-danger-subtle
-@elseif ($padrao_cores == 'verde')
+@elseif (session('tema') == 'verde')
     bg-success-subtle
-@elseif ($padrao_cores == 'amarelo')
+@elseif (session('tema') == 'amarelo')
     bg-warning-subtle
-@elseif ($padrao_cores == 'azul')
+@elseif (session('tema') == 'azul')
     bg-primary-subtle
 @else
     bg-primary-subtle

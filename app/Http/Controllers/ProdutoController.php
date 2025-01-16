@@ -12,7 +12,7 @@ class ProdutoController extends Controller
     public function create()
     {
         $categorias = Produtos_categoria::all();
-        return view('sistema.produto.cadastroDeProduto', ['page' => 'produto', 'categorias' => $categorias]);
+        return view('sistema.produto.cadastroDeProduto', ['page' => 'Produto', 'categorias' => $categorias]);
     }
 
 
@@ -20,18 +20,18 @@ class ProdutoController extends Controller
     {
         $categorias = Produtos_categoria::all();
         $produto = Produtos::find($id);
-        return view('sistema.produto.alterarDadosProduto', ['page' => 'produto', 'categorias' => $categorias, 'produto' => $produto]);
+        return view('sistema.produto.alterarDadosProduto', ['page' => 'Produto', 'categorias' => $categorias, 'produto' => $produto]);
     }
 
     public function createAtualizarPrecoProduto($id)
     {
         $produto = Produtos::find($id);
-        return view('sistema.produto.alterarPrecoProduto', ['page' => 'produto', 'produto' => $produto]);
+        return view('sistema.produto.alterarPrecoProduto', ['page' => 'Produto', 'produto' => $produto]);
     }
 
     public function createCadastroCategoria()
     {
-        return view('sistema.produto.cadastroDeCategoria', ['page' => 'produto']);
+        return view('sistema.produto.cadastroDeCategoria', ['page' => 'Produto']);
     }
 
     public function storeCategoria(Request $request)
@@ -142,7 +142,7 @@ class ProdutoController extends Controller
                 'desconto_maximo' => $desconto_maximo,
             ]);
         } catch (\Exception $e) {
-           
+
             return redirect()->back()->with('error', 'Erro ao atualizar preço do produto.');
         }
         return redirect()->back()->with('success', 'Preço do produto atualizado com sucesso!');

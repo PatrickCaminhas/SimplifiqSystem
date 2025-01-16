@@ -11,18 +11,18 @@ class ClienteController extends Controller
     //
     public function create()
     {
-        return view('sistema.cliente.cadastroCliente', ['page' => 'cliente']);
+        return view('sistema.cliente.cadastroCliente', ['page' => 'Cliente']);
 
     }
     public function read()
     {
         $clientes = Clientes::all();
-        return view('sistema.cliente.listaClientes', ['clientes' => $clientes, 'page' => 'cliente']);
+        return view('sistema.cliente.listaClientes', ['clientes' => $clientes, 'page' => 'Cliente']);
     }
     public function quitarDividaView(Request $request)
     {
         $cliente = Clientes::find($request->id);
-        return view('sistema.cliente.quitarDivida', ['cliente' => $cliente, 'page' => 'cliente']);
+        return view('sistema.cliente.quitarDivida', ['cliente' => $cliente, 'page' => 'Cliente']);
     }
     public function quitarDividaStore(Request $request)
     {
@@ -105,7 +105,7 @@ class ClienteController extends Controller
     public function edit(Request $request)
     {
         $cliente = Clientes::find($request->id);
-        return view('sistema.cliente.alterarCliente', ['cliente' => $cliente, 'page' => 'cliente']);
+        return view('sistema.cliente.alterarCliente', ['cliente' => $cliente, 'page' => 'Cliente']);
     }
     public function update(Request $request)
     {

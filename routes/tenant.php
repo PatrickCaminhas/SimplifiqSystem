@@ -19,7 +19,6 @@ use App\Http\Controllers\InformacaoProdutosController;
 use App\Http\Controllers\ConfiguracoesController;
 use App\Http\Controllers\EstoqueController;
 use App\Http\Middleware\AuthenticateDashboard;
-use App\Http\Middleware\CheckCompanyType;
 use App\Http\Controllers\MetasController;
 use App\Http\Controllers\CotacoesController;
 use App\Http\Controllers\SimplesNacionalController;
@@ -62,7 +61,7 @@ Route::middleware([
     Route::post('/login_second', [LoginController::class, 'loginTenant'])->name('tenant.login');
 
 
-    Route::middleware([AuthenticateDashboard::class, CheckCompanyType::class])->group(function () {
+    Route::middleware([AuthenticateDashboard::class])->group(function () {
 
 
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

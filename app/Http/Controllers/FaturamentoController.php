@@ -30,12 +30,12 @@ class FaturamentoController extends Controller
 
     public function create()
     {
-        return view('sistema/faturamento/cadastroManualFaturamento', ['page' => 'empresa']);
+        return view('sistema/faturamento/cadastroManualFaturamento', ['page' => 'Empresa']);
     }
     public function read()
     {
         $todosFaturamentos = HistoricoFaturamento::all();
-        return view('sistema/faturamento/HistoricoFaturamento',['faturamentos' => $todosFaturamentos], ['page' => 'empresa']);
+        return view('sistema/faturamento/HistoricoFaturamento',['faturamentos' => $todosFaturamentos], ['page' => 'Empresa']);
     }
 
 

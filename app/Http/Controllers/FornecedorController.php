@@ -11,17 +11,17 @@ class FornecedorController extends Controller
     //
     public function create()
     {
-        return view('sistema.fornecedores.cadastroDeFornecedor', ['page' => ' fornecedor']);
+        return view('sistema.fornecedores.cadastroDeFornecedor', ['page' => ' Fornecedores']);
     }
 
     public function read(){
         $fornecedores = Fornecedores::all();
-        return view('sistema.fornecedores.listaFornecedores', ['page' => ' fornecedor', 'fornecedores' => $fornecedores]);
+        return view('sistema.fornecedores.listaFornecedores', ['page' => ' Fornecedores', 'fornecedores' => $fornecedores]);
     }
     public function edit(Request $request)
     {
         $fornecedor = Fornecedores::find($request->id);
-        return view('sistema.fornecedores.alterarFornecedor', ['page' => ' fornecedor', 'fornecedor' => $fornecedor]);
+        return view('sistema.fornecedores.alterarFornecedor', ['page' => ' Fornecedores', 'fornecedor' => $fornecedor]);
     }
     public function update(Request $request)
     {

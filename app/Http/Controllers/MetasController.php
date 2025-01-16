@@ -22,11 +22,11 @@ class MetasController extends Controller
     public function createRead()
     {
         $metas = Metas::all();
-        return view('sistema.metas.metas', ['metas' => $metas], ['page' => 'empresa']);
+        return view('sistema.metas.metas', ['metas' => $metas], ['page' => 'Empresa']);
     }
     public function createStoreMeta()
     {
-        return view('sistema.metas.metasCadastro', ['page' => 'empresa']);
+        return view('sistema.metas.metasCadastro', ['page' => 'Empresa']);
     }
 
     public function createInformacoes(Request $Request)
@@ -50,7 +50,7 @@ class MetasController extends Controller
         $informacoes->estado = $meta->estado;
 
 
-        return view('sistema.metas.metasInformacoes', ['meta' => $meta, 'progressos' => $progressos, 'informacoes' => $informacoes], ['page' => 'empresa']);
+        return view('sistema.metas.metasInformacoes', ['meta' => $meta, 'progressos' => $progressos, 'informacoes' => $informacoes], ['page' => 'Empresa']);
     }
 
     public function store(Request $request)

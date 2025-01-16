@@ -1,8 +1,8 @@
 <nav class="offcanvas offcanvas-start
-@if ($padrao_cores == 'vermelho') bg-danger text-light navbar-dark
-@elseif ($padrao_cores == 'verde') bg-success text-light navbar-dark
-@elseif ($padrao_cores == 'amarelo') bg-warning text-dark
-@elseif ($padrao_cores == 'azul') bg-primary text-light navbar-dark
+@if (session('tema') == 'vermelho') bg-danger text-light navbar-dark
+@elseif (session('tema') == 'verde') bg-success text-light navbar-dark
+@elseif (session('tema') == 'amarelo') bg-warning text-dark
+@elseif (session('tema') == 'azul') bg-primary text-light navbar-dark
 @else bg-primary text-light navbar-dark @endif
 "
     data-bs-theme="dark" tabindex="-1" id="menuOffcanvas" aria-labelledby="menuOffcanvasLabel">
@@ -14,7 +14,7 @@
 
         <div class="offcanvas-body ">
             <h6 class="offcanvas-subtitle">
-                <p>Usuário: 
+                <p>Usuário:
                     @if (session('funcionario'))
                         {{ session('funcionario')->nome }}
                     @endif
@@ -26,7 +26,7 @@
 
                 <li class="nav-item">
                     <a class="nav-link
-                     @if ($page == 'dashboard') active @endif
+                     @if ($page == 'Pagina Inicial') active @endif
                      "
                         aria-current="page" href="/dashboard">Inicio</a>
                 </li>
@@ -34,7 +34,7 @@
                 <!-- Submenu Dropdown -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle
-                        @if ($page == 'produto') active @endif"
+                        @if ($page == 'Produtos') active @endif"
                         href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Produtos
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark @include('partials.bgCollor')">
@@ -46,7 +46,7 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle
-                        @if ($page == 'vendas') active @endif"
+                        @if ($page == 'Vendas') active @endif"
                         href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Vendas
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark @include('partials.bgCollor')">
@@ -57,7 +57,7 @@
                 <!--
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle
-                        @if ($page == 'servicos') active @endif"
+                        @if ($page == 'Servicos') active @endif"
                         href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Serviços
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark @include('partials.bgCollor')">
@@ -67,7 +67,7 @@
                 </li>-->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle
-                        @if ($page == 'cliente') active @endif"
+                        @if ($page == 'Clientes') active @endif"
                         href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Clientes
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark @include('partials.bgCollor')">
@@ -77,7 +77,7 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle
-                        @if ($page == 'fornecedor') active @endif"
+                        @if ($page == 'Fornecedores') active @endif"
                         href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Fornecedores
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark @include('partials.bgCollor')">
@@ -90,7 +90,7 @@
 
                 <li class="nav-item">
                     <a class="nav-link
-                @if ($page == 'cotacao') active @endif
+                @if ($page == 'Cotação') active @endif
                 "
                         href="{{ route('cotacaoProdutos') }}">Cotação de produtos</a>
                 </li>
@@ -98,13 +98,13 @@
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle
-                        @if ($page == 'empresa') active @endif
+                        @if ($page == 'Empresa') active @endif
                         "
                         href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Empresa
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark @include('partials.bgCollor')">
 
-                        @if($Administrador == true)
+                        @if(session('Administrador') == true)
                         <li><a class="dropdown-item" href="{{ route('contas.read') }}">Contas</a></li>
                         <li><a class="dropdown-item" href="{{ route('faturamento.read') }}">Faturamento</a></li>
 
@@ -122,7 +122,7 @@
 
                 <li class="nav-item">
                     <a class="nav-link
-                @if ($page == 'configuracoes') active @endif
+                @if ($page == 'Configurações') active @endif
                 "
                         href="{{ route('configuracoes') }}">Configurações</a>
                 </li>

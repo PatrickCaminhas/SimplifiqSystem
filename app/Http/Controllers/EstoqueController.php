@@ -14,7 +14,7 @@ class EstoqueController extends Controller
     public function create()
     {
         $produtos = Produtos::all();
-        return view('sistema\estoque\estoque', ['produtos' => $produtos], ['page' => 'produto']);
+        return view('sistema\estoque\estoque', ['produtos' => $produtos], ['page' => 'Produto']);
     }
     public function edit($id)
     {
@@ -26,7 +26,7 @@ class EstoqueController extends Controller
             $estoqueRecente = new Estoque();
             $estoqueRecente->acao = null;
         }
-        return view('estoque\alterarEstoque', ['produto' => $produto, 'page' => 'produto', 'estoqueRecente' => $estoqueRecente]);
+        return view('estoque\alterarEstoque', ['produto' => $produto, 'page' => 'Produto', 'estoqueRecente' => $estoqueRecente]);
 
     }
 

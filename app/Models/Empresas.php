@@ -35,7 +35,8 @@ class Empresas extends Authenticatable
     {
         return $this->belongsTo(Tenant::class);  // A empresa pertence a um tenant
     }
-    public function getDomain(){
+    public function getDomain()
+    {
         $domain = Domain::find($this->dominio);
         return $domain->domain;
     }

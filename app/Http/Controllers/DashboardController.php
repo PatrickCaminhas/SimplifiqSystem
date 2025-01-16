@@ -27,7 +27,7 @@ class DashboardController extends Controller
         $cartoesDashboard = (object) $cartoesDashboard;
 
         return view('sistema\dashboard', [
-            'page' => 'dashboard',
+            'page' => 'Pagina Inicial',
             'contas' => $contas,
             'despesasPorMes' => $despesasPorMes,
             'ultimas6Vendas' => $ultimas6Vendas,
@@ -137,7 +137,7 @@ class DashboardController extends Controller
             ->groupBy('data')
             ->orderBy('data') // Para ordenar as datas de forma cronológica
             ->get();
-    
+
         return $vendas;
     }
 

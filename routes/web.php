@@ -25,6 +25,8 @@ foreach (config('tenancy.central_domains') as $domain) {
         Route::get('/', function () {
             return view('index.inicio');
         })->name('inicio');
+        Route::get('/teste', function () {
+            return view('testeVue.index'); });
         Route::get('empresas2', [LoginController::class, 'showEmpresas'])->name('empresas');
         Route::get('/criartenant', [TenantController::class, 'create']);
         Route::post('/criar-Tenant', [TenantController::class, 'createTenant'])->name('criarTenant');
@@ -51,9 +53,9 @@ foreach (config('tenancy.central_domains') as $domain) {
 
 
 
-        Route::get('/mensagem',function(){
+        Route::get('/mensagem', function () {
             return new MensagemMail();
-           // Mail::to('patrickcaminhasm@gmail.com')->send(new MensagemMail());
+            // Mail::to('patrickcaminhasm@gmail.com')->send(new MensagemMail());
             //return 'E-mail enviado com sucesso!';
         });
 
@@ -75,9 +77,9 @@ foreach (config('tenancy.central_domains') as $domain) {
         Route::get('/dashboardAdministrador', [AdministradoresController::class, 'showDashboard'])->name('dashboardAdministrador.log');
 
         Route::post('dashboardAdministrador', [AdministradoresController::class, 'showDashboard'])->name('dashboardAdministrador.log');
-        Route::get('/simplesNacional',[SimplesNacionalController::class,'create'])->name('simples.create');
-        Route::post('/simplesNacional/store',[SimplesNacionalController::class,'store'])->name('simples.store');
-        Route::post('/simplesNacional/update',[SimplesNacionalController::class,'update'])->name('simples.update');
+        Route::get('/simplesNacional', [SimplesNacionalController::class, 'create'])->name('simples.create');
+        Route::post('/simplesNacional/store', [SimplesNacionalController::class, 'store'])->name('simples.store');
+        Route::post('/simplesNacional/update', [SimplesNacionalController::class, 'update'])->name('simples.update');
 
 
 
@@ -123,7 +125,7 @@ foreach (config('tenancy.central_domains') as $domain) {
             Route::post('/cadastrarfuncionarioconfirmar', [ConfiguracoesController::class, 'storeFuncionario'])->name('configuracoes.funcionario.cadastrar');
         });
 
-        Route::get('/cotacaoprodutos',[CotacoesController::class, 'create'])->name('cotacaoprodutos')->name('cotacaoprodutos');
+        Route::get('/cotacaoprodutos', [CotacoesController::class, 'create'])->name('cotacaoprodutos')->name('cotacaoprodutos');
 
         Route::middleware(AuthenticateDashboard::class)->match(['get', 'post'], '/cotacaoprodutosrevisao', function () {
             return view('cotacao/cotacaoDeProdutosRevisao');
@@ -156,3 +158,7 @@ foreach (config('tenancy.central_domains') as $domain) {
 
     });
 }
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

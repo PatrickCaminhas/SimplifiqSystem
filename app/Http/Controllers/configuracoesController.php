@@ -17,7 +17,7 @@ class configuracoesController extends Controller
     public function createConfiguracoes()
     {
         $status_cadastro = $this->verificarFuncionario();
-        return view('sistema.configuracoes.configuracaoUsuario', ['page' => 'configuracoes', 'cadastro_funcionario' => $status_cadastro]);
+        return view('sistema.configuracoes.configuracaoUsuario', ['page' => 'Configurações', 'cadastro_funcionario' => $status_cadastro]);
     }
     public function verificarFuncionario()
     {
@@ -44,14 +44,14 @@ class configuracoesController extends Controller
 
     public function createAlterarSenha()
     {
-        return view('sistema.configuracoes.alterarSenha', ['page' => 'configuracoes']);
+        return view('sistema.configuracoes.alterarSenha', ['page' => 'Configurações']);
     }
 
     public function createAlteraDadosPessoais()
     {
         $idUsuario = auth()->id();
         $funcionario = Funcionarios::find($idUsuario);
-        return view('sistema.configuracoes.alterarDadosPessoais', ['page' => 'configuracoes', 'funcionario' => $funcionario]);
+        return view('sistema.configuracoes.alterarDadosPessoais', ['page' => 'Configurações', 'funcionario' => $funcionario]);
     }
 
     public function createAlterarCargos()
@@ -59,7 +59,7 @@ class configuracoesController extends Controller
         $usuarioAtual = auth()->user();
         if ($usuarioAtual->cargo == 'Administrador' || $usuarioAtual->cargo == 'Gerente' || $usuarioAtual->cargo == 'Proprietario') {
             $funcionarios = Funcionarios::all();
-            return view('sistema.configuracoes.alterarCargos', ['page' => 'configuracoes', 'funcionarios' => $funcionarios]);
+            return view('sistema.configuracoes.alterarCargos', ['page' => 'Configurações', 'funcionarios' => $funcionarios]);
         } else {
             return redirect()->back()->with('error', 'Você não tem permissão para acessar essa página!');
         }
@@ -70,7 +70,7 @@ class configuracoesController extends Controller
         $usuarioAtual = auth()->user();
         if ($usuarioAtual->cargo == 'Administrador' || $usuarioAtual->cargo == 'Gerente' || $usuarioAtual->cargo == 'Proprietario') {
             $funcionarios = Funcionarios::all();
-            return view('sistema.configuracoes.excluirFuncionario', ['page' => 'configuracoes', 'funcionarios' => $funcionarios]);
+            return view('sistema.configuracoes.excluirFuncionario', ['page' => 'Configurações', 'funcionarios' => $funcionarios]);
         } else {
             return redirect()->back()->with('error', 'Você não tem permissão para acessar essa página!');
         }
@@ -116,7 +116,7 @@ class configuracoesController extends Controller
         if ($status_cadastro == 'negado') {
             return redirect('configuracoes')->with('error', 'Limite de funcionários atingido!');
         } else {
-            return view('sistema.configuracoes.cadastrarFuncionario', ['page' => 'configuracoes'], ['cadastro_funcionario' => $status_cadastro]);
+            return view('sistema.configuracoes.cadastrarFuncionario', ['page' => 'Configurações'], ['cadastro_funcionario' => $status_cadastro]);
         }
     }
 

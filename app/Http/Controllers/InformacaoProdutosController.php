@@ -11,9 +11,9 @@ class InformacaoProdutosController extends Controller
     //
     public function create()
     {
-        $produtos = Produtos::where('estado', 'ativo')->get();  
+        $produtos = Produtos::where('estado', 'ativo')->get();
         if ($produtos) {
-            return view('sistema\produto\informacaoProdutoLista', ['produtos' => $produtos], ['page' => 'produto']);
+            return view('sistema\produto\informacaoProdutoLista', ['produtos' => $produtos], ['page' => 'Produto']);
         } else {
             return redirect('informacaoProdutoRequisicao')->with('error', 'Produto não encontrado.');
         }
@@ -34,7 +34,7 @@ class InformacaoProdutosController extends Controller
     }
     public function createRead()
     {
-        return view('sistema\produto\informacaoProduto', ['page' => 'produto']);
+        return view('sistema\produto\informacaoProduto', ['page' => 'Produto']);
     }
 
 
@@ -43,7 +43,7 @@ class InformacaoProdutosController extends Controller
         $produto = Produtos::where('id', $id)->first();
         $estoque = $this->estoqueDoProdutoAoLongoDoTempo($id);
         if ($produto) {
-            return view('sistema\produto\informacaoProduto', ['produto' => $produto,'page' => 'produto', 'estoque' => $estoque]);
+            return view('sistema\produto\informacaoProduto', ['produto' => $produto,'page' => 'Produto', 'estoque' => $estoque]);
         } else {
             return redirect('informacaoproduto')->with('error', 'Produto não encontrado.');
         }

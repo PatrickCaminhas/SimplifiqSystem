@@ -14,7 +14,7 @@ class SimplesNacionalController extends Controller
     public function create()
     {
         $SimplesNacional = SimplesNacional::all();
-        return view("administracao.simplesNacional", ['simplesNacional' => $SimplesNacional], ['page' => 'empresa']);
+        return view("administracao.simplesNacional", ['simplesNacional' => $SimplesNacional], ['page' => 'Empresa']);
     }
     public function createCalculadora(Request $request)
     {
@@ -24,7 +24,7 @@ class SimplesNacionalController extends Controller
 
         }
         $calculoAutomatico= $this->calculoDASAutomatico();
-        return view("sistema.informativo.calculadoraSimplesNacional",['informacoes' => $calculoAutomatico], ['page' => 'empresa']);
+        return view("sistema.informativo.calculadoraSimplesNacional",['informacoes' => $calculoAutomatico], ['page' => 'Empresa']);
     }
 
     public function calculoDASAutomatico(){
@@ -46,11 +46,11 @@ class SimplesNacionalController extends Controller
     }
     public function createStore()
     {
-        return view("administracao.cadastroSimplesNacional", ['page' => 'empresa']);
+        return view("administracao.cadastroSimplesNacional", ['page' => 'Empresa']);
     }
     public function createUpdate()
     {
-        return view("administracao.simplesNacionalUpdate", ['page' => 'empresa']);
+        return view("administracao.simplesNacionalUpdate", ['page' => 'Empresa']);
     }
     public function store(Request $request)
     {

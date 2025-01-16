@@ -1,20 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simplifiq - Empresa</title>
-    <!-- Inclua os arquivos CSS do Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+@include('partials.head', ['chart' => true])
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
-
-</head>
 
 <body class="bg-black">
     <!-- Menu superior -->
@@ -63,7 +51,7 @@
                                     <p href="#" class="btn btn-primary">Alterar tema da empresa</p>
                                     <br>
                                     <p><a href="{{route('contas.read')}}" class="btn btn-primary">Historico de contas</a></p>
-                                    
+
                                     <p><a href="{{route('metas.read')}}" class="btn btn-primary">Lista de metas</a></p>
 
                                 </div>

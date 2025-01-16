@@ -1,10 +1,10 @@
-@if ($padrao_cores == 'vermelho')
+@if (session('tema') == 'vermelho')
     btn-danger
-@elseif ($padrao_cores == 'verde')
+@elseif (session('tema') == 'verde')
     btn-success
-@elseif ($padrao_cores == 'amarelo')
+@elseif (session('tema') == 'amarelo')
     btn-warning
-@elseif ($padrao_cores == 'azul')
+@elseif (session('tema') == 'azul')
     btn-primary
 @else
     btn-primary
