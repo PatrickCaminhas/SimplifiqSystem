@@ -11,6 +11,9 @@ Diagrama do banco de dados: https://dbdiagram.io/d/Simplifiq-System-667b82739939
 ### 2. <a href="https://laravel.com/">Laravel</a>
 ### 3. <a href="https://getbootstrap.com/">Bootstrap </a>
 ### 4. <a href="https://tenancyforlaravel.com/">Tenancy for Laravel</a>
+### 4. <a href="https://datatables.net/">Data Tables</a>
+### 4. <a href="https://www.chartjs.org/">Chart.js</a>
+
 
 
 # Requisitos Funcionais
@@ -22,13 +25,19 @@ Leitura de Empresas:
 O sistema deve permitir a consulta das informações cadastradas de cada empresa.  
 ## 2. Gerenciamento de Funcionários
 Cadastro de Funcionários:  
-O sistema deve permitir o cadastro de funcionários com as seguintes informações: nome, sobrenome, cargo, email, CNPJ da empresa em que trabalha (chave estrangeira), e senha.  
+O sistema deve permitir o cadastro de funcionários com as seguintes informações: nome, sobrenome, cargo, email, CNPJ da empresa em que trabalha (chave estrangeira) e senha.  
 
 Leitura de Funcionários:  
 O sistema deve permitir a consulta das informações de cada funcionário.  
 
+Alteração de dados do Funcionários:  
+O sistema deve permitir que o funcionário altere seus dados e sua senha.  
+
 Controle de Acesso:  
-O sistema deve permitir ao administrador da empresa definir e alterar os cargos dos funcionários, modificando suas permissões de acesso e operação no sistema (leitura, cadastro, alteração).  
+O sistema deve permitir ao administrador da empresa definir e alterar os cargos dos funcionários e assim modificando suas permissões de acesso e operação no sistema (leitura, cadastro, alteração).  
+
+Exclusão de funcionários:
+O sistema deve permitir que o usuario administrador exclua outros funcionários do sistema que já não tem vinculo com a empresa.
 
 Autenticação:  
 O sistema deve permitir que os usuários façam login e possam mudar suas senhas.  
@@ -55,7 +64,48 @@ O sistema deve permitir a consulta das cotações registradas.
 
 ## 6. Informações da Empresa
 Leitura de Dados da Empresa:  
-O sistema deve permitir a consulta de dados adicionais da empresa, tais como lucro mensal, produto mais vendido, produto mais rentável, produto menos vendido, entre outras informações.  
+O sistema deve permitir a consulta de dados adicionais da empresa, tais como vendas semestrais, vendas durante o mês, produto mais rentável, despesas semestrais, despesas durante o mês, tipos de vendas cadastradas, vendas no crediario.  
+
+## 7. Controle de metas
+Cadastro de metas:
+O sistema deve permitir que o usuario cadastre metas de vendas com prazo minimo de uma semana.
+
+Leitura de metas:
+O sistema deve listar todas as metas criadas e alem disso deve prover estatisticas das metas.
+
+## 8. Estoque de produtos
+Leitura de estoque:
+O sistema deve listar todos os produtos e seus estoques.
+
+Alteração no estoque:
+O sistema deve permitir o usuario dar repor ou dar baixa no estoque de produtos cadastrados.
+
+## 9. Controle de contas
+Cadastro de contas:
+O sistema deve permitir o cadastro de contas que será contabilizado nas desepesas da empresa, uma conta deve ter os seguiguintes dados: nome do credor, tipo de conta, valor da conta e data de nascimento.
+
+Leitura de contas:
+O sistema deve listar todas as contas da empresa.
+
+Finalização de contas:
+O sistema deve permitir ao usuario finalizar uma conta, sendo as finalizações dos tipos: cancelamento, conta paga e conta vencida.
+
+## 10. Controle de vendas
+Cadastro de vendas:
+O sistema deve permitir o cadastro de vendas com os seguintes dados: os produtos vendidos, quantidade cada produto vendido, cliente que comprou, metodo de pagamento, informar valor total e valor total com desconto máximo possivel da venda e cadastrar o preço final da venda com valor entre o valor total e valor desconto maximo.
+
+Leitura das vendas:
+O sistema deve listar todas as vendas com os dados das vendas.
+
+## 11. Controle de clientes
+Cadastro de clientes:
+O sistema deve permitir o cadastro de clientes com os seguintes dados: nome completo, cpf ou cnpj (o sistema deve distinguir se o numero cadastrado é cpf ou cnpj), telefone, email (não obrigatório) e o endereço completo.
+
+Leitura de clientes:
+O sistema deve listar todos os clientes e permitir ao usuario a visualização dos dados do cliente e se o cliente tiver comprado no crediario o sistema deve inclur nestes dados o valor total a receber do cliente, alem de poder ver a lista de todos os clientes que ainda tem a receber por compras no crediario.
+
+Pagamento de contas:
+O sistema deve permitir ao usuario pagamento completo ou parcial de contas de clientes.
 
 # Requisitos Não Funcionais
 ## 1. Segurança
@@ -64,7 +114,7 @@ O sistema deve garantir que apenas usuários autenticados possam acessar o siste
 O sistema deve implementar controles de autorização para garantir que os usuários só possam acessar funcionalidades e dados conforme suas permissões.  
 
 Isolamento de Dados:  
-Cada empresa deve ter seu próprio banco de dados para evitar o vazamento de dados entre empresas diferentes.  
+Cada empresa deve ter seu próprio banco de dados para evitar a leitura de dados de empresas diferentes.  
 
 ## 2. Desempenho
 Tempo de Resposta:  
@@ -80,8 +130,6 @@ O sistema deve ter uma documentação clara e completa para ajudar os usuários 
 Facilidade de Manutenção:  
 O sistema deve ser desenvolvido de forma modular para facilitar a manutenção e a adição de novas funcionalidades.  
 
-Backup e Recuperação:  
-O sistema deve ter mecanismos de backup e recuperação para garantir a integridade dos dados em caso de falha.  
 
 # Modelo de Dados
 
@@ -172,15 +220,8 @@ Validar os requisitos com stakeholders.
 Refinar e detalhar requisitos específicos conforme necessário.  
 Pesquisar novas funcionalidades para o sistema.  
 Novas funções a serem desenvolvidos e pesquisadas:  
-    1 - Calendario controle de metas.  
     2 - Balanço financeiro de entradas e saidas.  
-    3 - Gestão de inventario  
-    4 - Envio de mensagens entre funcionarios.  
-    5 - Envio de notificações para funcionarios.  
-    6 - Controle de folha de pagamento.  
-    7 - Gestão de benefícios e férias.  
-    8 - Informativo de proximas contas.  
-    9 - Informativo de ultimas atividades (ultimas alterações no sistema).  
+
 
 
 ## Implementação:
