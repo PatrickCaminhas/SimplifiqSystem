@@ -27,26 +27,23 @@ foreach (config('tenancy.central_domains') as $domain) {
         })->name('inicio');
         Route::get('/teste', function () {
             return view('testeVue.index'); });
-        Route::get('empresas2', [LoginController::class, 'showEmpresas'])->name('empresas');
         Route::get('/criartenant', [TenantController::class, 'create']);
         Route::post('/criar-Tenant', [TenantController::class, 'createTenant'])->name('criarTenant');
         Route::get('/create-tenant', [TenantController::class, 'createTenant']);
 
 
 
-        Route::get('/login3', [LoginController::class, 'login3'])->name('login3');
+        Route::get('/login', [LoginController::class, 'login3'])->name('login3');
         Route::post('/identificarLocatario', [LoginController::class, 'identificarLocatario'])->name('identify.tenant');
 
         Auth::routes(['verify' => true]);
 
-        Route::get('paginalogin', [LoginController::class, 'showLoginForm'])->name('paginalogin');
-        Route::post('paginalogin', [LoginController::class, 'showLoginForm'])->name('paginalogin');
-        Route::post('login', [LoginController::class, 'login']);
+
+        Route::post('login', [LoginController::class, 'login3']);
 
         Route::get('/cadastro', [CadastroController::class, 'create'])->name('cadastro');
         Route::post('/cadastro', [CadastroController::class, 'store']);
         Route::get('/cadastroConcluido', [CadastroController::class, 'cadastroConcluido'])->name('cadastroConcluido');
-        Route::get('empresas', [LoginController::class, 'showEmpresas2'])->name('empresas');
         Route::get('/sanitize-string/{nome}', [LoginController::class, 'sanitizeString'])->name('sanitize.string');
 
         Route::get('/buscar-empresa', [LoginController::class, 'buscar'])->name('buscar.empresa');
@@ -74,9 +71,9 @@ foreach (config('tenancy.central_domains') as $domain) {
         Route::get('cadastroAdministrador', [AdministradoresController::class, 'showCadastroForm'])->name('cadastroAdministrador.form');
         Route::post('cadastroAdministrador', [AdministradoresController::class, 'store'])->name('cadastroAdministrador.store');
 
-        Route::get('/dashboardAdministrador', [AdministradoresController::class, 'showDashboard'])->name('dashboardAdministrador.log');
+        Route::get('/inicioAdministrador', [AdministradoresController::class, 'showDashboard'])->name('dashboardAdministrador.log');
 
-        Route::post('dashboardAdministrador', [AdministradoresController::class, 'showDashboard'])->name('dashboardAdministrador.log');
+        Route::post('/inicioAdministrador', [AdministradoresController::class, 'showDashboard'])->name('dashboardAdministrador.log');
         Route::get('/simplesNacional', [SimplesNacionalController::class, 'create'])->name('simples.create');
         Route::post('/simplesNacional/store', [SimplesNacionalController::class, 'store'])->name('simples.store');
         Route::post('/simplesNacional/update', [SimplesNacionalController::class, 'update'])->name('simples.update');
@@ -114,8 +111,8 @@ foreach (config('tenancy.central_domains') as $domain) {
             Route::get('/informacaoprodutorequisicao', [InformacaoProdutosController::class, 'create'])->name('produto.listar');
             Route::get('alterarinformacoesproduto', [InformacaoProdutosController::class, 'update'])->name('produto.alterar');
 
-            Route::get('/ cadastroFornecedor', [FornecedorController::class, 'create'])->name(' cadastroFornecedor');
-            Route::post('/ cadastroFornecedor', [FornecedorController::class, 'store'])->name(' cadastroFornecedor.store');
+            Route::get('/ cadastroFornecedor', [FornecedorController::class, 'create'])->name(' fornecedor.create');
+            Route::post('/ cadastroFornecedor', [FornecedorController::class, 'store'])->name(' fornecedor.store');
 
             Route::get('/configuracoes', [ConfiguracoesController::class, 'createConfiguracoes'])->name('configuracoes');
             Route::get('/alterarSenha', [ConfiguracoesController::class, 'createAlterarSenha'])->name('configuracoes.senha');

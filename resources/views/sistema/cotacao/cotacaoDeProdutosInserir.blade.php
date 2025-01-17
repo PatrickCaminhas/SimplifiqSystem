@@ -1,12 +1,5 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-
-@include('partials.head')
-
-
-<body class="bg-dark">
-    <!-- Menu superior -->
-    @include('partials.header')
+@extends('layouts.padrao')
+@section('conteudo')
     <div class="container mt-4 mb-4 bg-light text-dark">
         <div class="row">
             <div class="col-12 text-center" style="overflow: auto;">
@@ -14,8 +7,8 @@
                 @include('partials.errorAndSuccess')
                 <form method="POST" action="{{ route('inserir.cotacao') }}">
                     @csrf
-                    <table class="col-12 table table-striped table-hover table-secondary">
-                        <thead>
+                    <table class="table table-bordered border border-secondary border-2 table-secondary table-responsive">
+                        <thead class="table-dark">
                             <input type="hidden" name="fornecedores" value="{{ json_encode($fornecedores->pluck('id')->toArray()) }}">
                             <input type="hidden" name="produtos" value="{{ json_encode($produtos->pluck('id')->toArray()) }}">
 
@@ -29,8 +22,8 @@
                         <tbody>
                             @foreach ($produtos as $produto)
                                 <tr>
-                                    <td>
-                                        <a>{{ $produto->nome }} {{ $produto->modelo }} {{ $produto->marca }}</a>
+                                    <td class="text-start">
+                                        <label class="text-break">{{ $produto->nome }} {{ $produto->modelo }} {{ $produto->marca }}</label>
                                     </td>
                                     @foreach ($fornecedores as $fornecedor)
                                         <td>
@@ -51,12 +44,4 @@
             </div>
         </div>
     </div>
-
-    <!-- Inclua os arquivos JavaScript do Bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Script para alterar o ID dos inputs -->
-
-</body>
-
-</html>
+@endsection

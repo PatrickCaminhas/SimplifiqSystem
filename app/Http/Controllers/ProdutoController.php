@@ -14,7 +14,11 @@ class ProdutoController extends Controller
         $categorias = Produtos_categoria::all();
         return view('sistema.produto.cadastroDeProduto', ['page' => 'Produto', 'categorias' => $categorias]);
     }
-
+    public function createTeste()
+    {
+        $categorias = Produtos_categoria::all();
+        return view('cadastroDeProduto', ['page' => 'Produto', 'categorias' => $categorias]);
+    }
 
     public function createAtualizarDadosProduto($id)
     {

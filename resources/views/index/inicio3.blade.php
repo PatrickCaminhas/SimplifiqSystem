@@ -32,7 +32,7 @@
                     <a class="nav-link" href="#">Contato</a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link" href="{{ route('empresas') }}">Login</a>
+                    <a class="nav-link" href="{{ route('login') }}">Login</a>
                 </li>
                 <li class="nav-item ">
                     <a class="nav-link" href="{{ route('cadastro') }}">Cadastro</a>
@@ -55,7 +55,7 @@
                 <h1 class="display-4">Bem-vindo ao Sistema de Administração</h1>
                 <p class="lead">Gerencie suas operações de forma eficiente e eficaz com nosso sistema robusto e
                     intuitivo.</p>
-                <a href="{{route('empresas')}}" class="btn btn-primary btn-lg mt-3">Entrar</a>
+                <a href="{{route('login')}}" class="btn btn-primary btn-lg mt-3">Entrar</a>
                 <a href="cadastro" class="btn btn-primary btn-lg mt-3">Cadastrar</a>
             </div>
         </div>

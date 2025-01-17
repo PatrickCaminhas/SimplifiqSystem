@@ -1,19 +1,6 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-    @include('partials.head')
-
-
-<body class="bg-dark">
-    <!-- Menu superior -->
-    @include('partials.header')
-
-
-
-
-
-
-
-    <div class="col-md-8 col-sm-12 container mt-4 mb-4 bg-light text-dark">
+@extends('layouts.padrao')
+@section('conteudo')
+    <div class="col-md-10 col-sm-12 container mt-4 mb-4 bg-light text-dark">
         <div class="row">
             <div class="text-center" style="overflow: auto;">
                 <h4 class="display-6">Cotação de Produtos</h4>
@@ -32,7 +19,7 @@
                 @else
                     <form method="POST" action="{{ route('cotacao.produtos.selecionados') }}">
                         @csrf
-                        <table class="table table-striped table-hover table-secondary">
+                        <table class="table table-striped-columns table-bordered border border-secondary border-2 table-secondary">
                             <thead>
                                 <tr class="text-light">
                                     <th scope="col">Estoque</th>
@@ -43,16 +30,20 @@
                             <tbody>
                                 @foreach ($produtos as $produto)
                                     <tr>
-                                        <td>
+                                        <td >
                                             <span>{{ $produto->quantidade }}</span>
                                         </td>
-                                        <td>
+                                        <td >
                                             <span>{{ $produto->nome }} {{ $produto->modelo }}
                                                 {{ $produto->marca }}</span>
                                         </td>
-                                        <td>
-                                            <input class="form-check-input" type="checkbox" name="produtos[]"
-                                                value="{{ $produto->id }}">
+                                        <td >
+                                            <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+
+                                            <input  type="checkbox" class="btn-check" name="produtos[]" id="btncheck{{ $produto->id }}"
+                                                value="{{ $produto->id }}" autocomplete="off">
+                                                <label class="btn @include('partials.buttomOutlineCollor')" for="btncheck{{$produto->id}}">Cotar</label>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -67,9 +58,4 @@
             </div>
         </div>
     </div>
-
-    <!-- Inclua os arquivos JavaScript do Bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-
-</html>
+@endsection

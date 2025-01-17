@@ -1,21 +1,8 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+@extends('layouts.cadastro')
+@section('titulo', 'Alterar dados de fornecedor')
+@section('formulario')
+@section('route', route('fornecedores.edit.store'))
 
-@include('partials.head')
-
-
-<body class="bg-dark" style="height: 100vh;">
-   <!-- Menu superior -->
-   @include('partials.header')
-    <div class=" d-flex align-items-center justify-content-center" style="height: 90vh;">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-6 col-4">
-                    <div class="card shadow-sm">
-                        <div class="card-body">
-                            <h2 class="text-center">Alteração de fornecedor</h2>
-                            <form method="POST" action="{{ route('fornecedores.edit.store') }}">
-                                @csrf
                                 <input type="hidden" name="id" value="{{ $fornecedor->id }}">
                                 <div class="form-group">
                                     <label for="nomefornecedor">Nome</label>
@@ -72,9 +59,4 @@
             </div>
         </div>
     </div>
-
-    <!-- Inclua os arquivos JavaScript do Bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-
-</html>
+@endsection

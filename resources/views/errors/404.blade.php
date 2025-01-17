@@ -18,7 +18,7 @@
                 <h1 class="display-1">404</h1>
                 <h2>Página Não Encontrada</h2>
                 <p>Desculpe, a página que você está procurando não existe.</p>
-                <a href="{{ url()->previous() }}" class="btn btn-light">Voltar</a>
+                <a href="/" class="btn btn-light">Voltar</a>
             </div>
         </div>
     </div>

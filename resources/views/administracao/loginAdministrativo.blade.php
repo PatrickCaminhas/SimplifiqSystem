@@ -31,7 +31,7 @@
                     <a class="nav-link" href="#">Contato</a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link" href="{{ route('empresas') }}">Login</a>
+                    <a class="nav-link" href="{{ route('login') }}">Login</a>
                 </li>
                 <li class="nav-item ">
                     <a class="nav-link" href="{{ route('cadastro') }}">Cadastro</a>

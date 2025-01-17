@@ -1,29 +1,9 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+@extends('layouts.cadastro')
+@section('titulo', 'Alterar senha')
+@section('formulario')
+@section('voltar', route('configuracoes'))
+@section('route', route('configuracoes.senha.alterar'))
 
-
-@include('partials.head')
-
-<body class=bg-dark>
-    <!-- Menu superior -->
-    @include('partials.header')
-
-
-
-
-
-
-
-    <div class=" d-flex align-items-center justify-content-center" style="height: 90vh;">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-6 col-4">
-                    <div class="card shadow-sm">
-                        <div class="card-body">
-                            <a href="{{route('configuracoes')}}" class="btn @include('partials.buttomCollor')">Voltar</a>
-                            <h1 class="text-center">Alterar senha</h1>
-                            <form method="POST" action="{{ route('configuracoes.senha.alterar') }}">
-                                @csrf
                                 <div class="form-group">
                                     <label for="senhaantiga">Senha antiga</label>
                                     <input type="password" class="form-control" id="senhaantiga" name="senhaantiga"
@@ -66,12 +46,4 @@
             </div>
         </div>
     </div>
-
-
-    <!-- Features Section -->
-
-    <!-- Inclua os arquivos JavaScript do Bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-
-</html>
+@endsection

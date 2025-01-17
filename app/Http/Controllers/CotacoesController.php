@@ -20,14 +20,14 @@ class CotacoesController extends Controller
     {
         $fornecedores = Fornecedores::all();
 
-        return view('sistema.cotacao.cotacaoDeProdutosInserir', ['page' => 'cotacao', 'fornecedores' => $fornecedores,]);
+        return view('sistema.cotacao.cotacaoDeProdutosInserir', ['page' => 'Cotação', 'fornecedores' => $fornecedores,]);
     }
 
     public function createLista()
     {
         $produtos = Produtos::all();
         $checagem = $this->checarProdutosEFornecedores();
-        return view('sistema.cotacao.cotacaoDeProdutos', ['page' => 'cotacao', 'produtos' => $produtos, 'checagem' => $checagem]);
+        return view('sistema.cotacao.cotacaoDeProdutos', ['page' => 'Cotação', 'produtos' => $produtos, 'checagem' => $checagem]);
     }
     public function checarProdutosEFornecedores()
     {
@@ -57,7 +57,7 @@ class CotacoesController extends Controller
 
         // Passar os produtos e fornecedores para a próxima view
         return view('sistema.cotacao.cotacaoDeProdutosInserir', [
-            'page' => 'cotacao',
+            'page' => 'Cotação',
             'produtos' => $produtosSelecionados,
             'fornecedores' => $fornecedores,
         ]);
@@ -69,24 +69,24 @@ class CotacoesController extends Controller
     {
         $fornecedores = json_decode($request->fornecedores); // fornecedores
         $produtos = json_decode($request->produtos); //produtos cotados
-        
+
         DB::beginTransaction();
-        
+
         try {
-            
+
             // Inicialmente, busca o maior id_cotacao para começar
             // Verificar se a estrutura de cotacao está sendo passada corretamente
             if (!isset($request->cotacao) || !is_array($request->cotacao)) {
                 return back()->withErrors('Nenhum produto foi selecionado para cotação.');
             }
-           
+
             $cotacaoAtual = Cotacoes::create(['data_cotacao' => now()]);
-           
+
             $produtosCotados = []; // Para armazenar os resultados
 
             // Percorrer os produtos e seus fornecedores para encontrar o menor preço
             foreach ($request->cotacao as $produtoId => $fornecedores) {
-                
+
                 $menorPreco = null;
                 $fornecedorEscolhido = null;
 
@@ -121,7 +121,7 @@ class CotacoesController extends Controller
                     'preco' => $menorPreco,
                 ];
             }
-            
+
             DB::commit();
             // Enviar os resultados para a view de resultados
             return redirect()->route('cotacao.resultados',['id_cotacao' => $cotacaoAtual->id]);
@@ -145,7 +145,7 @@ class CotacoesController extends Controller
         // Data atual
         $dataCotacao = now()->format('d/m/Y H:i:s');
 
-        return view('sistema.cotacao.resultados', compact('cotacoes', 'nomeEmpresa', 'dataCotacao'));
+        return view('sistema.cotacao.resultados', ['page' => 'Cotação', 'cotacoes' => $cotacoes,'nomeEmpresa' => $nomeEmpresa, 'dataCotacao' => $dataCotacao]);
     }
 
 
@@ -177,17 +177,17 @@ class CotacoesController extends Controller
 
     public function createRevisao()
     {
-        return view('sistema\cotacao\cotacaoDeProdutosRevisao', ['page' => 'cotacao']);
+        return view('sistema\cotacao\cotacaoDeProdutosRevisao', ['page' => 'Cotação']);
     }
 
     public function createFinal()
     {
-        return view('sistema\cotacao\cotacaoDeProdutosFinal', ['page' => 'cotacao']);
+        return view('sistema\cotacao\cotacaoDeProdutosFinal', ['page' => 'Cotação']);
     }
 
     public function createEdicao()
     {
-        return view('cotacao\cotacaoDeProdutosEdicao', ['page' => 'cotacao']);
+        return view('cotacao\cotacaoDeProdutosEdicao', ['page' => 'Cotação']);
     }
     public function store(Request $request)
     {

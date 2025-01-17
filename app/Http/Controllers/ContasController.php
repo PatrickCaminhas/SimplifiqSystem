@@ -31,7 +31,7 @@ class ContasController extends Controller
         $conta = Contas::find($request->input('id'));
         return view('sistema.informativo.contasAPagarFinalizar', ['conta' => $conta], ['page' => 'Empresa']);
     }
-    public function createConta(Request $request)
+    public function store(Request $request)
     {
         $conta = new Contas();
         $conta->credor = $request->input('credor');

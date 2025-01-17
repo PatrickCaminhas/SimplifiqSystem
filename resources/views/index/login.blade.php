@@ -5,80 +5,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Simplifiq</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    @vite('resources/css/app.css')
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
 </head>
 
-<body class="bg-image" style="height: 100vh; background-image: url({{ global_asset('img/login.jpg') }}); background-size: cover; background-repea: no-repeat;">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary text-dark sticky-top" style="height: 8vh;">
-        <a class="navbar-brand ms-2" style="font-family: 'Quicksand', sans-serif;">Simplifiq System</a>
-        <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse ml-auto text-dark" id="navbarNav">
-            <ul class="navbar-nav bg-primary">
-                <li class="nav-item ">
-                    <a class="nav-link" href="{{ route('inicio') }}">Início</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Sobre</a>
-                </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="#">Contato</a>
-                </li>
-                <li class="nav-item ">
-                    <a class="nav-link active" aria-current="page" href="{{ route('empresas') }}">Login</a>
-                </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="{{ route('cadastro') }}">Cadastro</a>
-                </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="{{ route('loginAdministrativo.form') }}">Administração</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <div>
-        <div class="bg-dark bg-opacity-75 col-6">
-            <div class="d-flex align-items-center justify-content-center" style="height: 92vh;">
-                <div class="container-fluid ps-0 pe-0">
-                    <div class="row justify-content-center">
-                        <div class="col-6">
-                            <div class="card shadow-lg border border-dark">
-                                <div class="card-body bg-dark text-light">
-                                    <h2 class="text-center">Login</h2>
-                                    <form method="POST" action="{{ route('login') }}">
+
+
+<body class="bg-dark">
+    @include('partials.menuIndex')
+    <section class="h-100 gradient-form">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-xl-10">
+                    <div class="card rounded-3 text-black">
+                        <div class="row g-0">
+                            <div class="col-lg-6">
+                                <div class="card-body p-md-5 mx-md-4">
+
+                                    <div class="text-center">
+                                        <img src="{{ global_asset('img/Logo.png') }}" style="width: 185px;"
+                                            alt="logo">
+                                        <h4 class="mt-1 mb-5 pb-1">Simplifiq System
+                                            <p>{{ $empresa }}</p>
+                                        </h4>
+                                    </div>
+
+                                    <form method="POST" action="{{ route('tenant.login') }}">
                                         @csrf
-                                        <div class="form-group">
-                                            <label for="email">Email</label>
-                                            <input type="email" class="form-control" id="email" name="email"
-                                                placeholder="Digite seu email" required>
+                                        <p>Acesse sua conta</p>
+                                        @include('partials.errorAndSuccess')
+                                        <div class="form-floating mb-3">
+                                            <input type="email" class="form-control" name="email" id="email"
+                                                placeholder="Digite seu e-mail" required>
+                                            <label> Email:</label>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="password">Senha</label>
-                                            <input type="password" class="form-control" id="password" name="password"
+                                        <div class="form-floating mb-3">
+                                            <input type="password" class="form-control" name="senha" id="senha"
                                                 placeholder="Digite sua senha" required>
+                                            <label> Senha:</label>
                                         </div>
-                                        <div class="text-start mt-3">
-                                            <a href="{{route('password.request')}}" class="text-primary">Esqueceu a senha?</a>
+
+
+                                        <div class="text-center pt-1 mb-5 pb-1 d-grid gap-2">
+                                            <button class="btn btn-primary fa-lg bg-primary  mb-3"
+                                                type="submit">Acesse</button>
+
+                                            <p><a class="text-muted" href="{{ route('password.request') }}">Esqueceu
+                                                    sua senha?</a></p>
                                         </div>
-                                        <div class="text-center mt-3">
-                                            <button type="submit" class="btn btn-primary text-center">Entrar</button>
+
+                                        <div class="d-flex align-items-center justify-content-center pb-4">
+                                            <p class="mb-0 me-2">Não tem uma conta?</p>
+                                            <a type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                                class="btn btn-outline-primary">Cria agora</a>
+                                            <div class="modal fade" id="exampleModal" tabindex="-1"
+                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Criação
+                                                                de conta</h1>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            Para criar uma conta, entre em contato com o administrador
+                                                            do sistema na empresa {{ $empresa }}.
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-primary"
+                                                                data-bs-dismiss="modal">Fechar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
+
                                     </form>
-                                    @if ($errors->any())
-                                        <div class="alert alert-danger mt-3">
 
-                                                @foreach ($errors->all() as $error)
-                                                    {{ $error }}
-                                                @endforeach
-
-                                        </div>
-                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-lg-6 d-flex align-items-center bg-primary bg-gradient">
+                                <div class="text-white px-3 py-4 p-md-5 mx-md-4 text-center">
+                                    <h4 class="mb-4">Nós somos mais que uma empresa</h4>
+                                    <p class="small mb-0">
+                                        Somos um time comprometido em criar soluções que impulsionam o sucesso de
+                                        negócios.
+                                        Juntos, transformamos desafios em resultados.</p>
                                 </div>
                             </div>
                         </div>
@@ -86,10 +101,9 @@
                 </div>
             </div>
         </div>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </section>
+
+    @vite('resources/js/app.js')
 </body>
 
 </html>

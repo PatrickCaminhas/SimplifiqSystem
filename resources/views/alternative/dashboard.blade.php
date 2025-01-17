@@ -46,10 +46,10 @@
                     <a class="nav-link active" aria-current="page" href="/dashboard">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('cadastroproduto')}}">Cadastro de produto</a>
+                    <a class="nav-link" href="{{route('produto.create')}}">Cadastro de produto</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route(' cadastroFornecedor')}}">Cadastro de fornecedor</a>
+                    <a class="nav-link" href="{{route(' fornecedor.create')}}">Cadastro de fornecedor</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="cotacaoprodutos">Cotação de produtos</a>
@@ -276,7 +276,7 @@
         </div>
     </div>
     <!-- Inclua os arquivos JavaScript do Bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    @vite('resources/js/app.js')
 </body>
 
 </html>

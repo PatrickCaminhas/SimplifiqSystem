@@ -9,7 +9,7 @@
         "@popperjs/core": "^2.11.6",
         "@vitejs/plugin-vue": "^4.5.0",
         "axios": "^1.6.4",
-        "bootstrap": "^5.2.3",
+        "bootstrap": "^5.3.3",
         "laravel-vite-plugin": "^1.1.1",
         "sass": "^1.56.1",
         "vite": "^5.0",
@@ -20,5 +20,15 @@
     "dependencies": {
         "@vitejs/plugin-vue": "^5.2.1",
         "vue": "^3.5.13"
-    }
+    },
+    "name": "simplifiqsystem",
+    "version": "1.0.0",
+    "description": "<p align=\"center\"><a href=\"https://github.com/PatrickCaminhas/SimplifiqSystem/\" target=\"_blank\"><img src=\"https://i.imgur.com/whwiNbp.png\" width=\"300\" alt=\"Simplifiq Logo\"></a></p> <h1 align=\"center\">Simplifiq</h1>",
+    "main": "vite.config.js",
+    "directories": {
+        "test": "tests"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
 }

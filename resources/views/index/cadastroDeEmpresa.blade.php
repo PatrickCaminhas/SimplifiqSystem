@@ -12,124 +12,117 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
 </head>
 
-<body
-    style="height: 100vh; background-image: url({{ global_asset('img/login.jpg') }}); background-size: cover; background-repea: no-repeat;"
-    class="bg-primary">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary text-light sticky-top" style="height: 8vh;">
-        <a class="navbar-brand ms-2 " style="font-family: 'Quicksand', sans-serif;">Simplifiq System</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse ml-auto" id="navbarNav">
-            <ul class="navbar-nav bg-primary">
-                <li class="nav-item">
-                    <a class="nav-link" href="/">Início</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Sobre</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Contato</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('empresas') }}">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{ route('cadastro') }}">Cadastro</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('loginAdministrativo.form') }}">Administracao</a>
-                </li>
-            </ul>
-
-        </div>
-    </nav>
+<body class="bg-dark">
+    @include('partials.menuIndex')
     <!-- -->
-    <div class="bg-dark bg-opacity-25">
-        <div class="d-flex align-items-center justify-content-center" style="height: 92vh;">
-            <div class="container" style="height: 92vh;">
-                <div class="row justify-content-center">
-                    <div class="col-6 col-4">
-                        <div class="card shadow-sm">
-                            <div class="card-body bg-dark text-light border">
-                                <h3 class="text-center">Cadastro</h3>
-                                <form method="POST" action="{{ route('cadastro') }}">
-                                    @csrf
-                                    <div class="form-group">
-                                        <label for="nomeempresa">Nome da empresa</label>
-                                        <input type="text" class="form-control" id="nomeempresa"
-                                            placeholder="Digite o nome da empresa" name="nomeempresa" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="cnpj">CNPJ</label>
-                                        <input type="text" class="form-control" id="cnpj"
-                                            placeholder="Digite o CNPJ da empresa" name="cnpj" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="tamanhoempresa">Tamanho da empresa</label>
-                                        <select class="form-control" id="tamanhoempresa" name="tamanhoempresa" required>
-                                            <option selected disabled>Selecione o tamanho de empresa</option>
-                                            <option value="mei">MEI</option>
-                                            <option value="microempresa">MICRO</option>
-                                            <option value="pequenaempresa">PEQUENA</option>
-                                        </select>
-                                    </div>
 
-                                    <div class="form-group">
-                                        <label for="tipoEmpresa">Tipo de empresa</label>
-                                        <select class="form-control" id="tipoempresa" name="tipoempresa" required>
-                                            <option selected disabled>Selecione o tipo de empresa</option>
-                                            <!-- As opções serão alteradas dinamicamente com JavaScript -->
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="telefone">Telefone</label>
-                                        <input type="tel" class="form-control" id="telefone" name="telefone"
-                                            placeholder="(33) 90123-4567" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="nome">Nome:</label>
-                                        <input type="text" class="form-control" id="nome" name="nome"
-                                            placeholder="Digite seu nome" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sobrenome">Sobrenome:</label>
-                                        <input type="text" class="form-control" id="sobrenome" name="sobrenome"
-                                            placeholder="Digite seu sobrenome" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email">E-mail</label>
-                                        <input type="email" class="form-control" id="email" name="email"
-                                            placeholder="Digite seu email" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="senha">Senha</label>
-                                        <input class="form-control" type="password" id="senha" name="senha"
-                                            placeholder="Digite sua senha" minlength="8" required>
-                                    </div>
-                                    <div class="text-center mt-2">
-                                        <button type="submit" class="btn btn-primary text-center">Cadastrar</button>
-                                        <button type="reset" class="btn btn-primary text-center">Limpar</button>
-                                    </div>
-                                </form>
-                                @if ($errors->any())
-                                    <div class="alert alert-danger mt-3">
 
-                                        @foreach ($errors->all() as $error)
-                                            {{ $error }}
-                                        @endforeach
 
+    <section class="h-100 gradient-form">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-xl-10">
+                    <div class="card rounded-3 text-black">
+                        <div class="row g-0">
+                            <div class="col-lg-6">
+                                <div class="card-body p-md-5 mx-md-4">
+                                    <form method="POST" action="{{ route('cadastro') }}">
+                                        @csrf
+                                        <h4 class=" mb-2">Cadastro</h4>
+
+                                        @include('partials.errorAndSuccess')
+                                        <div class="form-floating mb-2">
+                                            <input type="text" class="form-control" name="nomeempresa"
+                                                id="nomeempresa" placeholder="Digite o nome da empresa" required>
+                                            <label> Nome da empresa:</label>
+                                        </div>
+                                        <div class="form-floating mb-2"">
+                                            <input type="text" class="form-control" id="cnpj"
+                                                placeholder="Digite o CNPJ da empresa" name="cnpj" required>
+                                            <label for="cnpj">CNPJ</label>
+                                        </div>
+                                        <div class="form-floating mb-2">
+                                            <select class="form-control" id="tamanhoempresa" name="tamanhoempresa"
+                                                required>
+                                                <option selected disabled>Selecione o tamanho de empresa</option>
+                                                <option value="mei">MEI</option>
+                                                <option value="microempresa">MICRO</option>
+                                                <option value="pequenaempresa">PEQUENA</option>
+                                            </select>
+                                            <label for="tamanhoempresa">Tamanho da empresa</label>
+                                        </div>
+
+                                        <div class="form-floating mb-2">
+                                            <select class="form-control" id="tipoempresa" name="tipoempresa" required>
+                                                <option selected disabled>Selecione o tipo de empresa</option>
+                                                <!-- As opções serão alteradas dinamicamente com JavaScript -->
+                                            </select>
+                                            <label>Tipo de empresa</label>
+                                        </div>
+                                        <div class="form-floating mb-2">
+                                            <input type="tel" class="form-control" id="telefone" name="telefone"
+                                                placeholder="(33) 90123-4567" required>
+                                                <label for="telefone">Telefone</label>
+                                        </div>
+                                        <div class="form-floating mb-2">
+                                            <input type="text" class="form-control" id="nome" name="nome"
+                                                placeholder="Digite seu nome" required>
+                                                <label for="nome">Nome:</label>
+                                        </div>
+                                        <div class="form-floating mb-2">
+                                            <input type="text" class="form-control" id="sobrenome" name="sobrenome"
+                                                placeholder="Digite seu sobrenome" required>
+                                                <label for="sobrenome">Sobrenome:</label>
+                                        </div>
+                                        <div class="form-floating mb-2">
+                                            <input type="email" class="form-control" id="email" name="email"
+                                                placeholder="Digite seu email" required>
+                                                <label for="email">E-mail</label>
+                                        </div>
+                                        <div class="form-floating mb-2">
+                                            <input type="password" class="form-control" name="senha" id="senha"
+                                                placeholder="Digite sua senha" required>
+                                            <label> Senha:</label>
+                                        </div>
+
+
+                                        <div class="text-center pt-1 mb-5 pb-1 d-grid gap-2">
+                                            <button class="btn btn-primary fa-lg bg-primary  mb-3"
+                                                type="submit">Cadastre-se</button>
+
+                                        </div>
+
+                                        <div class="d-flex align-items-center justify-content-center pb-4">
+                                            <p class="mb-0 me-2">Já tem uma conta?</p>
+                                            <a type="button" href="{{ route('cadastro') }}"
+                                                class="btn btn-outline-primary">Acesse agora</a>
+                                        </div>
+
+                                    </form>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6 d-flex align-items-center bg-primary bg-gradient">
+                                <div class="text-white px-3 py-4 p-md-5 mx-md-4 text-center">
+                                    <div class="text-center">
+                                        <img src="{{ global_asset('img/Logo.png') }}" style="width: 185px;"
+                                            alt="logo">
+                                        <h4 class="mt-1 mb-5 pb-1">Simplifiq System</h4>
                                     </div>
-                                @endif
+                                    <h4 class="mb-4">Nós somos mais que uma empresa</h4>
+                                    <p class="small mb-0">
+                                        Somos um time comprometido em criar soluções que impulsionam o sucesso de
+                                        negócios.
+                                        Juntos, transformamos desafios em resultados.</p>
+                                </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

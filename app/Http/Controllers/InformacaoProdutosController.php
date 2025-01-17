@@ -108,7 +108,7 @@ class InformacaoProdutosController extends Controller
         if ($produto) {
             return redirect('dashboard')->with('success', 'Cadastro realizado com sucesso!');
         } else {
-            return redirect('cadastroproduto')->with('error', 'Erro ao cadastrar produto.');
+            return redirect('produto.create')->with('error', 'Erro ao cadastrar produto.');
         }
     }
     public function update(Request $request)
@@ -137,7 +137,7 @@ class InformacaoProdutosController extends Controller
         if ($produto) {
             return redirect('dashboard')->with('success', 'Alteração de dados produto com sucesso!');
         } else {
-            return redirect('cadastroproduto')->with('error', 'Erro ao alterar produto.');
+            return redirect('produto.create')->with('error', 'Erro ao alterar produto.');
         }
     }
     public function delete(Request $request)
@@ -146,7 +146,7 @@ class InformacaoProdutosController extends Controller
         if ($produto) {
             return redirect('dashboard')->with('success', 'Produto deletado com sucesso!');
         } else {
-            return redirect('cadastroproduto')->with('error', 'Erro ao deletar produto.');
+            return redirect('produto.create')->with('error', 'Erro ao deletar produto.');
         }
     }
 

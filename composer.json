@@ -12,6 +12,7 @@
         "laravel/tinker": "^2.9",
         "laravel/ui": "^4.6",
         "stancl/tenancy": "^3.8",
+        "twbs/bootstrap": "5.3.3",
         "tymon/jwt-auth": "^2.1"
     },
     "require-dev": {

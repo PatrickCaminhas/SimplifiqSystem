@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Empresa_information;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Hash;
@@ -25,7 +26,9 @@ class SenhaResetController extends Controller
 
     public function requestForm()
     {
-        return view('index.resetSenha');
+        $empresa = Empresa_information::first();
+        $empresa = $empresa->nome;
+        return view('index.resetSenha', ['empresa' => $empresa]);
     }
 
     public function sendResetLink(Request $request)

@@ -58,7 +58,7 @@ class configuracoesController extends Controller
     {
         $usuarioAtual = auth()->user();
         if ($usuarioAtual->cargo == 'Administrador' || $usuarioAtual->cargo == 'Gerente' || $usuarioAtual->cargo == 'Proprietario') {
-            $funcionarios = Funcionarios::all();
+            $funcionarios = Funcionarios::where('id', '!=', $usuarioAtual->id)->get();
             return view('sistema.configuracoes.alterarCargos', ['page' => 'Configurações', 'funcionarios' => $funcionarios]);
         } else {
             return redirect()->back()->with('error', 'Você não tem permissão para acessar essa página!');
@@ -69,7 +69,7 @@ class configuracoesController extends Controller
     {
         $usuarioAtual = auth()->user();
         if ($usuarioAtual->cargo == 'Administrador' || $usuarioAtual->cargo == 'Gerente' || $usuarioAtual->cargo == 'Proprietario') {
-            $funcionarios = Funcionarios::all();
+            $funcionarios = Funcionarios::where('id', '!=', $usuarioAtual->id)->get();
             return view('sistema.configuracoes.excluirFuncionario', ['page' => 'Configurações', 'funcionarios' => $funcionarios]);
         } else {
             return redirect()->back()->with('error', 'Você não tem permissão para acessar essa página!');

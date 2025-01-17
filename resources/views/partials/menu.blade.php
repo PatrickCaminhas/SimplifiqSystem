@@ -38,7 +38,7 @@
                         href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Produtos
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark @include('partials.bgCollor')">
-                        <li><a class="dropdown-item" href="{{ route('cadastroproduto') }}">Cadastrar</a></li>
+                        <li><a class="dropdown-item" href="{{ route('produto.create') }}">Cadastrar</a></li>
                         <li><a class="dropdown-item" href="{{ route('produto.listar') }}">Informação</a></li>
                         <li><a class="dropdown-item" href="{{ route('estoque.create') }}">Estoque</a></li>
 
@@ -81,7 +81,7 @@
                         href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Fornecedores
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark @include('partials.bgCollor')">
-                        <li><a class="dropdown-item" href="{{ route('cadastroFornecedor') }}">Cadastrar</a></li>
+                        <li><a class="dropdown-item" href="{{ route('fornecedor.create') }}">Cadastrar</a></li>
                         <li><a class="dropdown-item" href="{{ route('fornecedores') }}">Lista</a></li>
                     </ul>
                 </li>

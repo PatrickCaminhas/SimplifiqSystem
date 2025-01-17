@@ -37,7 +37,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">Cadastro de produtos e materiais</h5>
                                 <p class="card-text">Registre no sistema um novo produto a ser vendido ou ativos a serem usado no serviço.</p>
-                                <a href="{{ route('cadastroproduto') }}" class="btn btn-primary">Acessar</a>
+                                <a href="{{ route('produto.create') }}" class="btn btn-primary">Acessar</a>
                             </div>
                         </div>
                     </div>
@@ -46,7 +46,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">Cadastro de fornecedores</h5>
                                 <p class="card-text">Registre um novo fornecedor no sistema para a realização de cotações de produtos e ativos.</p>
-                                <a href="{{ route(' cadastroFornecedor') }}" class="btn btn-primary">Acessar</a>
+                                <a href="{{ route('fornecedor') }}" class="btn btn-primary">Acessar</a>
                             </div>
                         </div>
                     </div>
@@ -80,7 +80,7 @@
 
 
     <!-- Inclua os arquivos JavaScript do Bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    @vite('resources/js/app.js')
 
 </body>
 

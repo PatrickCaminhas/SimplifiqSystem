@@ -1,26 +1,6 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-
-@include('partials.head', ['data_tables' => true])
-
-
-<body class="bg-black bg-gradient">
-    <!-- Menu superior -->
-    @include('partials.header')
-
-
-
-
-
-
-
-    <div class="d-flex align-items-center justify-content-center" style="height: 92vh;">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-6 col-8">
-                    <div class="card shadow-sm">
-                        <div class="card-body" style="overflow-x: auto;">
-                            <h2 class="text-center">Clientes</h2>
+@extends('layouts.lista')
+@section('titulo', 'Clientes')
+@section('lista')
                             <p>Deseja cadastar um novo cliente? <a class="btn btn-primary"
                                     href="{{ route('cliente.store.create') }}">Clique aqui</a></p>
                             <table id="myTable" class="display">
@@ -49,7 +29,7 @@
                                                 @if ($cliente->debitos == null || $cliente->debitos == '0' || $cliente->debitos == '0.00')
                                                     Não possui débitos!
                                                 @else
-                                                    Fiado - Devedor - Debito - Inadimplente
+                                                    fiado - crediario - crédito - prazo - pendencias
                                                 @endif
                                             </td>
                                             <td>
@@ -160,23 +140,9 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            <p class="fs-6 fw-lighter">Para ver todos os clientes devedores procure por: Fiado, Devedor,
-                                Debito ou Inadimplente</p>
-                            @if ($errors->any())
-                                <div class="alert alert-danger mt-3">
-                                    @foreach ($errors->all() as $error)
-                                        {{ $error }}
-                                    @endforeach
-
-                                </div>
-                            @endif
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                            <p class="fs-6 fw-lighter">Para ver todos os clientes em crediário procure por: crediario ou pendencias</p>
+                            @endsection
+@push('scripts')
     <script>
         function setActionAndSubmit(acao) {
             document.getElementById('acao').value = acao;
@@ -184,12 +150,9 @@
         }
     </script>
 
-    <!-- Features Section -->
 
-    <!-- Inclua os arquivos JavaScript do Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
         crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.2/js/responsive.bootstrap5.min.js"></script>
@@ -202,6 +165,4 @@
             });
         });
     </script>
-</body>
-
-</html>
+@endpush

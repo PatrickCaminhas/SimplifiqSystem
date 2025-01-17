@@ -63,13 +63,17 @@ Route::middleware([
 
     Route::middleware([AuthenticateDashboard::class])->group(function () {
 
+        Route::get('/testeHome', function () {
+            return view('testeHome');
+        });
 
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
         Route::get('/cadastros', [DashboardController::class, 'cadastros'])->name('cadastros');
 
-        Route::get('/cadastroproduto', [ProdutoController::class, 'create'])->name('cadastroproduto');
+        Route::get('/cadastroproduto', [ProdutoController::class, 'create'])->name('produto.create');
+
         Route::post('/cadastroproduto', [ProdutoController::class, 'store'])->name('cadastroproduto.store');
 
         Route::get('/informacaoproduto', [InformacaoProdutosController::class, 'createRead'])->name('produto.informacao');
@@ -88,8 +92,8 @@ Route::middleware([
         Route::get('/produto/categoria/cadastro', [ProdutoController::class, 'createCadastroCategoria'])->name('produto.categoria');
         Route::post('/produto/categoria/cadastro', [ProdutoController::class, 'storeCategoria'])->name('produto.categoria.store');
 
-        Route::get('/cadastroFornecedor', [FornecedorController::class, 'create'])->name('cadastroFornecedor');
-        Route::post('/cadastroFornecedor', [FornecedorController::class, 'store'])->name('cadastroFornecedor.store');
+        Route::get('/cadastroFornecedor', [FornecedorController::class, 'create'])->name('fornecedor.create');
+        Route::post('/cadastroFornecedor', [FornecedorController::class, 'store'])->name('fornecedor.store');
         Route::get('/fornecedores', [FornecedorController::class, 'read'])->name('fornecedores');
         Route::post('/fornecedores/editar', [FornecedorController::class, 'edit'])->name('fornecedores.edit');
         Route::post('/fornecedores/editar/store', [FornecedorController::class, 'update'])->name('fornecedores.edit.store');
@@ -128,7 +132,7 @@ Route::middleware([
 
         Route::get('/contas', [ContasController::class, 'createRead'])->name('contas.read');
         Route::get('/contas/cadastro', [ContasController::class, 'create'])->name('contas.create');
-        Route::post('/contas/cadastro', [ContasController::class, 'createConta'])->name('contas.createConta');
+        Route::post('/contas/cadastro', [ContasController::class, 'store'])->name('contas.store');
         Route::get('/contas/finalizar', [ContasController::class, 'update'])->name('contas.update');
         Route::post('/contas/finalizar', [ContasController::class, 'finalizarConta'])->name('contas.finalizarConta');
 

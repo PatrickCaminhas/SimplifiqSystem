@@ -51,17 +51,9 @@ class LoginController extends Controller
         $this->middleware('auth')->only('logout');
     }
 
-    public function showLoginForm(Request $request)
+    public function showLoginForm()
     {
-        $empresa = $request->input('empresa');
-        $domain = $empresa . '.localhost';
-        if ($empresa) {
-            echo $domain;
-            return redirect()->away('http://' . $domain . ':8000/login');
-        }
-
-
-        return redirect()->away('http://localhost:8000/empresas');
+        return view('index.login3');
     }
 
     public function buscar(Request $request)
@@ -86,7 +78,9 @@ class LoginController extends Controller
     }
     public function showLoginFormTenant()
     {
-        return view('index.login');
+        $empresa = Empresa_information::first();
+        $empresa= $empresa->nome;
+        return view('index.login',['empresa' => $empresa]);
     }
     public function showEmpresas()
     {
@@ -199,18 +193,22 @@ class LoginController extends Controller
             return redirect()->away('http://' . $subdominio . ':8000/login_second?token=' . $encryptedEmail)
                 ->with('email', $request['email'])->with('senha', $request['senha']);
         }
-        return redirect()->away('http://localhost:8000/login3')->withErrors([
+        return redirect()->away('http://localhost:8000/login')->withErrors([
             'email' => 'E-mail incorreto.',
         ]);
     }
 
     public function formularioLoginTenant(Request $request)
     {
+        if (!$request->has('token')) {
+            return redirect()->route(route: 'login')->withErrors(['error' => 'Token inválido.']);
+        }
         $encryptedToken = $request->query('token');
 
         try {
             // Desencriptar o email
-
+            $empresa = Empresa_information::first();
+            $empresa= $empresa->nome;
             $decryptedData = Crypt::decryptString($encryptedToken);
             $data = json_decode($decryptedData, true);
 
@@ -219,14 +217,15 @@ class LoginController extends Controller
 
             // Verificar se o token expirou (expira em 15 minutos, por exemplo)
             if (now()->timestamp - $timestamp > 300) { // 300 segundos = 5 minutos
-                return response()->json(['error' => 'Token expirado.'], 403);
+                return redirect()->route('login')->json(['error' => 'Token expirado.'], 403);
             }
         } catch (\Exception $e) {
-            return redirect()->route('tenant.login')->withErrors(['error' => 'Token inválido ou expirado.']);
+            return redirect()->route(route: 'login')->withErrors(['error' => 'Token inválido ou expirado.']);
         }
 
-        return view('index.login3-2', ['email' => $email]);
+        return view('index.login3-2', ['email' => $email, 'empresa' => $empresa]);
     }
+
     public function loginTenant(Request $request)
     {
         $request->validate([
@@ -281,10 +280,7 @@ class LoginController extends Controller
         }
 
     */
-    public function login3()
-    {
-        return view('index.login3');
-    }
+
     public function loginSubdominio(Request $request)
     {
         $request->validate([

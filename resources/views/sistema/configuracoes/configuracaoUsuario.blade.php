@@ -1,28 +1,6 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simplifiq - Configurações</title>
-    <!-- Inclua os arquivos CSS do Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
-</head>
-
-<body class=bg-dark>
-    <!-- Menu superior -->
-    @include('partials.header')
-
-
-
-
-
-
-
-    <div class="container mt-5 col-lg-6 col-md-8 col-sm-12 bg-light pt-2 pb-4">
+@extends('layouts.padrao')
+@section('conteudo')
+    <div class="card shadow-sm">
 
         <h1 class="text-center">Configurações</h1>
 
@@ -74,21 +52,18 @@
                     <div class="col-6">
                         <div class="card">
                             <div class="card-body">
-
-                                <h5 class="card-subtitle mb-2 text-muted text-center">Excluir funcionario </h5>
-                                <p class="card-text">Exclua um usuario do sistema.</p>
-
-
-                                <a href="{{ route('configuracoes.excluir') }}"
-                                    class="btn @include('partials.buttomCollor')">Cadastrar funcionário</a>
-
+                                <h5 class="card-subtitle mb-2 text-muted text-center">Lista de usuários</h5>
+                                <p class="card-text">Veja lista de todos os usuários da empresa {{session('empresa')}} cadastrados no sistema.</p>
+                                <a href="{{ route('configuracoes.cargos') }}"
+                                    class="btn @include('partials.buttomCollor')">Alterar cargos</a>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
 
-            <div class="container mt-4">
+            <div class="container mt-4 mb-4">
                 <div class="row">
 
 
@@ -102,6 +77,20 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-6">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <h5 class="card-subtitle mb-2 text-muted text-center">Excluir funcionario </h5>
+                                <p class="card-text">Exclua um usuario do sistema.</p>
+
+
+                                <a href="{{ route('configuracoes.excluir') }}"
+                                    class="btn @include('partials.buttomCollor')">Cadastrar funcionário</a>
+
+                            </div>
+                        </div>
+                    </div>
 
 
                 </div>
@@ -109,13 +98,4 @@
         @endif
 
     </div>
-
-
-
-    <!-- Features Section -->
-
-    <!-- Inclua os arquivos JavaScript do Bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-
-</html>
+@endsection

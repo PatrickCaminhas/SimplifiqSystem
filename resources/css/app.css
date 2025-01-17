@@ -1,7 +1,9 @@
+@import "bootstrap/dist/css/bootstrap.min.css";
+
 .quicksand {
     font-family: "Quicksand", sans-serif;
     font-optical-sizing: auto;
     font-weight: 300;
     font-style: normal;
   }
-  
+
