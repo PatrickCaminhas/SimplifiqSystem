@@ -1,7 +1,11 @@
-@if (session('error'))
-<div class="alert alert-danger" role="alert">
-    {{ session('error') }}
-</div>
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <p>{{ $error }}</p>
+            @endforeach
+        </ul>
+    </div>
 @endif
 
 @if (session('success'))

@@ -38,6 +38,30 @@ class DashboardController extends Controller
 
         ]);
     }
+    public function testeHome()
+    {
+        $contas = Contas::all();
+        $despesasPorMes = DespesaHelper::despesasUltimosSeisMeses();
+        $ultimas6Vendas = $this->ultimasVendasRealizadas();
+        $ultimos6Produtos = $this->ultimosProdutosCadastrados();
+        $metasFaltandoUmaSemana = $this->metasQueFaltamUmaSemana();
+        $contas = $this->proximasContasAVencer();
+        $vendasSemana = $this->vendasNaUltimaSemana();
+        $cartoesDashboard = $this->cartoesDashboard();
+        $cartoesDashboard = (object) $cartoesDashboard;
+
+        return view('testeHome', [
+            'page' => 'Pagina Inicial',
+            'contas' => $contas,
+            'despesasPorMes' => $despesasPorMes,
+            'ultimas6Vendas' => $ultimas6Vendas,
+            'ultimos6Produtos' => $ultimos6Produtos,
+            'metasFaltandoUmaSemana' => $metasFaltandoUmaSemana,
+            'cartoesDashboard' => $cartoesDashboard,
+            'vendasSemana' => $vendasSemana
+
+        ]);
+    }
 
     public function cadastros()
     {

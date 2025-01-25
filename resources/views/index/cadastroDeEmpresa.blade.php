@@ -62,22 +62,27 @@
                                         <div class="form-floating mb-2">
                                             <input type="tel" class="form-control" id="telefone" name="telefone"
                                                 placeholder="(33) 90123-4567" required>
-                                                <label for="telefone">Telefone</label>
+                                            <label for="telefone">Telefone</label>
+                                        </div>
+                                        <div class="form-floating mb-2">
+                                            <input type="date" class="form-control" id="data_de_criacao"
+                                                name="data_de_criacao" required>
+                                            <label for="datafundacao">Data de abertura da empresa:</label>
                                         </div>
                                         <div class="form-floating mb-2">
                                             <input type="text" class="form-control" id="nome" name="nome"
                                                 placeholder="Digite seu nome" required>
-                                                <label for="nome">Nome:</label>
+                                            <label for="nome">Nome:</label>
                                         </div>
                                         <div class="form-floating mb-2">
                                             <input type="text" class="form-control" id="sobrenome" name="sobrenome"
                                                 placeholder="Digite seu sobrenome" required>
-                                                <label for="sobrenome">Sobrenome:</label>
+                                            <label for="sobrenome">Sobrenome:</label>
                                         </div>
                                         <div class="form-floating mb-2">
                                             <input type="email" class="form-control" id="email" name="email"
                                                 placeholder="Digite seu email" required>
-                                                <label for="email">E-mail</label>
+                                            <label for="email">E-mail</label>
                                         </div>
                                         <div class="form-floating mb-2">
                                             <input type="password" class="form-control" name="senha" id="senha"

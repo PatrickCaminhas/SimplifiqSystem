@@ -35,14 +35,14 @@
 
                                     <p class="card-text">Inicio no sistema: {{ $informacaoEmpresa->created_at }}</p>
                                     <h5 class="card-title">Ações</h5>
-                                    <p href="#" class="btn btn-primary">Alterar dados da empresa</p>
+                                    <p href="#" class="btn @include('partials.buttomCollor')"><i class="bi bi-info-circle-fill"></i> Alterar dados da empresa</p>
                                     <br>
-                                    <p href="#" class="btn btn-primary">Alterar tema da empresa</p>
+                                    <p href="#" class="btn @include('partials.buttomCollor')"><i class="bi bi-palette-fill"></i> Alterar tema da empresa</p>
                                     <br>
-                                    <p><a href="{{ route('contas.read') }}" class="btn btn-primary">Historico de contas</a>
+                                    <p><a href="{{ route('contas.read') }}" class="btn @include('partials.buttomCollor')"><i class="bi bi-wallet-fill"></i> Historico de contas</a>
                                     </p>
 
-                                    <p><a href="{{ route('metas.read') }}" class="btn btn-primary">Lista de metas</a></p>
+                                    <p><a href="{{ route('metas.read') }}" class="btn @include('partials.buttomCollor')"><i class="bi bi-flag-fill"></i> Lista de metas</a></p>
 
                                 </div>
 

@@ -13,7 +13,7 @@
                             <h5 class="card-subtitle mb-2 text-muted text-center">Alterar dados pessoais</h5>
                             <p class="card-text">Altere os seus dados cadastrais.</p>
                             <a href="{{ route('configuracoes.dados') }}"
-                                class="btn @include('partials.buttomCollor')">Alterar dados</a>
+                                class="btn @include('partials.buttomCollor')"><i class="bi bi-pencil-fill"></i> Alterar dados</a>
                         </div>
                     </div>
                 </div>
@@ -23,7 +23,7 @@
                             <h5 class="card-subtitle mb-2 text-muted text-center">Alterar senha</h5>
                             <p class="card-text">Altere sua senha para garantir a segurança de sua conta.</p>
                             <a href="{{ route('configuracoes.senha') }}"
-                                class="btn @include('partials.buttomCollor')">Alterar senha</a>
+                                class="btn @include('partials.buttomCollor')"><i class="bi bi-lock-fill"></i> Alterar senha</a>
                         </div>
                     </div>
                 </div>
@@ -45,7 +45,7 @@
                                         <a class="btn @include('partials.buttomCollor')"
                                             href="{{ route('configuracoes.funcionario') }}">
                                 @endif
-                                Cadastraar funcionário</a>
+                                <i class="bi bi-person-plus-fill"></i> Cadastrar funcionário</a>
                             </div>
                         </div>
                     </div>
@@ -55,7 +55,7 @@
                                 <h5 class="card-subtitle mb-2 text-muted text-center">Lista de usuários</h5>
                                 <p class="card-text">Veja lista de todos os usuários da empresa {{session('empresa')}} cadastrados no sistema.</p>
                                 <a href="{{ route('configuracoes.cargos') }}"
-                                    class="btn @include('partials.buttomCollor')">Alterar cargos</a>
+                                    class="btn @include('partials.buttomCollor')"><i class="bi bi-person-lines-fill"></i> Alterar cargos</a>
                             </div>
                         </div>
                     </div>
@@ -73,7 +73,7 @@
                                 <h5 class="card-subtitle mb-2 text-muted text-center">Alterar cargo de usuário</h5>
                                 <p class="card-text">Altere os cargos dos usuarios da sua empresa.</p>
                                 <a href="{{ route('configuracoes.cargos') }}"
-                                    class="btn @include('partials.buttomCollor')">Alterar cargos</a>
+                                    class="btn @include('partials.buttomCollor')"><i class="bi bi-briefcase-fill"></i> Alterar cargos</a>
                             </div>
                         </div>
                     </div>
@@ -86,7 +86,7 @@
 
 
                                 <a href="{{ route('configuracoes.excluir') }}"
-                                    class="btn @include('partials.buttomCollor')">Cadastrar funcionário</a>
+                                    class="btn @include('partials.buttomCollor')"><i class="bi bi-person-x"></i> Excluir funcionário</a>
 
                             </div>
                         </div>

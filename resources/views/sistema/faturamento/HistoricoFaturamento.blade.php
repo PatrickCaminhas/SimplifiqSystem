@@ -1,7 +1,7 @@
 @extends('layouts.lista')
-@section('titulo', 'Faturamento')
+@section('titulo', 'Renda Bruta')
 @section('lista')
-    <p> Está faltando faturamento de algum mês? Clique em <a class="btn btn-primary"
+    <p> Está faltando renda bruta de algum mês? Clique em <a class="btn @include('partials.buttomCollor')"
             href="{{ route('faturamento.create') }}">Registrar</a></p>
     <table id="myTable" class="display">
         <thead>
@@ -9,7 +9,6 @@
                 <th>Data</th>
                 <th>Faturamento</th>
                 <th>Alterar</th>
-
             </tr>
         </thead>
         <tbody>
@@ -33,7 +32,7 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h1 class="modal-title fs-5" id="staticBackdropLabel">
-                                            Faturamento #{{ $faturamento->id }}</h1>
+                                            Renda Bruta #{{ $faturamento->id }}</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
@@ -41,11 +40,9 @@
                                         <form action="{{ route('faturamento.update') }}" method="POST" class="row g-3">
                                             @csrf
                                             <div class="col-12">
-                                                <p>Se houve algum erro no
-                                                    faturamento ou
+                                                <p>Se houve algum erro na renda bruta ou
                                                     deseja alterar o valor, insira o
-                                                    novo
-                                                    valor abaixo:</p>
+                                                    novo valor abaixo:</p>
                                             </div>
                                             <div class="col-6">
                                                 <label for="exampleFormControlInput1" class="form-label">Data:</label>
@@ -65,11 +62,10 @@
                                                 <input type="number" class="form-control" name="valor" id="valor"
                                                     min="1" step="0.01" required>
                                                 <label>
-                                                    Novo valor do
-                                                    faturamento:</label>
+                                                    Novo valor da renda bruta:</label>
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-primary">
+                                        <button type="submit" class="btn @include('partials.buttomCollor')">
                                             Alterar</button>
 
                                     </div>

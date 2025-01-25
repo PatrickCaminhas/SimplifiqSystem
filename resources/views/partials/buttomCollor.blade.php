@@ -6,6 +6,8 @@
     btn-warning
 @elseif (session('tema') == 'azul')
     btn-primary
+@elseif (session('tema') == 'dark')
+    btn-dark
 @else
     btn-primary
 @endif

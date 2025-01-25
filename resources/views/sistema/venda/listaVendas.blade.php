@@ -1,7 +1,7 @@
 @extends('layouts.lista')
 @section('titulo', 'Lista de Vendas')
 @section('lista')
-    <p>Deseja cadastrar uma nova venda? <a class="btn btn-primary" href="{{ route('vendas.create') }}">Clique aqui</a></p>
+    <p><a class="btn @include('partials.buttomCollor')" href="{{ route('vendas.create') }}"><i class="bi bi-plus-circle-fill"></i> Cadastrar venda</a></p>
     <table id="myTable" class="display">
         <thead>
             <tr>
@@ -20,9 +20,9 @@
                     <td>{{ \Carbon\Carbon::parse($venda->data_venda)->format('d/m/Y') }}</td>
                     <td>{{ $venda->valor_total }}</td>
                     <td>
-                        <button type="button" class="btn bg-primary text-light" data-bs-toggle="modal"
+                        <button type="button" class="btn @include('partials.buttomCollor') text-light" data-bs-toggle="modal"
                             data-bs-target="#venda{{ $venda->id }}" data-venda-id="{{ $venda->id }}">
-                            Consultar
+                            <i class="bi bi-search"></i>
                         </button>
                         <!-- Modal -->
                         <div class="modal fade" id="venda{{ $venda->id }}" data-bs-backdrop="static"

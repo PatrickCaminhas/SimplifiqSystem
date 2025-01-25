@@ -35,7 +35,7 @@ class CadastroController extends Controller
         // Validação dos dados
         $this->ValidarEmpresa($request);
         $this->ValidarFuncionario($request);
-        // Verificar e criar a empresa
+        // Verificando e criar a empresa
         $empresa = $this->createEmpresa($request);
         if (!$empresa) {
             return redirect()->back()->withErrors([
@@ -65,6 +65,7 @@ class CadastroController extends Controller
             'tamanhoempresa' => 'required|string',
             'tipoempresa' => 'required|string',
             'telefone' => 'required|string',
+            'data_de_criacao => required|date',
             'nome' => 'required|string',
             'sobrenome' => 'required|string',
             'email' => 'required|string|email|unique:funcionarios,email',
@@ -110,6 +111,7 @@ class CadastroController extends Controller
             'tamanho_empresa' => $request->input('tamanhoempresa'),
             'tipo_empresa' => $request->input('tipoempresa'),
             'telefone' => $request->input('telefone'),
+            'data_de_criacao' => $request->input('data_de_criacao'),
             'estado' => 'inexistente',
         ]);
     }

@@ -1,7 +1,7 @@
 @extends('layouts.cadastro')
 @section('titulo', 'Cadastro de Produto')
 @section('formulario')
-@section('route', route('cadastroproduto.store'))
+@section('route', route('produto.preco.store'))
 
     <input type="hidden" name="id" value="{{ $produto->id }}">
     <div class=" form-group">

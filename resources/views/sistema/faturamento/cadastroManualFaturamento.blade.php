@@ -1,12 +1,10 @@
 @extends('layouts.cadastro')
-@section('titulo', 'Cadastro de faturamento')
+@section('titulo', 'Cadastro de Renda Bruta')
 @section('formulario')
 @section('route', route('faturamento.store'))
 <div class="form-group">
-    <p>Faturamento ou renda bruta é valor total recebido de venda e/ou
-        serviços. </p>
+    <p>Renda bruta é valor total recebido em sua empresa.</p>
 </div>
-
 <div class="form-group">
     <label for="mes">Mês:</label>
     <select name="mes" id="mes" class="form-control" required>
@@ -29,7 +27,7 @@
 <!-- Input para buscar Produto -->
 <div class="form-group">
     <label for="ano">Ano:</label>
-    <input type="number" id="ano" name="ano" class="form-control" maxlength="4" min="2000"
+    <input type="number" id="ano" name="ano" class="form-control" maxlength="4" min="2007"
         max="{{ date('Y') }}" pattern="[0-9]{4}" placeholder="Digite o ano do faturamento" required>
 </div>
 <div class="form-group">
@@ -38,7 +36,7 @@
         placeholder="Digite o valor do faturamento" required>
 </div>
 
-<button type="submit" class="btn btn-primary mt-3">Registrar
+<button type="submit" class="btn @include('partials.buttomCollor') mt-3">Registrar
     faturamento</button>
 
 

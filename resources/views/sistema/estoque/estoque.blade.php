@@ -17,7 +17,7 @@
                     <td>{{ $produto->nome }}</td>
                     <td>{{ $produto->quantidade }}</td>
                     <td>
-                        <button type="button" class="btn bg-primary text-light" data-bs-toggle="modal"
+                        <button type="button" class="btn @include('partials.buttomCollor') text-light" data-bs-toggle="modal"
                             data-bs-target="#estoque{{ $produto->id }}" data-produto-id="{{ $produto->id }}">
                             Alterar
                         </button>

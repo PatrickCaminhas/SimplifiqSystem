@@ -1,7 +1,8 @@
 @extends('layouts.lista')
 @section('titulo', 'Metas')
 @section('lista')
-    <p>Deseja cadastar uma nova meta? <a class ="btn btn-primary" href="{{ route('metas.create') }}">Clique aqui</a></p>
+    <p><a class="btn @include('partials.buttomCollor')" href="{{ route('metas.create') }}"><i class="bi bi-plus-circle-fill"></i>
+            Cadastrar meta</a></p>
     <table id="myTable" class="display">
         <thead>
             <tr>
@@ -15,7 +16,7 @@
         <tbody>
             @foreach ($metas as $meta)
                 <tr>
-                    <td style="overflow-x: auto;">{{ $meta->id }}</td>
+                    <td >{{ $meta->id }}</td>
 
                     <td>{{ $meta->valor }}</td>
 
@@ -24,7 +25,7 @@
                     <td>
                         <button type="button" class="btn bg-primary text-light" data-bs-toggle="modal"
                             data-bs-target="#meta{{ $meta->id }}">
-                            Adicionar
+                            <i class="bi bi-plus-lg"></i>
                         </button>
                         <!-- Modal -->
                         <div class="modal fade" id="meta{{ $meta->id }}" data-bs-backdrop="static"
@@ -98,7 +99,7 @@
                                                     Progresso de meta:</label>
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-primary"
+                                        <button type="submit" class="btn @include('partials.buttomCollor')"
                                             @if ($meta->estado == 'Finalizada' || $meta->estado == 'Não cumprida') disabled @endif>
                                             Novo progresso</button>
 
@@ -115,7 +116,7 @@
                             @csrf
                             <input type="hidden" name="meta_id" value="{{ $meta->id }}">
                             <button type="submit" class="btn bg-primary text-light">
-                                Verificar
+                                <i class="bi bi-search"></i>
                             </button>
                         </form>
 

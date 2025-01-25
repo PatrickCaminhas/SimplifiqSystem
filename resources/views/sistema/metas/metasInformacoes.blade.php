@@ -36,7 +36,7 @@
                     <div class="card shadow-sm">
                         <div class="card-body row" style="overflow-x: auto;">
                             <h2 class="text-center">Estatisticas da meta #{{ $meta->id }}</h2>
-                            <div class="col-6">
+                            <div class="col-md-6 col-sm-12">
                                 <div style="width: 75%; margin: auto;">
                                     <canvas id="myChart"></canvas>
                                 </div>
@@ -55,7 +55,7 @@
                                     Excedido {{$informacoes->porcentagem}} da meta em {{$informacoes->total}}
                                     @endif
                                 </p>
-                                <a href="{{ route('metas.read') }}" class="btn btn-primary">Voltar</a>
+                                <a href="{{ route('metas.read') }}" class="btn @include('partials.buttomCollor')">Voltar</a>
                             </div>
 
                         </div>

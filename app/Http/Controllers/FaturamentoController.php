@@ -49,7 +49,7 @@ class FaturamentoController extends Controller
             $verificaFaturamento->update([
                 'renda_bruta' => $request->input('valor'),
             ]);
-            return redirect('faturamento/exibir')->with('success', 'Faturamento atualizado com sucesso!');
+            return redirect('renda-bruta/exibir')->with('success', 'Faturamento atualizado com sucesso!');
         } else {
             return redirect()->back()->with('error', 'Faturamento não registrado para o mês informado.');
         }
@@ -74,9 +74,9 @@ class FaturamentoController extends Controller
         }
 
         if ($faturamento) {
-            return redirect('faturamento')->with('success', 'Faturamento registrado com sucesso!');
+            return redirect()->back()->with('success', 'Faturamento registrado com sucesso!');
         } else {
-            return redirect('faturamento')->with('error', 'Erro ao registrar faturamento.');
+            return redirect()->back()->with('error', 'Erro ao registrar faturamento.');
         }
     }
     /*
@@ -114,7 +114,7 @@ class FaturamentoController extends Controller
         {
             $faturamento = HistoricoFaturamento::find($request->input('id'));
             $faturamento->delete();
-            return redirect('faturamento/exibir')->with('success', 'Faturamento excluído com sucesso!');
+            return redirect('renda-bruta/exibir')->with('success', 'Faturamento excluído com sucesso!');
         }
 
 }

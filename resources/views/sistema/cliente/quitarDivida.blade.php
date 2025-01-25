@@ -51,7 +51,7 @@
                                             <div class="form-group mt-3" id="input-container">
                                             </div>
 
-                                            <button type="submit" class="btn btn-primary mt-3">Quitar</button>
+                                            <button type="submit" class="btn @include('partials.buttomCollor') mt-3">Quitar</button>
                                         </form>
                                     </div>
                                     @if ($errors->any())

@@ -19,6 +19,7 @@
     },
     "dependencies": {
         "@vitejs/plugin-vue": "^5.2.1",
+        "bootstrap-icons": "^1.11.3",
         "vue": "^3.5.13"
     },
     "name": "simplifiqsystem",

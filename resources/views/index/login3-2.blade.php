@@ -31,11 +31,12 @@
                                         </h4>
                                     </div>
 
-                                    <form method="POST" action="{{ route('tenant.login') }}">
+                                    <form method="POST" action="{{ route('login') }}">
                                         @csrf
                                         <p>Acesse sua conta</p>
                                         @include('partials.errorAndSuccess')
-
+                                        <input type="hidden" class="form-control" name="email" id="email"
+                                                value="{{ $email }}" required>
                                         <div class="form-floating mb-3">
                                             <input type="email" class="form-control" name="email" id="email"
                                                 placeholder="{{ $email }}" disabled required>
@@ -49,12 +50,13 @@
 
 
                                         <div class="text-center pt-1 mb-5 pb-1 d-grid gap-2">
-                                            <button class="btn btn-primary fa-lg bg-primary  mb-3"
+                                            <button class="btn btn-primary fa-lg bg-primary  mb-3" id="Acesse"
                                                 type="submit">Acesse</button>
 
                                             <p><a class="text-muted" href="{{ route('password.request') }}">Esqueceu
                                                     sua senha?</a></p>
                                         </div>
+
 
                                         <div class="d-flex align-items-center justify-content-center pb-4">
                                             <p class="mb-0 me-2">Não tem uma conta?</p>
@@ -67,8 +69,8 @@
                                                         <div class="modal-header">
                                                             <h1 class="modal-title fs-5" id="exampleModalLabel">Criação
                                                                 de conta</h1>
-                                                            <button type="button" class="btn-close"
-                                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            <a type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-label="Close"></a>
                                                         </div>
                                                         <div class="modal-body">
                                                             Para criar uma conta, entre em contato com o administrador

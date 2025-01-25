@@ -7,6 +7,7 @@ use App\Models\SimplesNacional;
 use App\Models\Empresa_information;
 use App\Models\HistoricoFaturamento; // Add this line to import the Faturamento class
 use Stancl\Tenancy\Facades\Tenancy;
+use Illuminate\Support\Facades\DB;
 
 class SimplesNacionalController extends Controller
 {
@@ -18,32 +19,187 @@ class SimplesNacionalController extends Controller
     }
     public function createCalculadora(Request $request)
     {
-        if($request->tamanho_empresa == "mei"){
+        $page = 'Empresa';
+        $tabela_vazia = false;
+        if ($request->tamanho_empresa == "mei") {
             $simplesMei = $this->calculateMEI();
-            return view("sistema.informativo.calculadoraSimplesNacional", ['empresa' => 'simplesNacional', 'simplesMei' => $simplesMei]);
+            return view("sistema.informativo.calculadoraSimplesNacional", compact('simplesMei', 'page', 'tabela_vazia'));
 
         }
-        $calculoAutomatico= $this->calculoDASAutomatico();
-        return view("sistema.informativo.calculadoraSimplesNacional",['informacoes' => $calculoAutomatico], ['page' => 'Empresa']);
+        if(HistoricoFaturamento::get()->isEmpty()){
+            $tabela_vazia = true;
+            return view('sistema.informativo.calculadoraSimplesNacional',compact('page','tabela_vazia'))->with('success', 'Não há faturamentos cadastrados.',);
+        }
+
+        $informacoes = $this->calculoDASAutomatico();
+
+        return view("sistema.informativo.calculadoraSimplesNacional", compact('informacoes', 'page', 'tabela_vazia'));
     }
 
-    public function calculoDASAutomatico(){
+    public function calculoDASAutomatico2()
+    {
         $empresa = Empresa_information::first();
         $faturamentosDeAteDozeMeses = HistoricoFaturamento::orderBy('ano_mes', 'desc')->take(13)->get();
         $Faturamento = array();
-        $Faturamento[0]=0;
-        $Faturamento[1]=$faturamentosDeAteDozeMeses[0]->renda_bruta;
-        $Faturamento[2]=$faturamentosDeAteDozeMeses[0]->ano_mes;
-        for($i= 1; $i < count($faturamentosDeAteDozeMeses); $i++){
+        $Faturamento[0] = 0;
+        $Faturamento[1] = $faturamentosDeAteDozeMeses[0]->renda_bruta;
+        $Faturamento[2] = $faturamentosDeAteDozeMeses[0]->ano_mes;
+        for ($i = 1; $i < count($faturamentosDeAteDozeMeses); $i++) {
             $Faturamento[0] += $faturamentosDeAteDozeMeses[$i]->renda_bruta;
         }
-        $Faturamento[3]= $Faturamento[0];
-        $Faturamento[4]= $faturamentosDeAteDozeMeses->count()-1;
-        $Faturamento[0]= ($Faturamento[0]/$Faturamento[4])*12;
-        $Faturamento[5]= $Faturamento[0];
-        $Faturamento[0]= $this->calculaDAS($Faturamento[0], $Faturamento[1], $empresa);
+        $Faturamento[3] = $Faturamento[0];
+        $Faturamento[4] = $faturamentosDeAteDozeMeses->count() - 1;
+        $Faturamento[0] = ($Faturamento[0] / $Faturamento[4]) * 12;
+        $Faturamento[5] = $Faturamento[0];
+        $Faturamento[0] = $this->calculaDAS($Faturamento[0], $Faturamento[1]);
         return $Faturamento;
     }
+
+    public function calculoDASAutomatico()
+    {
+        $faturamentosDeAteDozeMeses = HistoricoFaturamento::orderBy('ano_mes', 'desc')->take(13)->get();
+
+        // Inicializa as variáveis
+        $faturamentoTotal = 0;
+        $ultimoMesFaturamento = 0;
+        $ultimoMesAnoMes = '';
+        $mediaAnual = 0;
+        $quantidadeMeses = 0;  // Para contar quantos meses são utilizados
+
+
+        // Verifica se a empresa tem menos de 1 ano de atividade
+        $empresaTemMenosDeUmAno = $this->empresaTemMenosDeUmAno();
+        // Itera sobre os faturamentos
+        if ($this->empresaTemMenosDeUmAno() < 12) {
+            foreach ($faturamentosDeAteDozeMeses as $index => $faturamento) {
+                // Verifica se a empresa tem menos de 1 ano e se o mês é o mês atual
+                if ($this->empresaTemMenosDeUmAno() < 12 && $index == 0) {
+                    // Não inclui o faturamento do mês atual se a empresa tem menos de 1 ano
+                    $ultimoMesFaturamento = $faturamento->renda_bruta;
+                    $ultimoMesAnoMes = $faturamento->ano_mes;
+
+                    continue;
+                } else {
+
+                    // Inclui o faturamento normalmente
+                    $faturamentoTotal += $faturamento->renda_bruta;
+                    $quantidadeMeses++;  // Contabiliza o número de meses usados
+                }
+                // Define o último mês de faturamento
+                if ($index == 0) {
+                    $ultimoMesFaturamento = $faturamento->renda_bruta;
+                    $ultimoMesAnoMes = $faturamento->ano_mes;
+                }
+            }
+        } else {
+
+            foreach ($faturamentosDeAteDozeMeses as $index => $faturamento) {
+                // Inclui o faturamento normalmente
+                if ($index == 0) {
+                    $ultimoMesFaturamento = $faturamento->renda_bruta;
+                    $ultimoMesAnoMes = $faturamento->ano_mes;
+
+                }else{
+
+                $faturamentoTotal += $faturamento->renda_bruta;
+                $quantidadeMeses++;  // Contabiliza o número de meses usados
+                }
+
+            }
+        }
+
+
+            // Calcula a média da receita bruta se a empresa for maior que 1 ano, ou aplica a regra proporcional para empresas com menos de 1 ano
+            if ($empresaTemMenosDeUmAno < 12) {
+                if ($faturamentosDeAteDozeMeses->count() != 1) {
+                    $faturamentosDeAteDozeMeses = $faturamentosDeAteDozeMeses->slice(1)->values();
+                }
+
+                $rbt12Proporcional = $this->calculaRbt12Proporcional($faturamentosDeAteDozeMeses);
+
+            } else {
+                $rbt12Proporcional = $faturamentoTotal / $quantidadeMeses * 12;
+            }
+
+            // Calcula o DAS
+            $valorDAS = $this->calculaDAS($rbt12Proporcional, $ultimoMesFaturamento);
+            $valoresImpostos= $this->reparticaoImposto($valorDAS,$rbt12Proporcional);
+            // Retorna os dados
+
+            return [
+                'rbt12' => $rbt12Proporcional,
+                'ultimo_mes_faturamento' => $ultimoMesFaturamento,
+                'ultimo_mes_ano_mes' => $ultimoMesAnoMes,
+                'valor_das' => $valorDAS,
+                'quantidade_meses' => $quantidadeMeses,
+                'faturamento_total' => $faturamentoTotal,
+                'valores_impostos' => $valoresImpostos,
+            ];
+
+    }
+
+    public function empresaTemMenosDeUmAno()
+    {
+        $empresa = Empresa_information::first();
+        $dataCriacao = \Carbon\Carbon::parse($empresa->data_de_criacao);
+        $dataAtual = \Carbon\Carbon::now();
+        $empresaTemMenosDeUmAno = ceil($dataCriacao->diffInMonths($dataAtual));
+
+        return $empresaTemMenosDeUmAno;
+    }
+
+    public function calculaRbt12Proporcional($faturamentos)
+    {
+        $totalFaturamento = 0;
+        $quantidadeMeses = count($faturamentos);
+        // No primeiro mês, a RBT12 proporcional será a receita do próprio mês de apuração multiplicada por doze
+        if ($quantidadeMeses == 1) {
+            return $faturamentos[0]->renda_bruta * 12;
+        }
+
+        // Nos 11 meses seguintes, a RBT12 proporcional será a média aritmética dos meses anteriores multiplicada por 12
+        if ($quantidadeMeses <= 11) {
+            $media = 0;
+            foreach ($faturamentos as $faturamento) {
+                $media += $faturamento->renda_bruta;
+            }
+            $media /= $quantidadeMeses;
+            return $media * 12;
+        }
+
+        // Para empresas com 12 meses, a RBT12 é calculada pela regra geral
+        return $faturamentos->sum('renda_bruta');
+    }
+
+    public function reparticaoImposto($valor_das,$renda_bruta_anual){
+        $anexo = "Anexo I";
+        $simplesNacional = DB::connection('mysql')
+            ->table('simples_nacionals')
+            ->where('nome_anexo', $anexo)
+            ->where('receita_bruta_anual_min', '<=', $renda_bruta_anual)
+            ->where('receita_bruta_anual_max', '>=', $renda_bruta_anual)
+            ->first();
+        $reparticao = DB::connection('mysql')
+            ->table('reparticao_tributos')
+            ->where('faixa', $simplesNacional->faixa_anexo)
+            ->first();
+        $cpp = ($reparticao->cpp/100)*$valor_das;
+        $csll = ($reparticao->csll/100)*$valor_das;
+        $icms = ($reparticao->icms/100)*$valor_das;
+        $irpj = ($reparticao->irpj/100)*$valor_das;
+        $cofins = ($reparticao->cofins/100)*$valor_das;
+        $pis_pasep = ($reparticao->pis_pasep/100)*$valor_das;
+
+        return [
+            'cpp' => $cpp,
+            'csll' => $csll,
+            'icms' => $icms,
+            'irpj' => $irpj,
+            'cofins' => $cofins,
+            'pis_pasep' => $pis_pasep,
+        ];
+    }
+
     public function createStore()
     {
         return view("administracao.cadastroSimplesNacional", ['page' => 'Empresa']);
@@ -58,10 +214,10 @@ class SimplesNacionalController extends Controller
             'nome_anexo' => 'required|string',
             'faixa_anexo' => 'required|string',
             'receita_bruta_anual_min' => [
-                'required',
-                'numeric',
-                'between:0,4800000.99',
-            ],
+                    'required',
+                    'numeric',
+                    'between:0,4800000.99',
+                ],
             'receita_bruta_anual_max' => [
                 'required',
                 'numeric',
@@ -123,37 +279,33 @@ class SimplesNacionalController extends Controller
         }
     }
 
-    public function calculateMEI(){
+    public function calculateMEI()
+    {
         $empresa = Empresa_information::first();
         $cincoPorcentoSalarioMinAtual = 70.6;
-        if($empresa->tipo_empresa =="comercio" || $empresa->tipo_empresa =="industria"){
-            $resultado= $cincoPorcentoSalarioMinAtual + 1;
-        }
-        elseif($empresa->tipo_empresa =="servicos"){
-            $resultado= $cincoPorcentoSalarioMinAtual + 5;
-        }
-        else{
-            $resultado= $cincoPorcentoSalarioMinAtual + 6;
+        if ($empresa->tipo_empresa == "comercio" || $empresa->tipo_empresa == "industria") {
+            $resultado = $cincoPorcentoSalarioMinAtual + 1;
+        } elseif ($empresa->tipo_empresa == "servicos") {
+            $resultado = $cincoPorcentoSalarioMinAtual + 5;
+        } else {
+            $resultado = $cincoPorcentoSalarioMinAtual + 6;
         }
         return $resultado;
     }
 
-    public function calculaDAS($renda_bruta_anual, $valor_bruto_mes, $empresa)
+    public function calculaDAS($renda_bruta_anual, $valor_bruto_mes)
     {
         // Determina o anexo baseado no tipo da empresa
-        $anexo = match ($empresa->tipo_empresa) {
-            'comercio' => 1,
-            'industria' => 2,
-            'servicos' => 3,
-            default => null,
-        };
+        $anexo = "Anexo I";
+
+
 
         if (is_null($anexo)) {
             return redirect()->route('simples.create.calculadora')->with('error', 'Tipo de empresa inválido!');
         }
 
         // Obtém as alíquotas e deduções da tabela Simples Nacional
-        $simplesNacional = \DB::connection('mysql')
+        $simplesNacional = DB::connection('mysql')
             ->table('simples_nacionals')
             ->where('nome_anexo', $anexo)
             ->where('receita_bruta_anual_min', '<=', $renda_bruta_anual)
@@ -165,7 +317,13 @@ class SimplesNacionalController extends Controller
             $deducao = $simplesNacional->deducao;
 
             // Cálculo do DAS
-            $resultado = ((($renda_bruta_anual * ($aliquota / 100)) - $deducao) / $renda_bruta_anual) * $valor_bruto_mes;
+            $aliquotaEfetiva = ((($renda_bruta_anual * ($aliquota / 100)) - $deducao) / $renda_bruta_anual);
+
+
+            $aliquotaEfetiva = round($aliquotaEfetiva, 4);
+
+
+            $resultado = $aliquotaEfetiva * $valor_bruto_mes;
             return $resultado;
         } else {
             return "erro";
@@ -174,20 +332,16 @@ class SimplesNacionalController extends Controller
 
     public function calculate(Request $request)
     {
-        $empresa = Empresa_information::first();
-
         $request->validate([
             'receita_bruta_anual' => 'required|numeric|regex:/^\d{1,9}(\.\d{1,2})?$/',
             'receita_bruta_mes' => 'required|numeric|regex:/^\d{1,9}(\.\d{1,2})?$/',
         ]);
-
         $valor_bruto_anual = $request->input('receita_bruta_anual');
         $valor_bruto_mes = $request->input('receita_bruta_mes');
-        $resultado = $this->calculaDAS($valor_bruto_anual, $valor_bruto_mes, $empresa);
-        if($resultado != "erro"){
-            return redirect()->route('simples.create.calculadora')->with('valor', "A previsão de imposto do DAS é de R$".number_format($resultado, 2,',','.'));
-        }
-        else{
+        $resultado = $this->calculaDAS($valor_bruto_anual, $valor_bruto_mes);
+        if ($resultado != "erro") {
+            return redirect()->route('simples.create.calculadora')->with('valor', "A previsão de imposto do DAS é de R$" . number_format($resultado, 2, ',', '.'));
+        } else {
             return redirect()->route('simples.create.calculadora')->with('error', 'Registro não encontrado!');
         }
     }

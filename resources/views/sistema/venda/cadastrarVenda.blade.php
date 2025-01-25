@@ -16,37 +16,37 @@
     </select>
 </div>
 <div class="form-group">
-    <label for="data">Metodo de pagamento:</label>
+    <label for="data">Metodo de pagamento:</label><br>
     <div class="form-check form-check-inline">
         <input class="form-check-input" type="radio" name="metodo_pagamento" id="Dinheiro" value="Dinheiro" checked>
         <label class="form-check-label" for="Dinheiro">
-            Dinheiro
+            <i class="bi bi-cash-coin"></i> Dinheiro
         </label>
     </div>
     <div class="form-check form-check-inline">
         <input class="form-check-input" type="radio" name="metodo_pagamento" id="Pix" value="Pix">
         <label class="form-check-label" for="Pix">
-            Pix
+            <i class="bi bi-x-diamond-fill"></i> Pix
         </label>
     </div>
     <div class="form-check form-check-inline">
         <input class="form-check-input" type="radio" name="metodo_pagamento" id="Cartão de credito"
             value="Cartão de credito">
         <label class="form-check-label" for="Cartão de credito">
-            Cartão de credito
+            <i class="bi bi-credit-card-fill"></i> Cartão de credito
         </label>
     </div>
     <div class="form-check form-check-inline">
         <input class="form-check-input" type="radio" name="metodo_pagamento" id="Cartão de debito"
             value="Cartão de debito">
         <label class="form-check-label" for="Cartão de debito">
-            Cartão de debito
+            <i class="bi bi-credit-card"></i> Cartão de debito
         </label>
     </div>
     <div class="form-check form-check-inline">
         <input class="form-check-input" type="radio" name="metodo_pagamento" id="Crediario" value="Crediário">
         <label class="form-check-label" for="Crediário">
-            Crediário
+            <i class="bi bi-journal-bookmark-fill"></i> Crediário
         </label>
     </div>
 </div>
@@ -64,11 +64,11 @@
     </div>
 </div>
 <div class="form-group">
-    <label for="valor-total">Valor Total: </label>
+    <label for="valor-total"><i class="bi bi-cash-stack"></i> Valor Total: </label>
     <span type="text" id="valor-total" class="form-control-static"></span>
 </div>
 <div class="form-group">
-    <label for="desconto-maximo">Desconto Máximo: </label>
+    <label for="desconto-maximo"><i class="bi bi-tag"></i> Desconto Máximo: </label>
     <span type="text" id="desconto-maximo" class="form-control-static">
     </span>
 </div>
@@ -81,7 +81,7 @@
 </div>
 
 <!-- Botão de Registrar Venda -->
-<button type="submit" class="btn btn-primary mt-3">Registrar
+<button type="submit" class="btn @include('partials.buttomCollor') mt-3">Registrar
     Venda</button>
 @endsection
 

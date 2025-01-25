@@ -1,7 +1,7 @@
 @extends('layouts.lista')
-@section('titulo', 'Contas')
+@section('titulo', 'Despesas')
 @section('lista')
-    <p>Deseja cadastar uma nova conta? <a class ="btn btn-primary" href="{{ route('contas.create') }}">Clique aqui</a></p>
+    <p><a class ="btn @include('partials.buttomCollor')" href="{{ route('contas.create') }}"><i class="bi bi-plus-circle-fill"></i> Cadastrar despesa</a></p>
     <table id="myTable" class="display">
         <thead>
             <tr>
@@ -24,7 +24,7 @@
                         <form method="GET" action="{{ route('contas.update', $conta->id) }}">
                             @csrf
                             <input type="hidden" name="id" value="{{ $conta->id }}">
-                            <button type="submit" class="btn btn-primary"
+                            <button type="submit" class="btn @include('partials.buttomCollor')"
                                 @if ($conta->estado != 'Pendente') disabled @endif>
                                 Finalizar</button>
                         </form>

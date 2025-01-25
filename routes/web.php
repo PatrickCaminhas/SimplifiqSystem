@@ -48,8 +48,6 @@ foreach (config('tenancy.central_domains') as $domain) {
 
         Route::get('/buscar-empresa', [LoginController::class, 'buscar'])->name('buscar.empresa');
 
-
-
         Route::get('/mensagem', function () {
             return new MensagemMail();
             // Mail::to('patrickcaminhasm@gmail.com')->send(new MensagemMail());

@@ -194,25 +194,7 @@ class CotacoesController extends Controller
 
     }
 
-    public function gerarPdf()
-    {
-        $dados = [
-            'produtos' => [
-                ['nome' => 'Produto 1', 'fornecedor' => 'Fornecedor A', 'preco' => 100],
-                ['nome' => 'Produto 2', 'fornecedor' => 'Fornecedor B', 'preco' => 200],
-                // Adicione mais produtos aqui
-            ]
-        ];
 
-        $pdf = app('dompdf.wrapper');
-        $pdf->loadHTML('<h1>Teste</h1>');
-        // Carregue uma view ou HTML em um PDF
-        return $pdf->stream();
-
-
-        // Faça o download do PDF
-//return $pdf->download('invoice.pdf');
-    }
 
     public function delete(Request $request)
     {

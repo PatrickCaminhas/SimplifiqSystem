@@ -123,15 +123,15 @@ class LoginController extends Controller
     {
         $request->validate([
             'email' => 'required|email',
-            'password' => 'required',
+            'senha' => 'required',
         ]);
 
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('email', 'senha');
 
         // Tentar autenticar o usuário
         $funcionario = Funcionarios::where('email', $credentials['email'])->first();
 
-        if ($funcionario && Hash::check($credentials['password'], $funcionario->senha)) {
+        if ($funcionario && Hash::check($credentials['senha'], $funcionario->senha)) {
 
             Auth::login($funcionario);
             $this->informacoesDaEmpresa($funcionario);
@@ -139,11 +139,11 @@ class LoginController extends Controller
         }
         if ($funcionario) {
             return redirect()->back()->withErrors([
-                'email' => 'As credenciais fornecidas não correspondem aos nossos registros.',
+                'error' => 'Senha incorreta.',
             ]);
         } else {
             return redirect()->back()->withErrors([
-                'email' => 'O e-mail fornecido não corresponde aos nossos registros.',
+                'error' => 'E-mail não cadastrado.',
             ]);
         }
     }
@@ -194,7 +194,7 @@ class LoginController extends Controller
                 ->with('email', $request['email'])->with('senha', $request['senha']);
         }
         return redirect()->away('http://localhost:8000/login')->withErrors([
-            'email' => 'E-mail incorreto.',
+            'error' => 'E-mail incorreto.',
         ]);
     }
 
@@ -246,14 +246,15 @@ class LoginController extends Controller
         }
         if ($funcionario) {
             return redirect()->back()->withErrors([
-                'email' => 'As credenciais fornecidas não correspondem aos nossos registros.',
+                'error' => 'Senha incorreta.',
             ]);
         } else {
             return redirect()->back()->withErrors([
-                'email' => 'O e-mail fornecido não corresponde aos nossos registros.',
+                'error' => 'O e-mail incorreto.',
             ]);
         }
     }
+
 
 
 

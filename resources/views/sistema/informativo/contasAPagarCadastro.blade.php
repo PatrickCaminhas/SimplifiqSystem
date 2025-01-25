@@ -1,7 +1,8 @@
 @extends('layouts.cadastro')
-@section('titulo', 'Cadastro de contas')
+@section('titulo', 'Cadastro de despesas')
 @section('formulario')
 @section('route', route('contas.store'))
+@section('voltar', route('contas.read'))
 
 <div class="form-floating mb-3">
     <input type="text" class="form-control" name="credor" id="credor" required>
@@ -11,7 +12,7 @@
 
 
     <select class="form-select" id="tipo" name="tipo">
-        <option selected disabled>Selecione o tipo de conta
+        <option selected disabled>Selecione o tipo de despesa
         </option>
         <option value="agua">Água</option>
         <option value="aluguel">Aluguel</option>

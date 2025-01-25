@@ -6,6 +6,8 @@
     btn-outline-warning
 @elseif (session('tema') == 'azul')
     btn-outline-primary
+@elseif (session('tema') == 'azul')
+    btn-outline-dark
 @else
     btn-outline-primary
 @endif

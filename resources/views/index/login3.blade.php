@@ -32,23 +32,17 @@
                           <form method="POST" action="{{ route('identify.tenant') }}">
                             @csrf
                             <p>Acesse sua conta</p>
-
                             <div class="form-floating mb-3">
                                 <input type="email" class="form-control" name="email" id="email" placeholder="Digite seu e-mail"
                                     required>
                                     <label> Email:</label>
                             </div>
-                           <!-- <div class="form-floating mb-3">
-                                <input type="password" class="form-control" name="senha" id="senha" placeholder="Digite sua senha"
-                                    required>
-                                    <label> Senha:</label>
-                            </div>-->
+
 
 
                             <div class="text-center pt-1 mb-5 pb-1 d-grid gap-2">
                               <button  class="btn btn-primary fa-lg bg-primary  mb-3" type="submit">Acesse</button>
-                              <!--
-                              <p><a class="text-muted" href="#">Esqueceu sua senha?</a></p>-->
+
                               @include('partials.errorAndSuccess')
                             </div>
 

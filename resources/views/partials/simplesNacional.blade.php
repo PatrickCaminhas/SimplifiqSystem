@@ -2,7 +2,7 @@
     <div class="form-text">Você é um Microempreendedor Individual (MEI) e o valor do DAS MEI é de R$ {{ $simplesMei }}.
     </div>
 @else
-    <div class="form-text">Esta calculadora é uma estimativa, contate o seu contador.</div>
+    <div class="form-text">Este simulador é uma estimativa, contate o seu contador.</div>
 
     <div>
         <form action="{{ route('simples.calculate') }}" method="POST">

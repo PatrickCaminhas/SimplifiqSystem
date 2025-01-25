@@ -6,6 +6,9 @@
     bg-warning-subtle
 @elseif (session('tema') == 'azul')
     bg-primary-subtle
+@elseif (session('tema') == 'dark')
+    bg-dark-subtle
+
 @else
-    bg-primary-subtle
+    bg-seco-subtle
 @endif

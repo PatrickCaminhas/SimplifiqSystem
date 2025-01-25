@@ -1,7 +1,7 @@
 @extends('layouts.lista')
 @section('titulo', 'Fornecedores')
 @section('lista')
-    <p>Deseja cadastar um novo fornecedor? <a class="btn btn-primary" href="{{ route('fornecedor.store') }}">Clique aqui</a>
+    <p><a class="btn @include('partials.buttomCollor')" href="{{ route('fornecedor.store') }}"><i class="bi bi-plus-circle-fill"></i> Cadastrar forenecedor</a>
     </p>
     <table id="myTable" class="display">
         <thead>
@@ -21,9 +21,9 @@
                     <td>{{ $fornecedor->CNPJ }}</td>
                     <td>{{ $fornecedor->telefone }}</td>
                     <td>
-                        <button type="button" class="btn bg-primary text-light" data-bs-toggle="modal"
+                        <button type="button" class="btn @include('partials.buttomCollor') text-light" data-bs-toggle="modal"
                             data-bs-target="#fornecedor{{ $fornecedor->id }}" data-produto-id="{{ $fornecedor->id }}">
-                            Consultar
+                            <i class="bi bi-search"></i>
                         </button>
                         <!-- Modal -->
                         <div class="modal fade" id="fornecedor{{ $fornecedor->id }}" data-bs-backdrop="static"
@@ -80,7 +80,7 @@
                                         <form method="POST" action="{{ route('fornecedores.edit') }}">
                                             @csrf
                                             <input type="hidden" name="id" value="{{ $fornecedor->id }}">
-                                            <button type="submit" class="btn btn-primary">
+                                            <button type="submit" class="btn @include('partials.buttomCollor')">
                                                 Alterar</button>
                                         </form>
 

@@ -31,9 +31,9 @@
                 <div class="card mb-2 h-100 d-flex">
                     <div class="card-body">
                         <h5 class="card-title">Ações</h5>
-                        <a href="{{ route('produto.edit', ['id' => $produto->id]) }}" class="btn btn-primary">Alterar
+                        <a href="{{ route('produto.edit', ['id' => $produto->id]) }}" class="btn @include('partials.buttomCollor')">Alterar
                             dados</a>
-                        <a href="{{ route('produto.preco', ['id' => $produto->id]) }}" class="btn btn-primary">Alterar
+                        <a href="{{ route('produto.preco', ['id' => $produto->id]) }}" class="btn @include('partials.buttomCollor')">Alterar
                             preço de venda</a>
                         <a href="#" class="btn btn-danger">Excluir produto</a>
                     </div>

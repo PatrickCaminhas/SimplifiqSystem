@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8 col-sm-12">
             <div class="card shadow-sm">
-                <div class="card-body">
+                <div class="card-body table-responsive" >
                     <h4 class="display-6 text-center">@yield('titulo', 'Lista')</h4>
                     @include('partials.errorAndSuccess')
                     @yield('lista')

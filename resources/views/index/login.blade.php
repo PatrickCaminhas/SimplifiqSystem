@@ -32,10 +32,9 @@
                                         </h4>
                                     </div>
 
-                                    <form method="POST" action="{{ route('tenant.login') }}">
+                                    <form method="POST" action="{{ route('login') }}">
                                         @csrf
                                         <p>Acesse sua conta</p>
-                                        @include('partials.errorAndSuccess')
                                         <div class="form-floating mb-3">
                                             <input type="email" class="form-control" name="email" id="email"
                                                 placeholder="Digite seu e-mail" required>
@@ -54,6 +53,8 @@
 
                                             <p><a class="text-muted" href="{{ route('password.request') }}">Esqueceu
                                                     sua senha?</a></p>
+                                                    @include('partials.errorAndSuccess')
+
                                         </div>
 
                                         <div class="d-flex align-items-center justify-content-center pb-4">

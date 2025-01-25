@@ -1,8 +1,8 @@
 @extends('layouts.lista')
 @section('titulo', 'Clientes')
 @section('lista')
-                            <p>Deseja cadastar um novo cliente? <a class="btn btn-primary"
-                                    href="{{ route('cliente.store.create') }}">Clique aqui</a></p>
+                            <p> <a class="btn @include('partials.buttomCollor')"
+                                    href="{{ route('cliente.store.create') }}"><i class="bi bi-plus-circle-fill"></i> Cadastrar cliente</a></p>
                             <table id="myTable" class="display">
                                 <thead>
                                     <tr>
@@ -33,10 +33,10 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <button type="button" class="btn bg-primary text-light"
+                                                <button type="button" class="btn @include('partials.buttomCollor') text-light"
                                                     data-bs-toggle="modal" data-bs-target="#cliente{{ $cliente->id }}"
                                                     data-produto-id="{{ $cliente->id }}">
-                                                    Consultar
+                                                    <i class="bi bi-search"></i>
                                                 </button>
                                                 <!-- Modal -->
                                                 <div class="modal fade" id="cliente{{ $cliente->id }}"
@@ -117,7 +117,7 @@
                                                                     @csrf
                                                                     <input type="hidden" name="id"
                                                                         value="{{ $cliente->id }}">
-                                                                    <button type="submit" class="btn btn-primary">
+                                                                    <button type="submit" class="btn @include('partials.buttomCollor')">
                                                                         Alterar</button>
                                                                 </form>
                                                                 @if ($cliente->debitos > 0)
@@ -126,7 +126,7 @@
                                                                         @csrf
                                                                         <input type="hidden" name="id"
                                                                             value="{{ $cliente->id }}">
-                                                                        <button type="submit" class="btn btn-primary">
+                                                                        <button type="submit" class="btn @include('partials.buttomCollor')">
                                                                             Quitar divida</button>
                                                                     </form>
                                                                 @endif

@@ -28,7 +28,7 @@
         value="{{ old('endereco', $cliente->endereco_completo) }}" required>
 </div>
 <div class= "text-center mt-2">
-<button type="submit" class="btn btn-primary mt-3">Alterar dados do
+<button type="submit" class="btn @include('partials.buttomCollor') mt-3">Alterar dados do
     cliente</button>
 </div>
 @endsection

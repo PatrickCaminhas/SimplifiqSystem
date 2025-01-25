@@ -12,54 +12,74 @@
                 @endif
             </h5>
 
-
             <div class="col-md-6 col-lg-6 col-sm-12 mt-2">
                 <div class="card mb-2 h-100 d-flex justify-content-center align-items-center">
-
                     <div class="card-body">
-                        <h5>Resumo das atividades</h5>
-                        <div class=" mb-2 h-100 d-flex">
-                            <div class="card-body text-center">
-
-                                <div class="row">
-
-                                    <div class="d-flex flex-wrap justify-content-center align-items-center gap-3">
-                                        <div class="card text-bg-primary mb-2 col-md-3 col-sm-4">
-                                            <div class="card-body d-flex align-items-center">
-                                                <h6 class="card-text">{{ $cartoesDashboard->produtosCadastrados }}
-                                                    produtos cadastrados</h6>
-                                            </div>
-                                        </div>
-                                        <div class="card text-bg-warning  mb-2 col-md-3 col-sm-4">
-                                            <div class="card-body d-flex align-items-center">
-                                                <h6 class="card-text">{{ $cartoesDashboard->clientesCadastrados }}
-                                                    clientes cadastrados</h6>
-                                            </div>
-                                        </div>
-                                        <div class="card text-bg-secondary  mb-2 col-md-3 col-sm-4">
-                                            <div class="card-body d-flex align-items-center">
-                                                <h6 class="card-text">{{ $cartoesDashboard->vendasRealizadas }} vendas
-                                                    realizadas</h6>
-                                            </div>
-                                        </div>
-                                        <div class="card text-bg-dark  mb-2 col-md-3 col-sm-4">
-                                            <div class="card-body d-flex align-items-center">
-                                                <h6 class="card-text">{{ $cartoesDashboard->itensNoEstoque }} bens em
-                                                    estoque</h6>
-                                            </div>
-                                        </div>
-                                        <div class="card text-bg-success  mb-2 col-md-3 col-sm-4">
-                                            <div class="card-body d-flex align-items-center">
-                                                <h6 class="card-text">{{ $cartoesDashboard->metasCumpridas }} metas
-                                                    cumpridas</h6>
-                                            </div>
-                                        </div>
-                                        <div class="card text-bg-info  mb-2 col-md-3 col-sm-4">
-                                            <div class="card-body d-flex align-items-center">
-                                                <h6 class="card-text">{{ $cartoesDashboard->metasEmAndamento }} metas em
-                                                    andamento</h6>
-                                            </div>
-                                        </div>
+                        <h5 class="mb-4">Resumo das atividades</h5>
+                        <div class="row gy-3">
+                            <!-- Produtos Cadastrados -->
+                            <div class="col-md-4 col-sm-6">
+                                <div class="card text-bg-primary shadow-sm border-0 h-100">
+                                    <div class="card-body text-center">
+                                        <i class="bi bi-boxes display-6 mb-2"></i>
+                                        <h6 class="card-text">
+                                            {{ $cartoesDashboard->produtosCadastrados }} produtos cadastrados
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Clientes Cadastrados -->
+                            <div class="col-md-4 col-sm-6">
+                                <div class="card text-bg-warning shadow-sm border-0 h-100">
+                                    <div class="card-body text-center">
+                                        <i class="bi bi-people-fill display-6 mb-2"></i>
+                                        <h6 class="card-text">
+                                            {{ $cartoesDashboard->clientesCadastrados }} clientes cadastrados
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Vendas Realizadas -->
+                            <div class="col-md-4 col-sm-6">
+                                <div class="card text-bg-secondary shadow-sm border-0 h-100">
+                                    <div class="card-body text-center">
+                                        <i class="bi bi-cart-check-fill display-6 mb-2"></i>
+                                        <h6 class="card-text">
+                                            {{ $cartoesDashboard->vendasRealizadas }} vendas realizadas
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Estoque -->
+                            <div class="col-md-4 col-sm-6">
+                                <div class="card text-bg-dark shadow-sm border-0 h-100">
+                                    <div class="card-body text-center">
+                                        <i class="bi bi-box-seam display-6 mb-2"></i>
+                                        <h6 class="card-text">
+                                            {{ $cartoesDashboard->itensNoEstoque }} bens em estoque
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Metas Cumpridas -->
+                            <div class="col-md-4 col-sm-6">
+                                <div class="card text-bg-success shadow-sm border-0 h-100">
+                                    <div class="card-body text-center">
+                                        <i class="bi bi-graph-up-arrow display-6 mb-2"></i>
+                                        <h6 class="card-text">
+                                            {{ $cartoesDashboard->metasCumpridas }} metas cumpridas
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Metas em Andamento -->
+                            <div class="col-md-4 col-sm-6">
+                                <div class="card text-bg-info shadow-sm border-0 h-100">
+                                    <div class="card-body text-center">
+                                        <i class="bi bi-hourglass-split display-6 mb-2"></i>
+                                        <h6 class="card-text">
+                                            {{ $cartoesDashboard->metasEmAndamento }} metas em andamento
+                                        </h6>
                                     </div>
                                 </div>
                             </div>
@@ -78,67 +98,67 @@
                 </div>
             </div>
         </div>
-            <div class="row mt-2 mb-4">
+        <div class="row mt-2 mb-4">
 
-                <div class="col-md-6 col-lg-6 col-sm-12 mt-2">
-                    <div class="card mb-2 h-100 d-flex ">
-                        <div class="card-body">
-                            <h5 class="card-title">Ultimas vendas cadastradas</h5>
-                            <table id="vendasCadastradas" class="display">
-                                <thead>
+            <div class="col-md-6 col-lg-6 col-sm-12 mt-2">
+                <div class="card mb-2 h-100 d-flex ">
+                    <div class="card-body">
+                        <h5 class="card-title">Ultimas vendas cadastradas</h5>
+                        <table id="vendasCadastradas" class="display">
+                            <thead>
+                                <tr>
+                                    <th>Cliente</th>
+                                    <th>Data</th>
+                                    <th>Valor</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($ultimas6Vendas as $venda)
                                     <tr>
-                                        <th>Cliente</th>
-                                        <th>Data</th>
-                                        <th>Valor</th>
+                                        <td style="overflow-x: auto;">{{ $venda->cliente->nome }}</td>
 
+                                        <td>{{ \Carbon\Carbon::parse($venda->data_venda)->format('d/m/Y') }}
+                                        </td>
+                                        <td style="overflow-x: auto;">{{ $venda->valor_total }}</td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($ultimas6Vendas as $venda)
-                                        <tr>
-                                            <td style="overflow-x: auto;">{{ $venda->cliente->nome }}</td>
+                                @endforeach
 
-                                            <td>{{ \Carbon\Carbon::parse($venda->data_venda)->format('d/m/Y') }}
-                                            </td>
-                                            <td style="overflow-x: auto;">{{ $venda->valor_total }}</td>
-                                        </tr>
-                                    @endforeach
-
-                                </tbody>
-                            </table>
+                            </tbody>
+                        </table>
 
 
-                        </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-6 col-sm-12  mt-2 ">
-                    <div class="card h-100 d-flex">
-                        <div class="card-body">
-                            <h5 class="card-title">Proximas contas</h5>
-                            <table id="myTable" class="display">
-                                <thead>
-                                    <tr>
-                                        <th>Vencimento</th>
-                                        <th>Credor</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($contas as $conta)
-                                        @if ($conta->estado == 'Pendente' || $conta->estado == 'Vencida')
-                                            <tr>
-                                                <td>{{ \Carbon\Carbon::parse($conta->data_vencimento)->format('d/m/Y') }}
-                                                </td>
-                                                <td style="overflow-x: auto;">{{ $conta->credor }}</td>
-                                            </tr>
-                                        @endif
-                                    @endforeach
+            </div>
+            <div class="col-md-6 col-lg-6 col-sm-12  mt-2 ">
+                <div class="card h-100 d-flex">
+                    <div class="card-body">
+                        <h5 class="card-title">Proximas contas</h5>
+                        <table id="myTable" class="display">
+                            <thead>
+                                <tr>
+                                    <th>Vencimento</th>
+                                    <th>Credor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($contas as $conta)
+                                    @if ($conta->estado == 'Pendente' || $conta->estado == 'Vencida')
+                                        <tr>
+                                            <td>{{ \Carbon\Carbon::parse($conta->data_vencimento)->format('d/m/Y') }}
+                                            </td>
+                                            <td style="overflow-x: auto;">{{ $conta->credor }}</td>
+                                        </tr>
+                                    @endif
+                                @endforeach
 
-                                </tbody>
-                            </table>
+                            </tbody>
+                        </table>
 
 
-                        </div>
                     </div>
+                </div>
 
 
             </div>
@@ -239,4 +259,22 @@
             }
         });
     </script>
+    <script>
+        $(document).ready(function() {
+            // Ativar tooltips do Bootstrap
+            $('[data-bs-toggle="tooltip"]').tooltip();
+
+            // Adicionar animação nos cards ao passar o mouse
+            $(".card").hover(
+                function() {
+                    $(this).addClass("shadow-lg");
+                },
+                function() {
+                    $(this).removeClass("shadow-lg");
+                }
+            );
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 @endpush

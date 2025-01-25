@@ -57,15 +57,13 @@ Route::middleware([
     Route::get('password/reset/{token}', [SenhaResetController::class, 'resetForm'])->name('password.reset');
     Route::post('password/reset', [SenhaResetController::class, 'resetPassword'])->name('password.update');
 
-    Route::get('/login_second', [LoginController::class, 'formularioLoginTenant'])->name('tenant.login');
+    Route::get('/login_second', [LoginController::class, 'formularioLoginTenant'])->name('tenant.login.create');
     Route::post('/login_second', [LoginController::class, 'loginTenant'])->name('tenant.login');
 
 
     Route::middleware([AuthenticateDashboard::class])->group(function () {
 
-        Route::get('/testeHome', function () {
-            return view('testeHome');
-        });
+        Route::get('/testeHome', [DashboardController::class, 'testeHome'])->name('dashboard');
 
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
@@ -130,11 +128,11 @@ Route::middleware([
         Route::post('/estoque', [EstoqueController::class, 'update'])->name('estoque.update');
         Route::get('/estoque/recente/{id}', [EstoqueController::class, 'getEstoqueRecente'])->name('estoque.recente');
 
-        Route::get('/contas', [ContasController::class, 'createRead'])->name('contas.read');
-        Route::get('/contas/cadastro', [ContasController::class, 'create'])->name('contas.create');
-        Route::post('/contas/cadastro', [ContasController::class, 'store'])->name('contas.store');
-        Route::get('/contas/finalizar', [ContasController::class, 'update'])->name('contas.update');
-        Route::post('/contas/finalizar', [ContasController::class, 'finalizarConta'])->name('contas.finalizarConta');
+        Route::get('/despesas', [ContasController::class, 'createRead'])->name('contas.read');
+        Route::get('/despesas/cadastro', [ContasController::class, 'create'])->name('contas.create');
+        Route::post('/despesas/cadastro', [ContasController::class, 'store'])->name('contas.store');
+        Route::get('/despesas/finalizar', [ContasController::class, 'update'])->name('contas.update');
+        Route::post('/despesas/finalizar', [ContasController::class, 'finalizarConta'])->name('contas.finalizarConta');
 
         Route::middleware([CheckMetas::class])->group(function () {
             Route::get('/metas', [MetasController::class, 'createRead'])->name('metas.read');
@@ -172,10 +170,10 @@ Route::middleware([
         Route::get('/vendas', [VendasController::class, 'info'])->name('vendas.info');
 
 
-        Route::get('/faturamento', [FaturamentoController::class, 'create'])->name('faturamento.create');
-        Route::post('/faturamento', [FaturamentoController::class, 'store'])->name('faturamento.store');
-        Route::get('/faturamento/exibir', [FaturamentoController::class, 'read'])->name('faturamento.read');
-        Route::post('/faturamento/editar', [FaturamentoController::class, 'update'])->name('faturamento.update');
+        Route::get('/renda-bruta', [FaturamentoController::class, 'create'])->name('faturamento.create');
+        Route::post('/renda-bruta', [FaturamentoController::class, 'store'])->name('faturamento.store');
+        Route::get('/renda-bruta/exibir', [FaturamentoController::class, 'read'])->name('faturamento.read');
+        Route::post('/renda-bruta/editar', [FaturamentoController::class, 'update'])->name('faturamento.update');
 
 
         Route::get('/calcularSimples', [SimplesNacionalController::class, 'createCalculadora'])->name('simples.create.calculadora');
