@@ -14,7 +14,7 @@
             @foreach ($produtos as $produto)
                 <tr>
                     <td style="overflow-x: auto;">{{ $produto->id }}</td>
-                    <td>{{ $produto->nome }}</td>
+                    <td>{{ $produto->nome. " " .$produto->modelo. " " .$produto->marca }}</td>
                     <td>{{ $produto->quantidade }}</td>
                     <td>
                         <button type="button" class="btn @include('partials.buttomCollor') text-light" data-bs-toggle="modal"

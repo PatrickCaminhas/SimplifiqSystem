@@ -12,14 +12,9 @@ class Cotacoes extends Model
         'data_cotacao',
     ];
     // Em Cotacoes.php
-    public function produto()
+    public function itens()
     {
-        return $this->belongsTo(Produtos::class, 'produto_id');
-    }
-
-    public function fornecedor()
-    {
-        return $this->belongsTo(Fornecedores::class, 'fornecedor_id');
+        return $this->hasMany(Itens_cotacoes::class, 'id_cotacao');
     }
 
 }

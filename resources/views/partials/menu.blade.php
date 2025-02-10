@@ -36,7 +36,7 @@
                 <!-- Submenu Dropdown -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle
-                        @if ($page == 'Produtos') active @endif"
+                        @if ($page == 'Produto') active @endif"
                         id="buttomMenuProdutos" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false"><i class="bi bi-box-seam"></i> Produtos
                     </a>
@@ -55,32 +55,7 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle
-                        @if ($page == 'Vendas') active @endif"
-                        id ="buttomMenuVendas" href="#" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false"><i class="bi bi-cart"></i> Vendas
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-dark @include('partials.bgCollor')">
-                        <li><a id ="buttomMenuVendasCadastrar" class="dropdown-item"
-                                href="{{ route('vendas.create') }}"><i class="bi bi-cart-plus-fill"></i> Cadastro</a>
-                        </li>
-                        <li><a id ="buttomMenuVendasLista" class="dropdown-item" href="{{ route('vendas.info') }}"> <i
-                                    class="bi bi-cart-check-fill"></i> Lista</a></li>
-                    </ul>
-                </li>
-                <!--
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle
-                        @if ($page == 'Servicos') active @endif"
-                        href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Serviços
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-dark @include('partials.bgCollor')">
-                        <li><a class="dropdown-item" href="{{ route('servicos.create') }}">Cadastrar</a></li>
-                        <li><a class="dropdown-item" href="{{ route('servicos.read') }}">Informações</a></li>
-                    </ul>
-                </li>-->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle
-                        @if ($page == 'Clientes') active @endif"
+                        @if ($page == 'Cliente') active @endif"
                         id ="buttomMenuClientes" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false"><i class="bi bi-people"></i> Clientes
                     </a>
@@ -109,15 +84,60 @@
                     </ul>
                 </li>
 
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle
+                        @if ($page == 'Vendas') active @endif"
+                        id ="buttomMenuVendas" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false"><i class="bi bi-cart"></i> Vendas
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark @include('partials.bgCollor')">
+                        <li><a id ="buttomMenuVendasCadastrar" class="dropdown-item"
+                                href="{{ route('vendas.create') }}"><i class="bi bi-cart-plus-fill"></i> Cadastro</a>
+                        </li>
+                        <li><a id ="buttomMenuVendasLista" class="dropdown-item" href="{{ route('vendas.info') }}"> <i
+                                    class="bi bi-cart-check-fill"></i> Lista</a></li>
+                    </ul>
+                </li>
+                <!--
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle
+                        @if ($page == 'Servicos') active @endif"
+                        href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Serviços
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark @include('partials.bgCollor')">
+                        <li><a class="dropdown-item" href="{{ route('servicos.create') }}">Cadastrar</a></li>
+                        <li><a class="dropdown-item" href="{{ route('servicos.read') }}">Informações</a></li>
+                    </ul>
+                </li>-->
+
+
+
                 <!-- Outros Itens do Menu -->
 
-                <li class="nav-item">
-                    <a class="nav-link
-                @if ($page == 'Cotação') active @endif
-                "
-                        id ="buttomMenuCotacao" href="{{ route('cotacaoProdutos') }}"><i class="bi bi-cash"></i>
-                        Cotação de produtos</a>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle
+                        @if ($page == 'Cotação') active @endif"
+                        id ="buttomMenuCotacao" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false"><i class="bi bi-cash"></i> Cotação de produtos
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark @include('partials.bgCollor')">
+                        <li><a id ="buttomMenuCotacaoCadastrar" class="dropdown-item"
+                                href="{{ route('cotacaoProdutos') }}"><i class="bi bi-file-earmark-plus-fill"></i>
+                                Cadastro</a>
+                        </li>
+                        <li><a id ="buttomMenuCotacaoLista" class="dropdown-item"
+                                href="{{ route('cotacao.lista') }}"><i class="bi bi-file-earmark-text-fill"></i> Lista</a>
+                        </li>
+                    </ul>
                 </li>
+
+
+
+
+
+
+
 
                 @if (session('Administrador') == true)
                     <li class="nav-item dropdown">

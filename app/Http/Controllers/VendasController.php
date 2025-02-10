@@ -85,7 +85,7 @@ class VendasController extends Controller
                     $estoque->acao = "Venda";
                     $estoque->mes = date('m');
                     $estoque->ano = date('Y');
-                    $estoque->usuario = Auth::user()->nome . ' ' . Auth::user()->sobrenome;
+                    $estoque->usuario = Auth::user()->id;
                     $estoque->save();
 
                     // Atualizar o estoque do produto

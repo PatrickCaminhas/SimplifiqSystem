@@ -38,7 +38,7 @@ class EstoqueController extends Controller
             return response()->json([
                 'acao' => $estoqueRecente->acao,
                 'quantidade' => $estoqueRecente->quantidade,
-                'usuario' => $estoqueRecente->usuario ?? 'desconhecido',  // Assumindo que há uma relação 'usuario' no model
+                'usuario' => $estoqueRecente->funcionario->nome . " " . $estoqueRecente->funcionario->sobrenome ?? 'desconhecido',  // Assumindo que há uma relação 'usuario' no model
                 'formatted_created_at' => $estoqueRecente->formatted_created_at
             ]);
         } else {
@@ -75,7 +75,7 @@ class EstoqueController extends Controller
         $estoque->acao = $acao;
         $estoque->mes = date('m');
         $estoque->ano = date('Y');
-        $estoque->usuario = Auth::user()->nome . ' ' . Auth::user()->sobrenome;
+        $estoque->usuario = Auth::user()->id;
         $estoque->save();
 
         return redirect()->back()->with(['status' => 'Estoque atualizado com sucesso!']);

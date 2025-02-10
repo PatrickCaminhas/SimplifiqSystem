@@ -1,16 +1,18 @@
-@extends('layouts.padrao')
 @php
     $data_tables = true;
     $chartjs = true;
+    $jquery = true;
 @endphp
+@extends('layouts.padrao')
+
 @section('conteudo')
     <div class="container mt-4">
         <div class="row">
-            <h5 class="display-6 text-white">Bem vindo,
+           <!-- <h5 class="display-6 text-white">Bem vindo,
                 @if (session('funcionario'))
                     {{ session('funcionario')->nome }}!
                 @endif
-            </h5>
+            </h5> -->
 
             <div class="col-md-6 col-lg-6 col-sm-12 mt-2">
                 <div class="card mb-2 h-100 d-flex justify-content-center align-items-center">
@@ -170,7 +172,6 @@
 @push('scripts')
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
         crossorigin="anonymous"></script>
-
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.2/js/responsive.bootstrap5.min.js"></script>
@@ -184,6 +185,7 @@
                 "lengthChange": false,
             });
         });
+
         $(document).ready(function() {
             $('#produtosCadastrados').DataTable({
                 language: {
@@ -214,14 +216,14 @@
     </script>
 
     <script>
-        const chartvsmeses = document.getElementById('vendasChart').getContext('2d');
+        const chartvsdias = document.getElementById('vendasChart').getContext('2d');
 
         // Passando os dados do controlador
         const vendasData = @json($vendasSemana->pluck('total_vendas')->toArray()); // Valores somados de vendas
-        const labelvsm = @json($vendasSemana->pluck('data')->toArray()); // Datas das vendas
+        const labelvsm = @json($vendasSemana->pluck('data')->map(fn($date) => \Carbon\Carbon::parse($date)->format('d/m/Y'))->toArray());
 
         // Criando o gráfico
-        const vendasChart = new Chart(chartvsmeses, {
+        const vendasChart = new Chart(chartvsdias, {
             type: 'bar', // Gráfico de barras
             data: {
                 labels: labelvsm,
@@ -275,6 +277,4 @@
             );
         });
     </script>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
 @endpush

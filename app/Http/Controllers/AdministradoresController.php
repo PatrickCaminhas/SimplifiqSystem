@@ -65,7 +65,7 @@ class AdministradoresController extends Controller
 
             Auth::login($administrador);
             session(['administrador' => $administrador]);
-            return redirect()->intended('dashboardAdministrador');
+            return redirect()->intended('inicioAdministrador');
         }
         if ($administrador) {
             return redirect()->back()->withErrors([

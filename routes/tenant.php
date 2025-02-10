@@ -90,6 +90,11 @@ Route::middleware([
         Route::get('/produto/categoria/cadastro', [ProdutoController::class, 'createCadastroCategoria'])->name('produto.categoria');
         Route::post('/produto/categoria/cadastro', [ProdutoController::class, 'storeCategoria'])->name('produto.categoria.store');
 
+        Route::put('/informacaoproduto/{id}', [ProdutoController::class, 'atualizarProdutoApi'])->name('produto.atualizar.api');
+        Route::put('/informacaoproduto/preco/{id}', [ProdutoController::class, 'atualizarPrecosAPI'])->name('produto.atualizar.precos.api');
+
+        Route::get('/categoria/{categoria_id}', [ProdutoController::class, 'searchCategoria'])->name('produto.search.categoria');
+
         Route::get('/cadastroFornecedor', [FornecedorController::class, 'create'])->name('fornecedor.create');
         Route::post('/cadastroFornecedor', [FornecedorController::class, 'store'])->name('fornecedor.store');
         Route::get('/fornecedores', [FornecedorController::class, 'read'])->name('fornecedores');
@@ -107,7 +112,7 @@ Route::middleware([
         Route::post('/alterarCargos', [ConfiguracoesController::class, 'alterarCargos'])->name('configuracoes.cargos.alterar');
         Route::get('/excluirFuncionario', [ConfiguracoesController::class, 'createExcluirFuncionario'])->name('configuracoes.excluir');
         Route::post('/excluirFuncionario', [ConfiguracoesController::class, 'excluirFuncionario'])->name('configuracoes.funcionario.excluir');
-
+        Route::get('funcionarios',[ConfiguracoesController::class, 'createListaFuncionarios'])->name('configuracoes.funcionarios.lista');
         // Route::get('/cotacaoprodutos',[CotacoesController::class, 'create'])->name('cotacaoProdutos');
         Route::get('/cotacaoprodutos', [CotacoesController::class, 'createLista'])->name('cotacaoProdutos');
         Route::get('/cotacao/lista', [CotacoesController::class, 'createLista'])->name('cotacao.lista');
@@ -118,7 +123,7 @@ Route::middleware([
         Route::post('/cotacaoprodutosrevisao', [CotacoesController::class, 'createRevisao'])->name('cotacaoProdutosRevisao');
         Route::post('/cotacaoprodutosfinal', [CotacoesController::class, 'createFinal'])->name('cotacaoProdutosFinal');
         Route::post('/cotacaoprodutoseditar', [CotacoesController::class, 'createEdicao'])->name('cotacaoProdutosEditar');
-
+        Route::get('/cotacoes',[CotacoesController::class, 'info'])->name('cotacao.lista');
 
 
         Route::get('/estoque', [EstoqueController::class, 'create'])->name('estoque.create');
@@ -180,6 +185,7 @@ Route::middleware([
         Route::post('/calcularSimples', [SimplesNacionalController::class, 'calculate'])->name('simples.calculate');
 
         Route::get('logout', [LoginController::class, 'logout'])->name('logout');
+
     });
 });
 

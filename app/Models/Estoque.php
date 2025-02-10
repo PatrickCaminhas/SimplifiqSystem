@@ -22,4 +22,9 @@ class Estoque extends Model
     {
         return $this->belongsTo(Produtos::class, 'id_produto');
     }
+
+    public function funcionario()
+    {
+        return $this->belongsTo(Funcionarios::class, 'usuario');
+    }
 }

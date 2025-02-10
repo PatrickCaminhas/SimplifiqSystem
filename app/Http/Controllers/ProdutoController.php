@@ -120,6 +120,12 @@ class ProdutoController extends Controller
         return redirect()->back()->with('success', 'Produto atualizado com sucesso!');
     }
 
+    public function listarTodasCategoriasAPI()
+    {
+        $categorias = Produtos_categoria::all();
+        return response()->json($categorias);
+    }
+
     public function atualizarPrecoProduto(Request $request)
     {
 
@@ -142,5 +148,68 @@ class ProdutoController extends Controller
             return redirect()->back()->with('error', 'Erro ao atualizar preço do produto.');
         }
         return redirect()->back()->with('success', 'Preço do produto atualizado com sucesso!');
+    }
+    public function atualizarProdutoApi(Request $request)
+    {
+        if (!$request->expectsJson()) {
+            return response()->json(['error' => true, 'message' => 'Requisição inválida'], 400);
+        }
+
+        try {
+            $produto = Produtos::findOrFail($request->id);
+            $produto->update($request->only([
+                'nome',
+                'modelo',
+                'marca',
+                'categoria_id',
+                'unidade_medida',
+                'medida',
+                'descricao',
+                'preco_compra'
+            ]));
+            $produto->categoria=Produtos_categoria::find($produto->categoria_id);
+            return response()->json([
+                'success' => 'Produto atualizado com sucesso!',
+                'message' => 'Produto atualizado com sucesso!',
+                'produto' => $produto
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Erro ao atualizar produto.',
+                'message' => 'Erro ao atualizar produto.'
+            ], 500);
+        }
+    }
+
+    public function atualizarPrecosAPI(Request $request)
+    {
+
+        try {
+            $produto = Produtos::findOrFail($request->id);
+            $produto->update($request->only([
+                'preco_venda',
+                'desconto_maximo'
+            ]));
+            $produto->categoria=Produtos_categoria::find($produto->categoria_id);
+            return response()->json([
+                'success' => 'Preço do produto atualizado com sucesso!',
+                'message' => 'Preço do produto atualizado com sucesso!',
+                'produto' => $produto
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Erro ao atualizar preço do produto.',
+                'message' => 'Erro ao atualizar preço do produto.'
+            ], 500);
+        }
+    }
+
+    public function searchCategoriaAPI($id)
+    {
+        $categoria = Produtos_categoria::find($id);
+        if (!$categoria) {
+            return response()->json(['error' => true, 'message' => 'Categoria não encontrada'], 404);
+        }
+        return response()->json(['categoria' => $categoria]);
     }
 }

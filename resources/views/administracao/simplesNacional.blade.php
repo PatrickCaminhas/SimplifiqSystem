@@ -16,7 +16,7 @@
 
 </head>
 
-<body class="bg-black bg-gradient">
+<body class="bg-black">
     @include('partials.menuAdmin')
 
     <div class="d-flex align-items-center justify-content-center" style="height: 92vh;">

@@ -2,6 +2,7 @@
 @section('titulo', 'Cadastro de Produto')
 @section('formulario')
 @section('route', route('cadastroproduto.store'))
+
 <div class="form-group">
     <label for="nomeproduto">Nome</label>
     <input type="text" class="form-control" id="nomeproduto" name="nome" placeholder="Digite o nome do produto"
@@ -36,10 +37,9 @@
         </select>
 
     @endif
-    <label>Precisa de uma nova categoria?  <a type="submit"
-        class="btn @include('partials.buttomCollor') text-center"
-        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
-        href="{{ route('produto.categoria') }}">Clique aqui</a></label>
+    <label>Precisa de uma nova categoria? <a type="submit" class="btn @include('partials.buttomCollor') text-center"
+            style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+            href="{{ route('produto.categoria') }}">Clique aqui</a></label>
 
 
 
@@ -74,3 +74,28 @@
     <button type="reset" id="buttomLimpar" class="btn @include('partials.buttomCollor') text-center">Limpar</button>
 </div>
 @endsection
+@push('scripts')
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+        var toastList = toastElList.map(function(toastEl) {
+            return new bootstrap.Toast(toastEl).show();
+        });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll(".toast").forEach(function(toast) {
+            let progressBar = toast.querySelector(".progress-bar");
+            let duration = 3000; // 5 segundos
+            let step = 250; // 1 segundo
+            let width = 100;
+
+            let interval = setInterval(() => {
+                width -= 8.33; // Reduz 25% a cada segundo
+                progressBar.style.width = width + "%";
+            }, step);
+        });
+    });
+</script>
+@endpush

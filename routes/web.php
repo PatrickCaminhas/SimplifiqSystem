@@ -78,7 +78,7 @@ foreach (config('tenancy.central_domains') as $domain) {
 
 
 
-        Route::get('logout', [LoginController::class, 'logout'])->name('logout');
+        Route::get('logout', [AdministradoresController::class, 'logout'])->name('logout');
 
 
         //Route::middleware([AuthenticateDashboardAdministrator::class])->group(function () {

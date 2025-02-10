@@ -47,6 +47,7 @@
                                                 placeholder="Digite sua senha" required>
                                             <label> Senha:</label>
                                         </div>
+                                        <input type="hidden" name="recaptcha_token" id="recaptcha_token">
 
 
                                         <div class="text-center pt-1 mb-5 pb-1 d-grid gap-2">
@@ -106,7 +107,13 @@
     </section>
 
     @vite('resources/js/app.js')
-
+    <script>
+        grecaptcha.ready(function() {
+            grecaptcha.execute('{{ config('no-captcha.sitekey') }}', { action: 'submit' }).then(function(token) {
+                document.getElementById('recaptcha_token').value = token;
+            });
+        });
+    </script>
 </body>
 
 </html>

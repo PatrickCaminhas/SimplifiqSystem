@@ -1,5 +1,5 @@
 @extends('layouts.cadastro')
-@section('titulo', 'Cadastro de Produto')
+@section('titulo', 'Cadastro de Venda')
 @section('formulario')
     @php
         $jquery = true;

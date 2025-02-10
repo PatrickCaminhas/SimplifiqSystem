@@ -56,4 +56,9 @@ class Funcionarios extends Authenticatable implements MustVerifyEmail, JWTSubjec
 
         $this->notify( new RedefinirSenhaNotification($token, $this->email,$this->nome,$dominio) );
     }
+
+    public function Estoque()
+    {
+        return $this->hasMany(Estoque::class, 'usuario');
+    }
 }

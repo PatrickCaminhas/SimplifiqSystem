@@ -54,8 +54,8 @@
                             <div class="card-body">
                                 <h5 class="card-subtitle mb-2 text-muted text-center">Lista de usuários</h5>
                                 <p class="card-text">Veja lista de todos os usuários da empresa {{session('empresa')}} cadastrados no sistema.</p>
-                                <a href="{{ route('configuracoes.cargos') }}"
-                                    class="btn @include('partials.buttomCollor')"><i class="bi bi-person-lines-fill"></i> Alterar cargos</a>
+                                <a href="{{ route('configuracoes.funcionarios.lista') }}"
+                                    class="btn @include('partials.buttomCollor')"><i class="bi bi-person-lines-fill"></i> Visualizar</a>
                             </div>
                         </div>
                     </div>

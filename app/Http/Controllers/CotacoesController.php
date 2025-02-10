@@ -29,6 +29,19 @@ class CotacoesController extends Controller
         $checagem = $this->checarProdutosEFornecedores();
         return view('sistema.cotacao.cotacaoDeProdutos', ['page' => 'Cotação', 'produtos' => $produtos, 'checagem' => $checagem]);
     }
+
+    public function info()
+    {
+        $cotacoes = Cotacoes::with('itens.produto', 'itens.fornecedor')  // Carrega itens com produto e fornecedor
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('sistema.cotacao.cotacaoLista', [
+            'cotacoes' => $cotacoes,
+            'page' => 'Cotação'
+        ]);
+    }
+
     public function checarProdutosEFornecedores()
     {
         $produtos = Produtos::all();
@@ -124,7 +137,7 @@ class CotacoesController extends Controller
 
             DB::commit();
             // Enviar os resultados para a view de resultados
-            return redirect()->route('cotacao.resultados',['id_cotacao' => $cotacaoAtual->id]);
+            return redirect()->route('cotacao.resultados', ['id_cotacao' => $cotacaoAtual->id]);
 
         } catch (\Exception $e) {
             DB::rollBack();
@@ -145,7 +158,7 @@ class CotacoesController extends Controller
         // Data atual
         $dataCotacao = now()->format('d/m/Y H:i:s');
 
-        return view('sistema.cotacao.resultados', ['page' => 'Cotação', 'cotacoes' => $cotacoes,'nomeEmpresa' => $nomeEmpresa, 'dataCotacao' => $dataCotacao]);
+        return view('sistema.cotacao.resultados', ['page' => 'Cotação', 'cotacoes' => $cotacoes, 'nomeEmpresa' => $nomeEmpresa, 'dataCotacao' => $dataCotacao]);
     }
 
 

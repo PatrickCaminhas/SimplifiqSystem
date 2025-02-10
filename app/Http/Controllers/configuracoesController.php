@@ -42,6 +42,11 @@ class configuracoesController extends Controller
         return $status_cadastro;
     }
 
+    public function createListaFuncionarios(){
+        $funcionarios = Funcionarios::all();
+        return view('sistema.configuracoes.listaFuncionarios', ['page' => 'Configurações', 'funcionarios' => $funcionarios]);
+    }
+
     public function createAlterarSenha()
     {
         return view('sistema.configuracoes.alterarSenha', ['page' => 'Configurações']);
