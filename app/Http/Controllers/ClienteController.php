@@ -8,69 +8,48 @@ use App\Models\Vendas;
 
 class ClienteController extends Controller
 {
-    //
+    // ------------------
+    // FUNÇÃO PARA: RETORNAR VIEW DE CADASTRO DE CLIENTES
+    // ------------------
     public function create()
     {
         return view('sistema.cliente.cadastroCliente', ['page' => 'Cliente']);
-
     }
+
+    // ------------------
+    // FUNÇÃO PARA: RETORNAR VIEW DE LISTA DE CLIENTES
+    // PARAMETROS: TODOS OS CLIENTES
+    // ------------------
     public function read()
     {
         $clientes = Clientes::all();
         return view('sistema.cliente.listaClientes', ['clientes' => $clientes, 'page' => 'Cliente']);
     }
+
+    // ------------------
+    // FUNÇÃO PARA: RETORNAR VIEW DE QUITAÇÃO DE DÍVIDA
+    // PARAMETROS: ID DO CLIENTE
+    // ------------------
     public function quitarDividaView(Request $request)
     {
         $cliente = Clientes::find($request->id);
         return view('sistema.cliente.quitarDivida', ['cliente' => $cliente, 'page' => 'Cliente']);
     }
-    public function quitarDividaStore(Request $request)
+
+    // ------------------
+    // FUNÇÃO PARA: RETORNAR VIEW DE ALTERAÇÃO DE CLIENTE
+    // PARAMETROS: ID DO CLIENTE
+    // ------------------
+    public function edit(Request $request)
     {
-        $cliente = Clientes::find($request->cliente_id);
-        $debito = $cliente->debitos;
-        $pagamento = $request->valor_quitacao;
-        if ($debito < $pagamento) {
-            return redirect('clientes')->with('error', 'Valor de quitação maior que o valor da dívida!');
-        }
-        $cliente->debitos = $debito - $pagamento;
-        $this->mudarEstadoVendaCrediario($pagamento, $cliente);
-        $cliente->save();
-        return redirect('clientes')->with('success', 'Dívida quitada com sucesso!');
+        $cliente = Clientes::find($request->id);
+        return view('sistema.cliente.alterarCliente', ['cliente' => $cliente, 'page' => 'Cliente']);
     }
 
-    public function mudarEstadoVendaCrediario($pagamento, $cliente)
-    {
-        // Buscar todas as vendas em crediário do cliente, ordenadas por data (FIFO)
-        $vendasEmDebito = Vendas::where('cliente_id', $cliente->id)
-            ->whereIn('metodo_pagamento', ['Crediário', 'Crediário(Pago Parcial)'])
-            ->orderBy('data_venda', 'asc') // Ordenação FIFO
-            ->get();
-        foreach ($vendasEmDebito as $venda) {
-            // Verificar se ainda há pagamento disponível
-            if ($pagamento <= 0) {
-                break;
-            }
-
-
-            if ($pagamento >= $venda->crediario) {
-                // Pagamento é suficiente para quitar esta venda
-                $venda->metodo_pagamento = 'Crediário(Pago)';
-                $pagamento -= $venda->crediario; // Subtrai o valor pendente do pagamento
-                $venda->crediario = 0; // Total quitado
-            } else {
-                // Pagamento não é suficiente para quitar esta venda
-                $venda->metodo_pagamento = 'Crediário(Pago Parcial)';
-                $venda->crediario -= $pagamento; // Atualiza o valor pago
-                $pagamento = 0; // Todo o pagamento foi usado
-            }
-
-            $venda->save(); // Salva as alterações na venda
-        }
-    }
-
-
-
-
+    // ------------------
+    // FUNÇÃO PARA: CADASTRAR CLIENTE
+    // PARAMETROS: REQUEST COM DADOS DO CLIENTE
+    // ------------------
     public function store(Request $request)
     {
         $request->validate([
@@ -79,7 +58,7 @@ class ClienteController extends Controller
             'telefone' => 'required|string',
             'endereco_completo' => 'required|string',
         ]);
-        // Verificar se o cliente já está cadastrado pelo cpfOuCnpj
+
         $existingCliente = Clientes::where('cpfOuCnpj', $request->cpfOuCnpj)->first();
         if ($existingCliente) {
             return response()->json(['error' => 'Cliente já cadastrado com este CPF ou CNPJ.'], 409);
@@ -89,11 +68,7 @@ class ClienteController extends Controller
         $cliente->nome = $request->nome;
         $cliente->cpfOuCnpj = $request->cpfOuCnpj;
         $cliente->telefone = $request->telefone;
-        if ($request->email == null) {
-            $cliente->email = "-";
-        } else {
-            $cliente->email = $request->email;
-        }
+        $cliente->email = $request->email ?? "-";
         $cliente->endereco_completo = $request->endereco_completo;
         $cliente->debitos = 0;
         $cliente->observacoes = "-";
@@ -102,11 +77,11 @@ class ClienteController extends Controller
 
         return redirect('clientes')->with('success', 'Cliente cadastrado com sucesso!');
     }
-    public function edit(Request $request)
-    {
-        $cliente = Clientes::find($request->id);
-        return view('sistema.cliente.alterarCliente', ['cliente' => $cliente, 'page' => 'Cliente']);
-    }
+
+    // ------------------
+    // FUNÇÃO PARA: ATUALIZAR CLIENTE
+    // PARAMETROS: REQUEST COM ID DO CLIENTE E NOVOS DADOS
+    // ------------------
     public function update(Request $request)
     {
         $request->validate([
@@ -121,11 +96,7 @@ class ClienteController extends Controller
         $cliente->nome = $request->nome;
         $cliente->cpfOuCnpj = $request->cpfOuCnpj;
         $cliente->telefone = $request->telefone;
-        if ($request->email == null) {
-            $cliente->email = "-";
-        } else {
-            $cliente->email = $request->email;
-        }
+        $cliente->email = $request->email ?? "-";
         $cliente->endereco_completo = $request->endereco_completo;
         $cliente->debitos = 0;
         $cliente->observacoes = $request->observacoes;
@@ -135,11 +106,65 @@ class ClienteController extends Controller
         return redirect('clientes')->with('success', 'Cliente atualizado com sucesso!');
     }
 
+    // ------------------
+    // FUNÇÃO PARA: QUITAR DÍVIDA DO CLIENTE
+    // PARAMETROS: REQUEST COM ID DO CLIENTE E VALOR PAGO
+    // ------------------
+    public function quitarDividaStore(Request $request)
+    {
+        $cliente = Clientes::find($request->cliente_id);
+        $debito = $cliente->debitos;
+        $pagamento = $request->valor_quitacao;
+
+        if ($debito < $pagamento) {
+            return redirect('clientes')->with('error', 'Valor de quitação maior que o valor da dívida!');
+        }
+
+        $cliente->debitos -= $pagamento;
+        $this->mudarEstadoVendaCrediario($pagamento, $cliente);
+        $cliente->save();
+
+        return redirect('clientes')->with('success', 'Dívida quitada com sucesso!');
+    }
+
+    // ------------------
+    // FUNÇÃO PARA: ATUALIZAR ESTADO DAS VENDAS NO CREDIÁRIO
+    // PARAMETROS: VALOR PAGO E CLIENTE
+    // ------------------
+    public function mudarEstadoVendaCrediario($pagamento, $cliente)
+    {
+        $vendasEmDebito = Vendas::where('cliente_id', $cliente->id)
+            ->whereIn('metodo_pagamento', ['Crediário', 'Crediário(Pago Parcial)'])
+            ->orderBy('data_venda', 'asc')
+            ->get();
+
+        foreach ($vendasEmDebito as $venda) {
+            if ($pagamento <= 0) {
+                break;
+            }
+
+            if ($pagamento >= $venda->crediario) {
+                $venda->metodo_pagamento = 'Crediário(Pago)';
+                $pagamento -= $venda->crediario;
+                $venda->crediario = 0;
+            } else {
+                $venda->metodo_pagamento = 'Crediário(Pago Parcial)';
+                $venda->crediario -= $pagamento;
+                $pagamento = 0;
+            }
+
+            $venda->save();
+        }
+    }
+
+    // ------------------
+    // FUNÇÃO PARA: DELETAR CLIENTE
+    // PARAMETROS: REQUEST COM ID DO CLIENTE
+    // ------------------
     public function delete(Request $request)
     {
         $cliente = Clientes::find($request->id);
         $cliente->delete();
         return redirect('clientes')->with('success', 'Cliente deletado com sucesso!');
     }
-
 }

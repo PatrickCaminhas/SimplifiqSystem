@@ -8,7 +8,7 @@
             <tr>
                 <th>ID</th>
                 <th>Data</th>
-                <th>Detalhes</th>
+                <th>Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -16,54 +16,17 @@
                 <tr>
                     <td>{{ $cotacao->id }}</td>
                     <td>{{ \Carbon\Carbon::parse($cotacao->data_cotacao)->format('d/m/Y') }}</td>
-                    <td>
-                        <button type="button" class="btn @include('partials.buttomCollor') text-light" data-bs-toggle="modal"
-                            data-bs-target="#cotacao{{ $cotacao->id }}">
-                            <i class="bi bi-search"></i>
-                        </button>
-                        <div class="modal fade" id="cotacao{{ $cotacao->id }}" data-bs-backdrop="static"
-                            data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalLabel{{ $cotacao->id }}"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="modalLabel{{ $cotacao->id }}">
-                                            Cotação #{{ $cotacao->id }}</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body bg-secondary-subtle">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <label class="form-label">Data da Cotação:</label>
-                                                <span>{{ \Carbon\Carbon::parse($cotacao->data_cotacao)->format('d/m/Y') }}</span>
-                                            </div>
-                                            <div class="col-12">
-                                                <label class="form-label">Produtos:</label>
-                                                <table class="table table-striped">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Produto</th>
-                                                            <th>Preço</th>
-                                                            <th>Fornecedor</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach ($cotacao->itens as $item)
-                                                            <tr>
-                                                                <td>{{ $item->produto->nome }}</td>
-                                                                <td>{{ number_format($item->preco, 2, ',', '.') }}</td>
-                                                                <td>{{ $item->fornecedor->nome }}</td>
-                                                            </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <td class="grid gap-3 row-gap-3 ">
+
+                        <a type="button" class="btn @include('partials.buttomCollor') text-light m-2"
+                            href="{{ route('cotacao.verificarCotacao.create', $cotacao->id) }}">
+                            <i class="bi bi-search"></i> Verificar
+                        </a>
+                        <a type="button" class="btn @include('partials.buttomCollor') text-light m-2 "
+                            href="{{ route('cotacao.reporEstoque.create', $cotacao->id) }}">
+                            <i class="bi bi-box2-fill"></i> Repor estoque
+                        </a>
+
                     </td>
                 </tr>
             @endforeach

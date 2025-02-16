@@ -27,6 +27,10 @@ class Produtos extends Model
     {
         return $this->hasMany(Itens_venda::class);
     }
+    public function itensCotacoes()
+    {
+        return $this->hasMany(Itens_cotacoes::class);
+    }
     public function estoque()
     {
         return $this->hasMany(Estoque::class, 'id_produto');

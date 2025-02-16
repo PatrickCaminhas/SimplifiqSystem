@@ -123,6 +123,10 @@ Route::middleware([
         Route::post('/cotacaoprodutosrevisao', [CotacoesController::class, 'createRevisao'])->name('cotacaoProdutosRevisao');
         Route::post('/cotacaoprodutosfinal', [CotacoesController::class, 'createFinal'])->name('cotacaoProdutosFinal');
         Route::post('/cotacaoprodutoseditar', [CotacoesController::class, 'createEdicao'])->name('cotacaoProdutosEditar');
+        Route::get('cotacoes/reposicao/{id_cotacao}', [CotacoesController::class, 'createReposicaoGet'])->name('cotacao.reporEstoque.create');
+        Route::get('cotacoes/verificao/{id_cotacao}', [CotacoesController::class, 'createVerificaoCotacaoGet'])->name('cotacao.verificarCotacao.create');
+
+
         Route::get('/cotacoes',[CotacoesController::class, 'info'])->name('cotacao.lista');
 
 

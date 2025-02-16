@@ -15,7 +15,6 @@ import './bootstrap';
  * to use in your application's views. An example is included for you.
  */
 
-const app = createApp({});
 
 
 
@@ -37,4 +36,3 @@ const app = createApp({});
  * scaffolding. Otherwise, you will need to add an element yourself.
  */
 
-app.mount('#app');

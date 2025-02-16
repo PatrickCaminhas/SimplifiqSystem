@@ -3,40 +3,54 @@
 namespace App\Http\Controllers;
 
 use App\Models\Fornecedores;
-
 use Illuminate\Http\Request;
 
 class FornecedorController extends Controller
 {
-    //
+    // ------------------
+    // FUNÇÃO PARA: RETORNAR VIEW DE CADASTRO DE FORNECEDORES
+    // ------------------
     public function create()
     {
-        return view('sistema.fornecedores.cadastroDeFornecedor', ['page' => ' Fornecedores']);
+        return view('sistema.fornecedores.cadastroDeFornecedor', ['page' => 'Fornecedores']);
     }
 
-    public function read(){
+    // ------------------
+    // FUNÇÃO PARA: RETORNAR VIEW DA LISTA DE FORNECEDORES
+    // PARAMETROS: TODOS OS FORNECEDORES
+    // ------------------
+    public function read()
+    {
         $fornecedores = Fornecedores::all();
-        return view('sistema.fornecedores.listaFornecedores', ['page' => ' Fornecedores', 'fornecedores' => $fornecedores]);
+        return view('sistema.fornecedores.listaFornecedores', ['page' => 'Fornecedores', 'fornecedores' => $fornecedores]);
     }
+
+    // ------------------
+    // FUNÇÃO PARA: RETORNAR VIEW DE EDIÇÃO DE FORNECEDORES
+    // PARAMETROS: REQUEST COM ID DO FORNECEDOR
+    // ------------------
     public function edit(Request $request)
     {
         $fornecedor = Fornecedores::find($request->id);
-        return view('sistema.fornecedores.alterarFornecedor', ['page' => ' Fornecedores', 'fornecedor' => $fornecedor]);
+        return view('sistema.fornecedores.alterarFornecedor', ['page' => 'Fornecedores', 'fornecedor' => $fornecedor]);
     }
+
+    // ------------------
+    // FUNÇÃO PARA: ATUALIZAR FORNECEDOR
+    // PARAMETROS: REQUEST COM ID E DADOS ATUALIZADOS DO FORNECEDOR
+    // ------------------
     public function update(Request $request)
     {
         $fornecedor = Fornecedores::find($request->id);
-        $fornecedor->nome = $request->nome;
-        $fornecedor->cnpj = $request->cnpj;
-        $fornecedor->endereco = $request->endereco;
-        $fornecedor->cidade = $request->cidade;
-        $fornecedor->estado = $request->estado;
-        $fornecedor->nome_representante = $request->nome_representante;
-        $fornecedor->email = $request->email;
-        $fornecedor->telefone = $request->telefone;
-        $fornecedor->save();
+        $fornecedor->update($request->only(['nome', 'cnpj', 'endereco', 'cidade', 'estado', 'nome_representante', 'email', 'telefone']));
+
         return redirect('fornecedores')->with('success', 'Fornecedor editado com sucesso!');
     }
+
+    // ------------------
+    // FUNÇÃO PARA: REGISTRAR NOVO FORNECEDOR
+    // PARAMETROS: REQUEST COM DADOS DO FORNECEDOR
+    // ------------------
     public function store(Request $request)
     {
         $request->validate([
@@ -49,16 +63,8 @@ class FornecedorController extends Controller
             'email' => 'required|string',
             'telefone' => 'required|string',
         ]);
-        $fornecedores = Fornecedores::create([
-            'nome' => $request->input('nome'),
-            'cnpj' => $request->input('cnpj'),
-            'endereco' => $request->input('endereco'),
-            'cidade' => $request->input('cidade'),
-            'estado' =>  $request->input('estado'),
-            'nome_representante' => $request->input('nome_representante'),
-            'email' => $request->input('email'),
-            'telefone' => $request->input('telefone'),
-        ]);
+
+        $fornecedores = Fornecedores::create($request->only(['nome', 'cnpj', 'endereco', 'cidade', 'estado', 'nome_representante', 'email', 'telefone']));
 
         if ($fornecedores) {
             return redirect()->back()->with('success', 'Cadastro realizado com sucesso!');
@@ -66,10 +72,18 @@ class FornecedorController extends Controller
             return redirect()->back()->with('error', 'Erro ao cadastrar fornecedor.');
         }
     }
+
+    // ------------------
+    // FUNÇÃO PARA: DELETAR FORNECEDOR
+    // PARAMETROS: REQUEST COM ID DO FORNECEDOR
+    // ------------------
     public function delete(Request $request)
     {
         $fornecedor = Fornecedores::find($request->id);
-        $fornecedor->delete();
-        return redirect('fornecedores')->with('success', 'Fornecedor deletado com sucesso!');
+        if ($fornecedor) {
+            $fornecedor->delete();
+            return redirect('fornecedores')->with('success', 'Fornecedor deletado com sucesso!');
+        }
+        return redirect()->back()->with('error', 'Fornecedor não encontrado.');
     }
 }
