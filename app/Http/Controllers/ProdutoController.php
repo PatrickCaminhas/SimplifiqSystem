@@ -2,19 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Produtos; // Add this line to import the Produto class
-use App\Models\Produtos_categoria; // Add this line to import the Categoria class
+use App\Models\Produtos;
+use App\Models\Produtos_categoria;
 use Illuminate\Http\Request;
 
 class ProdutoController extends Controller
 {
-    //
+    // ------------------
+    // FUNÇÕES PARA: RETORNAR VIEWS
+    // ------------------
+
+    // ------------------
+    // FUNÇÃO PARA: RETORNAR VIEW DE CADASTRO DE PRODUTO
+    // ------------------
     public function create()
     {
         $categorias = Produtos_categoria::all();
         return view('sistema.produto.cadastroDeProduto', ['page' => 'Produto', 'categorias' => $categorias]);
     }
 
+    // ------------------
+    // FUNÇÃO PARA: RETORNAR VIEW DE ATUALIZAÇÃO DE DADOS DO PRODUTO
+    // PARÂMETROS: ID DO PRODUTO
+    // ------------------
     public function createAtualizarDadosProduto($id)
     {
         $categorias = Produtos_categoria::all();
@@ -22,36 +32,48 @@ class ProdutoController extends Controller
         return view('sistema.produto.alterarDadosProduto', ['page' => 'Produto', 'categorias' => $categorias, 'produto' => $produto]);
     }
 
+    // ------------------
+    // FUNÇÃO PARA: RETORNAR VIEW DE ATUALIZAÇÃO DE PREÇO DO PRODUTO
+    // PARÂMETROS: ID DO PRODUTO
+    // ------------------
     public function createAtualizarPrecoProduto($id)
     {
         $produto = Produtos::find($id);
         return view('sistema.produto.alterarPrecoProduto', ['page' => 'Produto', 'produto' => $produto]);
     }
 
+    // ------------------
+    // FUNÇÃO PARA: RETORNAR VIEW DE CADASTRO DE CATEGORIA
+    // ------------------
     public function createCadastroCategoria()
     {
         return view('sistema.produto.cadastroDeCategoria', ['page' => 'Produto']);
     }
 
+    // ------------------
+    // FUNÇÕES PARA: CADASTRO E ATUALIZAÇÃO DE DADOS
+    // ------------------
+
+    // ------------------
+    // FUNÇÃO PARA: CADASTRAR CATEGORIA
+    // PARÂMETROS: REQUEST COM NOME DA CATEGORIA
+    // ------------------
     public function storeCategoria(Request $request)
     {
-        $request->validate([
-            'nome' => 'required|string',
-        ]);
-        $existeCategoria = Produtos_categoria::where('nome', $request->input('nome'))->first();
-        if ($existeCategoria) {
+        $request->validate(['nome' => 'required|string']);
+
+        if (Produtos_categoria::where('nome', $request->input('nome'))->exists()) {
             return redirect()->back()->with('error', 'Categoria já cadastrada.');
         }
-        $categoria = Produtos_categoria::create([
-            'nome' => $request->input('nome'),
-        ]);
-        if ($categoria) {
-            return redirect()->back()->with('success', 'Categoria cadastrada com sucesso!');
-        } else {
-            return redirect()->back()->with('error', 'Erro ao cadastrar categoria.');
-        }
+
+        Produtos_categoria::create(['nome' => $request->input('nome')]);
+        return redirect()->back()->with('success', 'Categoria cadastrada com sucesso!');
     }
 
+    // ------------------
+    // FUNÇÃO PARA: CADASTRAR PRODUTO
+    // PARÂMETROS: REQUEST COM DADOS DO PRODUTO
+    // ------------------
     public function store(Request $request)
     {
         $request->validate([
@@ -63,7 +85,8 @@ class ProdutoController extends Controller
             'medida' => 'string',
             'descricao' => 'string',
         ]);
-        $produto = Produtos::create([
+
+        Produtos::create([
             'nome' => $request->input('nome'),
             'marca' => $request->input('marca'),
             'modelo' => $request->input('modelo'),
@@ -76,140 +99,64 @@ class ProdutoController extends Controller
             'preco_compra' => 0,
             'preco_venda' => 0,
             'desconto_maximo' => 0,
-
         ]);
-        if ($produto) {
-            return redirect()->back()->with('success', 'Produto cadastrado com sucesso!');
-        } else {
-            return redirect()->back()->with('error', 'Erro ao cadastrar produto.');
-        }
+
+        return redirect()->back()->with('success', 'Produto cadastrado com sucesso!');
     }
 
+    // ------------------
+    // FUNÇÃO PARA: ATUALIZAR DADOS DO PRODUTO
+    // PARÂMETROS: REQUEST COM DADOS DO PRODUTO
+    // ------------------
+    public function atualizarDadosProduto(Request $request)
+    {
+        Produtos::findOrFail($request->id)->update($request->only([
+            'nome', 'marca', 'modelo', 'categoria', 'unidade_medida', 'medida', 'preco_compra', 'descricao'
+        ]));
+
+        return redirect()->back()->with('success', 'Produto atualizado com sucesso!');
+    }
+
+    // ------------------
+    // FUNÇÕES PARA: CONSULTAS E PESQUISAS
+    // ------------------
+
+    // ------------------
+    // FUNÇÃO PARA: BUSCAR PRODUTOS NA VIEW DE VENDAS
+    // PARÂMETROS: REQUEST COM TERMO DE PESQUISA
+    // ------------------
     public function search(Request $request)
     {
-        //Função que busca os produtos na view de vendas
         $term = $request->input('term');
 
-        // Buscar produtos que correspondem ao termo digitado
         $produtos = Produtos::where('nome', 'LIKE', '%' . $term . '%')
             ->orWhere('modelo', 'LIKE', '%' . $term . '%')
             ->orWhere('marca', 'LIKE', '%' . $term . '%')
             ->get();
 
-        // Retornar como JSON para o autocomplete
         return response()->json($produtos);
     }
 
-    public function atualizarDadosProduto(Request $request)
-    {
-        try {
-            Produtos::find($request->id)->update([
-                'nome' => $request->input('nome'),
-                'marca' => $request->input('marca'),
-                'modelo' => $request->input('modelo'),
-                'categoria' => $request->input('categoria'),
-                'unidade_medida' => $request->input('unidade_medida'),
-                'medida' => $request->input('medida'),
-                'preco_compra' => $request->input('preco_compra'),
-                'descricao' => $request->input('descricao'),
-            ]);
-        } catch (\Exception $e) {
-
-            return redirect()->back()->with('error', 'Erro ao atualizar produto.');
-        }
-        return redirect()->back()->with('success', 'Produto atualizado com sucesso!');
-    }
-
+    // ------------------
+    // FUNÇÃO PARA: LISTAR TODAS AS CATEGORIAS VIA API
+    // ------------------
     public function listarTodasCategoriasAPI()
     {
-        $categorias = Produtos_categoria::all();
-        return response()->json($categorias);
+        return response()->json(Produtos_categoria::all());
     }
 
-    public function atualizarPrecoProduto(Request $request)
-    {
-
-        try {
-            if ($request->input('desconto_maximo') == null) {
-                $desconto_maximo = $request->input('preco_venda');
-            } else {
-                if ($request->input('desconto_maximo') > $request->input('preco_venda')) {
-                    return redirect()->back()->with('error', 'O desconto máximo não pode ser maior que o preço de venda.');
-                } else {
-                    $desconto_maximo = $request->input('desconto_maximo');
-                }
-            }
-            Produtos::find($request->id)->update([
-                'preco_venda' => $request->input('preco_venda'),
-                'desconto_maximo' => $desconto_maximo,
-            ]);
-        } catch (\Exception $e) {
-
-            return redirect()->back()->with('error', 'Erro ao atualizar preço do produto.');
-        }
-        return redirect()->back()->with('success', 'Preço do produto atualizado com sucesso!');
-    }
-    public function atualizarProdutoApi(Request $request)
-    {
-        if (!$request->expectsJson()) {
-            return response()->json(['error' => true, 'message' => 'Requisição inválida'], 400);
-        }
-
-        try {
-            $produto = Produtos::findOrFail($request->id);
-            $produto->update($request->only([
-                'nome',
-                'modelo',
-                'marca',
-                'categoria_id',
-                'unidade_medida',
-                'medida',
-                'descricao',
-                'preco_compra'
-            ]));
-            $produto->categoria=Produtos_categoria::find($produto->categoria_id);
-            return response()->json([
-                'success' => 'Produto atualizado com sucesso!',
-                'message' => 'Produto atualizado com sucesso!',
-                'produto' => $produto
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Erro ao atualizar produto.',
-                'message' => 'Erro ao atualizar produto.'
-            ], 500);
-        }
-    }
-
-    public function atualizarPrecosAPI(Request $request)
-    {
-
-        try {
-            $produto = Produtos::findOrFail($request->id);
-            $produto->update($request->only([
-                'preco_venda',
-                'desconto_maximo'
-            ]));
-            $produto->categoria=Produtos_categoria::find($produto->categoria_id);
-            return response()->json([
-                'success' => 'Preço do produto atualizado com sucesso!',
-                'message' => 'Preço do produto atualizado com sucesso!',
-                'produto' => $produto
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Erro ao atualizar preço do produto.',
-                'message' => 'Erro ao atualizar preço do produto.'
-            ], 500);
-        }
-    }
-
-    public function searchCategoriaAPI($id)
+    // ------------------
+    // FUNÇÃO PARA: BUSCAR CATEGORIA POR ID VIA API
+    // PARÂMETROS: ID DA CATEGORIA
+    // ------------------
+    public function searchCategoria($id)
     {
         $categoria = Produtos_categoria::find($id);
+
         if (!$categoria) {
             return response()->json(['error' => true, 'message' => 'Categoria não encontrada'], 404);
         }
+
         return response()->json(['categoria' => $categoria]);
     }
 }
