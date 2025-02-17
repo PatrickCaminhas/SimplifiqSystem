@@ -33,5 +33,16 @@
             background-color: inherit !important;
             color: inherit !important;
         }
+
+        /* Fonte padrão */
+        body {
+            font-size: 16px;
+        }
+
+        /* Estilo para o aumento de fonte */
+        .font-large {
+            font-size: 20px;
+        }
     </style>
+
 </head>

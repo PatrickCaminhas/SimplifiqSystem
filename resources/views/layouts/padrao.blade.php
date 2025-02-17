@@ -6,7 +6,7 @@
 @if(session('tema') == 'dark')
 bg-black
 @else
-bg-dark
+bg-secondary-subtle
 @endsession
 
 
@@ -20,8 +20,10 @@ bg-dark
             </div>
         </div>
     </div>
+    @include('partials.buttomsAcessibilidade')
     @vite('resources/js/app.js')
     @stack('scripts')
-</body>
+    @include('partials.scriptLightDark')
+    @include('partials.scriptAumentarFonte')
 
 </html>

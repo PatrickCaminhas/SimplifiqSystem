@@ -1,7 +1,10 @@
 @extends('layouts.padrao')
 @php
     $chartjs = true;
+
 @endphp
+
+
 @section('conteudo')
     <div class="container mt-4">
         <div class="row">
@@ -33,7 +36,7 @@
                                 </div>
                                 <div class="col-6">
 
-                                    <p class="card-text">Inicio no sistema: {{ $informacaoEmpresa->created_at }}</p>
+                                    <p class="card-text">Inicio no sistema: {{ \Carbon\Carbon::parse($informacaoEmpresa->created_at)->format('d/m/Y') }}
                                     <h5 class="card-title">Ações</h5>
                                     <p href="#" class="btn @include('partials.buttomCollor')"><i class="bi bi-info-circle-fill"></i> Alterar dados da empresa</p>
                                     <br>
@@ -310,8 +313,8 @@
                 datasets: [{
                     label: 'Crediário',
                     data: crediarioData,
-                    backgroundColor: 'rgba(44, 43, 43, 1)',
-                    borderColor: 'rgba(44, 43, 43, 1)',
+                    backgroundColor: 'rgba(217, 102, 0, 1)',
+                    borderColor: 'rgba(217, 102, 0, 1)',
                     borderWidth: 1
                 }]
             },

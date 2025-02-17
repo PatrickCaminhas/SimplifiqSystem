@@ -39,7 +39,7 @@
     @endif
     <label>Precisa de uma nova categoria? <a type="submit" class="btn @include('partials.buttomCollor') text-center"
             style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
-            href="{{ route('produto.categoria') }}">Clique aqui</a></label>
+            href="{{ route('produto.categoria') }}"><i class="bi bi-tags-fill"></i> Clique aqui</a></label>
 
 
 
@@ -69,9 +69,9 @@
     <textarea class="form-control" id="descricao" name="descricao" rows="3" style="resize: none;"
         placeholder="Digite a descrição do produto"></textarea>
 </div>
-<div class="text-center mt-1">
-    <button type="submit" id="buttomCadastrar" class="btn @include('partials.buttomCollor') text-center">Cadastrar</button>
-    <button type="reset" id="buttomLimpar" class="btn @include('partials.buttomCollor') text-center">Limpar</button>
+<div class="text-center mt-2">
+    <button type="submit" id="buttomCadastrar" class="btn @include('partials.buttomCollor') text-center"><i class="bi bi-floppy-fill"></i> Cadastrar</button>
+    <button type="reset" id="buttomLimpar" class="btn @include('partials.buttomCollor') text-center"><i class="bi bi-eraser-fill"></i> Limpar</button>
 </div>
 @endsection
 @push('scripts')

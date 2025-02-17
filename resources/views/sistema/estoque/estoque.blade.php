@@ -78,9 +78,9 @@
                                                 <div class="text-center mt-3">
                                                     <!-- Botões com valor da ação embutido -->
                                                     <button type="submit" class="btn @include('partials.buttomCollor')"
-                                                        name="acao" value="reposicao">Reposição</button>
+                                                        name="acao" value="reposicao"><i class="bi bi-arrow-up"></i> Reposição</button>
                                                     <button type="submit" class="btn btn-danger" name="acao"
-                                                        value="baixa">Baixa</button>
+                                                        value="baixa"><i class="bi bi-arrow-down"></i> Baixa</button>
                                                 </div>
                                             </div>
                                         </div>
