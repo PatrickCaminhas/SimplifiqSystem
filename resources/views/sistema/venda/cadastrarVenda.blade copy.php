@@ -7,7 +7,7 @@
 @section('route', route('vendas.store'))
 <!-- Select Cliente -->
 <div class="form-group">
-    <label name="cliente">Cliente:</label>
+    <label for="cliente">Cliente:</label>
     <select name="cliente_id" class="form-control">
         @foreach ($clientes as $cliente)
             <option value="{{ $cliente->id }}">{{ $cliente->nome }}
@@ -16,7 +16,7 @@
     </select>
 </div>
 <div class="form-group">
-    <label name="data">Metodo de pagamento:</label><br>
+    <label for="data">Metodo de pagamento:</label><br>
     <div class="form-check form-check-inline">
         <input class="form-check-input" type="radio" name="metodo_pagamento" id="Dinheiro" value="Dinheiro" checked>
         <label class="form-check-label" for="Dinheiro">
@@ -45,7 +45,7 @@
     </div>
     <div class="form-check form-check-inline">
         <input class="form-check-input" type="radio" name="metodo_pagamento" id="Crediario" value="Crediário">
-        <label class="form-check-label" name="Crediário">
+        <label class="form-check-label" for="Crediário">
             <i class="bi bi-journal-bookmark-fill"></i> Crediário
         </label>
     </div>
@@ -64,11 +64,11 @@
     </div>
 </div>
 <div class="form-group">
-    <label name="valor-total"><i class="bi bi-cash-stack"></i> Valor Total: </label>
+    <label for="valor-total"><i class="bi bi-cash-stack"></i> Valor Total: </label>
     <span type="text" id="valor-total" class="form-control-static"></span>
 </div>
 <div class="form-group">
-    <label name="desconto-maximo"><i class="bi bi-tag"></i> Desconto Máximo: </label>
+    <label for="desconto-maximo"><i class="bi bi-tag"></i> Desconto Máximo: </label>
     <span type="text" id="desconto-maximo" class="form-control-static">
     </span>
 </div>
@@ -81,7 +81,7 @@
 </div>
 
 <!-- Botão de Registrar Venda -->
-<button type="submit" class="btn @include('partials.buttomCollor') mt-3" >Registrar
+<button type="submit" class="btn @include('partials.buttomCollor') mt-3">Registrar
     Venda</button>
 @endsection
 
@@ -130,15 +130,12 @@
 
                     let produtoHtml = `
                 <div class="form-group row align-items-center mb-2" id="produto-${ui.item.id}">
-                    <label class="col-md-5 col-sm-6 col-form-label">${ui.item.label}</label>
-                    <div class="col-md-3 col-sm-6">
+                    <label class="col-4 col-form-label">${ui.item.label}</label>
+                    <div class="col-3">
                         <input type="number" name="quantidades[${ui.item.id}]" class="form-control quantidade-produto" data-id="${ui.item.id}" value="1" min="1" required>
                     </div>
-                    <div class="col " >
-                        <span class="badge bg-secondary" >Preço unitário: R$ ${ui.item.preco_venda}</span>
-                    </div>
-                    <div class="col" >
-                        <button type="button" class="btn badge btn-danger remove-produto" data-id="${ui.item.id}">Remover</button>
+                    <div class="col-2">
+                        <button type="button" class="btn btn-danger remove-produto" data-id="${ui.item.id}">Remover</button>
                     </div>
                 </div>`;
                     $("#produtos-list").append(produtoHtml);

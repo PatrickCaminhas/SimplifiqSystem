@@ -43,7 +43,7 @@
                             </div>
                             <!-- Vendas Realizadas -->
                             <div class="col-md-4 col-sm-6">
-                                <div class="card text-bg-secondary shadow-sm border-0 h-100">
+                                <div class="card text-bg-danger shadow-sm border-0 h-100">
                                     <div class="card-body text-center">
                                         <i class="bi bi-cart-check-fill display-6 mb-2"></i>
                                         <h6 class="card-text">
@@ -54,7 +54,7 @@
                             </div>
                             <!-- Estoque -->
                             <div class="col-md-4 col-sm-6">
-                                <div class="card text-bg-dark shadow-sm border-0 h-100">
+                                <div class="card bg-black text-white shadow-sm border-0 h-100">
                                     <div class="card-body text-center">
                                         <i class="bi bi-box-seam display-6 mb-2"></i>
                                         <h6 class="card-text">
