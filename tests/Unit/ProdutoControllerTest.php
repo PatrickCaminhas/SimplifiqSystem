@@ -27,10 +27,8 @@ class ProdutoControllerTest extends TestCase
 
     public function test_pode_criar_produto()
     {
-        // Mock do request
-        $request = Mockery::mock(Request::class);
-        $request->shouldReceive('validate')->once();
-        $request->shouldReceive('input')->with('nome')->andReturn('Teclado Mecânico');
+        // Cria um request real com os dados necessários
+        $request = Request::create('/store', 'POST', ['nome' => 'Teclado Mecânico']);
 
         // Mock do modelo
         $produtoMock = Mockery::mock(Produtos::class);

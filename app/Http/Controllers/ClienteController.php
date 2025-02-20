@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Clientes;
 use App\Models\Vendas;
+use App\Models\Itens_venda;
+use Illuminate\Support\Facades\DB;
 
 class ClienteController extends Controller
 {
@@ -167,4 +169,31 @@ class ClienteController extends Controller
         $cliente->delete();
         return redirect('clientes')->with('success', 'Cliente deletado com sucesso!');
     }
+
+    // ------------------
+    // FUNÇÃO PARA: BUSCAR OS 10 PRODUTOS MAIS COMPRADOS PELO CLIENTE
+    // PARAMETROS: ID DO CLIENTE
+    // ------------------
+    public function buscarProdutosMaisComprados($id)
+    {
+        $cliente = Clientes::find($id);
+
+        if (!$cliente) {
+            return response()->json(['error' => true, 'message' => 'Cliente não encontrado'], 404);
+        }
+
+        $produtosMaisComprados = Itens_venda::whereHas('venda', function ($query) use ($cliente) {
+            $query->where('cliente_id', $cliente->id)
+                ->where('metodo_pagamento', '!=', 'Crediário');
+        })
+            ->select('produto_id', DB::raw('SUM(quantidade) as total_comprado'))
+            ->groupBy('produto_id')
+            ->orderByDesc('total_comprado')
+            ->with('produto') // Carrega a relação produto
+            ->limit(10)
+            ->get();
+
+        return response()->json($produtosMaisComprados);
+    }
+
 }

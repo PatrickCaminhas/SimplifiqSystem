@@ -90,6 +90,8 @@ Route::middleware([
         Route::get('/produto/categoria/cadastro', [ProdutoController::class, 'createCadastroCategoria'])->name('produto.categoria');
         Route::post('/produto/categoria/cadastro', [ProdutoController::class, 'storeCategoria'])->name('produto.categoria.store');
 
+        Route::get('/api/produtos-mais-comprados/{id}', [ClienteController::class, 'buscarProdutosMaisComprados'])->name('produto.mais.comprados');
+
         Route::put('/informacaoproduto/{id}', [ProdutoController::class, 'atualizarProdutoApi'])->name('produto.atualizar.api');
         Route::put('/informacaoproduto/preco/{id}', [ProdutoController::class, 'atualizarPrecosAPI'])->name('produto.atualizar.precos.api');
 

@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Fornecedores;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\Itens_cotacoes;
+
 
 class FornecedorController extends Controller
 {
@@ -86,4 +89,38 @@ class FornecedorController extends Controller
         }
         return redirect()->back()->with('error', 'Fornecedor não encontrado.');
     }
+
+    // ------------------
+    // FUNÇÃO PARA: BUSCAR OS 10 PRODUTOS MAIS COTADOS DESSE FORNECEDOR COM MENOR E MAIOR PREÇO
+    // PARAMETROS: REQUEST COM ID DO FORNECEDOR
+    // ------------------
+
+    public function produtosMaisCotados(Request $request)
+    {
+        $fornecedor = Fornecedores::find($request->id);
+
+        if (!$fornecedor) {
+            return response()->json(['error' => true, 'message' => 'Fornecedor não encontrado'], 404);
+        }
+
+        // Buscar os 10 produtos mais cotados pelo fornecedor, com menor e maior preço
+        $produtos = Itens_cotacoes::where('fornecedor_id', $fornecedor->id)
+            ->select(
+                'produto_id',
+                DB::raw('COUNT(*) as total_cotado'),
+                DB::raw('MIN(preco) as preco_min'),
+                DB::raw('MAX(preco) as preco_max')
+            )
+            ->groupBy('produto_id')
+            ->orderByDesc('total_cotado')
+            ->limit(10)
+            ->get();
+
+        return response()->json([
+            'error' => false,
+            'fornecedor_id' => $fornecedor->id,
+            'produtos' => $produtos
+        ]);
+    }
+
 }

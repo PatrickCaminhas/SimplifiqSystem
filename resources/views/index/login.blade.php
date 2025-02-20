@@ -88,7 +88,7 @@
 
                                 </div>
                             </div>
-                            <div class="col-lg-6 d-flex align-items-center bg-primary bg-gradient">
+                           ! <div class="col-lg-6 d-flex align-items-center bg-primary bg-gradient">
                                 <div class="text-white px-3 py-4 p-md-5 mx-md-4 text-center">
                                     <h4 class="mb-4">Nós somos mais que uma empresa</h4>
                                     <p class="small mb-0">
@@ -96,7 +96,7 @@
                                         negócios.
                                         Juntos, transformamos desafios em resultados.</p>
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                 </div>

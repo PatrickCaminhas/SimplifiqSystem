@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Itens_cotacoes;
+use App\Models\Itens_venda;
 use App\Models\Produtos;
 use App\Models\Produtos_categoria;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+
 
 class ProdutoController extends Controller
 {
@@ -111,7 +116,14 @@ class ProdutoController extends Controller
     public function atualizarDadosProduto(Request $request)
     {
         Produtos::findOrFail($request->id)->update($request->only([
-            'nome', 'marca', 'modelo', 'categoria', 'unidade_medida', 'medida', 'preco_compra', 'descricao'
+            'nome',
+            'marca',
+            'modelo',
+            'categoria',
+            'unidade_medida',
+            'medida',
+            'preco_compra',
+            'descricao'
         ]));
 
         return redirect()->back()->with('success', 'Produto atualizado com sucesso!');
@@ -159,4 +171,94 @@ class ProdutoController extends Controller
 
         return response()->json(['categoria' => $categoria]);
     }
+
+    //------------------
+    //FUNÇÃO PARA: BUSCAR OS 10 MAIORES COMPRADORES DESSE PRODUTO
+    //PARÂMETROS: ID DO PRODUTO
+    //RETORNO: CLIENTES
+    //------------------
+    public function buscarMaioresCompradores($id)
+    {
+        $produto = Produtos::find($id);
+
+        if (!$produto) {
+            return response()->json(['error' => true, 'message' => 'Produto não encontrado'], 404);
+        }
+
+        $umAnoAtras = now()->subYear();
+
+        $clientes = Itens_venda::where('produto_id', $id)
+            ->whereHas('vendas', function ($query) use ($umAnoAtras) {
+                $query->where('data_venda', '>=', $umAnoAtras);
+            })
+            ->select('cliente_id', DB::raw('COUNT(*) as total_compras'))
+            ->groupBy('cliente_id')
+            ->orderByDesc('total_compras')
+            ->take(5)
+            ->get();
+
+        return response()->json($clientes);
+    }
+
+    //------------------
+    //FUNÇÃO PARA: BUSCAR OS 10 MAIORES FORNECEDORES DESSE PRODUTO EM COTAÇÕES
+    //PARÂMETROS: ID DO PRODUTO
+    //RETORNO: FORNECEDORES
+    //------------------
+    public function buscarMaioresFornecedoresCotacoes($id)
+    {
+        $produto = Produtos::find($id);
+
+        if (!$produto) {
+            return response()->json(['error' => true, 'message' => 'Produto não encontrado'], 404);
+        }
+
+        $umAnoAtras = now()->subYear();
+
+        $fornecedores = Itens_cotacoes::where('produto_id', $id)
+            ->whereHas('cotacoes', function ($query) use ($umAnoAtras) {
+                $query->where('data_cotacao', '>=', $umAnoAtras);
+            })
+            ->select('fornecedor_id', DB::raw('COUNT(*) as total_cotacoes'))
+            ->groupBy('fornecedor_id')
+            ->orderByDesc('total_cotacoes')
+            ->take(5)
+            ->get();
+
+        return response()->json($fornecedores);
+    }
+
+    //------------------
+    //FUNÇÃO PARA: BUSCAR VARIAÇÃO DE PRECO_UNITARIO DESTE PRODUTO EM 1 ANO
+    //PARÂMETROS: ID DO PRODUTO
+    //RETORNO: VARIAÇÃO DE PREÇO
+    //------------------
+
+
+    public function buscarVariacaoPrecoProduto($id)
+    {
+        $produto = Produtos::find($id);
+
+        if (!$produto) {
+            return response()->json(['error' => true, 'message' => 'Produto não encontrado'], 404);
+        }
+
+        $dataLimite = Carbon::now()->subMonths(13);
+
+        $variacoes = Itens_venda::where('produto_id', $id)
+            ->whereHas('vendas', function ($query) use ($dataLimite) {
+                $query->where('data_venda', '>=', $dataLimite);
+            })
+            ->select(
+                DB::raw("DATE_FORMAT(data_venda, '%Y-%m') as mes_ano"),
+                'preco_unitario'
+            )
+            ->groupBy('mes_ano', 'preco_unitario')
+            ->orderBy('mes_ano', 'asc')
+            ->get();
+
+        return response()->json($variacoes);
+    }
+
+
 }
