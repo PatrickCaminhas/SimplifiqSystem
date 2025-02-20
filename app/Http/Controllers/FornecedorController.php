@@ -113,13 +113,22 @@ class FornecedorController extends Controller
             )
             ->groupBy('produto_id')
             ->orderByDesc('total_cotado')
+            ->with('produto') // Carregar o nome do produto
             ->limit(10)
             ->get();
 
         return response()->json([
             'error' => false,
             'fornecedor_id' => $fornecedor->id,
-            'produtos' => $produtos
+            'produtos' => $produtos->map(function ($item) {
+                return [
+                    'produto_id' => $item->produto_id,
+                    'produto_nome' => $item->produto->nome . " " . $item->produto->modelo ." ". $item->produto->marca  ?? 'Produto não encontrado',
+                    'total_cotado' => $item->total_cotado,
+                    'preco_min' => $item->preco_min,
+                    'preco_max' => $item->preco_max
+                ];
+            })
         ]);
     }
 

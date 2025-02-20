@@ -74,7 +74,27 @@
 
 
 
+
                                         </div>
+                                        <div class="col-12">
+                                            <h5 class="mt-3">Produtos Mais Cotados</h5>
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Produto</th>
+                                                        <th>Total Cotado</th>
+                                                        <th>Preço Mínimo</th>
+                                                        <th>Preço Máximo</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="produtosTabela{{ $fornecedor->id }}">
+                                                    <tr>
+                                                        <td colspan="4">Carregando...</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
                                     </div>
                                     <div class="modal-footer">
                                         <form method="POST" action="{{ route('fornecedores.edit') }}">
@@ -119,5 +139,47 @@
             });
         });
     </script>
-    </body>
+    <script>
+    $(document).ready(function() {
+        $('button[data-bs-toggle="modal"]').click(function() {
+            let fornecedorId = $(this).data('produto-id');
+            let tabelaBody = $('#produtosTabela' + fornecedorId);
+
+            // Limpa a tabela e exibe "Carregando..."
+            tabelaBody.html('<tr><td colspan="4">Carregando...</td></tr>');
+
+            $.ajax({
+                url: `/api/produtos-mais-cotados/${fornecedorId}`,
+                type: 'GET',
+                success: function(response) {
+                    if (response.error) {
+                        tabelaBody.html('<tr><td colspan="4">Erro ao carregar os produtos.</td></tr>');
+                        return;
+                    }
+
+                    tabelaBody.empty(); // Limpa a tabela
+
+                    if (response.produtos.length > 0) {
+                        response.produtos.forEach(produto => {
+                            tabelaBody.append(`
+                                <tr>
+                                    <td>${produto.produto_nome}</td>
+                                    <td>${produto.total_cotado}</td>
+                                    <td>R$ ${produto.preco_min}</td>
+                                    <td>R$ ${produto.preco_max}</td>
+                                </tr>
+                            `);
+                        });
+                    } else {
+                        tabelaBody.html('<tr><td colspan="4">Nenhum produto encontrado.</td></tr>');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Erro na requisição:', error);
+                    tabelaBody.html('<tr><td colspan="4">Erro ao buscar os produtos.</td></tr>');
+                }
+            });
+        });
+    });
+    </script>
 @endpush
