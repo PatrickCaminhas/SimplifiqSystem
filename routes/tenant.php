@@ -92,6 +92,9 @@ Route::middleware([
 
         Route::get('/api/produtos-mais-comprados/{id}', [ClienteController::class, 'buscarProdutosMaisComprados'])->name('produto.mais.comprados');
         Route::get('/api/produtos-mais-cotados/{id}', [FornecedorController::class, 'produtosMaisCotados'])->name('produto.mais.cotados');
+        Route::get('/api/maiores-compradores/{id}', [ProdutoController::class, 'buscarMaioresCompradores'])->name('maiores.compradores.deste.produto');
+        Route::get('/api/maiores-fornecedores/{id}', [ProdutoController::class, 'buscarMaioresFornecedores'])->name('maiores.fornecedores.deste.produto');
+        Route::get('/api/variacao-preco/{id}', [ProdutoController::class, 'buscarVariacaoPrecoProduto'])->name('variacao.preco');
 
         Route::put('/informacaoproduto/{id}', [ProdutoController::class, 'atualizarProdutoApi'])->name('produto.atualizar.api');
         Route::put('/informacaoproduto/preco/{id}', [ProdutoController::class, 'atualizarPrecosAPI'])->name('produto.atualizar.precos.api');
