@@ -101,6 +101,7 @@ class ClienteController extends Controller
         $cliente->email = $request->email ?? "-";
         $cliente->endereco_completo = $request->endereco_completo;
         $cliente->debitos = 0;
+        $cliente->crediario=0;
         $cliente->observacoes = $request->observacoes;
 
         $cliente->save();
@@ -115,14 +116,14 @@ class ClienteController extends Controller
     public function quitarDividaStore(Request $request)
     {
         $cliente = Clientes::find($request->cliente_id);
-        $debito = $cliente->debitos;
+        $crediario = $cliente->crediario;
         $pagamento = $request->valor_quitacao;
 
-        if ($debito < $pagamento) {
+        if ($crediario < $pagamento) {
             return redirect('clientes')->with('error', 'Valor de quitação maior que o valor da dívida!');
         }
 
-        $cliente->debitos -= $pagamento;
+        $cliente->crediario -= $pagamento;
         $this->mudarEstadoVendaCrediario($pagamento, $cliente);
         $cliente->save();
 

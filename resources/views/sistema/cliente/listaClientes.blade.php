@@ -26,10 +26,17 @@
                         @endif
                     </td>
                     <td hidden>
-                        @if ($cliente->debitos == null || $cliente->debitos == '0' || $cliente->debitos == '0.00')
-                            Não possui débitos!
-                        @else
+                        @if (
+                            ($cliente->debitos == null ||
+                                $cliente->debitos == '0.00') &&
+                                ($cliente->crediario == null ||
+                                $cliente->crediario == '0.00'))
+                        @elseif(($cliente->debitos == null || $cliente->debitos == '0.00') && $cliente->crediario > 0)
                             fiado - crediario - crédito - prazo - pendencias
+                        @elseif($cliente->debitos > 0 && ($cliente->crediario == null || $cliente->crediario == '0.00'))
+                            debito - divida
+                        @elseif($cliente->debitos > 0 && $cliente->crediario > 0)
+                            fiado - debito - divida - crediario - crédito - prazo - pendencias
                         @endif
                     </td>
                     <td>
@@ -87,6 +94,17 @@
                                                 </p>
                                             </div>
                                             <div class="col-6">
+                                                <p for="exampleFormControlInput1" class="form-label">Crediário:
+                                                    <a>
+                                                        @if ($cliente->crediario == null || $cliente->crediario == '0' || $cliente->crediario == '0.00')
+                                                            Não possui.
+                                                        @else
+                                                            R${{ $cliente->crediario }}
+                                                        @endif
+                                                    </a>
+                                                </p>
+                                            </div>
+                                            <div class="col-6">
                                                 <p for="exampleFormControlInput1" class="form-label">Pendências:
                                                     <a>
                                                         @if ($cliente->debitos == null || $cliente->debitos == '0' || $cliente->debitos == '0.00')
@@ -127,6 +145,14 @@
                                             <button type="submit" class="btn @include('partials.buttomCollor')">
                                                 Alterar</button>
                                         </form>
+                                        @if ($cliente->crediario > 0)
+                                            <form method="POST" action="{{ route('cliente.quitar.view') }}">
+                                                @csrf
+                                                <input type="hidden" name="id" value="{{ $cliente->id }}">
+                                                <button type="submit" class="btn @include('partials.buttomCollor')">
+                                                    Pagar crediário</button>
+                                            </form>
+                                        @endif
                                         @if ($cliente->debitos > 0)
                                             <form method="POST" action="{{ route('cliente.quitar.view') }}">
                                                 @csrf
@@ -145,7 +171,9 @@
             @endforeach
         </tbody>
     </table>
-    <p class="fs-6 fw-lighter">Para ver todos os clientes em crediário procure por: crediario ou pendencias</p>
+    <p >Para ver todos os clientes em crediário procure por: crediario ou pendencias</p>
+    <p >Para ver todos os clientes em debito procure por: debito ou divida</p>
+
 @endsection
 @push('scripts')
     <script>

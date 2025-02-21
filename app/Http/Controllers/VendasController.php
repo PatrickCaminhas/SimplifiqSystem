@@ -38,9 +38,9 @@ class VendasController extends Controller
         return view('sistema.venda.listaVendas', ['vendas' => $vendas], ['page' => 'Vendas']);
     }
 
-    public function clienteCrediario($clienteId, $valorDebito)
+    public function clienteCrediario($clienteId, $valorCrediario)
     {
-        Clientes::where('id', $clienteId)->increment('debitos', $valorDebito);
+        Clientes::where('id', $clienteId)->increment('crediario', $valorCrediario);
     }
     public function store(Request $request)
     {
