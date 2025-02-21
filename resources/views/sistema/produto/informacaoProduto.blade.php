@@ -256,6 +256,19 @@
             <div class="col-sm-12 col-md-6">
                 <div class="card mb-2">
                     <div class="card-body">
+                        <h5 class="card-title">Variação de preço</h5>
+                        <p class="card-text">
+                            <!-- GRAFICO DE VARIAÇÃO DE PREÇO -->
+                        <div>
+                            <canvas id="variacaoPrecoChart"></canvas>
+                        </div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <div class="card mb-2">
+                    <div class="card-body">
                         <h5 class="card-title">Lista Maiores Compradores</h5>
                         <div>
                             <table class="table table-striped" id="tabelaCompradores">
@@ -393,6 +406,69 @@
             });
         });
     </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const produtoId = {{ $produto->id }}; // Pegando o ID do produto
+
+        fetch(`/api/variacao-preco/${produtoId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    console.error(data.message);
+                    return;
+                }
+
+                // Organizar os dados
+                const mesesAnos = [];
+                const precos = [];
+
+                data.forEach(item => {
+                    mesesAnos.push(item.mes_ano); // Exemplo: "2024-02"
+                    precos.push(item.preco_unitario);
+                });
+
+                // Criando gráfico
+                const ctx = document.getElementById('variacaoPrecoChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: mesesAnos, // Eixo X - Meses/Ano
+                        datasets: [{
+                            label: 'Preço Unitário',
+                            data: precos, // Eixo Y - Preços
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Meses/Ano'
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Preço Unitário (R$)'
+                                },
+                                min: 0 // Define o valor mínimo do eixo Y como 0
+
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error('Erro ao carregar os dados:', error));
+    });
+</script>
+
 
     <script>
         document.getElementById('formEditarProduto').addEventListener('submit', function(event) {

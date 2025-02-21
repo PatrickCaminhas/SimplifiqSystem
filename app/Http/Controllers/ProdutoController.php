@@ -173,6 +173,25 @@ class ProdutoController extends Controller
     }
 
     //------------------
+    //FUNÇÃO PARA: DESATIVAR PRODUTO
+    //PARÂMETROS: ID DO PRODUTO
+    //------------------
+
+    public function alterarEstadoProduto($id)
+    {
+        $produto = Produtos::find($id);
+
+        if (!$produto) {
+            return response()->json(['error' => true, 'message' => 'Produto não encontrado'], 404);
+        }
+
+        $produto->estado= "Inativo";
+        $produto->save();
+
+        return redirect()->route('produto.listar')->with('success', 'Produto desativado com sucesso!');
+    }
+
+    //------------------
     //FUNÇÃO PARA: BUSCAR OS 10 MAIORES COMPRADORES DESSE PRODUTO
     //PARÂMETROS: ID DO PRODUTO
     //RETORNO: CLIENTES
@@ -234,8 +253,6 @@ class ProdutoController extends Controller
     //PARÂMETROS: ID DO PRODUTO
     //RETORNO: VARIAÇÃO DE PREÇO
     //------------------
-
-
     public function buscarVariacaoPrecoProduto($id)
     {
         $produto = Produtos::find($id);
@@ -246,20 +263,20 @@ class ProdutoController extends Controller
 
         $dataLimite = Carbon::now()->subMonths(13);
 
-        $variacoes = Itens_venda::where('produto_id', $id)
-            ->whereHas('vendas', function ($query) use ($dataLimite) {
-                $query->where('data_venda', '>=', $dataLimite);
-            })
+        $variacoes = Itens_venda::join('vendas', 'itens_vendas.venda_id', '=', 'vendas.id')
+            ->where('itens_vendas.produto_id', $id)
+            ->where('vendas.data_venda', '>=', $dataLimite)
             ->select(
-                DB::raw("DATE_FORMAT(data_venda, '%Y-%m') as mes_ano"),
-                'preco_unitario'
+                DB::raw("DATE_FORMAT(vendas.data_venda, '%Y/%m') as mes_ano"),
+                'itens_vendas.preco_unitario'
             )
-            ->groupBy('mes_ano', 'preco_unitario')
-            ->orderBy('mes_ano', 'asc')
+            ->groupBy('vendas.created_at','data_venda', 'itens_vendas.preco_unitario')
+            ->orderBy('vendas.created_at', 'asc')
             ->get();
 
         return response()->json($variacoes);
     }
+
 
 
 }

@@ -2,7 +2,17 @@
 @section('titulo', 'Lista de Produtos')
 @section('lista')
     <p><a class="btn @include('partials.buttomCollor')" href="{{ route('produto.create') }}"><i class="bi bi-plus-circle-fill"></i>
-            Cadastrar produto</a></p>
+            Cadastrar produto</a>
+    @php
+        if ( session()->get('tema') == 'dark') {
+            $botaodesativado = 'btn-danger';
+        } else {
+            $botaodesativado = 'btn-dark';
+        }
+    @endphp
+        <a class="btn {{$botaodesativado}}" href="{{ route('produto.create') }}"><i class="bi bi-plus-circle-fill"></i>
+            Produtos desativados</a>
+    </p>
     <table id="myTable" class="display">
         <thead>
             <tr>
