@@ -22,10 +22,8 @@ class Kernel extends ConsoleKernel
             $faturamentoService->atualizarFaturamentoMensal($valor_vendas_mes);
         })->monthlyOn(1, '00:00'); // Executa no dia 1 de cada mês à meia-noite
         // Tarefa para verificar o status de vendas a crediário diariamente às 00:00
-        $schedule->call(function () {
-            $crediarioService = app(CheckCrediarioCommand::class);
-            $crediarioService->verificarVendasCrediario(); // método que implementa sua lógica de crediário
-        })->dailyAt('00:00');
+        $schedule->command('crediario:check')->dailyAt('00:00');
+
     }
 
     protected function commands()
