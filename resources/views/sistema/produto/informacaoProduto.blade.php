@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+@php
+    $chartjs = true;
+    $jquery = true;
+@endphp
+@extends('layouts.padrao')
+@section('titulo', 'Lista de Produtos')
 
-@include('partials.head', ['chart' => true])
-
-<body class=bg-dark>
-    <!-- Menu superior -->
-    @include('partials.header')
+@section(section: 'conteudo')
     <div class="container mt-2 col-12 mb-3 ">
         @include('partials.errorAndSuccessToast')
         <div class="row">
@@ -36,10 +36,10 @@
                     <div class="card-body">
                         <h5 class="card-title">Ações</h5>
                         <!--<a href="{{ route('produto.edit', ['id' => $produto->id]) }}" class="btn @include('partials.buttomCollor')">Alterar
-                            dados</a>
-                        <a href="{{ route('produto.preco', ['id' => $produto->id]) }}" class="btn @include('partials.buttomCollor')">Alterar
-                            preço de venda</a>
-                        -->
+                                dados</a>
+                            <a href="{{ route('produto.preco', ['id' => $produto->id]) }}" class="btn @include('partials.buttomCollor')">Alterar
+                                preço de venda</a>
+                            -->
                         <!-- Modal de Edição -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#modalEditarProduto">
@@ -70,14 +70,14 @@
                                                 value="{{ old('nome', $produto->nome) }}" required>
                                             <div class="form-group">
                                                 <label for="modeloproduto">Modelo</label>
-                                                <input type="text" class="form-control" id="modeloproduto"
-                                                    name="modelo" placeholder="{{ $produto->modelo }}"
+                                                <input type="text" class="form-control" id="modeloproduto" name="modelo"
+                                                    placeholder="{{ $produto->modelo }}"
                                                     value="{{ old('nome', $produto->modelo) }}" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="marcaproduto">Marca</label>
-                                                <input type="text" class="form-control" id="marcaproduto"
-                                                    name="marca" placeholder="{{ $produto->marca }}"
+                                                <input type="text" class="form-control" id="marcaproduto" name="marca"
+                                                    placeholder="{{ $produto->marca }}"
                                                     value="{{ old('nome', $produto->marca) }}" required>
                                             </div>
                                             <div class="form-group">
@@ -149,19 +149,18 @@
                                             <div class="form-group">
                                                 <label for="medidaproduto">Medida</label>
                                                 <input type="text" class="form-control" id="medidaproduto"
-                                                    name="medida" min='1'
-                                                    placeholder="{{ $produto->medida }}"
+                                                    name="medida" min='1' placeholder="{{ $produto->medida }}"
                                                     value="{{ old('nome', $produto->medida) }}" required>
                                             </div>
                                             <div class=" form-group">
                                                 <label for="precocompraproduto">Preço de compra</label>
                                                 <div class="input-group">
                                                     <span class="input-group-text" id="basic-addon1">R$</span>
-                                                    <input type="number" class="form-control"
-                                                        id="precocompraproduto" name="preco_compra" min='1'
+                                                    <input type="number" class="form-control" id="precocompraproduto"
+                                                        name="preco_compra" min='1'
                                                         placeholder="{{ $produto->preco_compra }}"
-                                                        value="{{ old('nome', $produto->preco_compra) }}"
-                                                        step="0.01" required>
+                                                        value="{{ old('nome', $produto->preco_compra) }}" step="0.01"
+                                                        required>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -169,8 +168,8 @@
                                                 <textarea class="form-control" id="descricao" name="descricao" rows="3" style="resize: none;"
                                                     placeholder="{{ $produto->descricao }}" value="{{ old('nome', $produto->descricao) }}">{{ $produto->descricao }}</textarea>
                                             </div>
-                                            <button type="submit" class="btn btn-primary"
-                                                data-bs-dismiss="modal">Salvar Alterações</button>
+                                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Salvar
+                                                Alterações</button>
                                         </form>
                                     </div>
                                 </div>
@@ -224,8 +223,7 @@
                                                         placeholder="{{ $produto->desconto_maximo }}" step="0.01">
                                                 </div>
                                             </div>
-                                            <button type="submit" class="btn btn-primary"
-                                                >Salvar Alterações</button>
+                                            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
                                         </form>
                                     </div>
                                 </div>
@@ -236,9 +234,10 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
+
+
     <div class="container mt-2">
         <div class="row">
             <div class="col-12">
@@ -257,127 +256,127 @@
 
         </div>
     </div>
-
+@endsection
     <!-- Features Section -->
 
     <!-- Inclua os arquivos JavaScript do Bootstrap -->
     @vite('resources/js/app.js')
+    @push('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const estoqueData = {!! json_encode($estoque) !!};
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const estoqueData = {!! json_encode($estoque) !!};
+                // Agrupar as quantidades de cada ação por mês/ano
+                const groupedData = estoqueData.reduce((acc, item) => {
+                    const mesAno = `${String(item.mes).padStart(2, '0')}/${item.ano}`; // Formato MM/YYYY
+                    if (!acc[mesAno]) {
+                        acc[mesAno] = {
+                            baixa: 0,
+                            venda: 0,
+                            reposicao: 0
+                        }; // Inicializa as quantidades para o mês/ano
+                    }
+                    // Sumariza as quantidades de acordo com a ação
+                    if (item.acao === 'baixa') {
+                        acc[mesAno].baixa += item.quantidade;
+                    } else if (item.acao === 'Venda') {
+                        acc[mesAno].venda += item.quantidade;
+                    } else if (item.acao === 'reposicao') {
+                        acc[mesAno].reposicao += item.quantidade;
+                    }
+                    return acc;
+                }, {});
 
-            // Agrupar as quantidades de cada ação por mês/ano
-            const groupedData = estoqueData.reduce((acc, item) => {
-                const mesAno = `${String(item.mes).padStart(2, '0')}/${item.ano}`; // Formato MM/YYYY
-                if (!acc[mesAno]) {
-                    acc[mesAno] = {
-                        baixa: 0,
-                        venda: 0,
-                        reposicao: 0
-                    }; // Inicializa as quantidades para o mês/ano
-                }
-                // Sumariza as quantidades de acordo com a ação
-                if (item.acao === 'baixa') {
-                    acc[mesAno].baixa += item.quantidade;
-                } else if (item.acao === 'Venda') {
-                    acc[mesAno].venda += item.quantidade;
-                } else if (item.acao === 'reposicao') {
-                    acc[mesAno].reposicao += item.quantidade;
-                }
-                return acc;
-            }, {});
+                // Extrair os meses/anos ordenados e as quantidades para cada ação
+                const mesesAnos = Object.keys(groupedData).sort((a, b) => {
+                    // Ordenar os meses/anos no formato MM/YYYY
+                    const [mesA, anoA] = a.split('/').map(Number);
+                    const [mesB, anoB] = b.split('/').map(Number);
+                    return new Date(anoA, mesA - 1) - new Date(anoB, mesB - 1);
+                });
 
-            // Extrair os meses/anos ordenados e as quantidades para cada ação
-            const mesesAnos = Object.keys(groupedData).sort((a, b) => {
-                // Ordenar os meses/anos no formato MM/YYYY
-                const [mesA, anoA] = a.split('/').map(Number);
-                const [mesB, anoB] = b.split('/').map(Number);
-                return new Date(anoA, mesA - 1) - new Date(anoB, mesB - 1);
-            });
+                // Preencher os arrays de quantidades, garantindo que todos os meses estejam no gráfico
+                const quantidadeBaixas = mesesAnos.map(mesAno => groupedData[mesAno].baixa);
+                const quantidadeVendas = mesesAnos.map(mesAno => groupedData[mesAno].venda);
+                const quantidadeReposicoes = mesesAnos.map(mesAno => groupedData[mesAno].reposicao);
 
-            // Preencher os arrays de quantidades, garantindo que todos os meses estejam no gráfico
-            const quantidadeBaixas = mesesAnos.map(mesAno => groupedData[mesAno].baixa);
-            const quantidadeVendas = mesesAnos.map(mesAno => groupedData[mesAno].venda);
-            const quantidadeReposicoes = mesesAnos.map(mesAno => groupedData[mesAno].reposicao);
-
-            const ctx = document.getElementById('estoqueChart').getContext('2d');
-            const estoqueChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: mesesAnos, // Meses/anos ordenados
-                    datasets: [{
-                            label: 'Baixas',
-                            data: quantidadeBaixas, // Quantidade de baixas
-                            borderColor: 'rgba(247, 39, 39, 1)',
-                            backgroundColor: 'rgba(247, 39, 39, 1)',
-                            fill: false,
-                            tension: 0.1
-                        },
-                        {
-                            label: 'Vendas',
-                            data: quantidadeVendas, // Quantidade de vendas
-                            borderColor: 'rgba(39, 247, 46, 1)',
-                            backgroundColor: 'rgba(39, 247, 46, 1)',
-                            fill: false,
-                            tension: 0.1
-                        },
-                        {
-                            label: 'Reposições',
-                            data: quantidadeReposicoes, // Quantidade de reposições
-                            borderColor: 'rgba(38, 72, 255, 1)',
-                            backgroundColor: 'rgba(38, 72, 255, 1)',
-                            fill: false,
-                            tension: 0.1
-                        }
-                    ]
-                },
-                options: {
-                    scales: {
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Meses/Ano'
+                const ctx = document.getElementById('estoqueChart').getContext('2d');
+                const estoqueChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: mesesAnos, // Meses/anos ordenados
+                        datasets: [{
+                                label: 'Baixas',
+                                data: quantidadeBaixas, // Quantidade de baixas
+                                borderColor: 'rgba(247, 39, 39, 1)',
+                                backgroundColor: 'rgba(247, 39, 39, 1)',
+                                fill: false,
+                                tension: 0.1
+                            },
+                            {
+                                label: 'Vendas',
+                                data: quantidadeVendas, // Quantidade de vendas
+                                borderColor: 'rgba(39, 247, 46, 1)',
+                                backgroundColor: 'rgba(39, 247, 46, 1)',
+                                fill: false,
+                                tension: 0.1
+                            },
+                            {
+                                label: 'Reposições',
+                                data: quantidadeReposicoes, // Quantidade de reposições
+                                borderColor: 'rgba(38, 72, 255, 1)',
+                                backgroundColor: 'rgba(38, 72, 255, 1)',
+                                fill: false,
+                                tension: 0.1
                             }
-                        },
-                        y: {
-                            title: {
-                                display: true,
-                                text: 'Quantidade'
+                        ]
+                    },
+                    options: {
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Meses/Ano'
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Quantidade'
+                                }
                             }
                         }
                     }
-                }
+                });
             });
-        });
-    </script>
+        </script>
 
-    <script>
-        document.getElementById('formEditarProduto').addEventListener('submit', function(event) {
-            event.preventDefault(); // Previne o redirecionamento padrão do formulário
+        <script>
+            document.getElementById('formEditarProduto').addEventListener('submit', function(event) {
+                event.preventDefault(); // Previne o redirecionamento padrão do formulário
 
-            let form = this;
-            let formData = new FormData(form);
+                let form = this;
+                let formData = new FormData(form);
 
-            fetch(form.action, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
-                        'Accept': 'application/json',
-                        'X-Requested-With': 'XMLHttpRequest'
-                    },
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // Atualiza os elementos da página com os novos dados do produto
-                        // (Utilize os IDs ou seletores adequados para cada campo)
-                        data.produto.preco_compra = parseFloat(data.produto.preco_compra).toFixed(2);
-                        data.produto.preco_venda = parseFloat(data.produto.preco_venda).toFixed(2);
+                fetch(form.action, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+                            'Accept': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Atualiza os elementos da página com os novos dados do produto
+                            // (Utilize os IDs ou seletores adequados para cada campo)
+                            data.produto.preco_compra = parseFloat(data.produto.preco_compra).toFixed(2);
+                            data.produto.preco_venda = parseFloat(data.produto.preco_venda).toFixed(2);
 
 
-                        document.getElementById('produto_info').innerHTML = `
+                            document.getElementById('produto_info').innerHTML = `
                 <div class="card mb-2 h-100">
                     <div class="card-body">
                         <h5 class="card-title">Informações do produto</h5>
@@ -393,54 +392,54 @@
                 </div>
             `;
 
-                        // Exibe o toast de sucesso
-                        const toastEl = document.getElementById('toastSuccess');
-                        if (toastEl) {
-                            // Se necessário, remova a classe 'show' para reiniciar o toast
-                            toastEl.classList.remove('show');
-                            const toast = bootstrap.Toast.getOrCreateInstance(toastEl);
-                            document.getElementById('toastMessage').innerText =
-                                'Produto atualizado com sucesso!';
-                            toast.show();
+                            // Exibe o toast de sucesso
+                            const toastEl = document.getElementById('toastSuccess');
+                            if (toastEl) {
+                                // Se necessário, remova a classe 'show' para reiniciar o toast
+                                toastEl.classList.remove('show');
+                                const toast = bootstrap.Toast.getOrCreateInstance(toastEl);
+                                document.getElementById('toastMessage').innerText =
+                                    'Produto atualizado com sucesso!';
+                                toast.show();
+                            } else {
+                                console.warn("Elemento 'toastSuccess' não encontrado!");
+                            }
+
+
                         } else {
-                            console.warn("Elemento 'toastSuccess' não encontrado!");
+                            alert("Erro ao atualizar produto!");
                         }
+                    })
+                    .catch(error => console.error("Erro:", error));
+            });
+        </script>
 
+        <script>
+            document.getElementById('formEditarPreco').addEventListener('submit', function(event) {
+                event.preventDefault(); // Previne o redirecionamento padrão do formulário
 
-                    } else {
-                        alert("Erro ao atualizar produto!");
-                    }
-                })
-                .catch(error => console.error("Erro:", error));
-        });
-    </script>
+                let form = this;
+                let formData = new FormData(form);
 
-    <script>
-        document.getElementById('formEditarPreco').addEventListener('submit', function(event) {
-            event.preventDefault(); // Previne o redirecionamento padrão do formulário
+                fetch(form.action, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+                            'Accept': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Atualiza os elementos da página com os novos dados do produto
+                            // (Utilize os IDs ou seletores adequados para cada campo)
 
-            let form = this;
-            let formData = new FormData(form);
+                            data.produto.preco_venda = parseFloat(data.produto.preco_venda).toFixed(2);
+                            data.produto.desconto_maximo = parseFloat(data.produto.desconto_maximo).toFixed(2);
 
-            fetch(form.action, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
-                        'Accept': 'application/json',
-                        'X-Requested-With': 'XMLHttpRequest'
-                    },
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // Atualiza os elementos da página com os novos dados do produto
-                        // (Utilize os IDs ou seletores adequados para cada campo)
-
-                        data.produto.preco_venda = parseFloat(data.produto.preco_venda).toFixed(2);
-                        data.produto.desconto_maximo = parseFloat(data.produto.desconto_maximo).toFixed(2);
-
-                        document.getElementById('produto_info').innerHTML = `
+                            document.getElementById('produto_info').innerHTML = `
             <div class="card mb-2 h-100">
                 <div class="card-body">
                     <h5 class="card-title">Informações do produto</h5>
@@ -456,29 +455,25 @@
             </div>
         `;
 
-                        // Exibe o toast de sucesso
-                        const toastEl = document.getElementById('toastSuccess');
-                        if (toastEl) {
-                            // Se necessário, remova a classe 'show' para reiniciar o toast
-                            toastEl.classList.remove('show');
-                            const toast = bootstrap.Toast.getOrCreateInstance(toastEl);
-                            document.getElementById('toastMessage').innerText =
-                                'Produto atualizado com sucesso!';
-                            toast.show();
+                            // Exibe o toast de sucesso
+                            const toastEl = document.getElementById('toastSuccess');
+                            if (toastEl) {
+                                // Se necessário, remova a classe 'show' para reiniciar o toast
+                                toastEl.classList.remove('show');
+                                const toast = bootstrap.Toast.getOrCreateInstance(toastEl);
+                                document.getElementById('toastMessage').innerText =
+                                    'Produto atualizado com sucesso!';
+                                toast.show();
+                            } else {
+                                console.warn("Elemento 'toastSuccess' não encontrado!");
+                            }
+
+
                         } else {
-                            console.warn("Elemento 'toastSuccess' não encontrado!");
+                            alert("Erro ao atualizar produto!");
                         }
-
-
-                    } else {
-                        alert("Erro ao atualizar produto!");
-                    }
-                })
-                .catch(error => console.error("Erro:", error));
-        });
-    </script>
-
-
-</body>
-
-</html>
+                    })
+                    .catch(error => console.error("Erro:", error));
+            });
+        </script>
+    @endpush
