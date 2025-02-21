@@ -177,28 +177,29 @@ class ProdutoController extends Controller
     //PARÂMETROS: ID DO PRODUTO
     //RETORNO: CLIENTES
     //------------------
+
     public function buscarMaioresCompradores($id)
     {
-        $produto = Produtos::find($id);
-
-        if (!$produto) {
-            return response()->json(['error' => true, 'message' => 'Produto não encontrado'], 404);
-        }
-
         $umAnoAtras = now()->subYear();
 
         $clientes = Itens_venda::where('produto_id', $id)
-            ->whereHas('vendas', function ($query) use ($umAnoAtras) {
-                $query->where('data_venda', '>=', $umAnoAtras);
-            })
-            ->select('cliente_id', DB::raw('COUNT(*) as total_compras'))
-            ->groupBy('cliente_id')
+            ->join('vendas', 'itens_vendas.venda_id', '=', 'vendas.id') // Relacionando com vendas
+            ->join('clientes', 'vendas.cliente_id', '=', 'clientes.id') // Pegando cliente correto
+            ->where('vendas.data_venda', '>=', $umAnoAtras)
+            ->select('clientes.id', 'clientes.nome', DB::raw('COUNT(*) as total_compras'))
+            ->groupBy('clientes.id', 'clientes.nome')
             ->orderByDesc('total_compras')
-            ->take(5)
+            ->take(10)
             ->get();
+
+        if ($clientes->isEmpty()) {
+            return response()->json(['error' => true, 'message' => 'Nenhuma compra encontrada para esse produto'], 404);
+        }
 
         return response()->json($clientes);
     }
+
+
 
     //------------------
     //FUNÇÃO PARA: BUSCAR OS 10 MAIORES FORNECEDORES DESSE PRODUTO EM COTAÇÕES
@@ -215,19 +216,19 @@ class ProdutoController extends Controller
 
         $umAnoAtras = now()->subYear();
 
-        $fornecedores = Itens_cotacoes::where('produto_id', $id)
-            ->whereHas('cotacoes', function ($query) use ($umAnoAtras) {
-                $query->where('data_cotacao', '>=', $umAnoAtras);
-            })
-            ->select('fornecedor_id', DB::raw('COUNT(*) as total_cotacoes'))
-            ->groupBy('fornecedor_id')
+        $fornecedores = DB::table('itens_cotacoes')
+            ->join('cotacoes', 'itens_cotacoes.id_cotacao', '=', 'cotacoes.id') // Verifique a FK correta
+            ->join('fornecedores', 'itens_cotacoes.fornecedor_id', '=', 'fornecedores.id') // Junta com fornecedores
+            ->where('itens_cotacoes.produto_id', $id)
+            ->where('cotacoes.data_cotacao', '>=', $umAnoAtras)
+            ->select('fornecedores.nome as fornecedor_nome', DB::raw('COUNT(*) as total_cotacoes'))
+            ->groupBy('fornecedores.nome')
             ->orderByDesc('total_cotacoes')
             ->take(5)
             ->get();
 
         return response()->json($fornecedores);
     }
-
     //------------------
     //FUNÇÃO PARA: BUSCAR VARIAÇÃO DE PRECO_UNITARIO DESTE PRODUTO EM 1 ANO
     //PARÂMETROS: ID DO PRODUTO

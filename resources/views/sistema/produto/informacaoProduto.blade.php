@@ -36,10 +36,10 @@
                     <div class="card-body">
                         <h5 class="card-title">Ações</h5>
                         <!--<a href="{{ route('produto.edit', ['id' => $produto->id]) }}" class="btn @include('partials.buttomCollor')">Alterar
-                                dados</a>
-                            <a href="{{ route('produto.preco', ['id' => $produto->id]) }}" class="btn @include('partials.buttomCollor')">Alterar
-                                preço de venda</a>
-                            -->
+                                        dados</a>
+                                    <a href="{{ route('produto.preco', ['id' => $produto->id]) }}" class="btn @include('partials.buttomCollor')">Alterar
+                                        preço de venda</a>
+                                    -->
                         <!-- Modal de Edição -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#modalEditarProduto">
@@ -240,7 +240,7 @@
 
     <div class="container mt-2">
         <div class="row">
-            <div class="col-12">
+            <div class="col-sm-12 col-md-6">
                 <div class="card mb-2">
                     <div class="card-body">
                         <h5 class="card-title">Estoque</h5>
@@ -253,130 +253,173 @@
                     </div>
                 </div>
             </div>
+            <div class="col-sm-12 col-md-6">
+                <div class="card mb-2">
+                    <div class="card-body">
+                        <h5 class="card-title">Lista Maiores Compradores</h5>
+                        <div>
+                            <table class="table table-striped" id="tabelaCompradores">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Cliente</th>
+                                        <th>Quantidade Comprada</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Aqui os dados serão inseridos via JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <div class="card mb-2">
+                    <div class="card-body">
+                        <h5 class="card-title">Lista dos maiores fornecedores</h5>
+                        <div>
+                            <table class="table table-striped" id="tabelaFornecedores">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Fornecedor</th>
+                                        <th>Quantidadade de cotações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Aqui os dados serão inseridos via JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
+
     </div>
 @endsection
-    <!-- Features Section -->
+<!-- Features Section -->
 
-    <!-- Inclua os arquivos JavaScript do Bootstrap -->
-    @vite('resources/js/app.js')
-    @push('scripts')
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const estoqueData = {!! json_encode($estoque) !!};
+<!-- Inclua os arquivos JavaScript do Bootstrap -->
+@vite('resources/js/app.js')
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const estoqueData = {!! json_encode($estoque) !!};
 
-                // Agrupar as quantidades de cada ação por mês/ano
-                const groupedData = estoqueData.reduce((acc, item) => {
-                    const mesAno = `${String(item.mes).padStart(2, '0')}/${item.ano}`; // Formato MM/YYYY
-                    if (!acc[mesAno]) {
-                        acc[mesAno] = {
-                            baixa: 0,
-                            venda: 0,
-                            reposicao: 0
-                        }; // Inicializa as quantidades para o mês/ano
-                    }
-                    // Sumariza as quantidades de acordo com a ação
-                    if (item.acao === 'baixa') {
-                        acc[mesAno].baixa += item.quantidade;
-                    } else if (item.acao === 'Venda') {
-                        acc[mesAno].venda += item.quantidade;
-                    } else if (item.acao === 'reposicao') {
-                        acc[mesAno].reposicao += item.quantidade;
-                    }
-                    return acc;
-                }, {});
+            // Agrupar as quantidades de cada ação por mês/ano
+            const groupedData = estoqueData.reduce((acc, item) => {
+                const mesAno = `${String(item.mes).padStart(2, '0')}/${item.ano}`; // Formato MM/YYYY
+                if (!acc[mesAno]) {
+                    acc[mesAno] = {
+                        baixa: 0,
+                        venda: 0,
+                        reposicao: 0
+                    }; // Inicializa as quantidades para o mês/ano
+                }
+                // Sumariza as quantidades de acordo com a ação
+                if (item.acao === 'baixa') {
+                    acc[mesAno].baixa += item.quantidade;
+                } else if (item.acao === 'Venda') {
+                    acc[mesAno].venda += item.quantidade;
+                } else if (item.acao === 'reposicao') {
+                    acc[mesAno].reposicao += item.quantidade;
+                }
+                return acc;
+            }, {});
 
-                // Extrair os meses/anos ordenados e as quantidades para cada ação
-                const mesesAnos = Object.keys(groupedData).sort((a, b) => {
-                    // Ordenar os meses/anos no formato MM/YYYY
-                    const [mesA, anoA] = a.split('/').map(Number);
-                    const [mesB, anoB] = b.split('/').map(Number);
-                    return new Date(anoA, mesA - 1) - new Date(anoB, mesB - 1);
-                });
+            // Extrair os meses/anos ordenados e as quantidades para cada ação
+            const mesesAnos = Object.keys(groupedData).sort((a, b) => {
+                // Ordenar os meses/anos no formato MM/YYYY
+                const [mesA, anoA] = a.split('/').map(Number);
+                const [mesB, anoB] = b.split('/').map(Number);
+                return new Date(anoA, mesA - 1) - new Date(anoB, mesB - 1);
+            });
 
-                // Preencher os arrays de quantidades, garantindo que todos os meses estejam no gráfico
-                const quantidadeBaixas = mesesAnos.map(mesAno => groupedData[mesAno].baixa);
-                const quantidadeVendas = mesesAnos.map(mesAno => groupedData[mesAno].venda);
-                const quantidadeReposicoes = mesesAnos.map(mesAno => groupedData[mesAno].reposicao);
+            // Preencher os arrays de quantidades, garantindo que todos os meses estejam no gráfico
+            const quantidadeBaixas = mesesAnos.map(mesAno => groupedData[mesAno].baixa);
+            const quantidadeVendas = mesesAnos.map(mesAno => groupedData[mesAno].venda);
+            const quantidadeReposicoes = mesesAnos.map(mesAno => groupedData[mesAno].reposicao);
 
-                const ctx = document.getElementById('estoqueChart').getContext('2d');
-                const estoqueChart = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: mesesAnos, // Meses/anos ordenados
-                        datasets: [{
-                                label: 'Baixas',
-                                data: quantidadeBaixas, // Quantidade de baixas
-                                borderColor: 'rgba(247, 39, 39, 1)',
-                                backgroundColor: 'rgba(247, 39, 39, 1)',
-                                fill: false,
-                                tension: 0.1
-                            },
-                            {
-                                label: 'Vendas',
-                                data: quantidadeVendas, // Quantidade de vendas
-                                borderColor: 'rgba(39, 247, 46, 1)',
-                                backgroundColor: 'rgba(39, 247, 46, 1)',
-                                fill: false,
-                                tension: 0.1
-                            },
-                            {
-                                label: 'Reposições',
-                                data: quantidadeReposicoes, // Quantidade de reposições
-                                borderColor: 'rgba(38, 72, 255, 1)',
-                                backgroundColor: 'rgba(38, 72, 255, 1)',
-                                fill: false,
-                                tension: 0.1
+            const ctx = document.getElementById('estoqueChart').getContext('2d');
+            const estoqueChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: mesesAnos, // Meses/anos ordenados
+                    datasets: [{
+                            label: 'Baixas',
+                            data: quantidadeBaixas, // Quantidade de baixas
+                            borderColor: 'rgba(247, 39, 39, 1)',
+                            backgroundColor: 'rgba(247, 39, 39, 1)',
+                            fill: false,
+                            tension: 0.1
+                        },
+                        {
+                            label: 'Vendas',
+                            data: quantidadeVendas, // Quantidade de vendas
+                            borderColor: 'rgba(39, 247, 46, 1)',
+                            backgroundColor: 'rgba(39, 247, 46, 1)',
+                            fill: false,
+                            tension: 0.1
+                        },
+                        {
+                            label: 'Reposições',
+                            data: quantidadeReposicoes, // Quantidade de reposições
+                            borderColor: 'rgba(38, 72, 255, 1)',
+                            backgroundColor: 'rgba(38, 72, 255, 1)',
+                            fill: false,
+                            tension: 0.1
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Meses/Ano'
                             }
-                        ]
-                    },
-                    options: {
-                        scales: {
-                            x: {
-                                title: {
-                                    display: true,
-                                    text: 'Meses/Ano'
-                                }
-                            },
-                            y: {
-                                title: {
-                                    display: true,
-                                    text: 'Quantidade'
-                                }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Quantidade'
                             }
                         }
                     }
-                });
+                }
             });
-        </script>
+        });
+    </script>
 
-        <script>
-            document.getElementById('formEditarProduto').addEventListener('submit', function(event) {
-                event.preventDefault(); // Previne o redirecionamento padrão do formulário
+    <script>
+        document.getElementById('formEditarProduto').addEventListener('submit', function(event) {
+            event.preventDefault(); // Previne o redirecionamento padrão do formulário
 
-                let form = this;
-                let formData = new FormData(form);
+            let form = this;
+            let formData = new FormData(form);
 
-                fetch(form.action, {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
-                            'Accept': 'application/json',
-                            'X-Requested-With': 'XMLHttpRequest'
-                        },
-                        body: formData
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            // Atualiza os elementos da página com os novos dados do produto
-                            // (Utilize os IDs ou seletores adequados para cada campo)
-                            data.produto.preco_compra = parseFloat(data.produto.preco_compra).toFixed(2);
-                            data.produto.preco_venda = parseFloat(data.produto.preco_venda).toFixed(2);
+            fetch(form.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Atualiza os elementos da página com os novos dados do produto
+                        // (Utilize os IDs ou seletores adequados para cada campo)
+                        data.produto.preco_compra = parseFloat(data.produto.preco_compra).toFixed(2);
+                        data.produto.preco_venda = parseFloat(data.produto.preco_venda).toFixed(2);
 
 
-                            document.getElementById('produto_info').innerHTML = `
+                        document.getElementById('produto_info').innerHTML = `
                 <div class="card mb-2 h-100">
                     <div class="card-body">
                         <h5 class="card-title">Informações do produto</h5>
@@ -392,54 +435,54 @@
                 </div>
             `;
 
-                            // Exibe o toast de sucesso
-                            const toastEl = document.getElementById('toastSuccess');
-                            if (toastEl) {
-                                // Se necessário, remova a classe 'show' para reiniciar o toast
-                                toastEl.classList.remove('show');
-                                const toast = bootstrap.Toast.getOrCreateInstance(toastEl);
-                                document.getElementById('toastMessage').innerText =
-                                    'Produto atualizado com sucesso!';
-                                toast.show();
-                            } else {
-                                console.warn("Elemento 'toastSuccess' não encontrado!");
-                            }
-
-
+                        // Exibe o toast de sucesso
+                        const toastEl = document.getElementById('toastSuccess');
+                        if (toastEl) {
+                            // Se necessário, remova a classe 'show' para reiniciar o toast
+                            toastEl.classList.remove('show');
+                            const toast = bootstrap.Toast.getOrCreateInstance(toastEl);
+                            document.getElementById('toastMessage').innerText =
+                                'Produto atualizado com sucesso!';
+                            toast.show();
                         } else {
-                            alert("Erro ao atualizar produto!");
+                            console.warn("Elemento 'toastSuccess' não encontrado!");
                         }
-                    })
-                    .catch(error => console.error("Erro:", error));
-            });
-        </script>
 
-        <script>
-            document.getElementById('formEditarPreco').addEventListener('submit', function(event) {
-                event.preventDefault(); // Previne o redirecionamento padrão do formulário
 
-                let form = this;
-                let formData = new FormData(form);
+                    } else {
+                        alert("Erro ao atualizar produto!");
+                    }
+                })
+                .catch(error => console.error("Erro:", error));
+        });
+    </script>
 
-                fetch(form.action, {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
-                            'Accept': 'application/json',
-                            'X-Requested-With': 'XMLHttpRequest'
-                        },
-                        body: formData
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            // Atualiza os elementos da página com os novos dados do produto
-                            // (Utilize os IDs ou seletores adequados para cada campo)
+    <script>
+        document.getElementById('formEditarPreco').addEventListener('submit', function(event) {
+            event.preventDefault(); // Previne o redirecionamento padrão do formulário
 
-                            data.produto.preco_venda = parseFloat(data.produto.preco_venda).toFixed(2);
-                            data.produto.desconto_maximo = parseFloat(data.produto.desconto_maximo).toFixed(2);
+            let form = this;
+            let formData = new FormData(form);
 
-                            document.getElementById('produto_info').innerHTML = `
+            fetch(form.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Atualiza os elementos da página com os novos dados do produto
+                        // (Utilize os IDs ou seletores adequados para cada campo)
+
+                        data.produto.preco_venda = parseFloat(data.produto.preco_venda).toFixed(2);
+                        data.produto.desconto_maximo = parseFloat(data.produto.desconto_maximo).toFixed(2);
+
+                        document.getElementById('produto_info').innerHTML = `
             <div class="card mb-2 h-100">
                 <div class="card-body">
                     <h5 class="card-title">Informações do produto</h5>
@@ -455,25 +498,99 @@
             </div>
         `;
 
-                            // Exibe o toast de sucesso
-                            const toastEl = document.getElementById('toastSuccess');
-                            if (toastEl) {
-                                // Se necessário, remova a classe 'show' para reiniciar o toast
-                                toastEl.classList.remove('show');
-                                const toast = bootstrap.Toast.getOrCreateInstance(toastEl);
-                                document.getElementById('toastMessage').innerText =
-                                    'Produto atualizado com sucesso!';
-                                toast.show();
-                            } else {
-                                console.warn("Elemento 'toastSuccess' não encontrado!");
-                            }
-
-
+                        // Exibe o toast de sucesso
+                        const toastEl = document.getElementById('toastSuccess');
+                        if (toastEl) {
+                            // Se necessário, remova a classe 'show' para reiniciar o toast
+                            toastEl.classList.remove('show');
+                            const toast = bootstrap.Toast.getOrCreateInstance(toastEl);
+                            document.getElementById('toastMessage').innerText =
+                                'Produto atualizado com sucesso!';
+                            toast.show();
                         } else {
-                            alert("Erro ao atualizar produto!");
+                            console.warn("Elemento 'toastSuccess' não encontrado!");
                         }
-                    })
-                    .catch(error => console.error("Erro:", error));
-            });
-        </script>
-    @endpush
+
+
+                    } else {
+                        alert("Erro ao atualizar produto!");
+                    }
+                })
+                .catch(error => console.error("Erro:", error));
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const produtoId = 1; // Substitua pelo ID do produto dinâmico
+            const url = `/api/maiores-compradores/${produtoId}`; // Ajuste conforme sua rota
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        document.querySelector("#tabelaCompradores tbody").innerHTML =
+                            `<tr><td colspan="3" class="text-center text-danger">${data.message}</td></tr>`;
+                        return;
+                    }
+
+                    let tbody = "";
+                    data.forEach((cliente, index) => {
+                        tbody += `
+                        <tr>
+                            <td>${index + 1}</td>
+                            <td>${cliente.nome}</td>
+                            <td>${cliente.total_compras}</td>
+                        </tr>
+                    `;
+                    });
+
+                    document.querySelector("#tabelaCompradores tbody").innerHTML = tbody;
+                })
+                .catch(error => {
+                    console.error("Erro ao buscar compradores:", error);
+                    document.querySelector("#tabelaCompradores tbody").innerHTML =
+                        `<tr><td colspan="3" class="text-center text-danger">Erro ao carregar os dados</td></tr>`;
+                });
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const produtoId = 1; // Substitua pelo ID correto do produto
+            const url = `/api/maiores-fornecedores/${produtoId}`; // Ajuste para a URL correta da sua API
+
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Erro ao buscar fornecedores");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const tabelaBody = document.querySelector("#tabelaFornecedores tbody");
+                    tabelaBody.innerHTML = ""; // Limpa qualquer dado anterior
+
+                    if (data.error) {
+                        tabelaBody.innerHTML = `<tr><td colspan="3" class="text-center text-danger">${data.message}</td></tr>`;
+                        return;
+                    }
+
+                    data.forEach((fornecedor, index) => {
+                        const row = `
+                            <tr>
+                                <td>${index + 1}</td>
+                                <td>${fornecedor.fornecedor_nome}</td>
+                                <td>${fornecedor.total_cotacoes}</td>
+                            </tr>
+                        `;
+                        tabelaBody.innerHTML += row;
+                    });
+                })
+                .catch(error => {
+                    console.error("Erro:", error);
+                    document.querySelector("#tabelaFornecedores tbody").innerHTML =
+                        `<tr><td colspan="3" class="text-center text-danger">Erro ao carregar fornecedores</td></tr>`;
+                });
+        });
+    </script>
+
+@endpush
