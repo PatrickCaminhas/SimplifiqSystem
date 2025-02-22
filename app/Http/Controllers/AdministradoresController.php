@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Administradores;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Crypt;
 use App\Models\Empresas;
 
 
@@ -55,13 +56,13 @@ class AdministradoresController extends Controller
     {
         $request->validate([
             'email' => 'required|email',
-            'password' => 'required',
+            'senha' => 'required',
         ]);
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('email', 'senha');
         // Tentar autenticar o usuário
         $administrador = Administradores::where('email', $credentials['email'])->first();
 
-        if ($administrador && Hash::check($credentials['password'], $administrador->senha)) {
+        if ($administrador && Hash::check($credentials['senha'], $administrador->senha)) {
 
             Auth::login($administrador);
             session(['administrador' => $administrador]);
@@ -77,6 +78,32 @@ class AdministradoresController extends Controller
             ]);
         }
     }
+
+    public function formularioLoginAdmin2(Request $request)
+    {
+        if (!$request->has('token')) {
+            return redirect()->route(route: 'login')->withErrors(['error' => 'Token inválido.']);
+        }
+        $encryptedToken = $request->query('token');
+
+        try {
+            $decryptedData = Crypt::decryptString($encryptedToken);
+            $data = json_decode($decryptedData, true);
+
+            $email = $data['email'];
+            $timestamp = $data['timestamp'];
+
+            // Verificar se o token expirou (expira em 15 minutos, por exemplo)
+            if (now()->timestamp - $timestamp > 300) { // 300 segundos = 5 minutos
+                return redirect()->route('login')->json(['error' => 'Token expirado.'], 403);
+            }
+        } catch (\Exception $e) {
+            return redirect()->route(route: 'login')->withErrors(['error' => 'Token inválido ou expirado.']);
+        }
+
+        return view('administracao.login3-2Admin', ['email' => $email]);
+    }
+
     public function logout(Request $request)
     {
         Auth::logout();

@@ -66,9 +66,10 @@ foreach (config('tenancy.central_domains') as $domain) {
 
         Route::get('loginAdministrativo', [AdministradoresController::class, 'showLoginForm'])->name('loginAdministrativo.form');
         Route::post('loginAdministrativo', [AdministradoresController::class, 'login'])->name('loginAdministrativo.store');
+        Route::get('/loginAdministrativoSecond', [AdministradoresController::class, 'formularioLoginAdmin2'])->name('loginAdministrativoSecond.form');
         Route::get('cadastroAdministrador', [AdministradoresController::class, 'showCadastroForm'])->name('cadastroAdministrador.form');
         Route::post('cadastroAdministrador', [AdministradoresController::class, 'store'])->name('cadastroAdministrador.store');
-
+        Route::post('identificarTipoUsuario', [LoginController::class, 'identificarTipoUsuario'])->name('identify.user');
         Route::get('/inicioAdministrador', [AdministradoresController::class, 'showDashboard'])->name('dashboardAdministrador.log');
 
         Route::post('/inicioAdministrador', [AdministradoresController::class, 'showDashboard'])->name('dashboardAdministrador.log');

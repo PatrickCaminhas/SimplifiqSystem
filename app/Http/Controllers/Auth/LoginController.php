@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Administradores;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,6 +16,7 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\Empresa_information;
+use Illuminate\Support\Str;
 use App\Services\AdministradorService;
 
 
@@ -193,9 +195,51 @@ class LoginController extends Controller
             return redirect()->away('http://' . $subdominio . ':8000/login_second?token=' . $encryptedEmail)
                 ->with('email', $request['email'])->with('senha', $request['senha']);
         }
+
         return redirect()->away('http://localhost:8000/login')->withErrors([
-            'error' => 'E-mail incorreto.',
+            'error' => 'E-mail incorreto. ',
         ]);
+    }
+
+    public function loginfirstAdmin(Request $request)
+    {
+
+         // Valida os dados de entrada
+         $request->validate([
+            'email' => 'required|email',
+
+        ]);
+        $email = $request['email'];
+        // Tentar autenticar o usuário
+        $admin = Administradores::where('email', $email)->first();
+        if ($admin) {
+
+            $data = ['email' => $email, 'timestamp' => now()->timestamp];
+            $encryptedEmail = Crypt::encryptString(json_encode($data));
+            return redirect()->away('http://localhost:8000/loginAdministrativoSecond?token=' . $encryptedEmail)
+            ->with('email', $request['email'])->with('senha', $request['senha']);
+        }
+        else{
+            return redirect()->away('http://localhost:8000/login')->withErrors([
+                'error' => 'E-mail incorreto Admin.',
+            ]);
+        }
+    }
+
+    public function identificarTipoUsuario(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+
+        $email = $request['email'];
+        $provedor = Str::after($email, '@');
+
+        if($provedor == 'simplifiqsystem.com'){
+            return $this->loginfirstAdmin($request);
+        }else{
+           return $this->identificarLocatario($request);
+        }
     }
 
     public function formularioLoginTenant(Request $request)
@@ -225,6 +269,7 @@ class LoginController extends Controller
 
         return view('index.login3-2', ['email' => $email, 'empresa' => $empresa]);
     }
+
 
     public function loginTenant(Request $request)
     {

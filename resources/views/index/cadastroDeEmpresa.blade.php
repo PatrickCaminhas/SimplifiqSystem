@@ -5,27 +5,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro - Simplifiq</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    @vite('resources/css/app.css')
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <style>
+        /* Sobrescreve o estilo do item de menu quando em foco ou ativo */
+        .dropdown-item:focus,
+        .dropdown-item:active {
+            background-color: inherit !important;
+            color: inherit !important;
+        }
+
+        /* Fonte padrão */
+        body {
+            font-size: 16px;
+        }
+
+        /* Estilo para o aumento de fonte */
+        .font-large {
+            font-size: 20px;
+        }
+    </style>
 </head>
 
-<body class="bg-dark">
-    @include('partials.menuIndex')
-    <!-- -->
-
-
-
+<body class="bg-dark-subtle">
     <section class="h-100 gradient-form">
+
         <div class="container py-5 h-100">
+
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-xl-10">
-                    <div class="card rounded-3 text-black">
+                    <div class="card rounded-3">
                         <div class="row g-0">
                             <div class="col-lg-6">
+                                <div class="m-2 col-lg-6 col-md-8 col-sm-12">
+
+                                    <a class="btn btn-primary" href="/">Voltar</a>
+                                </div>
                                 <div class="card-body p-md-5 mx-md-4">
+                                    <div class="text-center d-block d-sm-none">
+                                        <img src="{{ global_asset('img/Logo.png') }}" style="width: 185px;" alt="logo">
+                                        <h4 class="mt-1 mb-5 pb-1">Simplifiq System</h4>
+                                    </div>
                                     <form method="POST" action="{{ route('cadastro') }}">
                                         @csrf
                                         <h4 class=" mb-2">Cadastro</h4>
@@ -67,7 +89,7 @@
                                         <div class="form-floating mb-2">
                                             <input type="date" class="form-control" id="data_de_criacao"
                                                 name="data_de_criacao" required>
-                                            <label for="datafundacao">Data de abertura da empresa:</label>
+                                            <label>Data de abertura da empresa:</label>
                                         </div>
                                         <div class="form-floating mb-2">
                                             <input type="text" class="form-control" id="nome" name="nome"
@@ -99,7 +121,7 @@
 
                                         <div class="d-flex align-items-center justify-content-center pb-4">
                                             <p class="mb-0 me-2">Já tem uma conta?</p>
-                                            <a type="button" href="{{ route('cadastro') }}"
+                                            <a type="button" href="{{ route('login') }}"
                                                 class="btn btn-outline-primary">Acesse agora</a>
                                         </div>
 
@@ -107,7 +129,7 @@
 
                                 </div>
                             </div>
-                            <div class="col-lg-6 d-flex align-items-center bg-primary bg-gradient">
+                            <div class="d-none d-sm-block col-lg-6 d-flex align-items-center bg-primary bg-gradient">
                                 <div class="text-white px-3 py-4 p-md-5 mx-md-4 text-center">
                                     <div class="text-center">
                                         <img src="{{ global_asset('img/Logo.png') }}" style="width: 185px;"
@@ -127,7 +149,9 @@
             </div>
         </div>
     </section>
-
+    @include('partials.buttomsAcessibilidade')
+    @include('partials.scriptAumentarFonte')
+    @include('partials.scriptLightDark')
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

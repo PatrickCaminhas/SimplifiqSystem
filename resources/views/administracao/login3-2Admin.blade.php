@@ -44,11 +44,11 @@
                     <div class="text-center">
                         <img src="{{ global_asset('img/Logo.png') }}" style="width: 185px;" alt="logo">
                         <h4 class="mt-1 mb-5 pb-1">Simplifiq System
-                            <p>{{ $empresa }}</p>
+                            <p>Administrativo</p>
                         </h4>
                     </div>
 
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="{{ route('loginAdministrativo.store') }}">
                         @csrf
                         <p>Acesse sua conta</p>
                         @include('partials.errorAndSuccess')
