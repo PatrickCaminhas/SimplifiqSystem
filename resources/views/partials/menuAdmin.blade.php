@@ -3,14 +3,14 @@
        <div class="container-fluid">
            <!-- Botão de menu offcanvas -->
            <button
-            class="navbar-dark btn text-light align-top
+               class="navbar-dark btn text-light align-top
                @include('partials.buttomCollor')
             "type="button"
-            data-bs-toggle="offcanvas" data-bs-target="#menuOffcanvas" aria-controls="menuOffcanvas">
-            <!--<span class=" navbar-toggler-icon "></span>-->
-            <span class="navbar-brand mx-auto text-light"
-                style="font-family: 'Quicksand', sans-serif;"><b>Simplifiq</b></span>
-        </button>
+               data-bs-toggle="offcanvas" data-bs-target="#menuOffcanvas" aria-controls="menuOffcanvas">
+               <!--<span class=" navbar-toggler-icon "></span>-->
+               <span class="navbar-brand mx-auto text-light"
+                   style="font-family: 'Quicksand', sans-serif;"><b>Simplifiq</b></span>
+           </button>
 
 
 
@@ -27,16 +27,17 @@
 
        <div class="offcanvas-body">
            <h6 class="offcanvas-subtitle text-light">
-               <p>Bem-vindo
+               <p>Bem-vindo,
                    @if (session('administrador'))
-                       ,{{ optional(session('administrador'))->nome . ' ' . optional(session('administrador'))->sobrenome }}!
+                       {{ optional(session('administrador'))->nome . ' ' . optional(session('administrador'))->sobrenome }}!
                    @endif
                </p>
            </h6>
            <!-- Conteúdo do menu aqui -->
            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                <li class="nav-item">
-                   <a class="nav-link active" aria-current="page" href="{{ route('dashboardAdministrador.log') }}">Inicio</a>
+                   <a class="nav-link active" aria-current="page"
+                       href="{{ route('dashboardAdministrador.log') }}">Inicio</a>
                </li>
                <li class="nav-item">
                    <a class="nav-link" href="{{ route('simples.create') }}">Simples Nacional</a>
