@@ -1,7 +1,8 @@
 @extends('layouts.lista')
 @section('titulo', 'Despesas')
 @section('lista')
-    <p><a class ="btn @include('partials.buttomCollor')" href="{{ route('contas.create') }}"><i class="bi bi-plus-circle-fill"></i> Cadastrar despesa</a></p>
+    <p><a class ="btn @include('partials.buttomCollor')" href="{{ route('contas.create') }}"><i class="bi bi-plus-circle-fill"></i>
+            Cadastrar despesa</a></p>
     <table id="myTable" class="display">
         <thead>
             <tr>
@@ -16,7 +17,8 @@
             @foreach ($contas as $conta)
                 <tr>
                     <td style="overflow-x: auto;">{{ $conta->credor }}</td>
-                    <td>{{ \Carbon\Carbon::parse($conta->data_vencimento)->format('d/m/Y') }}
+                    <td data-order="{{ \Carbon\Carbon::parse($conta->data_vencimento)->format('Y-m-d') }}">
+                        {{ \Carbon\Carbon::parse($conta->data_vencimento)->format('d/m/Y') }}
                     </td>
                     <td>{{ $conta->valor }}</td>
                     <td>{{ $conta->estado }}</td>

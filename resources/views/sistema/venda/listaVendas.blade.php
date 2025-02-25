@@ -119,7 +119,7 @@
                     $vendas->keyBy('id')->map(function ($venda) {
                             return $venda->itens->map(function ($item) {
                                 return [
-                                    'produto' => $item->produto->nome,
+                                    'produto' => $item->produto->nome . " " . $item->produto->modelo . " ". $item->produto->marca,
                                     'quantidade' => $item->quantidade,
                                     'preco_unitario' => $item->preco_unitario,
                                     'subtotal' => $item->subtotal,

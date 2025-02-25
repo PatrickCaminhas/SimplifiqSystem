@@ -3,12 +3,13 @@
 @section('formulario')
     @php
         $jquery = true;
+        $select2 = true;
     @endphp
 @section('route', route('vendas.store'))
 <!-- Select Cliente -->
 <div class="form-group">
     <label name="cliente">Cliente:</label>
-    <select name="cliente_id" class="form-control">
+    <select name="cliente_id" id="cliente" class="select2 form-control bg-dark" class="form-control">
         @foreach ($clientes as $cliente)
             <option value="{{ $cliente->id }}">{{ $cliente->nome }}
             </option>
@@ -81,7 +82,7 @@
 </div>
 
 <!-- Botão de Registrar Venda -->
-<button type="submit" class="btn @include('partials.buttomCollor') mt-3" >Registrar
+<button type="submit" class="btn @include('partials.buttomCollor') mt-3">Registrar
     Venda</button>
 @endsection
 
@@ -236,6 +237,31 @@
                 $('#Dinheiro').prop('checked', true);
             }
         });
+    });
+</script>
+<!-- Adicione esses links no seu Blade -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('.select2').select2({
+            theme: 'bootstrap4',
+            placeholder: "Selecione um produto",
+            allowClear: true // Permite limpar a seleção
+        });
+    });
+</script>
+<script>
+    function updateSelect2Theme() {
+        $('.select2').select2({
+            theme: 'bootstrap-5' // Se estiver usando o tema do Bootstrap 5
+        });
+    }
+
+    // Chame essa função sempre que mudar o tema
+    document.querySelector('#toggle-dark-mode').addEventListener('click', function() {
+        updateSelect2Theme();
     });
 </script>
 @endpush

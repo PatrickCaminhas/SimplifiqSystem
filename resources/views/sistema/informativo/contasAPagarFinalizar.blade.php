@@ -1,29 +1,9 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-    @include('partials.head', ['data_tables' => true])
+@extends('layouts.cadastro')
+@section('titulo', 'Finalizar despesa')
+@section('formulario')
+@section('route', route('contas.store'))
+@section('voltar', route('contas.read'))
 
-
-
-
-<body class="bg-black bg-gradient">
-  <!-- Menu superior -->
-  @include('partials.header')
-
-
-
-
-
-
-    <div class="d-flex align-items-center justify-content-center " style="height: 92vh;">
-        <div class="container mt-5 col-lg-6 col-md-8 col-sm-12 col-12 ">
-            <div class="row align-items-center justify-content-center">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="container">
-                            <div class="row justify-content-center">
-                                <div class="card-body ">
-                                    <h2 class="text-center">Finalizar conta</h2>
-                                    <div>
                                         <form action="{{ route('contas.finalizarConta') }}" method="POST">
                                             @csrf
                                             <p> Credor: {{ $conta->id }}</p>
@@ -56,20 +36,9 @@
 
                                             </div>
                                         @endif
+@endsection
+  @push('scripts')
 
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Features Section -->
-
-    <!-- Inclua os arquivos JavaScript do Bootstrap -->
 
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
         crossorigin="anonymous"></script>
@@ -86,6 +55,4 @@
             });
         });
     </script>
-</body>
-
-</html>
+  @endpush

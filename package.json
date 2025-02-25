@@ -16,7 +16,8 @@
         "vue-template-compiler": "^2.7.16"
     },
     "dependencies": {
-        "bootstrap-icons": "^1.11.3"
+        "bootstrap-icons": "^1.11.3",
+        "select2": "^4.1.0-rc.0"
     },
     "name": "simplifiqsystem",
     "version": "1.0.0",

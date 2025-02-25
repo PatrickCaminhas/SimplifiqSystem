@@ -29,8 +29,9 @@
         placeholder="Digite o e-mail do funcionario" required>
 </div>
 <div class="form-group alert alert-primary mt-3">
-    <label for="senha">A senha sempre será padronizada como as 3 primeiras
-        letras do nome mais as 3 primeiras letras do sobrenome mais o 12.
+    <label for="senha">A senha inicial será padronizada como:
+        <br>
+        Em maiusculo as 3 primeiras letras do nome mais as 3 primeiras letras do sobrenome também em maiusculo mais o numero 12.
         <br>
         Exemplo: João Silva = JOASIL12
     </label>

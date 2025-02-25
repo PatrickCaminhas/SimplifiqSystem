@@ -8,7 +8,7 @@
 
                                     @if($funcionarios->count() == 0)
                                         <div class="alert alert-danger">
-                                            Não há funcionários cadastrados no sistema.
+                                            Não há outros funcionários cadastrados no sistema.
                                         </div>
                                     @else
                                     <label for="funcionario">Funcionários</label>

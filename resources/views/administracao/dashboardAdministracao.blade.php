@@ -20,12 +20,12 @@
 <body class="bg-black ">
     @include('partials.menuAdmin')
 
-    <div class="d-flex align-items-center justify-content-center" style="height: 92vh;">
+    <div class="d-flex align-items-center justify-content-center mt-5" style="height: 92vh;">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-6 col-8">
                     <div class="card shadow-sm">
-                        <div class="card-body" style="overflow-x: auto;">
+                        <div class="card-body p-2" style="overflow-x: auto;">
                             <h2 class="text-center">Empresas</h2>
                             <table id="myTable" class="display">
                                 <thead>
