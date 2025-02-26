@@ -3,6 +3,7 @@ namespace App\Services;
 
 use App\Models\Metas;
 use App\Models\MetasProgresso;
+use Carbon\Carbon;
 class metaService
 {
     public function cadastrarProgresso($dados)
@@ -67,5 +68,23 @@ class metaService
         foreach ($metas as $meta) {
             $this->removerProgresso((object)['meta_id' => $meta->id, 'valor' => $valor]);
         }
+    }
+    public function verificarSeExisteMeta()
+    {
+        $ultimoDiaMes = Carbon::now()->endOfMonth()->toDateString();
+        $metaExistente = Metas::whereDate('ending_at', $ultimoDiaMes)->exists();
+        if (!$metaExistente) {
+            $this->criarMeta();
+        }
+    }
+    public function criarMeta()
+    {
+        $meta = new Metas();
+        $meta->valor = 4800000;
+        $meta->valor_atual = 0;
+        $meta->ending_at = Carbon::now()->endOfMonth()->toDateString();
+        $meta->estado = 'Pendente';
+        $meta->save();
+
     }
 }

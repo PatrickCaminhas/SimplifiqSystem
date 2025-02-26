@@ -1,149 +1,93 @@
 @extends('layouts.lista')
-@section('titulo', 'Metas')
+@section('titulo', 'Meta do mês')
 @section('lista')
-    <p><a class="btn @include('partials.buttomCollor')" href="{{ route('metas.create') }}"><i class="bi bi-plus-circle-fill"></i>
-            Cadastrar meta</a></p>
-    <table id="myTable" class="display">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Valor final</th>
-                <th>Prazo final</th>
-                <th>Progresso</th>
-                <th>Estatísticas</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($metas as $meta)
-                <tr>
-                    <td >{{ $meta->id }}</td>
+    <p><a class="btn @include('partials.buttomCollor')" href="{{ route('metas.lista') }}"><i class="bi bi-flag-fill"></i>
+            Metas anteriores</a></p>
+    <p><strong>Mês de referência:</strong> {{ ucfirst($mes) }}</p>
+    <p class="row">
+        <div class="col-auto">
 
-                    <td>{{ $meta->valor }}</td>
+        <strong>Valor da Meta:</strong> R$
+        <span id="valorMetaDisplay">{{ number_format($meta->valor, 2, ',', '.') }}</span>
 
-                    <td>{{ \Carbon\Carbon::parse($meta->ending_at)->format('d/m/Y') }}
-                    </td>
-                    <td>
-                        <button type="button" class="btn bg-primary text-light" data-bs-toggle="modal"
-                            data-bs-target="#meta{{ $meta->id }}">
-                            <i class="bi bi-plus-lg"></i>
-                        </button>
-                        <!-- Modal -->
-                        <div class="modal fade" id="meta{{ $meta->id }}" data-bs-backdrop="static"
-                            data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">
-                                            Meta #{{ $meta->id }}</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body bg-secondary-subtle">
+        <button id="btnEditar" class="btn @include('partials.buttomCollor') btn-sm">Atualizar Meta</button>
 
-                                        <form action="{{ route('metas.storeProgresso') }}" method="POST" class="row g-3">
-                                            @csrf
-                                            <div class="col-6">
-                                                <label for="exampleFormControlInput1" class="form-label">Criação:</label>
-                                                <a>{{ \Carbon\Carbon::parse($meta->created_at)->format('d/m/Y') }}</a>
-                                            </div>
-                                            <div class="col-6">
-                                                <label for="exampleFormControlInput1" class="form-label">Vencimento:</label>
-                                                <a>{{ \Carbon\Carbon::parse($meta->ending_at)->format('d/m/Y') }}</a>
-                                            </div>
-                                            <div class="col-4">
-                                                <p for="exampleFormControlInput1" class="form-label">Valor final:</p>
-                                                <a>R$ {{ $meta->valor }}</a>
-                                            </div>
-                                            <div class="col-4">
-                                                <p for="exampleFormControlInput1" class="form-label">Valor atual:</p>
-                                                <a>R$ {{ $meta->valor_atual }}</a>
-                                            </div>
-                                            <div class="col-4">
-                                                @if ($meta->valor_atual >= $meta->valor)
-                                                    <p for="exampleFormControlInput1" class="form-label">Valor excedido:</p>
-                                                    <a>R$
-                                                        {{ $excedido = $meta->valor - $meta->valor_atual }}.00</a>
-                                                @else
-                                                    <p for="exampleFormControlInput1" class="form-label">Valor faltante:</p>
-                                                    <a>R$
-                                                        {{ $faltante = ($meta->valor_atual - $meta->valor) * -1 }}.00</a>
-                                                @endif
-                                            </div>
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-                                    </div>
-                                    <div class="modal-body bg-secondary-subtle col-12">
-                                        <div class="progress bg-light" role="progressbar"
-                                            aria-label="Default striped example" aria-valuenow="10" aria-valuemin="0"
-                                            aria-valuemax="100">
-                                            <div class="progress-bar progress-bar-striped
-                                                                    @if ($meta->valor_atual >= $meta->valor) bg-success
-                                                                    @elseif($meta->estado == 'Não cumprida') bg-danger @endif
-                                                                    "
-                                                style="width:
-                                                                    {{ $valor = floor(($meta->valor_atual * 100) / $meta->valor) }}%">
-                                                {{ $valor }}%
-                                            </div>
-                                        </div>
-                                    </div>
+        <span id="editMetaContainer" style="display: none;">
+            <input type="number"  id="valorMeta" min="1" value="{{ $meta->valor }}">
+            <button id="btnAtualizar" class="btn @include('partials.buttomCollor')  btn-sm">Atualizar</button>
+        </span>
+        </div>
+    </p>
 
+    <p><strong>Valor Atual:</strong> R$ <span
+            id="valorAtualDisplay">{{ number_format($meta->valor_atual, 2, ',', '.') }}</span></p>
+    <p><strong>Prazo:</strong> {{ \Carbon\Carbon::parse($meta->ending_at)->format('d/m/Y') }}</p>
 
-                                    <div class="modal-footer">
-                                        <div class="col-8">
-                                            <input type="hidden" name="meta_id" value="{{ $meta->id }}">
-                                            <div class="form-floating mb-3">
-                                                <input type="number" class="form-control" name="valor" id="valor"
-                                                    min="1" step="0.01" required
-                                                    @if ($meta->estado == 'Finalizada' || $meta->estado == 'Não cumprida') disabled @endif>
-                                                <label>
-                                                    Progresso de meta:</label>
-                                            </div>
-                                        </div>
-                                        <button type="submit" class="btn @include('partials.buttomCollor')"
-                                            @if ($meta->estado == 'Finalizada' || $meta->estado == 'Não cumprida') disabled @endif>
-                                            Novo progresso</button>
+    @php
+        $percentual = min(100, ($meta->valor_atual / $meta->valor) * 100);
+        $data_atual = \Carbon\Carbon::now();
+        if ($data_atual > $meta->ending_at) {
+            $bg = 'bg-danger';
+        } else {
+            $bg = 'bg-success';
+        }
+    @endphp
 
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        </form>
-
-                    </td>
-                    <td>
-                        <form action="{{ route('metas.informacoes') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="meta_id" value="{{ $meta->id }}">
-                            <button type="submit" class="btn bg-primary text-light">
-                                <i class="bi bi-search"></i>
-                            </button>
-                        </form>
-
-                    </td>
-                </tr>
-            @endforeach
-
-        </tbody>
-    </table>
-
+    <div class="progress" style="height: 25px;">
+        <div class="progress-bar {{ $bg }}" role="progressbar" id="progressBar"
+            style="width: {{ $percentual }}%;" aria-valuenow="{{ $percentual }}" aria-valuemin="0" aria-valuemax="100">
+            <span id="percentualDisplay">{{ round($percentual, 2) }}%</span>
+        </div>
+    </div>
 @endsection
+
 @push('scripts')
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/3.0.2/js/responsive.bootstrap5.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    @vite('resources/js/app.js')
+
     <script>
-        $(document).ready(function() {
-            $('#myTable').DataTable({
-                language: {
-                    url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json'
-                },
-                order: [
-                    [2, 'desc']
-                ],
-            });
+        document.getElementById("btnEditar").addEventListener("click", function() {
+            document.getElementById("editMetaContainer").style.display = "inline";
+            document.getElementById("btnEditar").style.display = "none";
+        });
+
+        document.getElementById("btnAtualizar").addEventListener("click", function() {
+            let novoValor = document.getElementById('valorMeta').value;
+            let metaId = {{ $meta->id }};
+
+            fetch(`/api/metas/update/${metaId}`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json",
+                        "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
+                    },
+                    body: JSON.stringify({
+                        valor: novoValor
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+
+                    // Atualizar valores na interface
+                    document.getElementById('valorMetaDisplay').innerText = parseFloat(data.meta.valor)
+                        .toLocaleString('pt-BR', {
+                            minimumFractionDigits: 2
+                        });
+
+                    // Atualizar barra de progresso
+                    let percentual = Math.min(100, (data.meta.valor_atual / data.meta.valor) * 100);
+                    document.getElementById('progressBar').style.width = percentual + "%";
+                    document.getElementById('percentualDisplay').innerText = percentual.toFixed(2) + "%";
+
+                    // Esconder input e botão, mostrar botão "Atualizar Meta" novamente
+                    document.getElementById("editMetaContainer").style.display = "none";
+                    document.getElementById("btnEditar").style.display = "inline";
+                })
+                .catch(error => console.error('Erro:', error));
         });
     </script>
 @endpush

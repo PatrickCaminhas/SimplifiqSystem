@@ -8,6 +8,8 @@ use App\Models\Itens_venda;
 use App\Models\Produtos;
 use App\Models\Clientes;
 use App\Models\Estoque;
+use App\Models\Metas;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\HistoricoFaturamento;
@@ -57,7 +59,7 @@ class VendasController extends Controller
             $venda->save();
 
             $totalVenda = 0;
-
+            $this->verificarSeExisteMeta();
             // Processar cada produto vendido
             foreach ($request->input('quantidades') as $produtoId => $quantidade) {
                 if ($quantidade > 0) {
@@ -98,13 +100,12 @@ class VendasController extends Controller
             }
 
             // Atualizar o total da venda
-            if($request->input('valor_venda')!=null){
-                if($request->input('valor_venda')<$request->input('desconto_maximo')){
+            if ($request->input('valor_venda') != null) {
+                if ($request->input('valor_venda') < $request->input('desconto_maximo')) {
                     $venda->valor_total = $totalVenda;
                 }
-                $venda->valor_total=$request->input('valor_venda');
-            }
-            else{
+                $venda->valor_total = $request->input('valor_venda');
+            } else {
                 $venda->valor_total = $totalVenda;
             }
             if ($venda->metodo_pagamento == 'Crediário') {
@@ -149,6 +150,26 @@ class VendasController extends Controller
             $faturamento->save();
         }
     }
+
+    public function verificarSeExisteMeta()
+    {
+        $ultimoDiaMes = Carbon::now()->endOfMonth()->toDateString();
+        $metaExistente = Metas::whereDate('ending_at', $ultimoDiaMes)->exists();
+        if (!$metaExistente) {
+            $this->criarMeta();
+        }
+    }
+    function criarMeta()
+    {
+        $meta = new Metas();
+        $meta->valor = 4800000;
+        $meta->valor_atual = 0;
+        $meta->ending_at = Carbon::now()->endOfMonth()->toDateString();
+        $meta->estado = 'Pendente';
+        $meta->save();
+
+    }
+
 
     public function delete(Request $request)
     {

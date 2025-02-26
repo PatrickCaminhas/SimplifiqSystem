@@ -21,8 +21,18 @@ class MetasController extends Controller
     }
     public function createRead()
     {
+        $finalDoMes = Carbon::now()->endOfMonth()->toDateString();
+        Carbon::setLocale('pt_BR');
+        $mes = Carbon::parse($finalDoMes)->locale('pt_BR')->monthName;
+        $this->metaService->verificarSeExisteMeta();
+        $meta = Metas::whereDate('ending_at', $finalDoMes)->first();
+        $itensMeta = MetasProgresso::where('meta_id', $meta->id)->get();
+        return view('sistema.metas.metas', ['meta' => $meta, 'itensMeta' => $itensMeta, 'mes' => $mes, 'page' => 'Empresa']);
+    }
+    public function createRead2()
+    {
         $metas = Metas::all();
-        return view('sistema.metas.metas', ['metas' => $metas], ['page' => 'Empresa']);
+        return view('sistema.metas.metasLista', ['metas' => $metas], ['page' => 'Empresa']);
     }
     public function createStoreMeta()
     {
@@ -91,14 +101,14 @@ class MetasController extends Controller
     public function diaComMaiorProgresso($progressos)
     {
         $progresso = $progressos->where('valor', $this->maiorProgresso($progressos))->first();
-        if($progresso == null){
+        if ($progresso == null) {
             return "Nenhum progresso";
         }
         return Carbon::parse($progresso->created_at)->format('d/m/Y');
     }
     public function maiorProgresso($progressos)
     {
-        if( $progressos->max == null ){
+        if ($progressos->max == null) {
             return 0;
         }
         return $progressos->max('valor');
@@ -108,7 +118,7 @@ class MetasController extends Controller
     {
 
         $progresso = $progressos->where('valor', $this->menorProgresso($progressos))->first();
-        if($progresso == null){
+        if ($progresso == null) {
             return "Nenhum progresso";
         }
         return Carbon::parse($progresso->created_at)->format('d/m/Y');
@@ -116,7 +126,7 @@ class MetasController extends Controller
 
     public function menorProgresso($progressos)
     {
-        if( $progressos->min == null ){
+        if ($progressos->min == null) {
             return 0;
         }
         return $progressos->min('valor');
@@ -149,5 +159,47 @@ class MetasController extends Controller
         $meta->delete();
         return redirect()->route('metas.read');
     }
+
+
+
+    public function update(Request $request, $id)
+    {
+        // Validação
+        $request->validate([
+            'valor' => 'required|numeric|min:0',
+        ]);
+
+        // Buscar a meta no banco
+        $meta = Metas::findOrFail($id);
+
+        // Atualizar o valor da meta
+        $meta->valor = $request->valor;
+
+        // Verificar se a meta foi cumprida
+        if ($meta->valor_atual >= $meta->valor) {
+            $meta->estado = 'Cumprida';
+        }else if($meta->valor_atual < $meta->valor && $meta->ending_at > date('Y-m-d') && $meta->estado == 'Cumprida'){
+            $meta->estado = 'Pendente';
+        }
+        else {
+            $meta->estado = 'Pendente';
+        }
+
+        // Salvar as alterações
+        $meta->save();
+
+        // Retornar JSON com os valores atualizados
+        return response()->json([
+            'message' => 'Meta atualizada com sucesso!',
+            'meta' => [
+                'valor' => $meta->valor,
+                'valor_atual' => $meta->valor_atual,
+            ]
+        ]);
+    }
+
+
+
+
 
 }

@@ -151,12 +151,15 @@ Route::middleware([
 
         Route::middleware([CheckMetas::class])->group(function () {
             Route::get('/metas', [MetasController::class, 'createRead'])->name('metas.read');
+            Route::get('/metas/lista', [MetasController::class, 'createRead2'])->name('metas.lista');
+
         });
         Route::get('/metas/cadastro', [MetasController::class, 'createStoreMeta'])->name('metas.create');
         Route::post('/metas/cadastro', [MetasController::class, 'store'])->name('metas.store');
         Route::post('/metas', [MetasController::class, 'storeProgresso'])->name('metas.storeProgresso');
         Route::get('/metas/informacoes', [MetasController::class, 'createInformacoes'])->name('metas.informacoes');
         Route::post('/metas/informacoes', [MetasController::class, 'createInformacoes'])->name('metas.informacoes');
+        Route::put('/api/metas/update/{id}', [MetasController::class, 'update']);
 
         Route::get('/servicos', [ServicosController::class, 'createRead'])->name('servicos.read');
         Route::get('/servicos/cadastro', [ServicosController::class, 'createStoreServico'])->name('servicos.create');
