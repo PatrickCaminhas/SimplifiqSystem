@@ -21,7 +21,7 @@ use Illuminate\Foundation\Testing\Concerns\MakesHttpRequests;
 use Illuminate\Foundation\Testing\Concerns\InteractsWithDatabase;
 
 
-class VendasTest extends TestCase
+class VendasTestUnit extends TestCase
 {
     use MakesHttpRequests, RefreshDatabase, InteractsWithDatabase;
     use MakesHttpRequests, RefreshDatabase;
@@ -53,9 +53,11 @@ class VendasTest extends TestCase
 
 
 
+        $controller = new VendasController(new MetaService());
         $request = Request::create(route('vendas.store'), 'POST', $requestData);
 
         DB::beginTransaction();
+        $response = $controller->store($request);
         DB::commit();
 
         $this->assertDatabaseHas('vendas', ['cliente_id' => $cliente->id]);

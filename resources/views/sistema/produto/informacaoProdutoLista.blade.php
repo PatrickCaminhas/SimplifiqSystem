@@ -1,5 +1,5 @@
 @extends('layouts.lista')
-@section('titulo', 'Lista de Produtos')
+@section('titulo', content: 'Lista de Produtos')
 @section('lista')
     <p><a class="btn @include('partials.buttomCollor')" href="{{ route('produto.create') }}"><i class="bi bi-plus-circle-fill"></i>
             Cadastrar produto</a>
