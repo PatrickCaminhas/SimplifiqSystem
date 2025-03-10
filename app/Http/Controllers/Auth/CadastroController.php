@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use App\Models\Empresas;
 use App\Models\Funcionarios;
+use App\Models\Empresa_information;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Services\AuxiliarService;
@@ -24,11 +25,11 @@ class CadastroController extends Controller
 
     public function create()
     {
-        return view('index\cadastroDeEmpresa');
+        return view('index.cadastroDeEmpresa');
     }
     public function cadastroConcluido()
     {
-        return view('index\cadastroEmpresaConcluido');
+        return view('index.cadastroEmpresaConcluido');
     }
     public function store(Request $request)
     {
@@ -54,7 +55,7 @@ class CadastroController extends Controller
             return redirect('cadastroConcluido')->with('success', 'Cadastro realizado com sucesso!');
         }
 
-        return view('index/inicio');
+        return view('index.inicio');
     }
 
     private function ValidarEmpresa($request)
@@ -103,7 +104,16 @@ class CadastroController extends Controller
             ['MEI', 'comercioEservicos'] => "mei_servico",
             default => "anexo1",
         };
-
+        Empresa_information::create([
+            'nome' => $request->input('nomeempresa'),
+            'cnpj' => $request->input('cnpj'),
+            'tamanho_empresa' => $request->input('tamanhoempresa'),
+            'tipo_empresa' => $request->input('tipoempresa'),
+            'telefone' => $request->input('telefone'),
+            'data_de_criacao' => $request->input('data_de_criacao'),
+            'estado' => 'ativa',
+            'padrao_cores' => 'azul',
+        ]);
         return Empresas::create([
             'nome' => $request->input('nomeempresa'),
             'cnpj' => $request->input('cnpj'),
@@ -112,9 +122,11 @@ class CadastroController extends Controller
             'tipo_empresa' => $request->input('tipoempresa'),
             'telefone' => $request->input('telefone'),
             'data_de_criacao' => $request->input('data_de_criacao'),
-            'estado' => 'inexistente',
+            'estado' => 'ativa',
         ]);
+
     }
+
 
     public function generateUniqueFuncionarioId()
     {
@@ -140,9 +152,6 @@ class CadastroController extends Controller
             ]);
 
             //Se não foi informado CNPJ o usuario é usuario de uma empresa existente
-
-
-
     }
     private function createNovoFuncionarioTenant($request, $idFuncionario)
     {
@@ -175,11 +184,9 @@ class CadastroController extends Controller
 
 
             // Busca a empresa do tenant
-            $tenant = tenant();
-            $empresa = Empresas::on('mysql')->where('tenant', $tenant->id)->first();
-            if (!$empresa) {
-                return redirect()->back()->withErrors(['error' => 'Empresa não encontrada para o tenant atual.']);
-            }
+
+            $empresa = Empresa_information::on('mysql')->first();
+
 
             // Gerar ID único para o funcionário
             $idFuncionario = $this->generateUniqueFuncionarioId();
@@ -187,8 +194,7 @@ class CadastroController extends Controller
             $funcionario = $this->createFuncionarioGlobal($request, $idFuncionario);
 
             // Reativa o tenant atual
-            $request->merge($request->except('cnpj')); // Atualiza o request sem o campo 'cnpj'
-            $funcionarioTenant = $this->createNovoFuncionarioTenant($request, $idFuncionario);
+
             DB::commit(); // Confirma a transação
 
         } catch (\Exception $e) {
@@ -201,7 +207,7 @@ class CadastroController extends Controller
         // *** Inserir funcionário no tenant ***
 
 
-        if ($funcionario && $funcionarioTenant) {
+        if ($funcionario) {
             return redirect()->back()->with('success' , 'Cadastro realizado com sucesso!');
         }
 

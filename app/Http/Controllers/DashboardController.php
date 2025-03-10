@@ -18,7 +18,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('sistema\dashboard', [
+        return view('sistema.dashboard', [
             'page' => 'Pagina Inicial',
             'contas' => $this->proximasContasAVencer(),
             'despesasPorMes' => DespesaHelper::despesasUltimosSeisMeses(),
@@ -52,7 +52,7 @@ class DashboardController extends Controller
      */
     public function cadastros()
     {
-        return view('sistema\cadastrosSistema\cadastros', ['page' => 'cadastros']);
+        return view('sistema.cadastrosSistema\cadastros', ['page' => 'cadastros']);
     }
 
     /**

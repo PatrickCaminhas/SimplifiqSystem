@@ -1,9 +1,10 @@
 @php
     $chartjs = true;
     $jquery = true;
+    $oProduto = $produto->nome . ' ' . $produto->modelo . ' ' . $produto->marca;
+    $page = $oProduto;
 @endphp
 @extends('layouts.padrao')
-@section('titulo', 'Lista de Produtos')
 
 @section(section: 'conteudo')
     <div class="container mt-2 col-12 mb-3 ">
@@ -18,11 +19,13 @@
                         <h5 class="card-title">Informações do produto</h5>
                         <p id="produto_id" class="card-text">ID: {{ $produto->id }}</p>
                         <p id="produto_nome" class="card-text">Nome:
-                            {{ $produto->nome . ' ' . $produto->modelo . ' ' . $produto->marca }}
+                            {{ $oProduto }}
                         </p>
                         <p id="produto_categoria" class="card-text">Categoria: {{ $produto->categoria->nome }}</p>
-                        <p id="produto_valor_compra" class="card-text">Valor Compra: R$ {{ $produto->preco_compra }}</p>
-                        <p id="produto_valor_venda" class="card-text">Preço venda: R$ {{ $produto->preco_venda }}</p>
+                        <p id="produto_valor_compra" class="card-text">Valor Compra: R$ {{ number_format($produto->preco_compra, 2, ',', '.') }}</p>
+                        <p id="produto_valor_venda" class="card-text">Preço venda: R$ {{  number_format($produto->preco_venda, 2, ',', '.') }}</p>
+                        <p id="produto_valor_venda_minimo" class="card-text">Preço minimo: R$
+                            {{ number_format($produto->desconto_maximo, 2, ',', '.')}}</p>
                         <p id="produto_ultimo_fornecedor" class="card-text">Ultimo fornecedor:
                             {{ $produto->ultimo_fornecedor }}</p>
                         <p id="produto_estoque" class="card-text">Estoque: {{ $produto->quantidade }}</p>
@@ -36,10 +39,10 @@
                     <div class="card-body">
                         <h5 class="card-title">Ações</h5>
                         <!--<a href="{{ route('produto.edit', ['id' => $produto->id]) }}" class="btn @include('partials.buttomCollor')">Alterar
-                                        dados</a>
-                                    <a href="{{ route('produto.preco', ['id' => $produto->id]) }}" class="btn @include('partials.buttomCollor')">Alterar
-                                        preço de venda</a>
-                                    -->
+                                                dados</a>
+                                            <a href="{{ route('produto.preco', ['id' => $produto->id]) }}" class="btn @include('partials.buttomCollor')">Alterar
+                                                preço de venda</a>
+                                            -->
                         <!-- Modal de Edição -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#modalEditarProduto">
@@ -223,7 +226,8 @@
                                                         placeholder="{{ $produto->desconto_maximo }}" step="0.01">
                                                 </div>
                                             </div>
-                                            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Salvar
+                                                Alterações</button>
                                         </form>
                                     </div>
                                 </div>
@@ -256,7 +260,7 @@
             <div class="col-sm-12 col-md-6">
                 <div class="card mb-2">
                     <div class="card-body">
-                        <h5 class="card-title">Variação de preço</h5>
+                        <h5 class="card-title">Variação de preço de vendas</h5>
                         <p class="card-text">
                             <!-- GRAFICO DE VARIAÇÃO DE PREÇO -->
                         <div>
@@ -316,7 +320,11 @@
 <!-- Features Section -->
 
 <!-- Inclua os arquivos JavaScript do Bootstrap -->
-@vite('resources/js/app.js')
+
+
+
+
+
 @push('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -407,67 +415,67 @@
         });
     </script>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const produtoId = {{ $produto->id }}; // Pegando o ID do produto
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const produtoId = {{ $produto->id }}; // Pegando o ID do produto
 
-        fetch(`/api/variacao-preco/${produtoId}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    console.error(data.message);
-                    return;
-                }
+            fetch(`/api/variacao-preco/${produtoId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        console.error(data.message);
+                        return;
+                    }
 
-                // Organizar os dados
-                const mesesAnos = [];
-                const precos = [];
+                    // Organizar os dados
+                    const mesesAnos = [];
+                    const precos = [];
 
-                data.forEach(item => {
-                    mesesAnos.push(item.mes_ano); // Exemplo: "2024-02"
-                    precos.push(item.preco_unitario);
-                });
+                    data.forEach(item => {
+                        mesesAnos.push(item.mes_ano); // Exemplo: "2024-02"
+                        precos.push(item.preco_unitario);
+                    });
 
-                // Criando gráfico
-                const ctx = document.getElementById('variacaoPrecoChart').getContext('2d');
-                new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: mesesAnos, // Eixo X - Meses/Ano
-                        datasets: [{
-                            label: 'Preço Unitário',
-                            data: precos, // Eixo Y - Preços
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                            borderWidth: 2,
-                            fill: true,
-                            tension: 0.1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        scales: {
-                            x: {
-                                title: {
-                                    display: true,
-                                    text: 'Meses/Ano'
-                                }
-                            },
-                            y: {
-                                title: {
-                                    display: true,
-                                    text: 'Preço Unitário (R$)'
+                    // Criando gráfico
+                    const ctx = document.getElementById('variacaoPrecoChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: mesesAnos, // Eixo X - Meses/Ano
+                            datasets: [{
+                                label: 'Preço Unitário',
+                                data: precos, // Eixo Y - Preços
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderWidth: 2,
+                                fill: true,
+                                tension: 0.1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                x: {
+                                    title: {
+                                        display: true,
+                                        text: 'Meses/Ano'
+                                    }
                                 },
-                                min: 0 // Define o valor mínimo do eixo Y como 0
+                                y: {
+                                    title: {
+                                        display: true,
+                                        text: 'Preço Unitário (R$)'
+                                    },
+                                    min: 0 // Define o valor mínimo do eixo Y como 0
 
+                                }
                             }
                         }
-                    }
-                });
-            })
-            .catch(error => console.error('Erro ao carregar os dados:', error));
-    });
-</script>
+                    });
+                })
+                .catch(error => console.error('Erro ao carregar os dados:', error));
+        });
+    </script>
 
 
     <script>
@@ -491,19 +499,26 @@
                     if (data.success) {
                         // Atualiza os elementos da página com os novos dados do produto
                         // (Utilize os IDs ou seletores adequados para cada campo)
-                        data.produto.preco_compra = parseFloat(data.produto.preco_compra).toFixed(2);
-                        data.produto.preco_venda = parseFloat(data.produto.preco_venda).toFixed(2);
-
+                        const formatarMoeda = (valor) => {
+                            return parseFloat(valor).toLocaleString('pt-BR', {
+                                style: 'currency',
+                                currency: 'BRL'
+                            });
+                        };
+                        data.produto.preco_compra = formatarMoeda(data.produto.preco_compra);
+                        data.produto.preco_venda = formatarMoeda(data.produto.preco_venda);
+                        data.produto.desconto_maximo = formatarMoeda(data.produto.desconto_maximo);
 
                         document.getElementById('produto_info').innerHTML = `
                 <div class="card mb-2 h-100">
                     <div class="card-body">
                         <h5 class="card-title">Informações do produto</h5>
-                        <p class="card-text">ID: ${data.produto.id}</p>
-                        <p class="card-text" id="produto_nome">Nome: ${data.produto.nome} ${data.produto.modelo} ${data.produto.marca}</p>
-                        <p class="card-text">Categoria: ${data.produto.categoria.nome}</p>
-                        <p class="card-text">Valor Compra: R$ ${data.produto.preco_compra}</p>
-                        <p  class="card-text">Preço venda: R$ ${ data.produto.preco_venda}</p>
+                        <p id="produto_id" class="card-text">ID: ${data.produto.id}</p>
+                        <p id="produto_nome" class="card-text" id="produto_nome">Nome: ${data.produto.nome} ${data.produto.modelo} ${data.produto.marca}</p>
+                        <p id="produto_categoria" class="card-text">Categoria: ${data.produto.categoria.nome}</p>
+                        <p id="produto_valor_compra" class="card-text">Valor Compra: ${data.produto.preco_compra}</p>
+                        <p id="produto_valor_venda" class="card-text">Preço venda: ${ data.produto.preco_venda}</p>
+                        <p id="produto_valor_venda_minimo" class="card-text">Preço minimo: ${ data.produto.desconto_maximo}</p>
                         <p id="produto_ultimo_fornecedor" class="card-text">Ultimo fornecedor:
                             ${ data.produto.ultimo_fornecedor }</p>
                         <p id="produto_estoque" class="card-text">Estoque: ${ data.produto.quantidade }</p>
@@ -552,47 +567,54 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        // Atualiza os elementos da página com os novos dados do produto
-                        // (Utilize os IDs ou seletores adequados para cada campo)
+                        // Atualiza apenas os campos de preço na view
+                        const formatarMoeda = (valor) => {
+                            return parseFloat(valor).toLocaleString('pt-BR', {
+                                style: 'currency',
+                                currency: 'BRL'
+                            });
+                        };
 
-                        data.produto.preco_venda = parseFloat(data.produto.preco_venda).toFixed(2);
-                        data.produto.desconto_maximo = parseFloat(data.produto.desconto_maximo).toFixed(2);
+                        // Atualiza o preço de venda
+                        const precoVendaElement = document.getElementById('produto_valor_venda');
+                        if (precoVendaElement) {
+                            precoVendaElement.textContent =
+                                `Preço venda: ${formatarMoeda(data.produto.preco_venda)}`;
+                        }
 
-                        document.getElementById('produto_info').innerHTML = `
-            <div class="card mb-2 h-100">
-                <div class="card-body">
-                    <h5 class="card-title">Informações do produto</h5>
-                    <p class="card-text">ID: ${data.produto.id}</p>
-                    <p class="card-text" id="produto_nome">Nome: ${data.produto.nome} ${data.produto.modelo} ${data.produto.marca}</p>
-                    <p class="card-text">Categoria: ${data.produto.categoria.nome}</p>
-                    <p class="card-text">Valor Compra: R$ ${data.produto.preco_compra}</p>
-                    <p  class="card-text">Preço venda: R$ ${ data.produto.preco_venda}</p>
-                    <p id="produto_ultimo_fornecedor" class="card-text">Ultimo fornecedor:
-                        ${ data.produto.ultimo_fornecedor }</p>
-                    <p id="produto_estoque" class="card-text">Estoque: ${ data.produto.quantidade }</p>
-                </div>
-            </div>
-        `;
+                        // Atualiza o desconto máximo
+                        const descontoMaximoElement = document.getElementById('produto_valor_venda_minimo');
+                        if (descontoMaximoElement) {
+                            descontoMaximoElement.textContent =
+                                `Preço mínimo: ${formatarMoeda(data.produto.desconto_maximo)}`;
+                        }
 
                         // Exibe o toast de sucesso
                         const toastEl = document.getElementById('toastSuccess');
                         if (toastEl) {
-                            // Se necessário, remova a classe 'show' para reiniciar o toast
                             toastEl.classList.remove('show');
                             const toast = bootstrap.Toast.getOrCreateInstance(toastEl);
                             document.getElementById('toastMessage').innerText =
-                                'Produto atualizado com sucesso!';
+                                'Preços atualizados com sucesso!';
                             toast.show();
                         } else {
                             console.warn("Elemento 'toastSuccess' não encontrado!");
                         }
-
-
                     } else {
-                        alert("Erro ao atualizar produto!");
+                        alert("Erro ao atualizar preços do produto!");
                     }
                 })
-                .catch(error => console.error("Erro:", error));
+                .catch(error => {
+                    console.error("Erro:", error);
+                    const toastEl = document.getElementById('toastError');
+                    if (toastEl) {
+                        toastEl.classList.remove('show');
+                        const toast = bootstrap.Toast.getOrCreateInstance(toastEl);
+                        document.getElementById('toastErrorMessage').innerText =
+                            'Erro ao atualizar preços. Verifique o console para detalhes.';
+                        toast.show();
+                    }
+                });
         });
     </script>
     <script>
@@ -630,7 +652,7 @@
         });
     </script>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
             const produtoId = 1; // Substitua pelo ID correto do produto
             const url = `/api/maiores-fornecedores/${produtoId}`; // Ajuste para a URL correta da sua API
 
@@ -646,7 +668,8 @@
                     tabelaBody.innerHTML = ""; // Limpa qualquer dado anterior
 
                     if (data.error) {
-                        tabelaBody.innerHTML = `<tr><td colspan="3" class="text-center text-danger">${data.message}</td></tr>`;
+                        tabelaBody.innerHTML =
+                            `<tr><td colspan="3" class="text-center text-danger">${data.message}</td></tr>`;
                         return;
                     }
 
@@ -668,5 +691,4 @@
                 });
         });
     </script>
-
 @endpush

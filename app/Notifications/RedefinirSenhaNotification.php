@@ -47,7 +47,7 @@ class RedefinirSenhaNotification extends Notification
     {
 
         // Construindo a URL com o subdomínio
-        $url = 'http://'.$this->dominio.'.localhost:8000/password/reset/'.$this->token.'?email='.urlencode($notifiable->email);
+        $url = 'http://'.$this->dominio.'localhost/password/reset/'.$this->token.'?email='.urlencode($notifiable->email);
 
 
 

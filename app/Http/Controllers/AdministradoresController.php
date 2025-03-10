@@ -49,7 +49,7 @@ class AdministradoresController extends Controller
         if ($administrador) {
             return redirect('/')->with('success', 'Cadastro realizado com sucesso!');
         } else {
-            return view('index/inicio');
+            return view('index.inicio');
         }
     }
     public function login(Request $request)

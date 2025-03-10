@@ -144,7 +144,7 @@
                             li.addEventListener('click', function() {
                                 const nomeSanitizado = sanitizeString(empresa.nome);
                                 window.location.href =
-                                    `http://${nomeSanitizado}.localhost:8000`;
+                                    `http://${nomeSanitizado}.localhost`;
                             });
                             sugestoes.appendChild(li);
                         });

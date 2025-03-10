@@ -43,7 +43,7 @@ abstract class DuskTestCase extends BaseTestCase
         $capabilities->setCapability(ChromeOptions::CAPABILITY, $options);
 
         // URL do WebDriver
-        $baseUrl = env('APP_URL', 'http://tenant.localhost:8000');
+        $baseUrl = env('APP_URL', 'http://tenant.localhost');
         // Criar o driver com as opções e capacidades
         return RemoteWebDriver::create(
             'http://localhost:9515', // WebDriver URL

@@ -12,21 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('produtos', function (Blueprint $table) {
-            // Renomeia a coluna 'categoria' para 'categoria_id'
-            $table->unsignedBigInteger('categoria')->nullable()->change();
-
             $table->renameColumn('categoria', 'categoria_id');
+        });
 
-            // Modifica 'categoria_id' para unsignedBigInteger e permite NULL
-
-
-            // Cria a chave estrangeira referenciando 'produtos_categoria'
+        Schema::table('produtos', function (Blueprint $table) {
+            $table->unsignedBigInteger('categoria_id')->nullable()->change();
             $table->foreign('categoria_id')
                 ->references('id')
                 ->on('produtos_categoria')
                 ->onUpdate('cascade')
                 ->onDelete('set null');
         });
+
     }
 
     /**

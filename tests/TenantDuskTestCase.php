@@ -59,7 +59,7 @@ abstract class TenantDuskTestCase extends BaseTestCase
 
         // Definir o subdomínio do tenant dinamicamente (ex: 'ufop')
         $tenantSubdomain = 'ufop';  // Subdomínio específico do tenant
-        $baseUrl = "http://{$tenantSubdomain}.localhost:8000";
+        $baseUrl = "http://{$tenantSubdomain}.localhost";
 
         // Definir a URL base do aplicativo para o subdomínio correto
         config(['app.url' => $baseUrl]);

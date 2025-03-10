@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Administradores;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -196,7 +197,7 @@ class LoginController extends Controller
                 ->with('email', $request['email'])->with('senha', $request['senha']);
         }
 
-        return redirect()->away('http://localhost:8000/login')->withErrors([
+        return redirect()->away('localhost/login')->withErrors([
             'error' => 'E-mail incorreto. ',
         ]);
     }
@@ -216,11 +217,11 @@ class LoginController extends Controller
 
             $data = ['email' => $email, 'timestamp' => now()->timestamp];
             $encryptedEmail = Crypt::encryptString(json_encode($data));
-            return redirect()->away('http://localhost:8000/loginAdministrativoSecond?token=' . $encryptedEmail)
+            return redirect()->away('localhost/loginAdministrativoSecond?token=' . $encryptedEmail)
             ->with('email', $request['email'])->with('senha', $request['senha']);
         }
         else{
-            return redirect()->away('http://localhost:8000/login')->withErrors([
+            return redirect()->away('localhost/login')->withErrors([
                 'error' => 'E-mail incorreto Admin.',
             ]);
         }
@@ -316,11 +317,11 @@ class LoginController extends Controller
                 Auth::login($funcionario);
                 return redirect()->intended('dashboard'); // Redireciona para o dashboard do subdomínio
             } elseif ($funcionario) {
-                return redirect()->away('http://localhost:8000/login3')->withErrors([
+                return redirect()->away('localhost/login3')->withErrors([
                     'email' => 'Senha incorreta.'
                 ]);
             }
-            return redirect()->away('http://localhost:8000/login3')->withErrors([
+            return redirect()->away('localhost/login3')->withErrors([
                 'email' => 'E-mail incorreto.',
             ]);
         }

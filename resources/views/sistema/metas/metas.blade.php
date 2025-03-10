@@ -45,7 +45,7 @@
 
 @push('scripts')
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    @vite('resources/js/app.js')
+
 
     <script>
         document.getElementById("btnEditar").addEventListener("click", function() {

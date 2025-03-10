@@ -173,7 +173,12 @@ class CotacoesController extends Controller
             ->get();
         $nomeEmpresa = Empresa_information::first()->nome;
         $dataCotacao = now()->format('d/m/Y H:i:s');
-        return view('sistema.cotacao.resultados', ['page' => 'Cotação', 'cotacoes' => $cotacoes, 'nomeEmpresa' => $nomeEmpresa, 'dataCotacao' => $dataCotacao]);
+        return view('sistema.cotacao.resultados', [
+            'page' => 'Cotação',
+            'id_cotacao' => $id_cotacao,
+            'cotacoes' => $cotacoes,
+            'nomeEmpresa' => $nomeEmpresa,
+            'dataCotacao' => $dataCotacao]);
     }
 
     // ------------------

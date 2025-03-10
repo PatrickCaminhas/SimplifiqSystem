@@ -69,12 +69,12 @@
     <span type="text" id="valor-total" class="form-control-static"></span>
 </div>
 <div class="form-group">
-    <label name="desconto-maximo"><i class="bi bi-tag"></i> Desconto Máximo: </label>
+    <label name="desconto-maximo"><i class="bi bi-tag"></i> Valor minimo(desconto): </label>
     <span type="text" id="desconto-maximo" class="form-control-static">
     </span>
 </div>
 <div class="form-group">
-    <label for="valor_venda">Valor da venda:</label>
+    <label for="valor_venda">Preço venda:</label>
     <input type="number" name="valor_venda" id="valor_venda" class="form-control" placeholder="Digite o valor da venda"
         step="0.01">
     <input type="hidden" name="desconto_maximo" id="input_desconto_maximo" value="0">
