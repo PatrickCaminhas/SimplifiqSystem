@@ -133,7 +133,7 @@ class VendasController extends Controller
             }
 
             // Redirecionar de volta com a mensagem de erro
-            return redirect()->back()->withErrors($e->getMessage());
+            return redirect()->back()->with($e->getMessage());
         }
     }
 
@@ -200,7 +200,7 @@ class VendasController extends Controller
                 $venda->metodo_pagamento == 'Cartão de debito(Cancelado)' ||
                 $venda->metodo_pagamento == 'Crediario(Cancelado)'
             ) {
-                return redirect()->back()->withErrors('Esta venda já foi cancelada.');
+                return redirect()->back()->with('Esta venda já foi cancelada.');
             }
 
             // Reverter o progresso nas metas
@@ -250,7 +250,7 @@ class VendasController extends Controller
             return redirect()->back()->with('success', 'Venda cancelada com sucesso!');
         } catch (\Exception $e) {
             DB::rollback();
-            return redirect()->back()->withErrors('Erro ao cancelar a venda: ' . $e->getMessage());
+            return redirect()->back()->with('Erro ao cancelar a venda: ' . $e->getMessage());
         }
     }
 

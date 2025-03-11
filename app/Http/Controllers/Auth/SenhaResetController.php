@@ -41,7 +41,7 @@ class SenhaResetController extends Controller
 
         return $status === Password::RESET_LINK_SENT
             ? back()->with(['status' => __($status)])
-            : back()->withErrors(['email' => __($status)]);
+            : back()->with(['email' => __($status)]);
     }
 
     public function resetForm($token)
@@ -69,7 +69,7 @@ class SenhaResetController extends Controller
 
         return $status === Password::PASSWORD_RESET
             ? redirect()->route('login')->with('status', __($status))
-            : back()->withErrors(['email' => __($status)]);
+            : back()->with(['email' => __($status)]);
     }
 
 

@@ -142,10 +142,14 @@ class ProdutoController extends Controller
     {
         $term = $request->input('term');
 
-        $produtos = Produtos::where('nome', 'LIKE', '%' . $term . '%')
-            ->orWhere('modelo', 'LIKE', '%' . $term . '%')
-            ->orWhere('marca', 'LIKE', '%' . $term . '%')
-            ->get();
+        $produtos = Produtos::where(function ($query) use ($term) {
+            $query->where('nome', 'LIKE', '%' . $term . '%')
+                ->orWhere('modelo', 'LIKE', '%' . $term . '%')
+                ->orWhere('marca', 'LIKE', '%' . $term . '%');
+        })
+        ->where('estado', 'Ativo')
+        //->where('quantidade', '>', 0)
+        ->get();
 
         return response()->json($produtos);
     }

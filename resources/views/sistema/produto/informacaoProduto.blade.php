@@ -22,10 +22,12 @@
                             {{ $oProduto }}
                         </p>
                         <p id="produto_categoria" class="card-text">Categoria: {{ $produto->categoria->nome }}</p>
-                        <p id="produto_valor_compra" class="card-text">Valor Compra: R$ {{ number_format($produto->preco_compra, 2, ',', '.') }}</p>
-                        <p id="produto_valor_venda" class="card-text">Preço venda: R$ {{  number_format($produto->preco_venda, 2, ',', '.') }}</p>
+                        <p id="produto_valor_compra" class="card-text">Valor Compra: R$
+                            {{ number_format($produto->preco_compra, 2, ',', '.') }}</p>
+                        <p id="produto_valor_venda" class="card-text">Preço venda: R$
+                            {{ number_format($produto->preco_venda, 2, ',', '.') }}</p>
                         <p id="produto_valor_venda_minimo" class="card-text">Preço minimo: R$
-                            {{ number_format($produto->desconto_maximo, 2, ',', '.')}}</p>
+                            {{ number_format($produto->desconto_maximo, 2, ',', '.') }}</p>
                         <p id="produto_ultimo_fornecedor" class="card-text">Ultimo fornecedor:
                             {{ $produto->ultimo_fornecedor }}</p>
                         <p id="produto_estoque" class="card-text">Estoque: {{ $produto->quantidade }}</p>
@@ -39,10 +41,10 @@
                     <div class="card-body">
                         <h5 class="card-title">Ações</h5>
                         <!--<a href="{{ route('produto.edit', ['id' => $produto->id]) }}" class="btn @include('partials.buttomCollor')">Alterar
-                                                dados</a>
-                                            <a href="{{ route('produto.preco', ['id' => $produto->id]) }}" class="btn @include('partials.buttomCollor')">Alterar
-                                                preço de venda</a>
-                                            -->
+                                                    dados</a>
+                                                <a href="{{ route('produto.preco', ['id' => $produto->id]) }}" class="btn @include('partials.buttomCollor')">Alterar
+                                                    preço de venda</a>
+                                                -->
                         <!-- Modal de Edição -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#modalEditarProduto">
@@ -114,7 +116,6 @@
                                                         @endforeach
 
                                                     </select>
-
                                                 @endif
                                                 <label>Precisa de uma nova categoria? <a type="submit"
                                                         class="btn @include('partials.buttomCollor') text-center"
@@ -233,8 +234,72 @@
                                 </div>
                             </div>
                         </div>
+                        @if ($produto->estado == 'Ativo')
+                            <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#desativarProduto">Desativar
+                                produto</a>
+                            <div class="modal fade" id="desativarProduto" data-bs-backdrop="static"
+                                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Desativar produto</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Tem certeza que deseja desativar o produto?</p>
+                                            <p>Após desativar o produto, ele não poderá ser mais vendido.</p>
+                                            <p>Para reativar o produto, acesse a lista de produtos desativados e na pagina
+                                                do produto procure o botão de ativar.</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Fechar</button>
+                                            <form action="{{ route('produto.desativar') }}"
+                                                method="POST">
+                                                <input type="hidden" value="{{ $produto->id }}" name="id">
 
-                        <a href="#" class="btn btn-danger">Excluir produto</a>
+                                                @csrf
+                                                <button type="submit" class="btn btn-danger">Desativar</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @elseif($produto->estado == 'Inativo')
+                        <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#desativarProduto">Reativar
+                            produto</a>
+                        <div class="modal fade" id="desativarProduto" data-bs-backdrop="static"
+                            data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Reativar produto</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Tem certeza que deseja reativar o produto?</p>
+                                        <p>Após reativar o produto, ele voltará ser vendido.</p>
+                                        <p>Para desabilitar o produto, acesse a lista de produtos e na pagina
+                                            do produto procure o botão de desativar.</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Fechar</button>
+                                        <form action="{{ route('produto.ativar') }}"
+                                            method="POST">
+                                            <input type="hidden" value="{{ $produto->id }}" name="id">
+                                            @csrf
+                                            <button type="submit" class="btn btn-primary">Ativar</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -316,6 +381,8 @@
         </div>
 
     </div>
+    @include('partials.errorAndSuccessToast')
+
 @endsection
 <!-- Features Section -->
 

@@ -29,7 +29,7 @@ use App\Http\Controllers\VendasController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\FaturamentoController;
 use App\Http\Controllers\Auth\SenhaResetController;
-
+use App\Models\Estoque;
 
 foreach (config('tenancy.central_domains') as $domain) {
     Route::domain($domain)->group(function () {
@@ -297,6 +297,11 @@ foreach (config('tenancy.central_domains') as $domain) {
 
             Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
+            Route::post('/informacaoproduto/desativar', [InformacaoProdutosController::class, 'desativarProduto'])->name('produto.desativar');
+            Route::get('/produtos/desabilitados', [InformacaoProdutosController::class, 'createInativos'])->name('produtos.desabilitados');
+            Route::post('/informacaoproduto/ativar', [InformacaoProdutosController::class, 'ativarProduto'])->name('produto.ativar');
+            Route::post('/repor-estoque', [EstoqueController::class, 'reporEstoque'])->name('repor.estoque');
+            Route::get('/perguntas-frequentes', [InformacaoEmpresaController::class, 'faq'])->name('faq');
         });
 
 

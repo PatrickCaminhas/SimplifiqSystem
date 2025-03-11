@@ -82,7 +82,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th>Produto</th>
-                                                        <th>Total Cotado</th>
+                                                        <th>Quantidade de cotações</th>
                                                         <th>Preço Mínimo</th>
                                                         <th>Preço Máximo</th>
                                                     </tr>

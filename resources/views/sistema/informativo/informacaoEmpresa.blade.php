@@ -67,12 +67,12 @@
                                             {{ $crediarioClientes->qtdClientes }}.</p>
                                         <p class="card-text">Valor total a receber no crediário: R$
                                             {{ $crediarioClientes->valorTotal }}.</p>
-                                        <p class="card-text">Quantidade de produtos com estoque:
+                                        <p class="card-text">Produtos com estoque:
                                             {{ $produtos->qtdProdutosEmEstoque }}.</p>
                                         <!--<p class="card-text">Lista de produtos mais vendidos: </p> -->
                                     </div>
                                     <div class="col-6">
-                                        <p class="card-text">Quantidade de produtos em falta:
+                                        <p class="card-text">Produtos sem estoque:
                                             {{ $produtos->qtdProdutosSemEstoque }}.</p>
                                         <p class="card-text">Total de produtos em estoque: {{ $produtos->estoque }}.</p>
                                         <p class="card-text">Valor total em estoque: R$
@@ -139,6 +139,8 @@
             </div>
         </div>
     </div>
+    @include('partials.errorAndSuccessToast')
+
 @endsection
 @push('scripts')
     <script>

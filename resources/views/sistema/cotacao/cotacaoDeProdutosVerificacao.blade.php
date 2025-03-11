@@ -16,7 +16,8 @@
                         <form method="POST" action="">
                             @csrf
 
-                            <table class="table rounded table-bordered border @include('partials.borderCollor') border-2 table-white">
+                            <table
+                                class="table rounded table-bordered border @include('partials.borderCollor') border-2 table-white">
                                 <thead>
                                     <tr class="text-light">
                                         <th scope="col">Produto</th>
@@ -40,8 +41,9 @@
                                             <td>
                                                 <div class="btn-group">
 
-                                                    <input type="number" name="produtos[]" class="form-control @include('partials.borderCollor')"
-                                                        min="0" step="1">
+                                                    <input type="number" name="produtos[]"
+                                                        class="form-control @include('partials.borderCollor')" min="0"
+                                                        step="1">
                                                 </div>
                                             </td>
                                             <td class="text-end">
@@ -74,9 +76,16 @@
 
                 inputsQuantidade.forEach(input => {
                     const row = input.closest("tr"); // Obtém a linha da tabela
-                    const precoUnitario = parseFloat(row.querySelector("td:nth-child(4) span").textContent
-                        .replace("R$", "").replace(",", ".").trim()); // Obtém o preço unitário
-                    let quantidade = parseInt(input.value) || 0; // Converte para inteiro e impede NaN
+
+                    // Obtém o preço unitário diretamente do dataset, caso tenha sido armazenado
+                    const precoUnitarioElement = row.querySelector("td:nth-child(4) span");
+                    let precoUnitario = precoUnitarioElement.dataset.valor || precoUnitarioElement
+                        .textContent;
+
+                    precoUnitario = parseFloat(precoUnitario.replace("R$", "").replace(".", "").replace(",",
+                        ".").trim());
+
+                    let quantidade = parseInt(input.value) || 0; // Garante que é um número inteiro válido
                     quantidade = Math.max(0, quantidade); // Garante que a quantidade nunca seja negativa
 
                     input.value = quantidade; // Atualiza o campo para garantir que só tenha inteiros
@@ -85,14 +94,16 @@
 
                     // Atualiza o total do produto na tabela
                     const totalProdutoSpan = row.querySelector("td:nth-child(5) span");
-                    totalProdutoSpan.textContent = `R$ ${totalProduto.toFixed(2).replace(".", ",")}`;
+                    totalProdutoSpan.textContent =
+                        `R$ ${totalProduto.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}`;
 
                     // Soma ao total da cotação
                     totalCotacao += totalProduto;
                 });
 
                 // Atualiza o total da cotação
-                totalCotacaoSpan.textContent = ` R$ ${totalCotacao.toFixed(2).replace(".", ",")}`;
+                totalCotacaoSpan.textContent =
+                    `R$ ${totalCotacao.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}`;
             }
 
             // Adiciona evento de input para recalcular sempre que houver mudança na quantidade

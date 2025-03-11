@@ -8,7 +8,7 @@
             <div class="card shadow-sm">
                 <div class="card-body table-responsive" >
                     <h4 class="display-6 text-center">@yield('titulo', 'Lista')</h4>
-                    @include('partials.errorAndSuccess')
+                    @include('partials.errorAndSuccessToast')
                     @yield('lista')
 
                 </div>

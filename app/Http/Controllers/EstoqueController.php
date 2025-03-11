@@ -14,7 +14,11 @@ class EstoqueController extends Controller
     // ------------------
     public function create()
     {
-        $produtos = Produtos::all();
+        $produtos = Produtos::where('estado', 'Ativo')
+            ->orWhere(function ($query) {
+                $query->where('estado', 'Inativo')
+                    ->where('quantidade', '>', 0);
+            })->get();
         return view('sistema.estoque.estoque', ['produtos' => $produtos], ['page' => 'Produto']);
     }
 
@@ -70,20 +74,20 @@ class EstoqueController extends Controller
         $acao = $request->input('acao');
 
         if (is_null($acao)) {
-            return redirect()->back()->withErrors(['acao' => 'Ação não foi recebida.']);
+            return redirect()->back()->with(['acao' => 'Ação não foi recebida.']);
         }
 
         if ($acao == 'reposicao') {
             $produto->quantidade += $quantidade;
         } elseif ($acao == 'baixa') {
             if ($produto->quantidade < $quantidade) {
-                return redirect()->back()->withErrors(['quantidade' => 'Quantidade em estoque insuficiente!']);
+                return redirect()->back()->with(['quantidade' => 'Quantidade em estoque insuficiente!']);
             }
             $produto->quantidade -= $quantidade;
         }
 
         if ($quantidade == 0) {
-            return redirect()->back()->withErrors(['quantidade' => 'Quantidade não pode ser 0.']);
+            return redirect()->back()->with(['quantidade' => 'Quantidade não pode ser 0.']);
         }
 
         $produto->save();
@@ -91,15 +95,48 @@ class EstoqueController extends Controller
         // ------------------
         // REGISTRAR MOVIMENTAÇÃO NO HISTÓRICO DE ESTOQUE
         // ------------------
+        $this->store($produto->id, $quantidade, $acao);
+
+        return redirect()->back()->with(['status' => 'Estoque atualizado com sucesso!']);
+    }
+    public function store($produtoId, $quantidade, $acao){
         $estoque = new Estoque();
-        $estoque->id_produto = $produto->id;
+        $estoque->id_produto = $produtoId;
         $estoque->quantidade = $quantidade;
         $estoque->acao = $acao;
         $estoque->mes = date('m');
         $estoque->ano = date('Y');
         $estoque->usuario = Auth::user()->id;
-        $estoque->save();
-
-        return redirect()->back()->with(['status' => 'Estoque atualizado com sucesso!']);
+        return $estoque->save();
     }
+
+    public function reporEstoque(Request $request)
+    {
+        // Percorre todas as entradas do request
+        foreach ($request->all() as $key => $value) {
+            // Verifica se o input é um campo de quantidade (produtoX)
+            if (preg_match('/^produto(\d+)$/', $key, $matches)) {
+                $produtoId = $matches[1]; // Extrai o ID do produto
+                $quantidadeRepor = intval($value); // Converte a quantidade para inteiro
+
+                // Garante que a quantidade seja positiva
+                if ($quantidadeRepor > 0) {
+                    // Busca o produto no banco de dados
+                    $produto = Produtos::find($produtoId);
+
+                    if ($produto) {
+                        // Atualiza a quantidade do produto no estoque
+                        $produto->quantidade += $quantidadeRepor;
+                        $produto->save();
+                        $this->store($produto->id, $quantidadeRepor, 'reposicao');
+                    }
+                }
+            }
+        }
+
+        return redirect()->back()->with('success', 'Estoque reposto com sucesso!');
+    }
+
+
+
 }

@@ -141,11 +141,11 @@ class LoginController extends Controller
             return redirect()->intended('dashboard');
         }
         if ($funcionario) {
-            return redirect()->back()->withErrors([
+            return redirect()->back()->with([
                 'error' => 'Senha incorreta.',
             ]);
         } else {
-            return redirect()->back()->withErrors([
+            return redirect()->back()->with([
                 'error' => 'E-mail não cadastrado.',
             ]);
         }
@@ -197,7 +197,7 @@ class LoginController extends Controller
                 ->with('email', $request['email'])->with('senha', $request['senha']);
         }
 
-        return redirect()->away('localhost/login')->withErrors([
+        return redirect()->away('localhost/login')->with([
             'error' => 'E-mail incorreto. ',
         ]);
     }
@@ -221,7 +221,7 @@ class LoginController extends Controller
             ->with('email', $request['email'])->with('senha', $request['senha']);
         }
         else{
-            return redirect()->away('localhost/login')->withErrors([
+            return redirect()->away('localhost/login')->with([
                 'error' => 'E-mail incorreto Admin.',
             ]);
         }
@@ -246,7 +246,7 @@ class LoginController extends Controller
     public function formularioLoginTenant(Request $request)
     {
         if (!$request->has('token')) {
-            return redirect()->route(route: 'login')->withErrors(['error' => 'Token inválido.']);
+            return redirect()->route(route: 'login')->with(['error' => 'Token inválido.']);
         }
         $encryptedToken = $request->query('token');
 
@@ -265,7 +265,7 @@ class LoginController extends Controller
                 return redirect()->route('login')->json(['error' => 'Token expirado.'], 403);
             }
         } catch (\Exception $e) {
-            return redirect()->route(route: 'login')->withErrors(['error' => 'Token inválido ou expirado.']);
+            return redirect()->route(route: 'login')->with(['error' => 'Token inválido ou expirado.']);
         }
 
         return view('index.login3-2', ['email' => $email, 'empresa' => $empresa]);
@@ -291,11 +291,11 @@ class LoginController extends Controller
             return redirect()->intended('dashboard');
         }
         if ($funcionario) {
-            return redirect()->back()->withErrors([
+            return redirect()->back()->with([
                 'error' => 'Senha incorreta.',
             ]);
         } else {
-            return redirect()->back()->withErrors([
+            return redirect()->back()->with([
                 'error' => 'O e-mail incorreto.',
             ]);
         }
@@ -317,11 +317,11 @@ class LoginController extends Controller
                 Auth::login($funcionario);
                 return redirect()->intended('dashboard'); // Redireciona para o dashboard do subdomínio
             } elseif ($funcionario) {
-                return redirect()->away('localhost/login3')->withErrors([
+                return redirect()->away('localhost/login3')->with([
                     'email' => 'Senha incorreta.'
                 ]);
             }
-            return redirect()->away('localhost/login3')->withErrors([
+            return redirect()->away('localhost/login3')->with([
                 'email' => 'E-mail incorreto.',
             ]);
         }

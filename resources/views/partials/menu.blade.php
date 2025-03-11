@@ -183,9 +183,14 @@
                         Configurações</a>
                 </li>
                 <li class="nav-item">
+                    <a id ="buttomMenuLogout" class="nav-link" href="{{ route('faq') }}"><i class="bi bi-question-circle"></i></i> Perguntas frequentes</a>
+                </li>
+                <li class="nav-item">
                     <a id ="buttomMenuLogout" class="nav-link" href="{{ route('logout') }}"><i
                             class="bi bi-box-arrow-right"></i> Logout</a>
                 </li>
+
+
                 <!-- Adicione mais itens de menu conforme necessário -->
             </ul>
         </div>

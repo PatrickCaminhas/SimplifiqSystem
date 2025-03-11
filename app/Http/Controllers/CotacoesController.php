@@ -133,7 +133,7 @@ class CotacoesController extends Controller
         DB::beginTransaction();
         try {
             if (!isset($request->cotacao) || !is_array($request->cotacao)) {
-                return back()->withErrors('Nenhum produto foi selecionado para cotação.');
+                return back()->with('Nenhum produto foi selecionado para cotação.');
             }
             $cotacaoAtual = Cotacoes::create(['data_cotacao' => now()]);
             foreach ($request->cotacao as $produtoId => $fornecedores) {
@@ -159,7 +159,7 @@ class CotacoesController extends Controller
             return redirect()->route('cotacao.resultados', ['id_cotacao' => $cotacaoAtual->id]);
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->withErrors('Erro ao cadastrar a cotação: ' . $e->getMessage());
+            return back()->with('Erro ao cadastrar a cotação: ' . $e->getMessage());
         }
     }
 

@@ -69,11 +69,11 @@ class AdministradoresController extends Controller
             return redirect()->intended('inicioAdministrador');
         }
         if ($administrador) {
-            return redirect()->back()->withErrors([
+            return redirect()->back()->with([
                 'email' => 'As credenciais fornecidas não correspondem aos nossos registros.',
             ]);
         } else {
-            return redirect()->back()->withErrors([
+            return redirect()->back()->with([
                 'email' => 'O e-mail fornecido não corresponde aos nossos registros.',
             ]);
         }
@@ -82,7 +82,7 @@ class AdministradoresController extends Controller
     public function formularioLoginAdmin2(Request $request)
     {
         if (!$request->has('token')) {
-            return redirect()->route(route: 'login')->withErrors(['error' => 'Token inválido.']);
+            return redirect()->route(route: 'login')->with(['error' => 'Token inválido.']);
         }
         $encryptedToken = $request->query('token');
 
@@ -98,7 +98,7 @@ class AdministradoresController extends Controller
                 return redirect()->route('login')->json(['error' => 'Token expirado.'], 403);
             }
         } catch (\Exception $e) {
-            return redirect()->route(route: 'login')->withErrors(['error' => 'Token inválido ou expirado.']);
+            return redirect()->route(route: 'login')->with(['error' => 'Token inválido ou expirado.']);
         }
 
         return view('administracao.login3-2Admin', ['email' => $email]);

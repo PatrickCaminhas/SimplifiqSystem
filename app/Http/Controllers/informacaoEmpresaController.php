@@ -41,7 +41,9 @@ class InformacaoEmpresaController extends Controller
         ]);
     }
 
-
+    public function faq(){
+        return view('sistema.informativo.faq');
+    }
 
     public function despesasUltimosSeisMeses()
     {

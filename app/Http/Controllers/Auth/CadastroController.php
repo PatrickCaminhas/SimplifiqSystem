@@ -39,7 +39,7 @@ class CadastroController extends Controller
         // Verificando e criar a empresa
         $empresa = $this->createEmpresa($request);
         if (!$empresa) {
-            return redirect()->back()->withErrors([
+            return redirect()->back()->with([
                 'cnpj' => 'O CNPJ fornecido já está cadastrado.',
             ]);
         }
@@ -199,7 +199,7 @@ class CadastroController extends Controller
 
         } catch (\Exception $e) {
             DB::rollback(); // Reverte a transação em caso de erro
-            return redirect()->back()->withErrors(['success' => 'Erro ao cadastrar o funcionário: ' . $e->getMessage()]);
+            return redirect()->back()->with(['success' => 'Erro ao cadastrar o funcionário: ' . $e->getMessage()]);
         }
 
 
