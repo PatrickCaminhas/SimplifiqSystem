@@ -11,7 +11,9 @@
                                             Não há outros funcionários cadastrados no sistema.
                                         </div>
                                     @else
-                                    <label for="funcionario">Funcionários</label>
+                                    <label for="funcionario">Funcionário
+                                        @include('partials.campoObrigatorio')
+                                    </label>
                                     <select class="form-control" id="funcionario" name="funcionario" required>
                                         <option selected disabled>Selecione o funcionário</option>
                                         @foreach ($funcionarios as $funcionario)

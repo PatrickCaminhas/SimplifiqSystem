@@ -14,8 +14,8 @@ return new class extends Migration
         if (!Schema::hasTable('metas')) {
             Schema::create('metas', function (Blueprint $table) {
             $table->id();
-            $table->decimal('valor', 6,2);
-            $table->decimal('valor_atual', 6,2);
+            $table->decimal('valor', 9,2);
+            $table->decimal('valor_atual', 9,2);
             $table->string('estado');
             $table->date('ending_at');
             $table->timestamps();

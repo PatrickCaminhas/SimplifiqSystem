@@ -21,7 +21,7 @@ class FaturamentoController extends Controller
     // ------------------
     public function create()
     {
-        return view('sistema/faturamento/cadastroManualFaturamento', ['page' => 'Empresa']);
+        return view('sistema.faturamento.cadastroManualFaturamento', ['page' => 'Empresa']);
     }
 
     // ------------------
@@ -31,7 +31,7 @@ class FaturamentoController extends Controller
     public function read()
     {
         $todosFaturamentos = HistoricoFaturamento::all();
-        return view('sistema/faturamento/HistoricoFaturamento', ['faturamentos' => $todosFaturamentos], ['page' => 'Empresa']);
+        return view('sistema.faturamento.HistoricoFaturamento', ['faturamentos' => $todosFaturamentos], ['page' => 'Empresa']);
     }
 
     // ------------------

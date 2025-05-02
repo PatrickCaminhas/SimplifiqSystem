@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Simplifiq</title>
-    @vite('resources/css/app.css')
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
@@ -36,7 +38,7 @@
         <div class = "container  ">
             <div class="mt-2 col-lg-6 col-md-8 col-sm-12">
 
-                <a class="btn btn-primary" href="http://localhost:8000/">Voltar</a>
+                <a class="btn btn-primary" href="/">Voltar</a>
             </div>
 
             <div class="row justify-content-center ">
@@ -55,7 +57,7 @@
                         <div class="form-floating mb-3">
                             <input type="email" class="form-control" name="email" id="email"
                                 placeholder="Digite seu e-mail" required>
-                            <label> Email:</label>
+                            <label> E-mail:</label>
                         </div>
                         <div class="form-floating mb-3">
                             <input type="password" class="form-control" name="senha" id="senha"
@@ -88,7 +90,15 @@
                                                 aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            Para criar uma conta, entre em contato com a empresa {{ $empresa }}.
+                                            Para criar uma conta, entre em contato com a empresa .
+                                          	
+                                          <p>[Funcionário comum]</p>
+                                          	
+											<p>Login: teste@teste.com</p>
+											<p>Senha: FUNTES12</p>
+                                            <p>[Funcionário Administrador]</p>
+                                            <p>Login: adminteste@teste.com</p>
+                                            <p>Senha: ADMTES12</p>
 
                                         </div>
                                         <div class="modal-footer">
@@ -107,7 +117,8 @@
         </div>
     </div>
     @include('partials.buttomsAcessibilidade')
-    @vite('resources/js/app.js')
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
 
     @include('partials.scriptLightDark')
     @include('partials.scriptAumentarFonte')

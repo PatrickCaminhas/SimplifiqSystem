@@ -1,11 +1,11 @@
 @extends('layouts.lista')
 @section('titulo', 'Lista de Vendas')
 @section('lista')
-    <p><a class="btn @include('partials.buttomCollor')" href="{{ route('vendas.create') }}"><i class="bi bi-plus-circle-fill"></i> Cadastrar venda</a></p>
+    <p><a class="btn @include('partials.buttomCollor')" href="{{ route('vendas.create') }}"><i class="bi bi-plus-circle-fill"></i>
+            Cadastrar venda</a></p>
     <table id="myTable" class="display">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Cliente</th>
                 <th>Data da venda</th>
                 <th>Valor total</th>
@@ -15,9 +15,10 @@
         <tbody>
             @foreach ($vendas as $venda)
                 <tr>
-                    <td>{{ $venda->id }}</td>
                     <td>{{ $venda->cliente->nome }}</td>
-                    <td>{{ \Carbon\Carbon::parse($venda->data_venda)->format('d/m/Y') }}</td>
+                    <td data-sort="{{ \Carbon\Carbon::parse($venda->data_venda)->format('Y-m-d') }}">
+                        {{ \Carbon\Carbon::parse($venda->data_venda)->format('d/m/Y') }}
+                    </td>
                     <td>{{ $venda->valor_total }}</td>
                     <td>
                         <button type="button" class="btn @include('partials.buttomCollor') text-light" data-bs-toggle="modal"
@@ -25,7 +26,7 @@
                             <i class="bi bi-search"></i>
                         </button>
                         <!-- Modal -->
-                        <div class="modal fade" id="venda{{ $venda->id }}" data-bs-backdrop="static"
+                        <div class="modal modal-md fade" id="venda{{ $venda->id }}" data-bs-backdrop="static"
                             data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
                             aria-hidden="true">
                             <div class="modal-dialog">
@@ -57,7 +58,7 @@
                                                             <th>Produto</th>
                                                             <th>Quantidade</th>
                                                             <th>Valor unitário</th>
-                                                            <th>Valor total</th>
+                                                            <th>Subtotal</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -81,7 +82,7 @@
                                             @csrf
                                             <input type="hidden" name="id" value="{{ $venda->id }}">
                                             <!--<button type="submit"
-                                                                            class="btn btn-danger">Cancelar venda</button>-->
+                                                                                class="btn btn-danger">Cancelar venda</button>-->
                                         </form>
                                     </div>
                                 </div>
@@ -119,7 +120,7 @@
                     $vendas->keyBy('id')->map(function ($venda) {
                             return $venda->itens->map(function ($item) {
                                 return [
-                                    'produto' => $item->produto->nome . " " . $item->produto->modelo . " ". $item->produto->marca,
+                                    'produto' => $item->produto->nome . ' ' . $item->produto->modelo . ' ' . $item->produto->marca,
                                     'quantidade' => $item->quantidade,
                                     'preco_unitario' => $item->preco_unitario,
                                     'subtotal' => $item->subtotal,
@@ -137,8 +138,8 @@
                             `<tr>
                                 <td>${item.produto}</td>
                                 <td>${item.quantidade}</td>
-                                <td>${item.preco_unitario}</td>
-                                <td>${item.subtotal}</td>
+                                <td>R$ ${item.preco_unitario}</td>
+                                <td>R$ ${item.subtotal}</td>
                             </tr>`
                         );
                     });

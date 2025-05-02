@@ -7,14 +7,15 @@
         <thead>
             <tr>
                 <th>Data</th>
-                <th>Faturamento</th>
+                <th>Renda bruta</th>
                 <th>Alterar</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($faturamentos as $faturamento)
                 <tr>
-                    <td>{{ \Carbon\Carbon::parse($faturamento->ano_mes)->format('m/Y') }}
+                    <td data-sort="{{ \Carbon\Carbon::parse($faturamento->ano_mes)->format('Y-m') }}">
+                        {{ \Carbon\Carbon::parse($faturamento->ano_mes)->format('m/Y') }}
                     </td>
 
                     <td>{{ $faturamento->renda_bruta }}</td>

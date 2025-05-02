@@ -8,11 +8,11 @@
 @section('conteudo')
     <div class="container mt-4">
         <div class="row">
-           <!-- <h5 class="display-6 text-white">Bem vindo,
-                @if (session('funcionario'))
-                    {{ session('funcionario')->nome }}!
-                @endif
-            </h5> -->
+            <!-- <h5 class="display-6 text-white">Bem vindo,
+                        @if (session('funcionario'))
+    {{ session('funcionario')->nome }}!
+    @endif
+                    </h5> -->
 
             <div class="col-md-6 col-lg-6 col-sm-12 mt-2">
                 <div class="card mb-2 h-100 d-flex justify-content-center align-items-center">
@@ -36,7 +36,7 @@
                                     <div class="card-body text-center">
                                         <i class="bi bi-people-fill display-6 mb-2"></i>
                                         <h6 class="card-text">
-                                            {{ $cartoesDashboard->clientesCadastrados }} clientes cadastrados
+                                            {{ $cartoesDashboard->clientesCadastrados - 1 }} clientes cadastrados
                                         </h6>
                                     </div>
                                 </div>
@@ -119,9 +119,10 @@
                                 @foreach ($ultimas6Vendas as $venda)
                                     <tr>
                                         <td style="overflow-x: auto;">{{ $venda->cliente->nome }}</td>
-
-                                        <td>{{ \Carbon\Carbon::parse($venda->data_venda)->format('d/m/Y') }}
+                                        <td data-sort="{{ \Carbon\Carbon::parse($venda->data_venda)->format('Y-m-d') }}">
+                                            {{ \Carbon\Carbon::parse($venda->data_venda)->format('d/m/Y') }}
                                         </td>
+
                                         <td style="overflow-x: auto;">{{ $venda->valor_total }}</td>
                                     </tr>
                                 @endforeach
@@ -133,6 +134,7 @@
                     </div>
                 </div>
             </div>
+            @if (session('Administrador') == true)
             <div class="col-md-6 col-lg-6 col-sm-12  mt-2 ">
                 <div class="card h-100 d-flex">
                     <div class="card-body">
@@ -148,8 +150,11 @@
                                 @foreach ($contas as $conta)
                                     @if ($conta->estado == 'Pendente' || $conta->estado == 'Vencida')
                                         <tr>
-                                            <td>{{ \Carbon\Carbon::parse($conta->data_vencimento)->format('d/m/Y') }}
+                                            <td
+                                                data-sort="{{ \Carbon\Carbon::parse($conta->data_vencimento)->format('Y-m-d') }}">
+                                                {{ \Carbon\Carbon::parse($conta->data_vencimento)->format('d/m/Y') }}
                                             </td>
+
                                             <td style="overflow-x: auto;">{{ $conta->credor }}</td>
                                         </tr>
                                     @endif
@@ -161,14 +166,13 @@
 
                     </div>
                 </div>
-
-
             </div>
+            @endif
         </div>
     </div>
     </div>
     </div>
-
+    @include('partials.errorAndSuccessToast')
 @endsection
 @push('scripts')
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
@@ -182,8 +186,13 @@
                 language: {
                     url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json'
                 },
+                order: [
+                    [0, 'asc']
+                ],
                 "pageLength": 6,
                 "lengthChange": false,
+                "info": false // Desativa a exibição da contagem de registros
+
             });
         });
 
@@ -192,6 +201,9 @@
                 language: {
                     url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json'
                 },
+                order: [
+                    [0, 'asc']
+                ],
                 "pageLength": 6,
                 "lengthChange": false,
             });
@@ -201,8 +213,13 @@
                 language: {
                     url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json'
                 },
+                order: [
+                    [1, 'desc']
+                ],
                 "pageLength": 6,
                 "lengthChange": false,
+                "info": false // Desativa a exibição da contagem de registros
+
             });
         });
         $(document).ready(function() {
@@ -210,6 +227,9 @@
                 language: {
                     url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json'
                 },
+                order: [
+                    [0, 'asc']
+                ],
                 "pageLength": 6,
                 "lengthChange": false,
             });

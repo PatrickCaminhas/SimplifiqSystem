@@ -22,8 +22,8 @@ return new class extends Migration
             $table->string("descricao", 200);
             $table->integer("quantidade");
             $table->string("ultimo_fornecedor", 100);
-            $table->decimal('preco_compra', 6,2);
-            $table->decimal('preco_venda', 6,2);
+            $table->decimal('preco_compra', 9,2);
+            $table->decimal('preco_venda', 9,2);
             $table->timestamps();
         });
     }

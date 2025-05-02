@@ -1,17 +1,8 @@
 @extends('layouts.lista')
 @section('titulo', content: 'Lista de Produtos')
 @section('lista')
-    <p><a class="btn @include('partials.buttomCollor')" href="{{ route('produto.create') }}"><i class="bi bi-plus-circle-fill"></i>
-            Cadastrar produto</a>
-    @php
-        if ( session()->get('tema') == 'dark') {
-            $botaodesativado = 'btn-danger';
-        } else {
-            $botaodesativado = 'btn-dark';
-        }
-    @endphp
-        <a class="btn {{$botaodesativado}} border border-secondary-subtle" href="{{ route('produtos.desabilitados') }}"><i class="bi bi-trash3-fill"></i>
-            Produtos desativados</a>
+    <p><a class="btn @include('partials.buttomCollor')" href="{{ route('produto.listar') }}"><i class="bi bi-check-square-fill"></i>
+        Produtos Ativos</a>
     </p>
     <table id="myTable" class="display">
         <thead>
@@ -54,10 +45,6 @@
                 language: {
                     url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json'
                 },
-                      "lengthMenu": [ [5, 10, 15, 25, -1], [5, 10, 15, 25, "Todos"] ], // Adiciona a opção de 5 itens
-                      "pageLength": 10 // Define 5 como padrão ao carregar a tabela
-
-
             });
         });
     </script>

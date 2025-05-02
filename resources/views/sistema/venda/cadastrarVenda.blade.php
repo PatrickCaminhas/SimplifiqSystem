@@ -6,18 +6,29 @@
         $select2 = true;
     @endphp
 @section('route', route('vendas.store'))
+@section('voltar',route('vendas.info'))
+
 <!-- Select Cliente -->
 <div class="form-group">
-    <label name="cliente">Cliente:</label>
-    <select name="cliente_id" id="cliente" class="select2 form-control bg-dark" class="form-control">
-        @foreach ($clientes as $cliente)
-            <option value="{{ $cliente->id }}">{{ $cliente->nome }}
-            </option>
-        @endforeach
-    </select>
+    <label name="cliente">Cliente
+        @include('partials.campoObrigatorio')
+    </label>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-6">
+                <select name="cliente_id" id="cliente" class="select2 form-control bg-dark" class="form-control" required>
+                    @foreach ($clientes as $cliente)
+                        <option value="{{ $cliente->id }}">{{ $cliente->nome }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="form-group">
-    <label name="data">Metodo de pagamento:</label><br>
+    <label name="data">Metodo de pagamento
+        @include('partials.campoObrigatorio')</label><br>
     <div class="form-check form-check-inline">
         <input class="form-check-input" type="radio" name="metodo_pagamento" id="Dinheiro" value="Dinheiro" checked>
         <label class="form-check-label" for="Dinheiro">
@@ -53,13 +64,13 @@
 </div>
 <!-- Input para buscar Produto -->
 <div class="form-group">
-    <label for="produto-search">Produto:</label>
+    <label for="produto-search">Produto</label>
     <input type="text" id="produto-search" class="form-control" placeholder="Digite o nome do produto">
 </div>
 
 <!-- Lista de produtos selecionados -->
 <div id="produtos-selecionados">
-    <h5>Produtos Selecionados:</h5>
+    <h5>Produtos Selecionados</h5>
     <div class="form-group" id="produtos-list">
         <!-- Produtos serão adicionados aqui dinamicamente -->
     </div>
@@ -69,12 +80,12 @@
     <span type="text" id="valor-total" class="form-control-static"></span>
 </div>
 <div class="form-group">
-    <label name="desconto-maximo"><i class="bi bi-tag"></i> Desconto Máximo: </label>
+    <label name="desconto-maximo"><i class="bi bi-tag"></i> Valor minimo(desconto): </label>
     <span type="text" id="desconto-maximo" class="form-control-static">
     </span>
 </div>
 <div class="form-group">
-    <label for="valor_venda">Valor da venda:</label>
+    <label for="valor_venda">Preço venda</label>
     <input type="number" name="valor_venda" id="valor_venda" class="form-control" placeholder="Digite o valor da venda"
         step="0.01">
     <input type="hidden" name="desconto_maximo" id="input_desconto_maximo" value="0">
@@ -111,6 +122,7 @@
                                     " / " + item.marca,
                                 value: item.nome,
                                 id: item.id,
+                                estoque: item.quantidade,
                                 preco_venda: item.preco_venda,
                                 desconto_maximo: item
                                     .desconto_maximo // Adicionar o desconto máximo do produto
@@ -125,18 +137,19 @@
                     produtos[ui.item.id] = {
                         nome: ui.item.label,
                         preco_venda: parseFloat(ui.item.preco_venda),
+                        estoque: parseInt(ui.item.estoque),
                         desconto_maximo: parseFloat(ui.item.desconto_maximo),
                         quantidade: 1
                     };
 
                     let produtoHtml = `
                 <div class="form-group row align-items-center mb-2" id="produto-${ui.item.id}">
-                    <label class="col-md-5 col-sm-6 col-form-label">${ui.item.label}</label>
-                    <div class="col-md-3 col-sm-6">
+                    <label class="col-md-4 col-sm-4 col-form-label">${ui.item.label}</label>
+                    <div class="col-md-3 col-sm-4">
                         <input type="number" name="quantidades[${ui.item.id}]" class="form-control quantidade-produto" data-id="${ui.item.id}" value="1" min="1" required>
                     </div>
-                    <div class="col " >
-                        <span class="badge bg-secondary" >Preço unitário: R$ ${ui.item.preco_venda}</span>
+                    <div class="col col-sm-3" >
+                        <span class="badge bg-secondary" >Estoque: ${ui.item.estoque} | Preço: R$ ${ui.item.preco_venda}</span>
                     </div>
                     <div class="col" >
                         <button type="button" class="btn badge btn-danger remove-produto" data-id="${ui.item.id}">Remover</button>

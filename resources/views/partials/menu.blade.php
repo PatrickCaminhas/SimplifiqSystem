@@ -29,7 +29,7 @@
                     <a class="nav-link
                      @if ($page == 'Pagina Inicial') active @endif
                      "
-                        id ="buttomMenuInicio" aria-current="page" href="/dashboard"><i class="bi bi-house"></i>
+                        id ="buttomMenuInicio" aria-current="page" href="/home"><i class="bi bi-house"></i>
                         Inicio</a>
                 </li>
 
@@ -40,7 +40,7 @@
                         id="buttomMenuProdutos" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false"><i class="bi bi-box-seam"></i> Produtos
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-dark @include('partials.bgCollor')">
+                    <ul class="dropdown-menu dropdown-menu-dark bg-primary border border-light">
 
                         <li><a id ="buttomMenuProdutosCadastrar" class="dropdown-item"
                                 href="{{ route('produto.create') }}"><i class="bi bi-plus-square-fill"></i>
@@ -59,7 +59,7 @@
                         id ="buttomMenuClientes" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false"><i class="bi bi-people"></i> Clientes
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-dark @include('partials.bgCollor')">
+                    <ul class="dropdown-menu dropdown-menu-dark bg-primary border border-light">
                         <li><a id ="buttomMenuClientesCadastrar" class="dropdown-item"
                                 href="{{ route('cliente.store.create') }}"><i class="bi bi-person-plus-fill"></i>
                                 Cadastrar</a></li>
@@ -74,7 +74,7 @@
                         id ="buttomMenuFornecedores" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false"><i class="bi bi-truck"></i> Fornecedores
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-dark @include('partials.bgCollor')">
+                    <ul class="dropdown-menu dropdown-menu-dark bg-primary border border-light">
                         <li><a id ="buttomMenuFornecedoresCadastrar" class="dropdown-item"
                                 href="{{ route('fornecedor.create') }}"><i class="bi bi-person-plus-fill"></i>
                                 Cadastrar</a></li>
@@ -90,7 +90,7 @@
                         id ="buttomMenuVendas" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false"><i class="bi bi-cart"></i> Vendas
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-dark @include('partials.bgCollor')">
+                    <ul class="dropdown-menu dropdown-menu-dark bg-primary border border-light">
                         <li><a id ="buttomMenuVendasCadastrar" class="dropdown-item"
                                 href="{{ route('vendas.create') }}"><i class="bi bi-cart-plus-fill"></i> Cadastro</a>
                         </li>
@@ -121,7 +121,7 @@
                         id ="buttomMenuCotacao" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false"><i class="bi bi-cash"></i> Cotação de produtos
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-dark @include('partials.bgCollor')">
+                    <ul class="dropdown-menu dropdown-menu-dark bg-primary border border-light">
                         <li><a id ="buttomMenuCotacaoCadastrar" class="dropdown-item"
                                 href="{{ route('cotacaoProdutos') }}"><i class="bi bi-file-earmark-plus-fill"></i>
                                 Cadastro</a>
@@ -147,7 +147,7 @@
                             id ="buttomMenuEmpresa" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false"><i class="bi bi-building"> </i>Empresa
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-dark @include('partials.bgCollor')">
+                    <ul class="dropdown-menu dropdown-menu-dark bg-primary border border-light">
 
 
                             <li><a id ="buttomMenuContas" class="dropdown-item" href="{{ route('contas.read') }}"><i
@@ -182,10 +182,16 @@
                         id ="buttomMenuConfiguracoes" href="{{ route('configuracoes') }}"><i class="bi bi-gear"></i>
                         Configurações</a>
                 </li>
+
+                <li class="nav-item">
+                    <a id ="buttomMenuLogout" class="nav-link" href="{{ route('faq') }}"><i class="bi bi-question-circle"></i></i> Perguntas frequentes</a>
+                </li>
+
                 <li class="nav-item">
                     <a id ="buttomMenuLogout" class="nav-link" href="{{ route('logout') }}"><i
                             class="bi bi-box-arrow-right"></i> Logout</a>
                 </li>
+
                 <!-- Adicione mais itens de menu conforme necessário -->
             </ul>
         </div>

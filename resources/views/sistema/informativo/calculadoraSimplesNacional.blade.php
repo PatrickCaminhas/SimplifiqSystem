@@ -29,13 +29,15 @@
                         <p class="fs-6">Renda bruta do mês referente:
                             R${{ number_format($informacoes['ultimo_mes_faturamento'], 2, ',', '.') }}</p>
 
-                        @if ($informacoes['quantidade_meses'] > 1)
+                        @if ( $informacoes['quantidade_meses'] < 12)
+              				<p class="fs-6">Renda bruta proporcionalizada dos últimos
+                                {{ $informacoes['quantidade_meses'] }} meses:
+                                R${{ number_format($informacoes['rbt12'], 2, ',', '.') }}</p>
+              	       	@elseif ($informacoes['quantidade_meses'] >= 12   )
+
                             <p class="fs-6">Renda bruta acumulada dos últimos
                                 {{ $informacoes['quantidade_meses'] }} meses:
                                 R${{ number_format($informacoes['faturamento_total'], 2, ',', '.') }}</p>
-                            <p class="fs-6">Renda bruta proporcionalizada dos últimos
-                                {{ $informacoes['quantidade_meses'] }} meses:
-                                R${{ number_format($informacoes['rbt12'], 2, ',', '.') }}</p>
                         @elseif($informacoes['quantidade_meses'] == 1)
                             <p class="fs-6">Renda bruta do último mês:
                                 R${{ number_format($informacoes['faturamento_total'], 2, ',', '.') }}</p>

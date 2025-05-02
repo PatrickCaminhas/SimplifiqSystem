@@ -6,9 +6,9 @@
     <p>Renda bruta é valor total recebido em sua empresa.</p>
 </div>
 <div class="form-group">
-    <label for="mes">Mês:</label>
+    <label for="mes">Mês:@include('partials.campoObrigatorio')</label>
     <select name="mes" id="mes" class="form-control" required>
-        <option selected disabled>Selecione o mês do faturamento</option>
+        <option selected disabled>Selecione o mês da renda bruta</option>
         <option value="01">Janeiro</option>
         <option value="02">Fevereiro</option>
         <option value="03">Março</option>
@@ -26,12 +26,12 @@
 
 <!-- Input para buscar Produto -->
 <div class="form-group">
-    <label for="ano">Ano:</label>
+    <label for="ano">Ano:@include('partials.campoObrigatorio')</label>
     <input type="number" id="ano" name="ano" class="form-control" maxlength="4" min="2007"
         max="{{ date('Y') }}" pattern="[0-9]{4}" placeholder="Digite o ano do faturamento" required>
 </div>
 <div class="form-group">
-    <label for="valor">Valor:</label>
+    <label for="valor">Valor:@include('partials.campoObrigatorio')</label>
     <input type="number" id="valor" name="valor" class="form-control" step="0.01" min="0.01"
         placeholder="Digite o valor do faturamento" required>
 </div>

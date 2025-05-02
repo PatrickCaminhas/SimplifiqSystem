@@ -1,27 +1,11 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-    @include('partials.head', ['data_tables' => true])
+@php
+    $chartjs = true;
+	
+@endphp
+@extends('layouts.padrao')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simplifiq - Metas</title>
-    <!-- Inclua os arquivos CSS do Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.2/css/responsive.bootstrap5.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/plug-ins/2.0.8/i18n/pt-BR.json">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+@section('conteudo')
 
-</head>
-
-<body class="bg-black bg-gradient">
-
-    <!-- Menu superior -->
-    @include('partials.header')
 
 
 
@@ -35,7 +19,8 @@
                 <div class="col-12">
                     <div class="card shadow-sm">
                         <div class="card-body row" style="overflow-x: auto;">
-                            <h2 class="text-center">Estatisticas da meta #{{ $meta->id }}</h2>
+                            <h2 class="text-center">Detalhes da meta de {{ \Carbon\Carbon::createFromFormat('d/m/Y', $informacoes->data_final)->translatedFormat('F \d\e Y') }}
+</h2>
                             <div class="col-md-6 col-sm-12">
                                 <div style="width: 75%; margin: auto;">
                                     <canvas id="myChart"></canvas>
@@ -47,12 +32,18 @@
 
                                 <p>Maior progresso: {{$informacoes->maiorProgresso}} | Data: {{$informacoes->diaComMaiorProgresso}}</p>
                                 <p>Menor progresso: {{$informacoes->menorProgresso}} | Data: {{$informacoes->diaComMenorProgresso}}</p>
-
-                                <p>Diferença de dias ultimo progresso para data final: {{$informacoes->diferencaDias}} dias</p>
+								
+                              	@if (\Carbon\Carbon::now() < $informacoes->data_final)
+                                 <p>Faltam {{$informacoes->diferencaDias}} dias para final da meta.</p>
+                              	@elseif(\Carbon\Carbon::now() > $informacoes->data_final)
+                              <p>Estado atual da meta é de: {{$informacoes->estado}}. </p>
+                                @endif
                                 <p>Data do ultimo progresso: {{$informacoes->UltimoProgresso}}</p>
                                 <p>
                                     @if($informacoes->estado == "Finalizada" || $informacoes->estado == "Cumprida")
-                                    Excedido {{$informacoes->porcentagem}} da meta em {{$informacoes->total}}
+                                    Excedido {{$informacoes->porcentagem}} da meta com {{$informacoes->total}}.
+                                  	@elseif($informacoes->estado == "Pendente")
+                                    Faltam {{$informacoes->porcentagem}} da meta, correspondente a {{$informacoes->total}}.
                                     @endif
                                 </p>
                                 <a href="{{ route('metas.read') }}" class="btn @include('partials.buttomCollor')">Voltar</a>
@@ -65,16 +56,12 @@
             </div>
         </div>
     </div>
-
+@endsection
+@push('scripts')
     <!-- Features Section -->
 
     <!-- Inclua os arquivos JavaScript do Bootstrap -->
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-        crossorigin="anonymous"></script>
-    @vite('resources/js/app.js')
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/3.0.2/js/responsive.bootstrap5.min.js"></script>
+   
     <script>
         $(document).ready(function() {
             $('#myTable').DataTable({
@@ -138,6 +125,4 @@
         });
     </script>
 
-</body>
-
-</html>
+@endpush

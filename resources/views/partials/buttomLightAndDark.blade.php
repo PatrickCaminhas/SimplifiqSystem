@@ -1,3 +1,3 @@
-<button id="toggle-theme" class="btn btn-secondary py-2 mt-2">
+<button id="toggle-theme" class="btn btn-secondary py-2 mt-2" name="TemaClaroEEscuro">
     <span id="theme-icon" class="bi bi-moon-stars-fill"></span>
 </button>

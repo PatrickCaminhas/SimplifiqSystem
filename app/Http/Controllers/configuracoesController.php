@@ -126,10 +126,10 @@ class ConfiguracoesController extends Controller
      */
     public function alterarDadosPessoais(Request $request)
     {
-        $request->validate([
-            'nome' => 'string',
-            'sobrenome' => 'string',
-            'email' => 'email',
+          $request->validate([
+            'nome' => 'required|string',
+            'sobrenome' =>'required|string',
+            'email' => 'required|email',
         ]);
 
         Funcionarios::where('id', auth()->id())->update($request->only(['nome', 'sobrenome', 'email']));

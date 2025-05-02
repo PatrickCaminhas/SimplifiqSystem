@@ -6,7 +6,7 @@
     <table id="myTable" class="display">
         <thead>
             <tr>
-                <th>ID</th>
+
                 <th>Nome</th>
                 <th>Tipo de pessoa</th>
                 <th hidden>Débito</th>
@@ -16,7 +16,6 @@
         <tbody>
             @foreach ($clientes as $cliente)
                 <tr>
-                    <td style="overflow-x: auto;">{{ $cliente->id }}</td>
                     <td>{{ $cliente->nome }}</td>
                     <td>
                         @if (strlen($cliente->cpfOuCnpj) == 14)
@@ -54,7 +53,7 @@
 
                                     <div class="modal-header">
                                         <h1 class="modal-title fs-5" id="staticBackdropLabel">
-                                            cliente #{{ $cliente->id }}</h1>
+                                            Cliente #{{ $cliente->id }}</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
@@ -68,7 +67,7 @@
 
                                             <div class="col-6">
                                                 <p for="exampleFormControlInput1" class="form-label">
-                                                    @if (strlen($cliente->cpfOuCnpj) == 11)
+                                                    @if (strlen($cliente->cpfOuCnpj) == 14)
                                                         CPF:
                                                     @else
                                                         CNPJ:
@@ -139,12 +138,14 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
+                                      	@if ($cliente->nome != "Cliente Não cadastrado")
                                         <form method="POST" action="{{ route('cliente.edit') }}">
                                             @csrf
                                             <input type="hidden" name="id" value="{{ $cliente->id }}">
                                             <button type="submit" class="btn @include('partials.buttomCollor')">
                                                 Alterar</button>
                                         </form>
+                                      	@endif
                                         @if ($cliente->crediario > 0)
                                             <form method="POST" action="{{ route('cliente.quitar.view') }}">
                                                 @csrf

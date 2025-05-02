@@ -5,17 +5,23 @@
 @section('route', route('configuracoes.senha.alterar'))
 
                                 <div class="form-group">
-                                    <label for="senhaantiga">Senha antiga</label>
+                                    <label for="senhaantiga">Senha antiga
+                                        @include('partials.campoObrigatorio')
+                                    </label>
                                     <input type="password" class="form-control" id="senhaantiga" name="senhaantiga"
                                         placeholder="Digite a senha antiga" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="novasenha">Nova senha</label>
+                                    <label for="novasenha">Nova senha
+                                        @include('partials.campoObrigatorio')
+                                    </label>
                                     <input type="password" class="form-control" id="novasenha" name="novasenha"
                                         placeholder="Digite a nova senha" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="confirmanovasenha">Confirme nova senha</label>
+                                    <label for="confirmanovasenha">Confirme nova senha
+                                        @include('partials.campoObrigatorio')
+                                    </label>
                                     <input type="password" class="form-control" id="confirmanovasenha"
                                         name="confirmasenhanova" placeholder="Confirme a nova senha" required>
                                 </div>

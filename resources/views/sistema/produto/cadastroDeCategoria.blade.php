@@ -2,9 +2,11 @@
 @section('titulo', 'Cadastro de Categoria')
 @section('formulario')
 @section('route', route('produto.categoria.store'))
+@section('voltar',route('produto.create'))
+
 <div class="form-group">
     <label for="nomeproduto">Nome</label>
-    <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite o nome da nova categoria"
+    <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite o nome da nova categoria" maxlength="250"
         required>
 </div>
 

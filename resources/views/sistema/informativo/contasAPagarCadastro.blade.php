@@ -6,7 +6,8 @@
 
 <div class="form-floating mb-3">
     <input type="text" class="form-control" name="credor" id="credor" required>
-    <label>Credor:</label>
+    <label>Credor
+        @include('partials.campoObrigatorio')</label>
 </div>
 <div class="form-floating mb-3">
 
@@ -14,22 +15,28 @@
     <select class="form-select" id="tipo" name="tipo">
         <option selected disabled>Selecione o tipo de despesa
         </option>
-        <option value="agua">Água</option>
-        <option value="aluguel">Aluguel</option>
-        <option value="energia">Energia</option>
-        <option value="fornecedor">Fornecedor</option>
-        <option value="outros">Outros</option>
+        <option value="Água">Água</option>
+        <option value="Aluguel">Aluguel</option>
+        <option value="Energia">Energia</option>
+        <option value="Fornecedor">Fornecedor</option>
+		<option value="Telefonia">Telefonia</option>
+      	<option value="Internet">Internet</option>
+        <option value="Outros">Outros</option>
     </select>
-    <label> Tipo:</label>
+    <label> Tipo
+        @include('partials.campoObrigatorio')</label>
 </div>
 <div class="form-floating mb-3">
     <input type="number" class="form-control" name="valor" id="valor" min="1" step="0.01"
         required><label>
-        Valor:</label>
+        Valor
+        @include('partials.campoObrigatorio')</label>
 </div>
 <div class="form-floating mb-3">
     <input type="date" class="form-control" name="data_vencimento" id="data_vencimento" required>
-    <label> Data de vencimento:</label>
+    <label> Data de vencimento
+        @include('partials.campoObrigatorio')
+    </label>
 </div>
 <div class=" text-center mt-3">
     <button type="submit" class="btn @include('partials.buttomCollor')">Cadastrar</button>

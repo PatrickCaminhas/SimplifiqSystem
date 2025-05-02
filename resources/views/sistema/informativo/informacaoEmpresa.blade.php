@@ -67,12 +67,17 @@
                                             {{ $crediarioClientes->qtdClientes }}.</p>
                                         <p class="card-text">Valor total a receber no crediário: R$
                                             {{ $crediarioClientes->valorTotal }}.</p>
-                                        <p class="card-text">Quantidade de produtos com estoque:
-                                            {{ $produtos->qtdProdutosEmEstoque }}.</p>
+                                       <p class="card-text">Quantidade de clientes em débito:
+                                            {{ $debitoClientes->qtdClientes }}.</p>
+                                        <p class="card-text">Valor total a receber de débitos: R$
+                                            {{ $debitoClientes->valorTotal }}.</p>
+                                        	
                                         <!--<p class="card-text">Lista de produtos mais vendidos: </p> -->
                                     </div>
                                     <div class="col-6">
-                                        <p class="card-text">Quantidade de produtos em falta:
+                                      <p class="card-text">Produtos com estoque:
+                                            {{ $produtos->qtdProdutosEmEstoque }}.</p>
+                                        <p class="card-text">Produtos sem estoque:
                                             {{ $produtos->qtdProdutosSemEstoque }}.</p>
                                         <p class="card-text">Total de produtos em estoque: {{ $produtos->estoque }}.</p>
                                         <p class="card-text">Valor total em estoque: R$
@@ -120,53 +125,64 @@
                     <div class="col-md-6 col-lg-6 col-sm-12 mt-2">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">Vendas por metodo de pagamento nos ultimos 12 meses</h5>
-                                <canvas id="vendasPorMetodoPagamentoChart"></canvas>
+                                <h5 class="card-title">Vendas por método de pagamento nos últimos 12 meses</h5>
+                                <canvas id="vendasPorMetodoPagamentoChart" style="width: 100% !important; max-height: 300px !important; margin: 0 auto;">
+                              </canvas>
                             </div>
                         </div>
                     </div>
+
                     <div class="col-md-6 col-lg-6 col-sm-12 mt-2">
                         <div class="card h-100 d-flex">
                             <div class="card-body">
-                                <h5 class="card-title">Vendas por crédiario nos ultimos 6 meses</h5>
+                                <h5 class="card-title">Vendas por crediário nos últimos 6 meses</h5>
                                 <canvas id="crediarioSeisMesesChart"></canvas>
                             </div>
                         </div>
                     </div>
 
 
+
                 </div>
             </div>
         </div>
     </div>
+    @include('partials.errorAndSuccessToast')
+
 @endsection
 @push('scripts')
     <script>
-        const chartvsmeses = document.getElementById('vendasChart').getContext('2d');
-        const vendasData = @json(array_values($vendasPorMes));
-        const labelvsm = @json(array_keys($vendasPorMes));
+    const chartvsmeses = document.getElementById('vendasChart').getContext('2d');
+    const vendasData = @json(array_values($vendasPorMes));
+    const labelvsm = @json(array_keys($vendasPorMes));
 
-        const vendasChart = new Chart(chartvsmeses, {
-            type: 'bar', // ou 'line' para um gráfico de linha
-            data: {
-                labels: labelvsm,
-                datasets: [{
-                    label: 'Vendas',
-                    data: vendasData,
-                    backgroundColor: 'rgba(5, 171, 0, 0.8)',
-                    borderColor: 'rgba(5, 171, 0, 0.8)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+    // Calcula o maior valor e aumenta 20% para dar um espaço extra
+    const maxValor = Math.max(...vendasData);
+    const topoAjustado = maxValor * 1.2; // 20% a mais no topo
+
+    const vendasChart = new Chart(chartvsmeses, {
+        type: 'bar', // Tipo de gráfico 'bar' (barras)
+        data: {
+            labels: labelvsm,
+            datasets: [{
+                label: 'Vendas',
+                data: vendasData,
+                backgroundColor: 'rgba(5, 171, 0, 0.8)',
+                borderColor: 'rgba(5, 171, 0, 0.8)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: topoAjustado // Define o topo ajustado
                 }
             }
-        });
-    </script>
+        }
+    });
+</script>
+
     <script>
         const chartvdiarias = document.getElementById('vendasDiariasChart').getContext('2d');
         const vendasDiariasData = @json(array_values($vendasDiarias));
@@ -193,115 +209,7 @@
             }
         });
     </script>
-    <script>
-        const ctx = document.getElementById('vendasPorMetodoPagamentoChart').getContext('2d');
-        const vendasPorMetodoPagamentoData = @json(array_values($vendasPorMetodoPagamento));
-        const labelsMetodosPagamento = @json(array_keys($vendasPorMetodoPagamento));
-
-        const vendasPorMetodoPagamentoChart = new Chart(ctx, {
-            type: 'pie', // Gráfico de torta/pizza
-            data: {
-                labels: labelsMetodosPagamento,
-                datasets: [{
-                    label: 'Métodos de Pagamento',
-                    data: vendasPorMetodoPagamentoData,
-                    backgroundColor: [
-                        'rgba(5, 149, 0, 1)', // Dinheiro
-                        'rgba(217, 0, 56, 1)', // Pix
-                        'rgba(106, 0, 157, 1)', // Cartão de crédito
-                        'rgba(0, 89, 208, 1)', // Cartão de débito
-                        'rgba(217, 102, 0, 1)' // Crediário
-                    ],
-                    borderColor: [
-                        'rgba(5, 149, 0, 1)',
-                        'rgba(217, 0, 56, 1)',
-                        'rgba(106, 0, 157, 1)',
-                        'rgba(0, 89, 208, 1)',
-                        'rgba(217, 102, 0, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    datalabels: {
-                        color: '#fff', // Cor do texto
-                        font: {
-                            size: 16,
-                            weight: 'bold'
-                        },
-                        formatter: (value, ctx) => {
-                            if (value === 0) {
-                                return ''; // Não exibe nada se o valor for zero
-                            }
-                            let total = ctx.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
-                            let percentage = (value / total * 100).toFixed(1) + "%";
-                            return percentage; // Exibir a porcentagem dentro da fatia
-                        },
-                        align: 'center', // Alinha o texto ao centro da fatia
-                    }
-                }
-            },
-            plugins: [ChartDataLabels] // Adiciona o plugin de Data Labels
-        });
-    </script>
-
-    <script>
-        const chartdsmeses = document.getElementById('despesasChart').getContext('2d');
-        const despesasData = @json(array_values($despesasPorMes));
-        const labeldsm = @json(array_keys($despesasPorMes));
-
-        const despesasChart = new Chart(chartdsmeses, {
-            type: 'bar', // ou 'line' para um gráfico de linha
-            data: {
-                labels: labeldsm,
-                datasets: [{
-                    label: 'Despesas',
-                    data: despesasData,
-                    backgroundColor: 'rgba(214, 11, 11, 1)',
-                    borderColor: 'rgba(214, 11, 11, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    </script>
-    <script>
-        const chartddiarias = document.getElementById('despesasDiariasChart').getContext('2d');
-        const despesasDiariasData = @json(array_values($despesasDiarias));
-        const labeldd = @json(array_keys($despesasDiarias));
-
-        const despesasDiariasChart = new Chart(chartddiarias, {
-            type: 'line', // ou 'line' para um gráfico de linha
-            data: {
-                labels: labeldd,
-                datasets: [{
-                    label: 'Despesas',
-                    data: despesasDiariasData,
-                    backgroundColor: 'rgba(214, 11, 11, 1)',
-                    borderColor: 'rgba(214, 11, 11, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    </script>
-    <script>
+   <script>
         const chartcredsmeses = document.getElementById('crediarioSeisMesesChart').getContext('2d');
         const crediarioData = @json(array_values($crediarioMensal));
         const labelcsm = @json(array_keys($crediarioMensal));
@@ -328,4 +236,127 @@
             }
         });
     </script>
+  <script>
+    const ctx = document.getElementById('vendasPorMetodoPagamentoChart').getContext('2d');
+    const vendasPorMetodoPagamentoData = @json(array_values($vendasPorMetodoPagamento));
+    const labelsMetodosPagamento = @json(array_keys($vendasPorMetodoPagamento));
+
+    const vendasPorMetodoPagamentoChart = new Chart(ctx, {
+        type: 'pie', // Gráfico de torta/pizza
+        data: {
+            labels: labelsMetodosPagamento,
+            datasets: [{
+                label: 'Métodos de Pagamento',
+                data: vendasPorMetodoPagamentoData,
+                backgroundColor: [
+                    'rgba(5, 149, 0, 1)', // Dinheiro
+                    'rgba(217, 0, 56, 1)', // Pix
+                    'rgba(106, 0, 157, 1)', // Cartão de crédito
+                    'rgba(0, 89, 208, 1)', // Cartão de débito
+                    'rgba(217, 102, 0, 1)' // Crediário
+                ],
+                borderColor: [
+                    'rgba(5, 149, 0, 1)',
+                    'rgba(217, 0, 56, 1)',
+                    'rgba(106, 0, 157, 1)',
+                    'rgba(0, 89, 208, 1)',
+                    'rgba(217, 102, 0, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+             responsive: true,
+   			 maintainAspectRatio: false,
+            plugins: {
+                datalabels: {
+                    color: '#fff', // Cor do texto
+                    font: {
+                        size: 16,
+                        weight: 'bold'
+                    },
+                    formatter: (value, ctx) => {
+                        if (value === 0) {
+                            return ''; // Não exibe nada se o valor for zero
+                        }
+                        let total = ctx.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+                        let percentage = (value / total * 100).toFixed(1) + "%";
+                        return percentage; // Exibir a porcentagem dentro da fatia
+                    },
+                    align: 'center', // Alinha o texto ao centro da fatia
+                }
+            },
+            cutoutPercentage: 70, // Define o tamanho da "pizza" (50% de corte para uma fatia interna menor)
+        },
+        plugins: [ChartDataLabels] // Adiciona o plugin de Data Labels
+    });
+</script>
+
+    <script>
+       // Gráfico de Despesas por Meses
+    const chartdsmeses = document.getElementById('despesasChart').getContext('2d');
+    const despesasData = @json(array_values($despesasPorMes));
+    const labeldsm = @json(array_keys($despesasPorMes));
+
+    // Calcula o maior valor e aumenta 20% para dar um espaço extra
+    const maxValorDespesasMeses = Math.max(...despesasData);
+    const topoAjustadoDespesasMeses = maxValorDespesasMeses * 1.2; // 20% a mais no topo
+
+    const despesasChart = new Chart(chartdsmeses, {
+        type: 'bar', // Tipo de gráfico 'bar' (barras)
+        data: {
+            labels: labeldsm,
+            datasets: [{
+                label: 'Despesas',
+                data: despesasData,
+                backgroundColor: 'rgba(214, 11, 11, 1)',
+                borderColor: 'rgba(214, 11, 11, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: topoAjustadoDespesasMeses // Define o topo ajustado
+                }
+            }
+        }
+    });
+    </script>
+    <script>
+       // Gráfico de Despesas Diárias
+    const chartddiarias = document.getElementById('despesasDiariasChart').getContext('2d');
+    const despesasDiariasData = @json(array_values($despesasDiarias));
+    const labeldd = @json(array_keys($despesasDiarias));
+
+    // Calcula o maior valor e aumenta 20% para dar um espaço extra
+    const maxValorDespesasDiarias = Math.max(...despesasDiariasData);
+    const topoAjustadoDespesasDiarias = maxValorDespesasDiarias * 1.2; // 20% a mais no topo
+
+    const despesasDiariasChart = new Chart(chartddiarias, {
+        type: 'line', // Tipo de gráfico 'line' (linha)
+        data: {
+            labels: labeldd,
+            datasets: [{
+                label: 'Despesas',
+                data: despesasDiariasData,
+                backgroundColor: 'rgba(214, 11, 11, 1)',
+                borderColor: 'rgba(214, 11, 11, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: topoAjustadoDespesasDiarias // Define o topo ajustado
+                }
+            }
+        }
+    });
+    </script>
+ 
 @endpush

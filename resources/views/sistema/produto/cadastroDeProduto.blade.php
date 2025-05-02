@@ -2,24 +2,34 @@
 @section('titulo', 'Cadastro de Produto')
 @section('formulario')
 @section('route', route('cadastroproduto.store'))
+@section('voltar',route('produto.listar'))
+
 
 <div class="form-group">
-    <label for="nomeproduto">Nome</label>
-    <input type="text" class="form-control" id="nomeproduto" name="nome" placeholder="Digite o nome do produto"
+    <label for="nomeproduto">Nome
+        @include('partials.campoObrigatorio')
+    </label>
+    <input type="text" class="form-control" id="nomeproduto" name="nome" placeholder="Digite o nome do produto" maxlength="100"
         required>
 </div>
 <div class="form-group">
-    <label for="modeloproduto">Modelo</label>
-    <input type="text" class="form-control" id="modeloproduto" name="modelo"
+    <label for="modeloproduto">Modelo
+        @include('partials.campoObrigatorio')
+    </label>
+    <input type="text" class="form-control" id="modeloproduto" name="modelo" maxlength="100"
         placeholder="Digite o modelo do produto">
 </div>
 <div class="form-group">
-    <label for="marcaproduto">Marca</label>
-    <input type="text" class="form-control" id="marcaproduto" name="marca"
+    <label for="marcaproduto">Marca
+        @include('partials.campoObrigatorio')
+    </label>
+    <input type="text" class="form-control" id="marcaproduto" name="marca" maxlength="100"
         placeholder="Digite o nome da marca do produto">
 </div>
 <div class="form-group">
-    <label for="categoriaproduto">Categoria</label>
+    <label for="categoriaproduto">Categoria
+        @include('partials.campoObrigatorio')
+    </label>
     @if ($categorias->count() == 1)
         <input type="hidden" name="categoria" value="{{ $categorias[0]->nome }}">
         <label class="fst-italic">[Nenhuma categoria cadastrada]</label>
@@ -45,7 +55,9 @@
 
 </div>
 <div class="form-group">
-    <label for="unidadeproduto">Unidade de medida</label>
+    <label for="unidadeproduto">Unidade de medida
+        @include('partials.campoObrigatorio')
+    </label>
     <select class="form-control" id="unidadeproduto" name="unidade_medida">
         <option selected disabled>Selecione a unidade de medida do produto
         </option>
@@ -60,13 +72,15 @@
     </select>
 </div>
 <div class="form-group">
-    <label for="medidaproduto">Medida</label>
-    <input type="text" class="form-control" id="medidaproduto" name="medida" min='1'
+    <label for="medidaproduto">Medida
+        @include('partials.campoObrigatorio')
+    </label>
+    <input type="text" class="form-control" id="medidaproduto" name="medida" min='1'maxlength="20"
         placeholder="Digite a medida do produto">
 </div>
 <div class="form-group">
     <label for="descricao">Descrição</label>
-    <textarea class="form-control" id="descricao" name="descricao" rows="3" style="resize: none;"
+    <textarea class="form-control" id="descricao" name="descricao" rows="3" style="resize: none;" maxlength="200"
         placeholder="Digite a descrição do produto"></textarea>
 </div>
 <div class="text-center mt-2">

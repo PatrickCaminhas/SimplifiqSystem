@@ -63,9 +63,10 @@ Route::middleware([
 
     Route::middleware([AuthenticateDashboard::class])->group(function () {
 
+
         Route::get('/testeHome', [DashboardController::class, 'testeHome'])->name('dashboard');
 
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/home', [DashboardController::class, 'index'])->name('dashboard');
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
         Route::get('/cadastros', [DashboardController::class, 'cadastros'])->name('cadastros');
@@ -114,11 +115,11 @@ Route::middleware([
         Route::post('/alterarDadosPessoais', [ConfiguracoesController::class, 'alterarDadosPessoais'])->name('configuracoes.dados.alterar');
         Route::get('/cadastrarfuncionario', [ConfiguracoesController::class, 'createCadastroFuncionario'])->name('configuracoes.funcionario');
         Route::post('/cadastrarfuncionarioconfirmar', [CadastroController::class, 'cadastrarNovoFuncionarioEmpresaExiste'])->name('configuracoes.funcionario.cadastrar');
-        Route::get('/alterarCargos', [ConfiguracoesController::class,'createAlterarCargos'])->name('configuracoes.cargos');
+        Route::get('/alterarCargos', [ConfiguracoesController::class, 'createAlterarCargos'])->name('configuracoes.cargos');
         Route::post('/alterarCargos', [ConfiguracoesController::class, 'alterarCargos'])->name('configuracoes.cargos.alterar');
         Route::get('/excluirFuncionario', [ConfiguracoesController::class, 'createExcluirFuncionario'])->name('configuracoes.excluir');
         Route::post('/excluirFuncionario', [ConfiguracoesController::class, 'excluirFuncionario'])->name('configuracoes.funcionario.excluir');
-        Route::get('funcionarios',[ConfiguracoesController::class, 'createListaFuncionarios'])->name('configuracoes.funcionarios.lista');
+        Route::get('funcionarios', [ConfiguracoesController::class, 'createListaFuncionarios'])->name('configuracoes.funcionarios.lista');
         // Route::get('/cotacaoprodutos',[CotacoesController::class, 'create'])->name('cotacaoProdutos');
         Route::get('/cotacaoprodutos', [CotacoesController::class, 'createLista'])->name('cotacaoProdutos');
         Route::get('/cotacao/lista', [CotacoesController::class, 'createLista'])->name('cotacao.lista');
@@ -133,7 +134,7 @@ Route::middleware([
         Route::get('cotacoes/verificao/{id_cotacao}', [CotacoesController::class, 'createVerificaoCotacaoGet'])->name('cotacao.verificarCotacao.create');
 
 
-        Route::get('/cotacoes',[CotacoesController::class, 'info'])->name('cotacao.lista');
+        Route::get('/cotacoes', [CotacoesController::class, 'info'])->name('cotacao.lista');
 
 
         Route::get('/estoque', [EstoqueController::class, 'create'])->name('estoque.create');
@@ -172,7 +173,7 @@ Route::middleware([
         //Route::get('/tarefas', [ServicosController::class, 'createReadTarefas'])->name('tarefas.read');
         //Route::get('/tarefas/cadastro', [ServicosController::class, 'createStoreTarefas'])->name('tarefas.create');
 
-        Route::get('/informacoes/empresa', [InformacaoEmpresaController::class, 'createRead'])->name('informacoes.empresa');
+        Route::get('/informacoes/empresa', [informacaoEmpresaController::class, 'createRead'])->name('informacoes.empresa');
 
         Route::get('/cliente/cadastro', [ClienteController::class, 'create'])->name('cliente.store.create');
         Route::post('/cliente/cadastro/store', [ClienteController::class, 'store'])->name('cliente.store');
@@ -197,7 +198,16 @@ Route::middleware([
         Route::get('/calcularSimples', [SimplesNacionalController::class, 'createCalculadora'])->name('simples.create.calculadora');
         Route::post('/calcularSimples', [SimplesNacionalController::class, 'calculate'])->name('simples.calculate');
 
-        Route::get('logout', [LoginController::class, 'logout'])->name('logout');
+          Route::post('/informacaoproduto/desativar', [InformacaoProdutosController::class, 'desativarProduto'])->name('produto.desativar');
+        Route::get('/produtos/desabilitados', [InformacaoProdutosController::class, 'createInativos'])->name('produtos.desabilitados');
+        Route::post('/informacaoproduto/ativar', [InformacaoProdutosController::class, 'ativarProduto'])->name('produto.ativar');
+        Route::post('/repor-estoque', [EstoqueController::class, 'reporEstoque'])->name('repor.estoque');
+        Route::get('/perguntas-frequentes', [InformacaoEmpresaController::class, 'faq'])->name('faq');
+
+          Route::post('/informacaoproduto/preco/atualizar', [ProdutoController::class, 'atualizarPrecos'])->name('produto.atualizar.precos');
+
+
+          Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
     });
 });

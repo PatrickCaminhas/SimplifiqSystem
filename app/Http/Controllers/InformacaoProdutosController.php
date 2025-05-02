@@ -13,12 +13,23 @@ class InformacaoProdutosController extends Controller
     {
         $produtos = Produtos::where('estado', 'Ativo')->get();
         if ($produtos) {
-            return view('sistema\produto\informacaoProdutoLista', ['produtos' => $produtos], ['page' => 'Produto']);
+            return view('sistema.produto.informacaoProdutoLista', ['produtos' => $produtos], ['page' => 'Produto']);
         } else {
             return redirect('informacaoProdutoRequisicao')->with('error', 'Produto não encontrado.');
         }
 
     }
+
+    public function createInativos()
+    {
+        $produtos = Produtos::where('estado', 'Inativo')->get();
+        if ($produtos) {
+            return view('sistema.produto.informacaoProdutoListaDesabilitados', ['produtos' => $produtos], ['page' => 'Produto']);
+        } else {
+            return redirect('informacaoProdutoRequisicao')->with('error', 'Produto não encontrado.');
+        }
+    }
+
     private function sanitizeString($string)
     {
         $string = trim($string); // Remove espaços em branco do início e do fim
@@ -34,7 +45,7 @@ class InformacaoProdutosController extends Controller
     }
     public function createRead()
     {
-        return view('sistema\produto\informacaoProduto', ['page' => 'Produto']);
+        return view('sistema.produto.informacaoProduto', ['page' => 'Produto']);
     }
 
 
@@ -43,7 +54,7 @@ class InformacaoProdutosController extends Controller
         $produto = Produtos::where('id', $id)->first();
         $estoque = $this->estoqueDoProdutoAoLongoDoTempo($id);
         if ($produto) {
-            return view('sistema\produto\informacaoProduto', ['produto' => $produto,'page' => 'Produto', 'estoque' => $estoque]);
+            return view('sistema.produto.informacaoProduto', ['produto' => $produto,'page' => 'Produto', 'estoque' => $estoque]);
         } else {
             return redirect('informacaoproduto')->with('error', 'Produto não encontrado.');
         }
@@ -82,13 +93,16 @@ class InformacaoProdutosController extends Controller
 
     public function store(Request $request)
     {
+        if ($request->input('descricao') == null) {
+            $request->merge(['descricao' => '-']);
+        }
         $request->validate([
             'nome' => 'required|string',
-            'marca' => 'string',
-            'modelo' => 'string',
-            'categoria' => 'string',
-            'unidade_medida' => 'string',
-            'medida' => 'string',
+            'marca' => 'required|string',
+            'modelo' => 'required|string',
+            'categoria' => 'required|integer',
+            'unidade_medida' => 'required|string',
+            'medida' => 'required|string',
             'descricao' => 'string',
         ]);
         $produto = Produtos::create([
@@ -115,14 +129,13 @@ class InformacaoProdutosController extends Controller
     {
         $request->validate([
             'nome' => 'required|string',
-            'marca' => 'string',
-            'modelo' => 'string',
-            'categoria' => 'string',
-            'unidade_medida' => 'string',
-            'medida' => 'string',
-            'descricao' => 'string',
-            'quantidade' => 'string',
-            'preco_venda' => 'string',
+            'marca' => 'required|string',
+            'modelo' => 'required|string',
+            'categoria' => 'required|string',
+            'unidade_medida' => 'required|string',
+            'medida' => 'required|string',
+            'descricao' => 'required|string',
+            'preco_venda' => 'required|string',
         ]);
         $produto = Produtos::where('nome', $request->input('nome'))->update([
             'nome' => $request->input('nome'),
@@ -140,6 +153,33 @@ class InformacaoProdutosController extends Controller
             return redirect('produto.create')->with('error', 'Erro ao alterar produto.');
         }
     }
+
+    public function desativarProduto(Request $request){
+        $produto = Produtos::where('id', $request->input('id'))
+        ->where('estado', 'Ativo')
+        ->update([
+            'estado' => 'Inativo',
+        ]);
+        if ($produto) {
+            return redirect('informacaoprodutorequisicao')->with('sucess', 'Produto desativado com sucesso!');
+        } else {
+            return redirect('informacaoprodutorequisicao')->with('error', 'Erro ao desativar produto.');
+        }
+    }
+
+    public function ativarProduto(Request $request){
+        $produto = Produtos::where('id', $request->input('id'))
+        ->where('estado', 'Inativo')
+        ->update([
+            'estado' => 'Ativo',
+        ]);
+        if ($produto) {
+            return redirect('informacaoprodutorequisicao')->with('success', 'Produto ativado com sucesso!');
+        } else {
+            return redirect('informacaoprodutorequisicao')->with('error', 'Erro ao desativar produto.');
+        }
+    }
+
     public function delete(Request $request)
     {
         $produto = Produtos::where('nome', $request->input('nome'))->delete();

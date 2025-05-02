@@ -6,7 +6,6 @@
     <table id="myTable" class="display">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Nome</th>
                 <th>CNPJ</th>
                 <th>Telefone</th>
@@ -16,7 +15,6 @@
         <tbody>
             @foreach ($fornecedores as $fornecedor)
                 <tr>
-                    <td style="overflow-x: auto;">{{ $fornecedor->id }}</td>
                     <td>{{ $fornecedor->nome }}</td>
                     <td>{{ $fornecedor->CNPJ }}</td>
                     <td>{{ $fornecedor->telefone }}</td>
@@ -45,7 +43,7 @@
                                                 <a>{{ $fornecedor->nome }}</a>
                                             </div>
                                             <div class="col-12">
-                                                <label for="exampleFormControlInput1" class="form-label">Cnpj:</label>
+                                                <label for="exampleFormControlInput1" class="form-label">CNPJ:</label>
                                                 <a>{{ $fornecedor->CNPJ }}</a>
                                             </div>
                                             <div class="col-12">
@@ -82,7 +80,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th>Produto</th>
-                                                        <th>Total Cotado</th>
+                                                        <th>Quantidade de cotações</th>
                                                         <th>Preço Mínimo</th>
                                                         <th>Preço Máximo</th>
                                                     </tr>
@@ -126,7 +124,7 @@
 
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
         crossorigin="anonymous"></script>
-    @vite('resources/js/app.js')
+
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.2/js/responsive.bootstrap5.min.js"></script>

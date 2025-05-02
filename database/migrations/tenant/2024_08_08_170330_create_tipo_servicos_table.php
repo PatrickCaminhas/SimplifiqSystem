@@ -19,7 +19,7 @@ return new class extends Migration
             $table->decimal('duracao',5,2);
             $table->string('materiais');
             $table->integer('quantidade_de_funcionarios');
-            $table->decimal('valor',6,2);
+            $table->decimal('valor',9,2);
             $table->string('descricao')->nullable();
             $table->timestamps();
         });

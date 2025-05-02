@@ -9,6 +9,7 @@ use App\Models\Produtos_categoria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 
 class ProdutoController extends Controller
@@ -81,13 +82,16 @@ class ProdutoController extends Controller
     // ------------------
     public function store(Request $request)
     {
+        if($request->input('descricao') == null){
+            $request->merge(['descricao' => '-']);
+        }
         $request->validate([
             'nome' => 'required|string',
-            'marca' => 'string',
-            'modelo' => 'string',
-            'categoria' => 'integer',
-            'unidade_medida' => 'string',
-            'medida' => 'string',
+            'marca' => 'required|string',
+            'modelo' => 'required|string',
+            'categoria' => 'required|integer',
+            'unidade_medida' => 'required|string',
+            'medida' => 'required|string',
             'descricao' => 'string',
         ]);
 
@@ -185,7 +189,7 @@ class ProdutoController extends Controller
             return response()->json(['error' => true, 'message' => 'Produto não encontrado'], 404);
         }
 
-        $produto->estado= "Inativo";
+        $produto->estado = "Inativo";
         $produto->save();
 
         return redirect()->route('produto.listar')->with('success', 'Produto desativado com sucesso!');
@@ -198,25 +202,26 @@ class ProdutoController extends Controller
     //------------------
 
     public function buscarMaioresCompradores($id)
-    {
-        $umAnoAtras = now()->subYear();
+{
+    $umAnoAtras = now()->subYear();
 
-        $clientes = Itens_venda::where('produto_id', $id)
-            ->join('vendas', 'itens_vendas.venda_id', '=', 'vendas.id') // Relacionando com vendas
-            ->join('clientes', 'vendas.cliente_id', '=', 'clientes.id') // Pegando cliente correto
-            ->where('vendas.data_venda', '>=', $umAnoAtras)
-            ->select('clientes.id', 'clientes.nome', DB::raw('COUNT(*) as total_compras'))
-            ->groupBy('clientes.id', 'clientes.nome')
-            ->orderByDesc('total_compras')
-            ->take(10)
-            ->get();
+    $clientes = Itens_venda::where('produto_id', $id)
+        ->join('vendas', 'itens_vendas.venda_id', '=', 'vendas.id') // Relacionando com vendas
+        ->join('clientes', 'vendas.cliente_id', '=', 'clientes.id') // Pegando cliente correto
+        ->where('vendas.data_venda', '>=', $umAnoAtras)
+        ->select('clientes.id', 'clientes.nome', DB::raw('SUM(itens_vendas.quantidade) as total_compras')) // Somando as quantidades
+        ->groupBy('clientes.id', 'clientes.nome')
+        ->orderByDesc('total_compras')
+        ->take(10)
+        ->get();
 
-        if ($clientes->isEmpty()) {
-            return response()->json(['error' => true, 'message' => 'Nenhuma compra encontrada para esse produto'], 404);
-        }
-
-        return response()->json($clientes);
+    if ($clientes->isEmpty()) {
+        return response()->json(['error' => true, 'message' => 'Nenhuma compra encontrada para esse produto'], 404);
     }
+
+    return response()->json($clientes);
+}
+
 
 
 
@@ -270,13 +275,142 @@ class ProdutoController extends Controller
                 DB::raw("DATE_FORMAT(vendas.data_venda, '%Y/%m') as mes_ano"),
                 'itens_vendas.preco_unitario'
             )
-            ->groupBy('vendas.created_at','data_venda', 'itens_vendas.preco_unitario')
+            ->groupBy('vendas.created_at', 'data_venda', 'itens_vendas.preco_unitario')
             ->orderBy('vendas.created_at', 'asc')
             ->get();
 
         return response()->json($variacoes);
     }
 
+    public function atualizarProdutoApi(Request $request, $id)
+    {
+        // Validação dos dados de entrada
+        $validatedData = $request->validate([
+            'nome' => 'sometimes|string|max:255',
+            'marca' => 'sometimes|string|max:255',
+            'modelo' => 'sometimes|string|max:255',
+            'categoria_id' => 'sometimes|exists:produtos_categorias,id', // Assumindo que é um relacionamento
+            'unidade_medida' => 'sometimes|string|max:50',
+            'medida' => 'sometimes|numeric|min:0',
+            'preco_compra' => 'sometimes|numeric|min:0',
+            'descricao' => 'sometimes|string|max:1000',
+        ]);
 
+        // Busca o produto
+        $produto = Produtos::find($id);
+
+        if (!$produto) {
+            return response()->json([
+                'error' => true,
+                'message' => 'Produto não encontrado'
+            ], 404);
+        }
+
+        try {
+            // Atualiza o produto com os dados validados
+            $produto->update($validatedData);
+
+            // Recarrega o produto com possíveis relacionamentos
+            $produto->load('categoria'); // Carrega o relacionamento de categoria, se existir
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Produto atualizado com sucesso',
+                'produto' => $produto // Retorna os dados atualizados do produto
+            ], 200);
+
+        } catch (\Exception $e) {
+            // Log do erro (opcional)
+            Log::error('Erro ao atualizar produto: ' . $e->getMessage());
+
+            return response()->json([
+                'error' => true,
+                'message' => 'Erro ao atualizar produto',
+                'details' => $e->getMessage() // Detalhes do erro (apenas em ambiente de desenvolvimento)
+            ], 500);
+        }
+    }
+
+    public function atualizarPrecosAPI(Request $request, $id)
+    {
+        // Validação dos dados de entrada
+        $validatedData = $request->validate([
+            'preco_venda' => 'sometimes|numeric|min:0',
+            'desconto_maximo' => 'sometimes|numeric|min:0|max:' . $request->preco_venda,
+        ]);
+
+        // Busca o produto
+        $produto = Produtos::find($id);
+
+        if (!$produto) {
+            return response()->json([
+                'error' => true,
+                'message' => 'Produto não encontrado'
+            ], 404);
+        }
+
+        try {
+            // Atualiza os preços do produto com os dados validados
+            $produto->update($validatedData);
+
+            // Recarrega o produto para garantir que os dados estão atualizados
+            $produto->refresh();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Preços atualizados com sucesso',
+                'produto' => $produto // Retorna os dados atualizados do produto
+            ], 200);
+
+        } catch (\Exception $e) {
+            // Log do erro (opcional)
+            Log::error('Erro ao atualizar preços do produto: ' . $e->getMessage());
+
+            return response()->json([
+                'error' => true,
+                'message' => 'Erro ao atualizar preços do produto',
+                'details' => $e->getMessage() // Detalhes do erro (apenas em ambiente de desenvolvimento)
+            ], 500);
+        }
+    }
+  
+      public function atualizarPrecos(Request $request)
+    {
+        // Busca o produto
+        $produto = Produtos::find($request->input('id'));
+
+        if (!$produto) {
+            return redirect()->back()->with('error', 'Produto não encontrado.');
+        }
+
+        // Se o desconto máximo não for enviado ou for nulo, definir como preço de venda
+        $descontoMaximo = $request->filled('desconto_maximo') ? $request->input('desconto_maximo') : $request->input('preco_venda');
+
+        // Verifica se o desconto máximo é menor que o preço de compra
+        if ($descontoMaximo < $produto->preco_compra) {
+            return redirect()->back()->with('error', 'O desconto máximo não pode ser menor que o preço de compra.');
+        }
+
+        // Validação dos dados de entrada
+        $request->validate([
+            'preco_venda' => 'required|numeric|min:0',
+            'desconto_maximo' => 'nullable|numeric|min:' . $produto->preco_compra,
+        ]);
+
+        try {
+            // Atualiza os preços do produto
+            $produto->update([
+                'preco_venda' => $request->input('preco_venda'),
+                'desconto_maximo' => $descontoMaximo
+            ]);
+
+            return redirect()->back()
+                ->with('success', 'Preços atualizados com sucesso!');
+        } catch (\Exception $e) {
+            Log::error('Erro ao atualizar preços do produto: ' . $e->getMessage());
+
+            return redirect()->back()->with('error', 'Erro ao atualizar preços do produto.');
+        }
+    }
 
 }

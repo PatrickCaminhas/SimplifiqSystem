@@ -1,6 +1,6 @@
 <div class="toast-container position-fixed bottom-0 start-50 translate-middle p-3">
-    @if ($errors->any())
-        @foreach ($errors->all() as $error)
+    @if (session(key: 'error'))
+
             <div class="toast align-items-center text-bg-danger border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-header bg-danger">
                     <strong class="me-auto text-white">Erro!</strong>
@@ -9,12 +9,12 @@
                 </div>
                 <div class="d-flex">
                     <div class="toast-body">
-                        {{ $error }}
+                        {{ session(key: 'error') }}
                     </div>
                 </div>
 
             </div>
-        @endforeach
+
     @endif
 
     @if (session(key: 'success'))

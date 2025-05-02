@@ -2,44 +2,59 @@
 @section('titulo', 'Cadastro de fornecedor')
 @section('formulario')
 @section('route', route('fornecedor.store'))
+@section('voltar',route('fornecedores'))
+
 
 <div class="form-group">
-    <label for="nomefornecedor">Nome</label>
+    <label for="nomefornecedor">Nome
+        @include('partials.campoObrigatorio')</label>
     <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite o nome do fornecedor">
 </div>
 <div class="form-group">
-    <label for="cnpjornecedor">CNPJ</label>
+    <label for="cnpjornecedor">CNPJ
+        @include('partials.campoObrigatorio')</label>
     <input type="text" class="form-control" id="cnpj" name="cnpj" placeholder="Digite o CNPJ do fornecdor">
 </div>
 <div class="form-group">
-    <label for="enderecofornecedor">Endereço</label>
+    <label for="enderecofornecedor">Endereço
+        @include('partials.campoObrigatorio')</label>
     <input type="text" class="form-control" id="endereco" name="endereco"
         placeholder="Digite o endereço do fornecdor">
 </div>
 <div class="form-group">
-    <label for="cidadefornecedor">Cidade</label>
+    <label for="cidadefornecedor">Cidade
+        @include('partials.campoObrigatorio')
+    </label>
     <input type="text" class="form-control" id="cidade" name="cidade"
         placeholder="Digite a cidade do fornecedor">
 </div>
 <div class="form-group">
-    <label for="estadofornecedor">Estado</label>
+    <label for="estadofornecedor">Estado
+        @include('partials.campoObrigatorio')
+    </label>
     <select class="form-control" id="estado" name="estado">
         <option selected disabled>Selecione o estado</option>
         @include('partials.estadosBrasil')
     </select>
 </div>
 <div class="form-group">
-    <label for="representantefornecedor">Representante</label>
+    <label for="representantefornecedor">Representante
+        @include('partials.campoObrigatorio')
+    </label>
     <input type="text" class="form-control" id="nome_representante" name="nome_representante"
         placeholder="Digite o nome do representante do fornecedor">
 </div>
 <div class="form-group">
-    <label for="emailfornecedor">E-mail</label>
+    <label for="emailfornecedor">E-mail
+        @include('partials.campoObrigatorio')
+    </label>
     <input type="text" class="form-control" id="email" name="email"
         placeholder="Digite o e-mail do fornecedor">
 </div>
 <div class="form-group">
-    <label for="telefonefornecedor">Telefone</label>
+    <label for="telefonefornecedor">Telefone
+        @include('partials.campoObrigatorio')
+    </label>
     <input type="text" class="form-control" id="telefone" name="telefone"
         placeholder="Digite o telefone do fornecedor" maxlength="15">
 </div>

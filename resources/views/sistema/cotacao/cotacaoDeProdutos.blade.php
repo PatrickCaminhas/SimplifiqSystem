@@ -19,8 +19,10 @@
             @endif
         </div>
     @else
+
         <form method="POST" action="{{ route('cotacao.produtos.selecionados') }}">
             @csrf
+          <h5 class="text-center">Selecione todos os produtos que deseje comparar preços</h5>
             <table id="myTable" class="display">
                 <thead>
                     <tr>
@@ -53,10 +55,38 @@
                 </tbody>
             </table>
             <div class="text-center mt-2 mb-4">
-                <button type="submit" class="btn @include('partials.buttomCollor') text-center">Avançar</button>
-                <button type="reset" class="btn @include('partials.buttomCollor') text-center">Limpar</button>
+                <button type="submit" class="btn @include('partials.buttomCollor') text-center"><i class="bi bi-arrow-right"></i> Prossiga</button>
+                <button type="reset" class="btn @include('partials.buttomCollor') text-center"><i class="bi bi-eraser-fill"></i> Limpar</button>
             </div>
         </form>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#modalDuvidaCotacao">
+                            O que é uma cotação de produtos?
+                        </button>
+
+                        <div class="modal fade" id="modalDuvidaCotacao" tabindex="-1"
+                            aria-labelledby="modalDuvidaCotacaoLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="modalEditarProdutoLabel">O que é uma cotação de produtos?</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                      <p>Uma cotação de produtos é o processo de pesquisar e comparar preços
+                                        de um mesmo item por diferentes fornecedores.</p>
+                                      <p>No sistema Simplifiq, deixamos este processo mais rápido e simples,
+                                        basta apenas você selecionar dentre os produtos cadastrados aqueles que queira
+                                        comparar clicando no botão "Cotar" e avançando, na proxima pagina coloque coloque os preços
+                                        de cada fornecedor, podendo deixar em branco se o fornecedor não vender o produto.
+                                      </p>
+                                      <p>Por fim na pagina dos resultados você pode decidir baixar a cotação em formato PDF ou imprimir antes de voltar ao sistema.
+                                      </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
     @endif
 
 @endsection
@@ -79,7 +109,11 @@
                     [-1],
                     ["Todos"]
                 ], // Define opção "Todos"
-                pageLength: -1 // Exibe todas as linhas
+                pageLength: -1, // Exibe todas as linhas
+              	 "paging": false,       // Remove a paginação
+        "lengthChange": false, // Remove a opção de alterar o número de registros por página
+        "info": false          // (Opcional) Remove o texto de informações sobre registros
+
             });
         });
     </script>

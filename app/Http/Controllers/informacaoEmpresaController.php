@@ -23,8 +23,10 @@ class InformacaoEmpresaController extends Controller
         $vendasPorMetodoPagamento = $this->vendasPorMetodoPagamento();
         $crediarioMensal = $this->vendaCrediarioUltimosSeisMeses();
         $crediarioClientes = $this->crediarioClientesValor();
+        $debitoClientes = $this->debitoClientesValor();
         $produtos = $this->estoqueProdutos();
         $produtos = (object) $produtos;
+        $debitoClientes = (object) $debitoClientes;
         $crediarioClientes = (object) $crediarioClientes;
 
         return view('sistema.informativo.informacaoEmpresa', [
@@ -37,11 +39,14 @@ class InformacaoEmpresaController extends Controller
             'vendasPorMetodoPagamento' => $vendasPorMetodoPagamento,
             'crediarioMensal' => $crediarioMensal,
             'crediarioClientes' => $crediarioClientes,
+          	'debitoClientes' => $debitoClientes,
             'produtos' => $produtos
         ]);
     }
 
-
+    public function faq(){
+        return view('sistema.informativo.faq');
+    }
 
     public function despesasUltimosSeisMeses()
     {
@@ -172,7 +177,16 @@ public function vendaCrediarioUltimosSeisMeses()
 }
 
 
-    public function crediarioClientesValor()
+  public function crediarioClientesValor()
+    {
+        $qtdClientes = Clientes::where('crediario', '>', 0)->count();
+        $valorTotal = Clientes::where('crediario', '>', 0)->sum('crediario');
+        return [
+            'qtdClientes' => $qtdClientes,
+            'valorTotal' => $valorTotal
+        ];
+    }
+    public function debitoClientesValor()
     {
         $qtdClientes = Clientes::where('debitos', '>', 0)->count();
         $valorTotal = Clientes::where('debitos', '>', 0)->sum('debitos');

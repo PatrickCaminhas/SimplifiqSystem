@@ -4,21 +4,27 @@
 @section('voltar', route('configuracoes'))
 @section('route', route('configuracoes.dados.alterar'))
                                 <div class="form-group">
-                                    <label for="nome">Nome</label>
+                                    <label for="nome">Nome
+                                        @include('partials.campoObrigatorio')
+                                    </label>
                                     <input type="text" class="form-control" id="nome" name="nome"
                                         placeholder="{{$funcionario->nome}}"
                                          value="{{ old('nome', $funcionario->nome) }}" required>
 
                                 </div>
                                 <div class="form-group">
-                                    <label for="sobrenome">Sobrenome</label>
+                                    <label for="sobrenome">Sobrenome
+                                        @include('partials.campoObrigatorio')
+                                    </label>
                                     <input type="text" class="form-control" id="sobrenome" name="sobrenome"
                                         placeholder="{{$funcionario->sobrenome}}"
                                          value="{{ old('sobrenome', $funcionario->sobrenome) }}" required>
 
                                 </div>
                                 <div class="form-group">
-                                    <label for="email">E-mail</label>
+                                    <label for="email">E-mail
+                                        @include('partials.campoObrigatorio')
+                                    </label>
                                     <input type="text" class="form-control" id="email" name="email"
                                         placeholder="{{$funcionario->email}}"
                                          value="{{ old('email', $funcionario->email) }}" required>

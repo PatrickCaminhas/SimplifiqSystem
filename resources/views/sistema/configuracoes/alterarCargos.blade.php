@@ -10,7 +10,9 @@
                                         Você não pode alterar o próprio cargo.
                                     </div>
                                 @else
-                                    <label for="funcionario">Funcionários</label>
+                                    <label for="funcionario">Funcionários
+                                        @include('partials.campoObrigatorio')
+                                    </label>
                                     <select class="form-control" id="funcionario" name="funcionario" required>
                                         <option selected disabled>Selecione o funcionário</option>
                                         @foreach ($funcionarios as $funcionario)
@@ -21,7 +23,9 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="cargo">Cargo</label>
+                                    <label for="cargo">Cargo
+                                        @include('partials.campoObrigatorio')
+                                    </label>
                                     <select class="form-control" id="cargo" name="cargo" required>
                                         <option selected disabled>Selecione o cargo</option>
                                         <option value="Proprietário">1. Proprietário</option>

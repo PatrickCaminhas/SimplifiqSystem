@@ -1,13 +1,13 @@
 @extends('layouts.padrao')
 @section('conteudo')
-    <div class="container mt-4 mb-4 bg-light text-dark">
+    <div class="container mt-4 mb-4">
         <div class="row">
-            <div class="col-12 text-center" style="overflow: auto;">
-                <h4 class="display-6">Cotação de Produtos</h4>
+            <div class=" card card-shadow col-12 text-center" style="overflow: auto;">
+                <h4 class="display-6 text-center">Cotação de Produtos</h4>
                 @include('partials.errorAndSuccess')
                 <form method="POST" action="{{ route('inserir.cotacao') }}">
                     @csrf
-                    <table class="table table-bordered border border-secondary border-2 table-secondary table-responsive">
+                    <table class="table table-bordered border border-secondary border-2  table-responsive">
                         <thead class="table-dark">
                             <input type="hidden" name="fornecedores" value="{{ json_encode($fornecedores->pluck('id')->toArray()) }}">
                             <input type="hidden" name="produtos" value="{{ json_encode($produtos->pluck('id')->toArray()) }}">
@@ -37,8 +37,8 @@
                         </tbody>
                     </table>
                     <div class="text-center mt-2 mb-4">
-                        <button type="submit" class="btn @include('partials.buttomCollor') text-center">Salvar</button>
-                        <button type="reset" class="btn @include('partials.buttomCollor') text-center">Limpar</button>
+                        <button type="submit" class="btn @include('partials.buttomCollor') text-center"><i class="bi bi-arrow-right"></i> Prossiga</button>
+                        <button type="reset" class="btn @include('partials.buttomCollor') text-center"><i class="bi bi-eraser-fill"></i> Limpar</button>
                     </div>
                 </form>
             </div>
