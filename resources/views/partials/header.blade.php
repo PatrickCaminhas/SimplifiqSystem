@@ -22,13 +22,14 @@
             @else
                 text-light
             @endsession
-            "
-                style="font-family: 'Quicksand', sans-serif;"><b>Simplifiq</b></span>
+            " > <i class="bi bi-list"></i></span>
         </button>
         <!-- Nome da aplicação -->
-        <!--<a href="/dashboard"><span class="navbar-brand mx-auto text-light"
+        <a href="/dashboard"><span class="navbar-brand mx-auto text-light"
                 style="font-family: 'Quicksand', sans-serif;"><b>Simplifiq</b></span> </a>
-         Botão para offcanvas de notificações -->
+         <!-- Botão para offcanvas de notificações -->
+         <span></span>
+
         @include('partials.menu')
     </div>
 </header>

@@ -21,6 +21,6 @@ class Produtos_categoria extends Model
     public function produtos()
     {
         // A chave estrangeira é 'categoria' na tabela 'produtos'
-        return $this->hasMany(Produtos::class, 'categoria');
+        return $this->hasMany(Produtos::class, 'categoria_id');
     }
 }

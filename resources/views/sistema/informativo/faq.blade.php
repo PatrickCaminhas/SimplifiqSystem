@@ -401,230 +401,313 @@
                                 </div>
                             </div>
                             @if (session('funcionario') && session('funcionario')->cargo == 'Administrador')
-                            <!-- Pergunta 2 -->
+                                <!-- Pergunta 2 -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingRelatorios">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseRelatorios"
+                                            aria-expanded="false" aria-controls="collapseRelatorios">
+                                            Relatórios e informações financeiras
+                                        </button>
+                                    </h2>
+                                    <div id="collapseRelatorios" class="accordion-collapse collapse"
+                                        aria-labelledby="headingRelatorios" data-bs-parent="#faqAccordion">
+                                        <div class="accordion-body">
+                                            <div class="accordion" id="nestedAccordionRelatorios">
+                                                <!-- Sub-pergunta 1 -->
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="nestedHeadingCadastroConta">
+                                                        <button class="accordion-button" type="button"
+                                                            data-bs-toggle="collapse"
+                                                            data-bs-target="#nestedCollapseCadastroConta"
+                                                            aria-expanded="true"
+                                                            aria-controls="nestedCollapseCadastroConta">
+                                                            Como cadastrar uma conta?
+                                                        </button>
+                                                    </h2>
+                                                    <div id="nestedCollapseCadastroConta"
+                                                        class="accordion-collapse collapse show"
+                                                        aria-labelledby="nestedHeadingCadastroConta"
+                                                        data-bs-parent="#nestedAccordionRelatorios">
+                                                        <div class="accordion-body">
+                                                            Acesse a aba "Empresa" e depois "Despesas", nesta página você
+                                                            pode visualizar
+                                                            todas as despesas cadastradas e adicionar uma nova despesa no
+                                                            botão "Cadastrar
+                                                            despesa". Para cadastrar, basta inserir um credor, o tipo de
+                                                            despesa, o valor e a
+                                                            data de vencimento.
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Sub-pergunta 2 -->
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="nestedHeadingGerenciamentoMetas">
+                                                        <button class="accordion-button collapsed" type="button"
+                                                            data-bs-toggle="collapse"
+                                                            data-bs-target="#nestedCollapseGerenciamentoMetas"
+                                                            aria-expanded="false"
+                                                            aria-controls="nestedCollapseGerenciamentoMetas">
+                                                            O sistema tem gerenciamento de metas?
+                                                        </button>
+                                                    </h2>
+                                                    <div id="nestedCollapseGerenciamentoMetas"
+                                                        class="accordion-collapse collapse"
+                                                        aria-labelledby="nestedHeadingGerenciamentoMetas"
+                                                        data-bs-parent="#nestedAccordionRelatorios">
+                                                        <div class="accordion-body">
+                                                            Sim, o sistema tem gerenciamento de metas, na aba "Empresa" e na
+                                                            opção "Metas". Na
+                                                            página você pode ver a meta do mês atual, o valor da meta em
+                                                            vendas e uma barra de
+                                                            progresso. Também é possível alterar o valor da meta e verificar
+                                                            metas antigas clicando
+                                                            no botão "Metas anteriores" e depois na lupa da coluna
+                                                            estatísticas.
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Sub-pergunta 3 -->
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="nestedHeadingSimuladorSimples">
+                                                        <button class="accordion-button collapsed" type="button"
+                                                            data-bs-toggle="collapse"
+                                                            data-bs-target="#nestedCollapseSimuladorSimples"
+                                                            aria-expanded="false"
+                                                            aria-controls="nestedCollapseSimuladorSimples">
+                                                            O que é o Simulador Simples Nacional?
+                                                        </button>
+                                                    </h2>
+                                                    <div id="nestedCollapseSimuladorSimples"
+                                                        class="accordion-collapse collapse"
+                                                        aria-labelledby="nestedHeadingSimuladorSimples"
+                                                        data-bs-parent="#nestedAccordionRelatorios">
+                                                        <div class="accordion-body">
+                                                            É um simulador do valor que a empresa irá pagar de impostos do
+                                                            Simples Nacional. No
+                                                            simulador, além do valor do mês atual de acordo com suas vendas
+                                                            cadastradas no
+                                                            sistema, é possível ver quanto de cada imposto está contido no
+                                                            documento de
+                                                            arrecadação do Simples Nacional.
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Sub-pergunta 4 -->
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header"
+                                                        id="nestedHeadingValorSimuladorDiferente">
+                                                        <button class="accordion-button collapsed" type="button"
+                                                            data-bs-toggle="collapse"
+                                                            data-bs-target="#nestedCollapseValorSimuladorDiferente"
+                                                            aria-expanded="false"
+                                                            aria-controls="nestedCollapseValorSimuladorDiferente">
+                                                            O valor do simulador está diferente do real, o que fazer?
+                                                        </button>
+                                                    </h2>
+                                                    <div id="nestedCollapseValorSimuladorDiferente"
+                                                        class="accordion-collapse collapse"
+                                                        aria-labelledby="nestedHeadingValorSimuladorDiferente"
+                                                        data-bs-parent="#nestedAccordionRelatorios">
+                                                        <div class="accordion-body">
+                                                            O que pode estar acontecendo é que o valor do imposto do Simples
+                                                            é baseado na renda
+                                                            bruta cadastrada no sistema. É necessário, antes de tudo,
+                                                            cadastrar os valores da
+                                                            renda bruta dos 12 meses anteriores ao mês vigente. Para isso,
+                                                            basta acessar "Empresa"
+                                                            e depois "Renda bruta", corrigir alguma renda bruta de meses
+                                                            passados na lista ou
+                                                            cadastrar uma nova renda bruta anterior. O valor do mês atual é
+                                                            sempre incrementado com
+                                                            cada venda cadastrada no sistema.
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Sub-pergunta 5 -->
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="nestedHeadingVerRelatorioEmpresa">
+                                                        <button class="accordion-button collapsed" type="button"
+                                                            data-bs-toggle="collapse"
+                                                            data-bs-target="#nestedCollapseVerRelatorioEmpresa"
+                                                            aria-expanded="false"
+                                                            aria-controls="nestedCollapseVerRelatorioEmpresa">
+                                                            Como verificar relatório da situação da empresa?
+                                                        </button>
+                                                    </h2>
+                                                    <div id="nestedCollapseVerRelatorioEmpresa"
+                                                        class="accordion-collapse collapse"
+                                                        aria-labelledby="nestedHeadingVerRelatorioEmpresa"
+                                                        data-bs-parent="#nestedAccordionRelatorios">
+                                                        <div class="accordion-body">
+                                                            Acesse no menu em "Empresa" e depois "Informações". Nesta
+                                                            página, você pode verificar
+                                                            dados da empresa, informações de estoque e gráficos da situação
+                                                            financeira da empresa.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div> <!-- Fim do Accordion Interno -->
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+<!--
+                            <!-- Pergunta 3 -->
                             <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingTwo">
+                                <h2 class="accordion-header" id="headingConfiguracoes">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                        Relatórios e informações financeiras
+                                        data-bs-target="#collapseConfiguracoes" aria-expanded="false"
+                                        aria-controls="collapseConfiguracoes">
+                                        Configurações
                                     </button>
                                 </h2>
-                                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+                                <div id="collapseConfiguracoes" class="accordion-collapse collapse"
+                                    aria-labelledby="headingConfiguracoes" data-bs-parent="#faqAccordion">
                                     <div class="accordion-body">
-                                        <div class="accordion" id="nestedAccordion2">
+                                        <div class="accordion" id="nestedAccordionConfiguracoes">
                                             <!-- Sub-pergunta 1 -->
                                             <div class="accordion-item">
-                                                <h2 class="accordion-header" id="nestedHeadingThree">
-                                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                                        data-bs-target="#nestedCollapseThree" aria-expanded="true" aria-controls="nestedCollapseThree">
-                                                        Como cadastrar uma conta?
+                                                <h2 class="accordion-header" id="nestedHeadingAlterarDadosUsuario">
+                                                    <button class="accordion-button" type="button"
+                                                        data-bs-toggle="collapse"
+                                                        data-bs-target="#nestedCollapseAlterarDadosUsuario"
+                                                        aria-expanded="true"
+                                                        aria-controls="nestedCollapseAlterarDadosUsuario">
+                                                        Como alterar meus dados de usuário?
                                                     </button>
                                                 </h2>
-                                                <div id="nestedCollapseThree" class="accordion-collapse collapse show" aria-labelledby="nestedHeadingThree"
-                                                    data-bs-parent="#nestedAccordion2">
+                                                <div id="nestedCollapseAlterarDadosUsuario"
+                                                    class="accordion-collapse collapse show"
+                                                    aria-labelledby="nestedHeadingAlterarDadosUsuario"
+                                                    data-bs-parent="#nestedAccordionConfiguracoes">
                                                     <div class="accordion-body">
-                                                        Acesse a aba "Empresa" e depois "Despesas", nesta página você pode visualizar
-                                                        todas as despesas cadastradas e adicionar uma nova despesa no botão "Cadastrar despesa".
-                                                        Para cadastrar basta inserir um credor, ou seja, a quem você vai pagar, o tipo de despesa, o valor
-                                                        e a data de vencimento.
+                                                        ---
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <!-- Sub-pergunta 2 -->
                                             <div class="accordion-item">
-                                                <h2 class="accordion-header" id="nestedHeadingFour">
-                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                                        data-bs-target="#nestedCollapseFour" aria-expanded="false" aria-controls="nestedCollapseFour">
-                                                        O sistema tem gerenciamento de metas?
+                                                <h2 class="accordion-header" id="nestedHeadingAlterarSenha">
+                                                    <button class="accordion-button collapsed" type="button"
+                                                        data-bs-toggle="collapse"
+                                                        data-bs-target="#nestedCollapseAlterarSenha" aria-expanded="false"
+                                                        aria-controls="nestedCollapseAlterarSenha">
+                                                        Como alterar minha senha?
                                                     </button>
                                                 </h2>
-                                                <div id="nestedCollapseFour" class="accordion-collapse collapse" aria-labelledby="nestedHeadingFour"
-                                                    data-bs-parent="#nestedAccordion2">
+                                                <div id="nestedCollapseAlterarSenha" class="accordion-collapse collapse"
+                                                    aria-labelledby="nestedHeadingAlterarSenha"
+                                                    data-bs-parent="#nestedAccordionConfiguracoes">
                                                     <div class="accordion-body">
-                                                        Sim, o sistema tem gerenciamento de metas, na aba Empresa e na opção metas.
-                                                        Na página você pode ver a meta do mês atual, o valor da meta em vendas e uma barra de progresso,
-                                                        na página também é possível alterar o valor da meta. Você também pode verificar metas antigas clicando no
-                                                        botão "Metas anteriores" e depois na lupa da coluna estatísticas.
+                                                        ----
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <!-- Sub-pergunta 3 -->
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header" id="nestedHeadingFive">
-                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                                        data-bs-target="#nestedCollapseFive" aria-expanded="false" aria-controls="nestedCollapseFive">
-                                                        O que é o Simulador Simples Nacional?
-                                                    </button>
-                                                </h2>
-                                                <div id="nestedCollapseFive" class="accordion-collapse collapse" aria-labelledby="nestedHeadingFive"
-                                                    data-bs-parent="#nestedAccordion2">
-                                                    <div class="accordion-body">
-                                                        É um simulador do valor que a empresa irá pagar de impostos do Simples Nacional, no simulador além do valor
-                                                        do mês atual de acordo com suas vendas cadastradas no sistema é possível ver quanto de cada imposto
-                                                        está contido no documento de arrecadação do Simples Nacional.
+                                            @if (session('funcionario') && session('funcionario')->cargo == 'Administrador')
+                                                <!-- Sub-pergunta 3 -->
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="nestedHeadingCadastrarFuncionario">
+                                                        <button class="accordion-button collapsed" type="button"
+                                                            data-bs-toggle="collapse"
+                                                            data-bs-target="#nestedCollapseCadastrarFuncionario"
+                                                            aria-expanded="false"
+                                                            aria-controls="nestedCollapseCadastrarFuncionario">
+                                                            Como cadastrar um novo funcionário?
+                                                        </button>
+                                                    </h2>
+                                                    <div id="nestedCollapseCadastrarFuncionario"
+                                                        class="accordion-collapse collapse"
+                                                        aria-labelledby="nestedHeadingCadastrarFuncionario"
+                                                        data-bs-parent="#nestedAccordionConfiguracoes">
+                                                        <div class="accordion-body">
+                                                            ----
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                            <!-- Sub-pergunta 4 -->
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header" id="nestedHeadingSix">
-                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                                        data-bs-target="#nestedCollapseSix" aria-expanded="false" aria-controls="nestedCollapseSix">
-                                                        O valor do simulador está diferente do real, o que fazer?
-                                                    </button>
-                                                </h2>
-                                                <div id="nestedCollapseSix" class="accordion-collapse collapse" aria-labelledby="nestedHeadingSix"
-                                                    data-bs-parent="#nestedAccordion2">
-                                                    <div class="accordion-body">
-                                                        O que pode estar acontecendo é que o valor do imposto do Simples é baseado na renda bruta cadastrada
-                                                        no sistema, é necessário antes de tudo você cadastrar os valores da renda bruta da sua empresa dos
-                                                        12 meses anteriores ao mês vigente.
-
-                                                        <p>Para isso basta no menu em "Empresa" e depois em "Renda bruta", corrija alguma renda bruta de
-                                                            meses passados na lista se necessário ou clique em "Registrar" para cadastrar uma nova renda
-                                                            bruta anterior.</p>
-                                                        <p>O valor do mês atual é sempre incrementado com cada venda cadastrada no sistema.</p>
+                                                <!-- Sub-pergunta 4 -->
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="nestedHeadingVisualizarFuncionarios">
+                                                        <button class="accordion-button collapsed" type="button"
+                                                            data-bs-toggle="collapse"
+                                                            data-bs-target="#nestedCollapseVisualizarFuncionarios"
+                                                            aria-expanded="false"
+                                                            aria-controls="nestedCollapseVisualizarFuncionarios">
+                                                            Como visualizar os funcionários cadastrados?
+                                                        </button>
+                                                    </h2>
+                                                    <div id="nestedCollapseVisualizarFuncionarios"
+                                                        class="accordion-collapse collapse"
+                                                        aria-labelledby="nestedHeadingVisualizarFuncionarios"
+                                                        data-bs-parent="#nestedAccordionConfiguracoes">
+                                                        <div class="accordion-body">
+                                                            ----
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                            <!-- Sub-pergunta 5 -->
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header" id="nestedHeadingSeven">
-                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                                        data-bs-target="#nestedCollapseSeven" aria-expanded="false" aria-controls="nestedCollapseSeven">
-                                                        Como verificar relatório da situação da empresa?
-                                                    </button>
-                                                </h2>
-                                                <div id="nestedCollapseSeven" class="accordion-collapse collapse" aria-labelledby="nestedHeadingSeven"
-                                                    data-bs-parent="#nestedAccordion2">
-                                                    <div class="accordion-body">
-                                                        Acesse no menu em "Empresa" e depois em "Informações", nesta página você pode verificar dados da
-                                                        empresa e informações de estoque, além de informações e gráficos da situação financeira da empresa.
+                                                <!-- Sub-pergunta 5 -->
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="nestedHeadingAlterarCargos">
+                                                        <button class="accordion-button collapsed" type="button"
+                                                            data-bs-toggle="collapse"
+                                                            data-bs-target="#nestedCollapseAlterarCargos"
+                                                            aria-expanded="false"
+                                                            aria-controls="nestedCollapseAlterarCargos">
+                                                            Como alterar cargos de funcionários no sistema?
+                                                        </button>
+                                                    </h2>
+                                                    <div id="nestedCollapseAlterarCargos"
+                                                        class="accordion-collapse collapse"
+                                                        aria-labelledby="nestedHeadingAlterarCargos"
+                                                        data-bs-parent="#nestedAccordionConfiguracoes">
+                                                        <div class="accordion-body">
+                                                            ----
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
+
+                                                <!-- Sub-pergunta 6 -->
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="nestedHeadingExcluirFuncionario">
+                                                        <button class="accordion-button collapsed" type="button"
+                                                            data-bs-toggle="collapse"
+                                                            data-bs-target="#nestedCollapseExcluirFuncionario"
+                                                            aria-expanded="false"
+                                                            aria-controls="nestedCollapseExcluirFuncionario">
+                                                            Como excluir um funcionário?
+                                                        </button>
+                                                    </h2>
+                                                    <div id="nestedCollapseExcluirFuncionario"
+                                                        class="accordion-collapse collapse"
+                                                        aria-labelledby="nestedHeadingExcluirFuncionario"
+                                                        data-bs-parent="#nestedAccordionConfiguracoes">
+                                                        <div class="accordion-body">
+                                                            ----
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endif
                                         </div> <!-- Fim do Accordion Interno -->
                                     </div>
                                 </div>
                             </div>
-                        @endif
+                            @if ( $informacoes['quantidade_meses'] > 1   )
+                            <p class="fs-6">Renda bruta proporcionalizada dos últimos
+                              {{ $informacoes['quantidade_meses'] }} meses:
+                              R${{ number_format($informacoes['rbt12'], 2, ',', '.') }}</p>
+                           @if ($informacoes['quantidade_meses'] > 12 && $informacoes['quantidade_meses'] > 1   )
 
-                        <!-- Pergunta 3 -->
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingThree">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                    Configurações
-                                </button>
-                            </h2>
-                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
-                                <div class="accordion-body">
-                                    <div class="accordion" id="nestedAccordion3">
-                                        <!-- Sub-pergunta 1 -->
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="nestedHeadingOne">
-                                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                                    data-bs-target="#nestedCollapseOne" aria-expanded="true" aria-controls="nestedCollapseOne">
-                                                    Como alterar meus dados de usuário?
-                                                </button>
-                                            </h2>
-                                            <div id="nestedCollapseOne" class="accordion-collapse collapse show" aria-labelledby="nestedHeadingOne"
-                                                data-bs-parent="#nestedAccordion3">
-                                                <div class="accordion-body">
-                                                    ---
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- Sub-pergunta 2 -->
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="nestedHeadingTwo">
-                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                                    data-bs-target="#nestedCollapseTwo" aria-expanded="false" aria-controls="nestedCollapseTwo">
-                                                    Como alterar minha senha?
-                                                </button>
-                                            </h2>
-                                            <div id="nestedCollapseTwo" class="accordion-collapse collapse" aria-labelledby="nestedHeadingTwo"
-                                                data-bs-parent="#nestedAccordion3">
-                                                <div class="accordion-body">
-                                                    ----
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- Sub-pergunta 3 (Visível apenas para Administradores) -->
-                                        @if (session('funcionario') && session('funcionario')->cargo == 'Administrador')
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header" id="nestedHeadingThree">
-                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                                        data-bs-target="#nestedCollapseThree" aria-expanded="false" aria-controls="nestedCollapseThree">
-                                                        Como cadastrar um novo funcionário?
-                                                    </button>
-                                                </h2>
-                                                <div id="nestedCollapseThree" class="accordion-collapse collapse" aria-labelledby="nestedHeadingThree"
-                                                    data-bs-parent="#nestedAccordion3">
-                                                    <div class="accordion-body">
-                                                        ----
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <!-- Sub-pergunta 4 -->
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header" id="nestedHeadingFour">
-                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                                        data-bs-target="#nestedCollapseFour" aria-expanded="false" aria-controls="nestedCollapseFour">
-                                                        Como visualizar os funcionários cadastrados?
-                                                    </button>
-                                                </h2>
-                                                <div id="nestedCollapseFour" class="accordion-collapse collapse" aria-labelledby="nestedHeadingFour"
-                                                    data-bs-parent="#nestedAccordion3">
-                                                    <div class="accordion-body">
-                                                        ----
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <!-- Sub-pergunta 5 -->
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header" id="nestedHeadingFive">
-                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                                        data-bs-target="#nestedCollapseFive" aria-expanded="false" aria-controls="nestedCollapseFive">
-                                                        Como alterar cargos de funcionários no sistema?
-                                                    </button>
-                                                </h2>
-                                                <div id="nestedCollapseFive" class="accordion-collapse collapse" aria-labelledby="nestedHeadingFive"
-                                                    data-bs-parent="#nestedAccordion3">
-                                                    <div class="accordion-body">
-                                                        ----
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <!-- Sub-pergunta 6 -->
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header" id="nestedHeadingSix">
-                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                                        data-bs-target="#nestedCollapseSix" aria-expanded="false" aria-controls="nestedCollapseSix">
-                                                        Como excluir um funcionário?
-                                                    </button>
-                                                </h2>
-                                                <div id="nestedCollapseSix" class="accordion-collapse collapse" aria-labelledby="nestedHeadingSix"
-                                                    data-bs-parent="#nestedAccordion3">
-                                                    <div class="accordion-body">
-                                                        ----
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endif
-                                    </div> <!-- Fim do Accordion Interno -->
-                                </div>
-                            </div>
-                        </div>
+                          <p class="fs-6">Renda bruta acumulada dos últimos
+                              {{ $informacoes['quantidade_meses'] }} meses:
+                              R${{ number_format($informacoes['faturamento_total'], 2, ',', '.') }}</
 
 
                         </div> <!-- Fim do Accordion Principal -->

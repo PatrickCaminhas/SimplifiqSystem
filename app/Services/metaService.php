@@ -6,6 +6,7 @@ use App\Models\MetasProgresso;
 use Carbon\Carbon;
 class metaService
 {
+
     public function cadastrarProgresso($dados)
     {
         $metaProgresso = new MetasProgresso();
@@ -34,7 +35,8 @@ class metaService
         $metas = $this->buscarMetasEmAberto();
         foreach ($metas as $meta) {
             //chamar cadastrarProgresso
-            $this->cadastrarProgresso((object)['meta_id' => $meta->id, 'valor' => $valor]);
+
+            $this->cadastrarProgresso((object) ['meta_id' => $meta->id, 'valor' => $valor]);
         }
     }
 
@@ -66,7 +68,7 @@ class metaService
     {
         $metas = $this->buscarMetasEmAberto();
         foreach ($metas as $meta) {
-            $this->removerProgresso((object)['meta_id' => $meta->id, 'valor' => $valor]);
+            $this->removerProgresso((object) ['meta_id' => $meta->id, 'valor' => $valor]);
         }
     }
     public function verificarSeExisteMeta()

@@ -54,7 +54,7 @@ class InformacaoProdutosController extends Controller
         $produto = Produtos::where('id', $id)->first();
         $estoque = $this->estoqueDoProdutoAoLongoDoTempo($id);
         if ($produto) {
-            return view('sistema.produto\informacaoProduto', ['produto' => $produto,'page' => 'Produto', 'estoque' => $estoque]);
+            return view('sistema.produto\informacaoProduto', ['produto' => $produto, 'page' => 'Produto', 'estoque' => $estoque]);
         } else {
             return redirect('informacaoproduto')->with('error', 'Produto não encontrado.');
         }
@@ -93,13 +93,16 @@ class InformacaoProdutosController extends Controller
 
     public function store(Request $request)
     {
+        if ($request->input('descricao') == null) {
+            $request->merge(['descricao' => '-']);
+        }
         $request->validate([
             'nome' => 'required|string',
-            'marca' => 'string',
-            'modelo' => 'string',
-            'categoria' => 'string',
-            'unidade_medida' => 'string',
-            'medida' => 'string',
+            'marca' => 'required|string',
+            'modelo' => 'required|string',
+            'categoria' => 'required|integer',
+            'unidade_medida' => 'required|string',
+            'medida' => 'required|string',
             'descricao' => 'string',
         ]);
         $produto = Produtos::create([
@@ -126,14 +129,13 @@ class InformacaoProdutosController extends Controller
     {
         $request->validate([
             'nome' => 'required|string',
-            'marca' => 'string',
-            'modelo' => 'string',
-            'categoria' => 'string',
-            'unidade_medida' => 'string',
-            'medida' => 'string',
-            'descricao' => 'string',
-            'quantidade' => 'string',
-            'preco_venda' => 'string',
+            'marca' => 'required|string',
+            'modelo' => 'required|string',
+            'categoria' => 'required|string',
+            'unidade_medida' => 'required|string',
+            'medida' => 'required|string',
+            'descricao' => 'required|string',
+            'preco_venda' => 'required|string',
         ]);
         $produto = Produtos::where('nome', $request->input('nome'))->update([
             'nome' => $request->input('nome'),
@@ -152,12 +154,13 @@ class InformacaoProdutosController extends Controller
         }
     }
 
-    public function desativarProduto(Request $request){
+    public function desativarProduto(Request $request)
+    {
         $produto = Produtos::where('id', $request->input('id'))
-        ->where('estado', 'Ativo')
-        ->update([
-            'estado' => 'Inativo',
-        ]);
+            ->where('estado', 'Ativo')
+            ->update([
+                'estado' => 'Inativo',
+            ]);
         if ($produto) {
             return redirect('informacaoprodutorequisicao')->with('sucess', 'Produto desativado com sucesso!');
         } else {
@@ -165,12 +168,13 @@ class InformacaoProdutosController extends Controller
         }
     }
 
-    public function ativarProduto(Request $request){
+    public function ativarProduto(Request $request)
+    {
         $produto = Produtos::where('id', $request->input('id'))
-        ->where('estado', 'Inativo')
-        ->update([
-            'estado' => 'Ativo',
-        ]);
+            ->where('estado', 'Inativo')
+            ->update([
+                'estado' => 'Ativo',
+            ]);
         if ($produto) {
             return redirect('informacaoprodutorequisicao')->with('success', 'Produto ativado com sucesso!');
         } else {
@@ -188,12 +192,14 @@ class InformacaoProdutosController extends Controller
         }
     }
 
-    public function estoqueDoProdutoAoLongoDoTempo($id){
+    public function estoqueDoProdutoAoLongoDoTempo($id)
+    {
         $estoque = Estoque::where('id_produto', $id)->get();
-        if($estoque){
+        if ($estoque) {
             return $estoque;
-        }else{
-            return "sem estoque";;
+        } else {
+            return "sem estoque";
+            ;
         }
 
     }

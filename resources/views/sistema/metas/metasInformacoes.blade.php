@@ -47,7 +47,9 @@
 
                                 <p>Maior progresso: {{$informacoes->maiorProgresso}} | Data: {{$informacoes->diaComMaiorProgresso}}</p>
                                 <p>Menor progresso: {{$informacoes->menorProgresso}} | Data: {{$informacoes->diaComMenorProgresso}}</p>
-
+                                @if (\Carbon\Carbon::now() > $informacoes->data_final)
+                                    
+                                @endif
                                 <p>Diferença de dias ultimo progresso para data final: {{$informacoes->diferencaDias}} dias</p>
                                 <p>Data do ultimo progresso: {{$informacoes->UltimoProgresso}}</p>
                                 <p>

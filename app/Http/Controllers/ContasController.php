@@ -48,6 +48,12 @@ class ContasController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'credor' => 'required|string',
+            'valor' => 'required|numeric',
+            'tipo' => 'required|string',
+            'data_vencimento' => 'required|date'
+        ]);
         $conta = new Contas();
         $conta->credor = $request->input('credor');
         $conta->valor = $request->input('valor');

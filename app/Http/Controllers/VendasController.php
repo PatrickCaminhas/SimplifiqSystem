@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\HistoricoFaturamento;
+use Illuminate\Auth\AuthenticationException;
 use App\Services\metaService;
 
 class VendasController extends Controller
@@ -46,94 +47,126 @@ class VendasController extends Controller
     }
     public function store(Request $request)
     {
-        DB::beginTransaction(); // Inicia a transação
+        DB::beginTransaction();
 
         try {
-            // Criar a venda
+            $venda = $this->criarVenda($request);
 
-            $venda = new Vendas();
-            $venda->cliente_id = $request->input('cliente_id');
-            $venda->data_venda = now();
-            $venda->metodo_pagamento = $request->input('metodo_pagamento');
-            $venda->valor_total = 0;  // Será atualizado depois
-            $venda->save();
+            $totalVenda = $this->processarItensVenda($request, $venda);
+            $this->atualizarTotalVenda($request, $venda, $totalVenda);
+            $this->processarPagamento($venda, $totalVenda);
+            $this->atualizarMetricas($totalVenda);
 
-            $totalVenda = 0;
-            $this->verificarSeExisteMeta();
-            // Processar cada produto vendido
-            foreach ($request->input('quantidades') as $produtoId => $quantidade) {
-                if ($quantidade > 0) {
-                    $produto = Produtos::find($produtoId);
-
-                    // Verificar se a quantidade disponível no estoque é suficiente
-                    if ($produto->quantidade < $quantidade) {
-                        // Se não houver estoque suficiente, lançar uma exceção
-                        throw new \Exception('Quantidade insuficiente no estoque para o produto ' . $produto->nome);
-                    }
-
-                    $precoUnitario = $produto->preco_venda;
-
-                    // Criar o item da venda
-                    $itemVenda = new Itens_venda();
-                    $itemVenda->venda_id = $venda->id;
-                    $itemVenda->produto_id = $produtoId;
-                    $itemVenda->quantidade = $quantidade;
-                    $itemVenda->preco_unitario = $precoUnitario;
-                    $itemVenda->subtotal = $quantidade * $precoUnitario;
-                    $itemVenda->save();
-                    $estoque = new Estoque();
-                    $estoque->id_produto = $produtoId;
-                    $estoque->quantidade = $quantidade;
-                    $estoque->acao = "Venda";
-                    $estoque->mes = date('m');
-                    $estoque->ano = date('Y');
-                    $estoque->usuario = Auth::user()->id;
-                    $estoque->save();
-
-                    // Atualizar o estoque do produto
-                    $produto->quantidade -= $quantidade;
-                    $produto->save();
-
-                    // Atualizar o total da venda
-                    $totalVenda += $itemVenda->subtotal;
-                }
-            }
-
-            // Atualizar o total da venda
-            if ($request->input('valor_venda') != null) {
-                if ($request->input('valor_venda') < $request->input('desconto_maximo')) {
-                    $venda->valor_total = $totalVenda;
-                }
-                $venda->valor_total = $request->input('valor_venda');
-            } else {
-                $venda->valor_total = $totalVenda;
-            }
-            if ($venda->metodo_pagamento == 'Crediário') {
-                $this->clienteCrediario($venda->cliente_id, $totalVenda);
-
-                $venda->crediario = $totalVenda;
-            }
-            $this->atualizarFaturamento($totalVenda);
-            $this->metaService->cadastrarProgressoEmTodasMetasAbertas($totalVenda);
-            $venda->save();
-
-            DB::commit(); // Confirma a transação se tudo der certo
+            DB::commit();
             return redirect()->back()->with('success', 'Venda registrada com sucesso!');
-
         } catch (\Exception $e) {
-            DB::rollback(); // Reverte a transação se houver erro
+            DB::rollback();
+            $this->reverterTransacao($venda ?? null);
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
 
-            // Apagar os itens da venda e a venda em si
-            if (isset($venda)) {
-                // Apaga os itens associados à venda
-                Itens_venda::where('venda_id', $venda->id)->delete();
 
-                // Apaga a venda
-                $venda->delete();
-            }
+    public function criarVenda(Request $request): Vendas
+    {
+        $venda = new Vendas();
+        $venda->cliente_id = $request->input('cliente_id');
+        $venda->data_venda = now();
+        $venda->metodo_pagamento = $request->input('metodo_pagamento');
+        $venda->valor_total = 0;
+        $venda->save();
+        return $venda;
+    }
+    public function processarItensVenda(Request $request, Vendas $venda): float
+    {
+        $totalVenda = 0;
 
-            // Redirecionar de volta com a mensagem de erro
-            return redirect()->back()->with($e->getMessage());
+        foreach ($request->input('quantidades') as $produtoId => $quantidade) {
+            if ($quantidade <= 0)
+                continue;
+
+            $produto = $this->validarProduto($produtoId, $quantidade);
+            $subtotal = $this->criarItemVenda($venda, $produto, $quantidade);
+            $this->atualizarEstoque($produto, $quantidade);
+
+            $totalVenda += $subtotal;
+        }
+
+        return $totalVenda;
+    }
+    public function validarProduto(int $produtoId, int $quantidade): Produtos
+    {
+        $produto = Produtos::findOrFail($produtoId);
+
+        if ($produto->quantidade < $quantidade) {
+            throw new \Exception("Quantidade insuficiente no estoque para o produto {$produto->nome}");
+        }
+
+        return $produto;
+    }
+    public function criarItemVenda(Vendas $venda, Produtos $produto, int $quantidade): float
+    {
+        $subtotal = $quantidade * $produto->preco_venda;
+
+        Itens_venda::create([
+            'venda_id' => $venda->id,
+            'produto_id' => $produto->id,
+            'quantidade' => $quantidade,
+            'preco_unitario' => $produto->preco_venda,
+            'subtotal' => $subtotal
+        ]);
+
+        return $subtotal;
+    }
+    public function atualizarEstoque(Produtos $produto, int $quantidade): void
+    {
+        if (!Auth::check()) {
+            throw new AuthenticationException();
+        }
+        $produto->decrement('quantidade', $quantidade);
+
+        Estoque::create([
+            'id_produto' => $produto->id,
+            'quantidade' => $quantidade,
+            'acao' => "Venda",
+            'mes' => date('m'),
+            'ano' => date('Y'),
+            'usuario' => Auth::id()
+        ]);
+    }
+    public function atualizarTotalVenda(Request $request, Vendas $venda, float $totalVenda): void
+    {
+        $valorVenda = $request->input('valor_venda');
+        $descontoMaximo = $request->input('desconto_maximo');
+
+        $venda->valor_total = match (true) {
+            is_numeric($valorVenda) && $valorVenda >= $descontoMaximo && $valorVenda <= $totalVenda => $valorVenda,
+            default => $totalVenda
+        };
+
+        $venda->save();
+    }
+
+    public function processarPagamento(Vendas $venda, float $totalVenda): void
+    {
+        if ($venda->metodo_pagamento === 'Crediário') {
+            $this->clienteCrediario($venda->cliente_id, $totalVenda);
+            $venda->update(['crediario' => $totalVenda]);
+        }
+    }
+
+    public function atualizarMetricas(float $totalVenda): void
+    {
+        $this->atualizarFaturamento($totalVenda);
+        $this->metaService->verificarSeExisteMeta();
+        $this->metaService->cadastrarProgressoEmTodasMetasAbertas($totalVenda);
+    }
+
+    public function reverterTransacao(?Vendas $venda): void
+    {
+        if ($venda) {
+            Itens_venda::where('venda_id', $venda->id)->delete();
+            $venda->delete();
         }
     }
 
@@ -151,26 +184,9 @@ class VendasController extends Controller
         }
     }
 
-    public function verificarSeExisteMeta()
-    {
-        $ultimoDiaMes = Carbon::now()->endOfMonth()->toDateString();
-        $metaExistente = Metas::whereDate('ending_at', $ultimoDiaMes)->exists();
-        if (!$metaExistente) {
-            $this->criarMeta();
-        }
-    }
-    function criarMeta()
-    {
-        $meta = new Metas();
-        $meta->valor = 4800000;
-        $meta->valor_atual = 0;
-        $meta->ending_at = Carbon::now()->endOfMonth()->toDateString();
-        $meta->estado = 'Pendente';
-        $meta->save();
-
-    }
 
 
+/*
     public function delete(Request $request)
     {
         $venda = Vendas::find($request->id);
@@ -253,6 +269,7 @@ class VendasController extends Controller
             return redirect()->back()->with('Erro ao cancelar a venda: ' . $e->getMessage());
         }
     }
+    */
 
 
 

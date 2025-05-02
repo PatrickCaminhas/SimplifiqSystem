@@ -82,13 +82,16 @@ class ProdutoController extends Controller
     // ------------------
     public function store(Request $request)
     {
+        if ($request->input('descricao') == null) {
+            $request->merge(['descricao' => '-']);
+        }
         $request->validate([
             'nome' => 'required|string',
-            'marca' => 'string',
-            'modelo' => 'string',
-            'categoria' => 'integer',
-            'unidade_medida' => 'string',
-            'medida' => 'string',
+            'marca' => 'required|string',
+            'modelo' => 'required|string',
+            'categoria' => 'required|integer',
+            'unidade_medida' => 'required|string',
+            'medida' => 'required|string',
             'descricao' => 'string',
         ]);
 
@@ -147,9 +150,9 @@ class ProdutoController extends Controller
                 ->orWhere('modelo', 'LIKE', '%' . $term . '%')
                 ->orWhere('marca', 'LIKE', '%' . $term . '%');
         })
-        ->where('estado', 'Ativo')
-        //->where('quantidade', '>', 0)
-        ->get();
+            ->where('estado', 'Ativo')
+            //->where('quantidade', '>', 0)
+            ->get();
 
         return response()->json($produtos);
     }
@@ -202,6 +205,7 @@ class ProdutoController extends Controller
     //RETORNO: CLIENTES
     //------------------
 
+
     public function buscarMaioresCompradores($id)
     {
         $umAnoAtras = now()->subYear();
@@ -209,10 +213,10 @@ class ProdutoController extends Controller
         $clientes = Itens_venda::where('produto_id', $id)
             ->join('vendas', 'itens_vendas.venda_id', '=', 'vendas.id') // Relacionando com vendas
             ->join('clientes', 'vendas.cliente_id', '=', 'clientes.id') // Pegando cliente correto
-            ->where('vendas.data_venda', '>=', $umAnoAtras)
-            ->select('clientes.id', 'clientes.nome', DB::raw('COUNT(*) as total_compras'))
+            ->where('vendas.data_venda', '>=', $umAnoAtras) // Apenas compras no último ano
+            ->select('clientes.id', 'clientes.nome', DB::raw('SUM(itens_vendas.quantidade) as total_comprado')) // Somando quantidades
             ->groupBy('clientes.id', 'clientes.nome')
-            ->orderByDesc('total_compras')
+            ->orderByDesc('total_comprado')
             ->take(10)
             ->get();
 
@@ -222,6 +226,7 @@ class ProdutoController extends Controller
 
         return response()->json($clientes);
     }
+
 
 
 
@@ -373,5 +378,44 @@ class ProdutoController extends Controller
             ], 500);
         }
     }
+    public function atualizarPrecos(Request $request)
+    {
+        // Busca o produto
+        $produto = Produtos::find($request->input('id'));
+
+        if (!$produto) {
+            return redirect()->back()->with('error', 'Produto não encontrado.');
+        }
+
+        // Se o desconto máximo não for enviado ou for nulo, definir como preço de venda
+        $descontoMaximo = $request->filled('desconto_maximo') ? $request->input('desconto_maximo') : $request->input('preco_venda');
+
+        // Verifica se o desconto máximo é menor que o preço de compra
+        if ($descontoMaximo < $produto->preco_compra) {
+            return redirect()->back()->with('error', 'O desconto máximo não pode ser menor que o preço de compra.');
+        }
+
+        // Validação dos dados de entrada
+        $request->validate([
+            'preco_venda' => 'required|numeric|min:0',
+            'desconto_maximo' => 'nullable|numeric|min:' . $produto->preco_compra,
+        ]);
+
+        try {
+            // Atualiza os preços do produto
+            $produto->update([
+                'preco_venda' => $request->input('preco_venda'),
+                'desconto_maximo' => $descontoMaximo
+            ]);
+
+            return redirect()->route('produto.show', $produto->id)
+                ->with('success', 'Preços atualizados com sucesso!');
+        } catch (\Exception $e) {
+            Log::error('Erro ao atualizar preços do produto: ' . $e->getMessage());
+
+            return redirect()->back()->with('error', 'Erro ao atualizar preços do produto.');
+        }
+    }
+
 
 }

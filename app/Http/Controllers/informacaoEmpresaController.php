@@ -176,6 +176,15 @@ public function vendaCrediarioUltimosSeisMeses()
 
     public function crediarioClientesValor()
     {
+        $qtdClientes = Clientes::where('crediario', '>', 0)->count();
+        $valorTotal = Clientes::where('crediario', '>', 0)->sum('crediario');
+        return [
+            'qtdClientes' => $qtdClientes,
+            'valorTotal' => $valorTotal
+        ];
+    }
+    public function debitoClientesValor()
+    {
         $qtdClientes = Clientes::where('debitos', '>', 0)->count();
         $valorTotal = Clientes::where('debitos', '>', 0)->sum('debitos');
         return [
@@ -183,6 +192,7 @@ public function vendaCrediarioUltimosSeisMeses()
             'valorTotal' => $valorTotal
         ];
     }
+
 
     public function estoqueProdutos()
     {

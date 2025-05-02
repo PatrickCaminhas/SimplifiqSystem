@@ -27,7 +27,7 @@ class CotacoesController extends Controller
     // ------------------
     public function createLista()
     {
-        $produtos = Produtos::all();
+        $produtos = Produtos::where('estado', 'Ativo')->get();
         $checagem = $this->checarProdutosEFornecedores();
         return view('sistema.cotacao.cotacaoDeProdutos', ['page' => 'Cotação', 'produtos' => $produtos, 'checagem' => $checagem]);
     }

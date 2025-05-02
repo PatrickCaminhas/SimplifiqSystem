@@ -29,7 +29,6 @@ use App\Http\Controllers\VendasController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\FaturamentoController;
 use App\Http\Controllers\Auth\SenhaResetController;
-use App\Models\Estoque;
 
 foreach (config('tenancy.central_domains') as $domain) {
     Route::domain($domain)->group(function () {
@@ -310,4 +309,3 @@ foreach (config('tenancy.central_domains') as $domain) {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
